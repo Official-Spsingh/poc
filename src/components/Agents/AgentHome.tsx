@@ -100,9 +100,10 @@ const AgentHome: React.FC<AgentHomeProps> = ({ onSelectAgent, onCreateAgent }) =
 
   const getStatusColor = (status: Agent['status']) => {
     switch (status) {
-      case 'active': return 'bg-teal-50 text-teal-600 border-teal-100';
-      case 'training': return 'bg-blue-50 text-blue-600 border-blue-100';
-      case 'idle': return 'bg-gray-50 text-gray-400 border-gray-100';
+      case 'active': return theme.statusBadges.active;
+      case 'training': return theme.statusBadges.training || theme.statusBadges.active;
+      case 'idle': return theme.statusBadges.idle || theme.statusBadges.draft;
+      default: return theme.statusBadges.draft;
     }
   };
 
@@ -212,7 +213,7 @@ const AgentHome: React.FC<AgentHomeProps> = ({ onSelectAgent, onCreateAgent }) =
                 header: 'Agent Identity',
                 render: (agent) => (
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 bg-slate-50 rounded-xl flex items-center justify-center text-violet-700 border border-slate-100 shadow-sm">
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-sm ${theme.card.iconBg} ${theme.card.iconText}`}>
                       <Bot size={20} />
                     </div>
                     <div>

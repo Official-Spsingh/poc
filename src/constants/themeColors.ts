@@ -54,6 +54,31 @@ export interface TipsSectionColors {
   iconText: string;
 }
 
+export interface StatusBadgeColors {
+  active: string;
+  training?: string;
+  idle?: string;
+  published?: string;
+  draft?: string;
+  error?: string;
+}
+
+export interface ModalColors {
+  headerBg: string;
+  headerText: string;
+  iconBg: string;
+  primaryBtn: string;
+  secondaryBtn: string;
+}
+
+export interface LineageColors {
+  mainIconBg: string;
+  mainIconText: string;
+  cardBorder: string;
+  cardHoverBg: string;
+  badgeBg: string;
+}
+
 export interface HomepageColors {
   hero: HeroColors;
   header: HeaderColors;
@@ -63,11 +88,15 @@ export interface HomepageColors {
   toolbar: ToolbarColors;
   emptyState: EmptyStateColors;
   tipsSection: TipsSectionColors;
+  statusBadges: StatusBadgeColors;
+  modal: ModalColors;
+  lineage: LineageColors;
 }
 
 export interface ModuleColors {
   homepage: HomepageColors;
-  [key: string]: any; // Allows future expansion e.g., workflowBuilder
+  variations?: Record<string, HomepageColors>;
+  [key: string]: any;
 }
 
 const generateTealColors = (): HomepageColors => ({
@@ -112,10 +141,98 @@ const generateTealColors = (): HomepageColors => ({
     glow: 'bg-teal-400',
     iconBg: 'bg-teal-50 text-teal-600',
     button: 'bg-teal-600 hover:bg-teal-700 shadow-teal-100',
-    secondaryText: 'text-violet-700',
-    secondaryBg: 'hover:bg-violet-50'
+    secondaryText: 'text-teal-700',
+    secondaryBg: 'hover:bg-teal-50'
   },
-  tipsSection: { iconBg: 'bg-teal-50', iconText: 'text-teal-600' }
+  tipsSection: { iconBg: 'bg-teal-50', iconText: 'text-teal-600' },
+  statusBadges: {
+    active: 'bg-teal-50 text-teal-600 border-teal-100',
+    published: 'bg-teal-50 text-teal-600 border-teal-100',
+    draft: 'bg-slate-50 text-slate-500 border-slate-100',
+    error: 'bg-rose-50 text-rose-600 border-rose-100'
+  },
+  modal: {
+    headerBg: 'bg-teal-50',
+    headerText: 'text-teal-900',
+    iconBg: 'bg-teal-600',
+    primaryBtn: 'bg-teal-600 hover:bg-teal-700',
+    secondaryBtn: 'hover:bg-teal-50 text-teal-600'
+  },
+  lineage: {
+    mainIconBg: 'bg-teal-600',
+    mainIconText: 'text-white',
+    cardBorder: 'hover:border-teal-200',
+    cardHoverBg: 'hover:bg-teal-50/20',
+    badgeBg: 'bg-teal-50 text-teal-600'
+  }
+});
+
+const generateEmeraldColors = (): HomepageColors => ({
+  hero: {
+    badge: 'bg-emerald-50 text-emerald-600',
+    gradient: 'from-emerald-700 to-teal-700',
+    shadow: 'shadow-emerald-50/5',
+    button: 'bg-emerald-600 hover:bg-emerald-700 shadow-emerald-200/50',
+    secondaryHover: 'hover:text-emerald-700 hover:bg-emerald-50',
+    iconColor: 'text-emerald-500'
+  },
+  header: {
+    iconBg: 'bg-slate-50 text-emerald-600 border-slate-100',
+    primaryBtn: 'bg-emerald-600 text-white shadow-emerald-100 hover:bg-emerald-700',
+  },
+  pageWrapper: {
+    blurs: ['bg-emerald-400/10', 'bg-teal-400/10', 'bg-emerald-400/5']
+  },
+  card: {
+    border: 'hover:border-emerald-400',
+    shadow: 'hover:shadow-emerald-100/30',
+    accent: 'from-emerald-400 to-emerald-400',
+    iconBg: 'group-hover:bg-emerald-50',
+    iconText: 'group-hover:text-emerald-600',
+    titleHover: 'group-hover:text-emerald-700',
+    chevronBg: 'group-hover:bg-emerald-50',
+    chevronText: 'group-hover:text-emerald-600',
+    menuHover: 'hover:bg-emerald-50 hover:text-emerald-700',
+    statusBg: 'bg-emerald-50',
+    statusText: 'text-emerald-700'
+  },
+  table: {
+    hoverBg: 'hover:bg-emerald-50/30',
+    menuHover: 'hover:bg-emerald-50 hover:text-emerald-700',
+  },
+  toolbar: {
+    focusRing: 'focus:ring-emerald-100 focus:border-emerald-400',
+    activeText: 'text-emerald-600',
+    bgLight: 'bg-emerald-50'
+  },
+  emptyState: {
+    glow: 'bg-emerald-400',
+    iconBg: 'bg-emerald-50 text-emerald-600',
+    button: 'bg-emerald-600 hover:bg-emerald-700 shadow-emerald-100',
+    secondaryText: 'text-emerald-700',
+    secondaryBg: 'hover:bg-emerald-50'
+  },
+  tipsSection: { iconBg: 'bg-emerald-50', iconText: 'text-emerald-600' },
+  statusBadges: {
+    active: 'bg-emerald-50 text-emerald-600 border-emerald-100',
+    published: 'bg-emerald-50 text-emerald-600 border-emerald-100',
+    draft: 'bg-slate-50 text-slate-500 border-slate-100',
+    error: 'bg-rose-50 text-rose-600 border-rose-100'
+  },
+  modal: {
+    headerBg: 'bg-emerald-50',
+    headerText: 'text-emerald-900',
+    iconBg: 'bg-emerald-600',
+    primaryBtn: 'bg-emerald-600 hover:bg-emerald-700',
+    secondaryBtn: 'hover:bg-emerald-50 text-emerald-600'
+  },
+  lineage: {
+    mainIconBg: 'bg-emerald-600',
+    mainIconText: 'text-white',
+    cardBorder: 'hover:border-emerald-200',
+    cardHoverBg: 'hover:bg-emerald-50/20',
+    badgeBg: 'bg-emerald-50 text-emerald-600'
+  }
 });
 
 const generateSkyColors = (): HomepageColors => ({
@@ -129,7 +246,7 @@ const generateSkyColors = (): HomepageColors => ({
   },
   header: {
     iconBg: 'bg-slate-50 text-sky-800 border-slate-100',
-    primaryBtn: 'bg-sky-800 text-white shadow-sky-100 hover:bg-sky-800',
+    primaryBtn: 'bg-sky-800 text-white shadow-sky-100 hover:bg-sky-900',
   },
   pageWrapper: {
     blurs: ['bg-sky-400/10', 'bg-indigo-400/10', 'bg-blue-400/5']
@@ -160,10 +277,98 @@ const generateSkyColors = (): HomepageColors => ({
     glow: 'bg-sky-400',
     iconBg: 'bg-sky-50 text-sky-800',
     button: 'bg-sky-800 hover:bg-sky-900 shadow-sky-100',
-    secondaryText: 'text-teal-700',
-    secondaryBg: 'hover:bg-teal-50'
+    secondaryText: 'text-sky-700',
+    secondaryBg: 'hover:bg-sky-50'
   },
-  tipsSection: { iconBg: 'bg-sky-50', iconText: 'text-sky-700' }
+  tipsSection: { iconBg: 'bg-sky-50', iconText: 'text-sky-700' },
+  statusBadges: {
+    active: 'bg-sky-50 text-sky-800 border-sky-100',
+    published: 'bg-sky-50 text-sky-800 border-sky-100',
+    draft: 'bg-slate-50 text-slate-500 border-slate-100',
+    error: 'bg-rose-50 text-rose-600 border-rose-100'
+  },
+  modal: {
+    headerBg: 'bg-sky-50',
+    headerText: 'text-sky-900',
+    iconBg: 'bg-sky-800',
+    primaryBtn: 'bg-sky-800 hover:bg-sky-900',
+    secondaryBtn: 'hover:bg-sky-50 text-sky-800'
+  },
+  lineage: {
+    mainIconBg: 'bg-sky-800',
+    mainIconText: 'text-white',
+    cardBorder: 'hover:border-sky-200',
+    cardHoverBg: 'hover:bg-sky-50/20',
+    badgeBg: 'bg-sky-50 text-sky-800'
+  }
+});
+
+const generateBlueColors = (): HomepageColors => ({
+  hero: {
+    badge: 'bg-blue-50 text-blue-700',
+    gradient: 'from-blue-700 to-indigo-600',
+    shadow: 'shadow-blue-50/10',
+    button: 'bg-blue-700 hover:bg-blue-800 shadow-blue-200/50',
+    secondaryHover: 'hover:text-blue-800 hover:bg-blue-50',
+    iconColor: 'text-blue-700'
+  },
+  header: {
+    iconBg: 'bg-slate-50 text-blue-700 border-slate-100',
+    primaryBtn: 'bg-blue-700 text-white shadow-blue-100 hover:bg-blue-800',
+  },
+  pageWrapper: {
+    blurs: ['bg-blue-400/10', 'bg-sky-400/10', 'bg-blue-400/5']
+  },
+  card: {
+    border: 'hover:border-blue-400',
+    shadow: 'hover:shadow-blue-100/30',
+    accent: 'from-blue-700 to-blue-700',
+    iconBg: 'group-hover:bg-blue-50',
+    iconText: 'group-hover:text-blue-800',
+    titleHover: 'group-hover:text-blue-800',
+    chevronBg: 'group-hover:bg-blue-50',
+    chevronText: 'group-hover:text-blue-800',
+    menuHover: 'hover:bg-blue-50 hover:text-blue-800',
+    statusBg: 'bg-blue-50',
+    statusText: 'text-blue-800'
+  },
+  table: {
+    hoverBg: 'hover:bg-blue-50/30',
+    menuHover: 'hover:bg-blue-50 hover:text-blue-800',
+  },
+  toolbar: {
+    focusRing: 'focus:ring-blue-100 focus:border-blue-800/40',
+    activeText: 'text-blue-800',
+    bgLight: 'bg-blue-50'
+  },
+  emptyState: {
+    glow: 'bg-blue-400',
+    iconBg: 'bg-blue-50 text-blue-800',
+    button: 'bg-blue-700 hover:bg-blue-800 shadow-blue-100',
+    secondaryText: 'text-blue-700',
+    secondaryBg: 'hover:bg-blue-50'
+  },
+  tipsSection: { iconBg: 'bg-blue-50', iconText: 'text-blue-700' },
+  statusBadges: {
+    active: 'bg-blue-50 text-blue-800 border-blue-100',
+    published: 'bg-blue-50 text-blue-800 border-blue-100',
+    draft: 'bg-slate-50 text-slate-500 border-slate-100',
+    error: 'bg-rose-50 text-rose-600 border-rose-100'
+  },
+  modal: {
+    headerBg: 'bg-blue-50',
+    headerText: 'text-blue-900',
+    iconBg: 'bg-blue-800',
+    primaryBtn: 'bg-blue-800 hover:bg-blue-900',
+    secondaryBtn: 'hover:bg-blue-50 text-blue-800'
+  },
+  lineage: {
+    mainIconBg: 'bg-blue-800',
+    mainIconText: 'text-white',
+    cardBorder: 'hover:border-blue-200',
+    cardHoverBg: 'hover:bg-blue-50/20',
+    badgeBg: 'bg-blue-50 text-blue-800'
+  }
 });
 
 const generateVioletColors = (): HomepageColors => ({
@@ -208,10 +413,102 @@ const generateVioletColors = (): HomepageColors => ({
     glow: 'bg-violet-400',
     iconBg: 'bg-violet-50 text-violet-700',
     button: 'bg-violet-700 hover:bg-violet-800 shadow-violet-100',
-    secondaryText: 'text-indigo-700',
-    secondaryBg: 'hover:bg-indigo-50'
+    secondaryText: 'text-violet-700',
+    secondaryBg: 'hover:bg-violet-50'
   },
-  tipsSection: { iconBg: 'bg-violet-50', iconText: 'text-violet-600' }
+  tipsSection: { iconBg: 'bg-violet-50', iconText: 'text-violet-600' },
+  statusBadges: {
+    active: 'bg-violet-50 text-violet-700 border-violet-100',
+    published: 'bg-violet-50 text-violet-700 border-violet-100',
+    training: 'bg-blue-50 text-blue-600 border-blue-100',
+    idle: 'bg-slate-50 text-slate-400 border-slate-100',
+    draft: 'bg-slate-50 text-slate-500 border-slate-100',
+    error: 'bg-rose-50 text-rose-600 border-rose-100'
+  },
+  modal: {
+    headerBg: 'bg-violet-50',
+    headerText: 'text-violet-900',
+    iconBg: 'bg-violet-700',
+    primaryBtn: 'bg-violet-700 hover:bg-violet-800',
+    secondaryBtn: 'hover:bg-violet-50 text-violet-700'
+  },
+  lineage: {
+    mainIconBg: 'bg-violet-700',
+    mainIconText: 'text-white',
+    cardBorder: 'hover:border-violet-200',
+    cardHoverBg: 'hover:bg-violet-50/20',
+    badgeBg: 'bg-violet-50 text-violet-700'
+  }
+});
+
+const generatePurpleColors = (): HomepageColors => ({
+  hero: {
+    badge: 'bg-purple-50 text-purple-700',
+    gradient: 'from-purple-700 to-fuchsia-600',
+    shadow: 'shadow-purple-50/10',
+    button: 'bg-purple-700 hover:bg-purple-800 shadow-purple-200/50',
+    secondaryHover: 'hover:text-purple-700 hover:bg-purple-50',
+    iconColor: 'text-purple-600'
+  },
+  header: {
+    iconBg: 'bg-slate-50 text-purple-700 border-slate-100',
+    primaryBtn: 'bg-purple-700 text-white shadow-purple-100 hover:bg-purple-800',
+  },
+  pageWrapper: {
+    blurs: ['bg-purple-400/10', 'bg-violet-400/10', 'bg-purple-400/5']
+  },
+  card: {
+    border: 'hover:border-purple-400',
+    shadow: 'hover:shadow-purple-100/30',
+    accent: 'from-purple-700 to-purple-700',
+    iconBg: 'group-hover:bg-purple-50',
+    iconText: 'group-hover:text-purple-600',
+    titleHover: 'group-hover:text-purple-700',
+    chevronBg: 'group-hover:bg-purple-50',
+    chevronText: 'group-hover:text-purple-600',
+    menuHover: 'hover:bg-purple-50 hover:text-purple-700',
+    statusBg: 'bg-purple-50',
+    statusText: 'text-purple-700'
+  },
+  table: {
+    hoverBg: 'hover:bg-purple-50/30',
+    menuHover: 'hover:bg-purple-50 hover:text-purple-700',
+  },
+  toolbar: {
+    focusRing: 'focus:ring-purple-50 focus:border-purple-700/40',
+    activeText: 'text-purple-700',
+    bgLight: 'bg-purple-50'
+  },
+  emptyState: {
+    glow: 'bg-purple-400',
+    iconBg: 'bg-purple-50 text-purple-700',
+    button: 'bg-purple-700 hover:bg-purple-800 shadow-purple-100',
+    secondaryText: 'text-purple-700',
+    secondaryBg: 'hover:bg-purple-50'
+  },
+  tipsSection: { iconBg: 'bg-purple-50', iconText: 'text-purple-600' },
+  statusBadges: {
+    active: 'bg-purple-50 text-purple-700 border-purple-100',
+    published: 'bg-purple-50 text-purple-700 border-purple-100',
+    training: 'bg-indigo-50 text-indigo-600 border-indigo-100',
+    idle: 'bg-slate-50 text-slate-400 border-slate-100',
+    draft: 'bg-slate-50 text-slate-500 border-slate-100',
+    error: 'bg-rose-50 text-rose-600 border-rose-100'
+  },
+  modal: {
+    headerBg: 'bg-purple-50',
+    headerText: 'text-purple-900',
+    iconBg: 'bg-purple-700',
+    primaryBtn: 'bg-purple-700 hover:bg-purple-800',
+    secondaryBtn: 'hover:bg-purple-50 text-purple-700'
+  },
+  lineage: {
+    mainIconBg: 'bg-purple-700',
+    mainIconText: 'text-white',
+    cardBorder: 'hover:border-purple-200',
+    cardHoverBg: 'hover:bg-purple-50/20',
+    badgeBg: 'bg-purple-50 text-purple-700'
+  }
 });
 
 const generateIndigoColors = (): HomepageColors => ({
@@ -256,24 +553,128 @@ const generateIndigoColors = (): HomepageColors => ({
     glow: 'bg-indigo-400',
     iconBg: 'bg-indigo-50 text-indigo-600',
     button: 'bg-indigo-600 hover:bg-indigo-700 shadow-indigo-100',
-    secondaryText: 'text-sky-700',
-    secondaryBg: 'hover:bg-sky-50'
+    secondaryText: 'text-indigo-700',
+    secondaryBg: 'hover:bg-indigo-50'
   },
-  tipsSection: { iconBg: 'bg-indigo-50', iconText: 'text-indigo-600' }
+  tipsSection: { iconBg: 'bg-indigo-50', iconText: 'text-indigo-600' },
+  statusBadges: {
+    active: 'bg-indigo-50 text-indigo-600 border-indigo-100',
+    published: 'bg-indigo-50 text-indigo-600 border-indigo-100',
+    draft: 'bg-slate-50 text-slate-500 border-slate-100',
+    error: 'bg-rose-50 text-rose-600 border-rose-100'
+  },
+  modal: {
+    headerBg: 'bg-indigo-50',
+    headerText: 'text-indigo-900',
+    iconBg: 'bg-indigo-600',
+    primaryBtn: 'bg-indigo-600 hover:bg-indigo-700',
+    secondaryBtn: 'hover:bg-indigo-50 text-indigo-600'
+  },
+  lineage: {
+    mainIconBg: 'bg-indigo-600',
+    mainIconText: 'text-white',
+    cardBorder: 'hover:border-indigo-200',
+    cardHoverBg: 'hover:bg-indigo-50/20',
+    badgeBg: 'bg-indigo-50 text-indigo-600'
+  }
+});
+
+const generateSlateColors = (): HomepageColors => ({
+  hero: {
+    badge: 'bg-slate-100 text-slate-700',
+    gradient: 'from-slate-700 to-slate-500',
+    shadow: 'shadow-slate-50/10',
+    button: 'bg-slate-800 hover:bg-slate-900 shadow-slate-200/50',
+    secondaryHover: 'hover:text-slate-800 hover:bg-slate-100',
+    iconColor: 'text-slate-600'
+  },
+  header: {
+    iconBg: 'bg-white text-slate-800 border-slate-200',
+    primaryBtn: 'bg-slate-800 text-white hover:bg-slate-900',
+  },
+  pageWrapper: {
+    blurs: ['bg-slate-200/20', 'bg-slate-300/10', 'bg-slate-100/10']
+  },
+  card: {
+    border: 'hover:border-slate-400',
+    shadow: 'hover:shadow-slate-100/30',
+    accent: 'from-slate-700 to-slate-700',
+    iconBg: 'group-hover:bg-slate-100',
+    iconText: 'group-hover:text-slate-800',
+    titleHover: 'group-hover:text-slate-800',
+    chevronBg: 'group-hover:bg-slate-100',
+    chevronText: 'group-hover:text-slate-800',
+    menuHover: 'hover:bg-slate-100 hover:text-slate-800',
+    statusBg: 'bg-slate-100',
+    statusText: 'text-slate-800'
+  },
+  table: {
+    hoverBg: 'hover:bg-slate-100/30',
+    menuHover: 'hover:bg-slate-100 hover:text-slate-800',
+  },
+  toolbar: {
+    focusRing: 'focus:ring-slate-100 focus:border-slate-800/40',
+    activeText: 'text-slate-800',
+    bgLight: 'bg-slate-100'
+  },
+  emptyState: {
+    glow: 'bg-slate-400',
+    iconBg: 'bg-slate-100 text-slate-800',
+    button: 'bg-slate-800 hover:bg-slate-900 shadow-slate-100',
+    secondaryText: 'text-slate-700',
+    secondaryBg: 'hover:bg-slate-100'
+  },
+  tipsSection: { iconBg: 'bg-slate-100', iconText: 'text-slate-700' },
+  statusBadges: {
+    active: 'bg-slate-100 text-slate-800 border-slate-200',
+    published: 'bg-slate-100 text-slate-800 border-slate-200',
+    draft: 'bg-slate-50 text-slate-400 border-slate-100',
+    error: 'bg-rose-50 text-rose-600 border-rose-100'
+  },
+  modal: {
+    headerBg: 'bg-slate-100',
+    headerText: 'text-slate-900',
+    iconBg: 'bg-slate-800',
+    primaryBtn: 'bg-slate-800 hover:bg-slate-900',
+    secondaryBtn: 'hover:bg-slate-100 text-slate-800'
+  },
+  lineage: {
+    mainIconBg: 'bg-slate-800',
+    mainIconText: 'text-white',
+    cardBorder: 'hover:border-slate-200',
+    cardHoverBg: 'hover:bg-slate-50/20',
+    badgeBg: 'bg-slate-100 text-slate-800'
+  }
 });
 
 export const studioThemeColors: Record<string, ModuleColors> = {
   workflow: {
     homepage: generateTealColors(),
+    variations: {
+      default: generateTealColors(),
+      alternative: generateEmeraldColors()
+    },
     workflowBuilder: {}
   },
   apps: {
     homepage: generateSkyColors(),
+    variations: {
+      default: generateSkyColors(),
+      alternative: generateBlueColors()
+    }
   },
   agents: {
     homepage: generateVioletColors(),
+    variations: {
+      default: generateVioletColors(),
+      alternative: generatePurpleColors()
+    }
   },
   vibecoding: {
     homepage: generateIndigoColors(),
+    variations: {
+      default: generateIndigoColors(),
+      alternative: generateSlateColors()
+    }
   }
 };

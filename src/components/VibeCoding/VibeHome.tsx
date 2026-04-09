@@ -184,7 +184,7 @@ const VibeHome: React.FC<VibeHomeProps> = ({ onStartProject, onOpenProject, proj
                   header: 'Project Name',
                   render: (project) => (
                     <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center border border-indigo-100 shadow-sm">
+                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-sm ${theme.card.iconBg} ${theme.card.iconText}`}>
                         <Rocket size={20} />
                       </div>
                       <div>
@@ -197,7 +197,7 @@ const VibeHome: React.FC<VibeHomeProps> = ({ onStartProject, onOpenProject, proj
                 {
                   header: 'Status',
                   render: () => (
-                    <span className="px-3 py-1 bg-green-50 text-green-600 border border-green-100 rounded-full text-[10px] font-bold uppercase tracking-wider">
+                    <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${theme.statusBadges.published || 'bg-green-50 text-green-600 border-green-100'}`}>
                       Live
                     </span>
                   )

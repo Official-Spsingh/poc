@@ -393,7 +393,7 @@ const WorkflowHome: React.FC<WorkflowHomeProps> = ({
                     <section key={ws.id} className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                       <div className="flex items-center justify-between mb-6 border-b border-gray-100 pb-4">
                         <div className="flex items-center gap-4">
-                          <div className="w-12 h-12 bg-teal-50 text-teal-600 rounded-2xl flex items-center justify-center shadow-sm">
+                          <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm ${theme.card.iconBg} ${theme.card.iconText}`}>
                             <Layers size={24} />
                           </div>
                           <div>
@@ -403,7 +403,7 @@ const WorkflowHome: React.FC<WorkflowHomeProps> = ({
                         </div>
                         <button
                           onClick={() => handleCreateBlank(ws.id)}
-                          className="hidden md:flex px-4 py-2 bg-teal-50 text-teal-600 rounded-xl text-xs font-bold hover:bg-teal-100 transition-all items-center gap-2"
+                          className={`hidden md:flex px-4 py-2 rounded-xl text-xs font-bold transition-all items-center gap-2 border ${theme.statusBadges.active}`}
                         >
                           <Plus size={14} /> Add to Workspace
                         </button>
@@ -450,7 +450,7 @@ const WorkflowHome: React.FC<WorkflowHomeProps> = ({
                                     header: 'Workflow Name',
                                     render: (wf) => (
                                       <div className="flex items-center gap-3">
-                                        <div className="w-9 h-9 bg-teal-50 text-teal-600 rounded-lg flex items-center justify-center">
+                                        <div className={`w-9 h-9 rounded-lg flex items-center justify-center shadow-sm ${theme.card.iconBg} ${theme.card.iconText}`}>
                                           <WorkflowIcon size={18} />
                                         </div>
                                         <span className="text-sm font-bold text-gray-900">{wf.name}</span>
@@ -462,9 +462,9 @@ const WorkflowHome: React.FC<WorkflowHomeProps> = ({
                                     render: (wf) => (
                                       <div className="flex items-center gap-2">
                                         {wf.isPublic ? (
-                                          <span className="px-2 py-0.5 bg-teal-50 text-teal-600 text-[9px] font-bold rounded border border-teal-100">PUBLIC</span>
+                                          <span className={`px-2 py-0.5 text-[9px] font-bold rounded border uppercase tracking-tighter ${theme.statusBadges.published}`}>PUBLIC</span>
                                         ) : (
-                                          <span className="px-2 py-0.5 bg-gray-50 text-gray-400 text-[9px] font-bold rounded border border-gray-100">PRIVATE</span>
+                                          <span className={`px-2 py-0.5 text-[9px] font-bold rounded border uppercase tracking-tighter ${theme.statusBadges.draft}`}>PRIVATE</span>
                                         )}
                                       </div>
                                     )
@@ -500,7 +500,7 @@ const WorkflowHome: React.FC<WorkflowHomeProps> = ({
                   <section className="animate-in fade-in slide-in-from-bottom-4 duration-500 delay-150">
                     <div className="flex items-center justify-between mb-6 border-b border-gray-100 pb-4">
                       <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-teal-50 text-teal-600 rounded-2xl flex items-center justify-center shadow-sm">
+                        <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm ${theme.card.iconBg} ${theme.card.iconText}`}>
                           <Zap size={24} />
                         </div>
                         <div>
@@ -553,7 +553,7 @@ const WorkflowHome: React.FC<WorkflowHomeProps> = ({
                             header: 'Workflow Name',
                             render: (wf) => (
                               <div className="flex items-center gap-3">
-                                <div className="w-9 h-9 bg-teal-50 text-teal-600 rounded-lg flex items-center justify-center">
+                                <div className={`w-9 h-9 rounded-lg flex items-center justify-center shadow-sm ${theme.card.iconBg} ${theme.card.iconText}`}>
                                   <WorkflowIcon size={18} />
                                 </div>
                                 <span className="text-sm font-bold text-gray-900">{wf.name}</span>
@@ -565,9 +565,9 @@ const WorkflowHome: React.FC<WorkflowHomeProps> = ({
                             render: (wf) => (
                               <div className="flex items-center gap-2">
                                 {wf.isPublic ? (
-                                  <span className="px-2 py-0.5 bg-teal-50 text-teal-600 text-[9px] font-bold rounded border border-teal-100">PUBLIC</span>
+                                  <span className={`px-2 py-0.5 text-[9px] font-bold rounded border uppercase tracking-tighter ${theme.statusBadges.published}`}>PUBLIC</span>
                                 ) : (
-                                  <span className="px-2 py-0.5 bg-gray-50 text-gray-400 text-[9px] font-bold rounded border border-gray-100">PRIVATE</span>
+                                  <span className={`px-2 py-0.5 text-[9px] font-bold rounded border uppercase tracking-tighter ${theme.statusBadges.draft}`}>PRIVATE</span>
                                 )}
                               </div>
                             )
@@ -617,13 +617,13 @@ const WorkflowHome: React.FC<WorkflowHomeProps> = ({
         maxWidth="max-w-2xl"
       >
         <div className="space-y-8">
-          <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl flex items-center gap-4">
-            <div className="p-3 bg-blue-700 rounded-xl text-white">
+          <div className={`p-4 rounded-2xl flex items-center gap-4 border ${theme.lineage.badgeBg} ${theme.lineage.cardBorder}`}>
+            <div className={`p-3 rounded-xl shadow-lg ${theme.lineage.mainIconBg} ${theme.lineage.mainIconText}`}>
               <WorkflowIcon size={24} />
             </div>
             <div>
-              <h4 className="text-sm font-bold text-blue-900">{lineageWorkflow?.name}</h4>
-              <p className="text-[11px] text-blue-500 font-mono mt-0.5">{lineageWorkflow?.id}</p>
+              <h4 className={`text-sm font-bold ${theme.lineage.mainIconText === 'text-white' ? 'text-gray-900' : theme.lineage.mainIconText}`}>{lineageWorkflow?.name}</h4>
+              <p className={`text-[11px] font-mono mt-0.5 opacity-60`}>{lineageWorkflow?.id}</p>
             </div>
           </div>
 
@@ -635,19 +635,19 @@ const WorkflowHome: React.FC<WorkflowHomeProps> = ({
                 { title: 'CRM Contact Sync', element: 'Form Submitter', location: 'Settings / Integration', type: 'call' },
                 { title: 'Data Retention Script', element: 'Cron Job', location: 'Background Tasks', type: 'system' },
               ].map((item, i) => (
-                <div key={i} className="flex items-center gap-4 p-4 rounded-xl border border-gray-100 hover:border-blue-200 hover:bg-blue-50/20 transition-all group">
-                  <div className="p-2.5 rounded-lg bg-gray-50 group-hover:bg-blue-100 text-gray-400 group-hover:text-blue-600 transition-all">
+                <div key={i} className={`flex items-center gap-4 p-4 rounded-xl border transition-all group ${theme.lineage.cardBorder} ${theme.lineage.cardHoverBg}`}>
+                  <div className={`p-2.5 rounded-lg transition-all ${theme.lineage.badgeBg} opacity-80 group-hover:opacity-100`}>
                     {item.type === 'trigger' ? <Zap size={16} /> : item.type === 'call' ? <Layers size={16} /> : <Settings size={16} />}
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center justify-between">
                       <span className="text-xs font-bold text-gray-800">{item.title}</span>
-                      <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-gray-100 text-gray-400 uppercase tracking-tighter">{item.type}</span>
+                      <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded uppercase tracking-tighter ${theme.lineage.badgeBg}`}>{item.type}</span>
                     </div>
                     <div className="flex items-center gap-2 mt-1 text-[10px] text-gray-400 font-medium">
                       <span>{item.location}</span>
                       <ChevronRight size={10} className="text-gray-300" />
-                      <span className="text-blue-500">{item.element}</span>
+                      <span className={theme.hero.iconColor}>{item.element}</span>
                     </div>
                   </div>
                   <button className="p-2 text-gray-300 hover:text-blue-600 hover:bg-white rounded-lg transition-all opacity-0 group-hover:opacity-100">
@@ -675,22 +675,22 @@ const WorkflowHome: React.FC<WorkflowHomeProps> = ({
             <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1">Full Name</label>
             <p className="text-sm font-semibold text-gray-800">{infoWorkflow?.name}</p>
           </div>
-          <div className="p-4 bg-gray-50 rounded-xl border border-gray-100">
+          <div className={`p-4 border rounded-xl ${theme.emptyState.secondaryBg} ${theme.card.border}`}>
             <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1">Workflow Unique ID</label>
-            <p className="text-xs font-mono text-blue-700 break-all">{infoWorkflow?.id}</p>
+            <p className={`text-xs font-mono break-all ${theme.emptyState.secondaryText}`}>{infoWorkflow?.id}</p>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <div className="p-3 bg-gray-50 rounded-xl border border-gray-100">
+            <div className={`p-3 border rounded-xl ${theme.tipsSection.iconBg} ${theme.card.border}`}>
               <label className="text-[9px] font-bold text-gray-400 uppercase block mb-1">Visibility</label>
               <div className="flex items-center gap-2">
-                <Globe size={12} className={infoWorkflow?.isPublic ? "text-teal-500" : "text-gray-300"} />
+                <Globe size={12} className={infoWorkflow?.isPublic ? theme.hero.iconColor : "text-gray-300"} />
                 <span className="text-[11px] font-bold">{infoWorkflow?.isPublic ? "Public" : "Private"}</span>
               </div>
             </div>
-            <div className="p-3 bg-gray-50 rounded-xl border border-gray-100">
+            <div className={`p-3 border rounded-xl ${theme.tipsSection.iconBg}`}>
               <label className="text-[9px] font-bold text-gray-400 uppercase block mb-1">Data Retention</label>
               <div className="flex items-center gap-2">
-                <HardDrive size={12} className={infoWorkflow?.saveResponse ? "text-blue-500" : "text-gray-300"} />
+                <HardDrive size={12} className={infoWorkflow?.saveResponse ? theme.hero.iconColor : "text-gray-300"} />
                 <span className="text-[11px] font-bold">{infoWorkflow?.saveResponse ? "Saving" : "No Saving"}</span>
               </div>
             </div>
@@ -737,7 +737,7 @@ const WorkflowHome: React.FC<WorkflowHomeProps> = ({
             </button>
             <button
               onClick={handleCreateWorkspace}
-              className="px-8 py-2.5 bg-blue-600 text-white text-xs font-bold rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-100 flex items-center gap-2"
+              className={`px-8 py-2.5 text-white text-xs font-bold rounded-xl transition-all shadow-lg flex items-center gap-2 ${theme.header.primaryBtn}`}
             >
               <Check size={14} /> Create Workspace
             </button>

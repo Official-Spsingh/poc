@@ -299,7 +299,7 @@ const AppHome: React.FC<AppHomeProps> = ({ onSelectApp, onStartVibeCoding }) => 
                 header: 'App Name',
                 render: (app) => (
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 bg-sky-100 rounded-xl flex items-center justify-center text-sky-800">
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-sm ${theme.card.iconBg} ${theme.card.iconText}`}>
                       <Layout size={20} />
                     </div>
                     <div>
@@ -314,8 +314,8 @@ const AppHome: React.FC<AppHomeProps> = ({ onSelectApp, onStartVibeCoding }) => 
                 render: (app) => (
                   <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${
                     app.status === 'published' 
-                    ? 'bg-teal-50 text-teal-600 border-teal-100' 
-                    : 'bg-sky-50 text-sky-800 border-sky-100'
+                    ? theme.statusBadges.published 
+                    : theme.statusBadges.draft
                   }`}>
                     {app.status}
                   </span>
