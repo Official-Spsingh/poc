@@ -141,6 +141,7 @@ export interface HomepageColors {
   statusBadges: StatusBadgeColors;
   modal: ModalColors;
   lineage: LineageColors;
+  layoutBorder: string;
 }
 
 export interface CombinedTheme {
@@ -148,8 +149,42 @@ export interface CombinedTheme {
   builder: WorkflowBuilderColors;
 }
 
+export interface DataColors {
+  layoutBorder: string;
+  card: {
+    border: string;
+    shadow: string;
+    accent: string;
+    statusText: string;
+    iconBg: string;
+    iconText: string;
+    chevronBg: string;
+    chevronText: string;
+    menuHover: string;
+    titleHover: string;
+  };
+  toolbar: {
+    focusRing: string;
+    bgLight: string;
+  };
+  header: {
+    primaryBtn: string;
+  };
+  statusBadges: {
+    active: string;
+    draft: string;
+  };
+  hero: {
+    secondaryHover: string;
+    button: string;
+  };
+  pageWrapper: {
+    blurs: string[];
+  };
+}
+
 export interface ModuleColors {
-  homepage: HomepageColors;
+  homepage: HomepageColors | DataColors;
   builder?: WorkflowBuilderColors;
   [key: string]: any;
 }
@@ -309,7 +344,8 @@ const generateTealColors = (): HomepageColors => ({
     cardBorder: 'hover:border-teal-200',
     cardHoverBg: 'hover:bg-teal-50/20',
     badgeBg: 'bg-teal-50 text-teal-600'
-  }
+  },
+  layoutBorder: 'border-slate-100'
 });
 
 const generateSkyColors = (): HomepageColors => ({
@@ -377,7 +413,8 @@ const generateSkyColors = (): HomepageColors => ({
     cardBorder: 'hover:border-sky-200',
     cardHoverBg: 'hover:bg-sky-50/20',
     badgeBg: 'bg-sky-50 text-sky-800'
-  }
+  },
+  layoutBorder: 'border-sky-100'
 });
 
 const generateBlueColors = (): HomepageColors => ({
@@ -445,7 +482,8 @@ const generateBlueColors = (): HomepageColors => ({
     cardBorder: 'hover:border-blue-200',
     cardHoverBg: 'hover:bg-blue-50/20',
     badgeBg: 'bg-blue-50 text-blue-800'
-  }
+  },
+  layoutBorder: 'border-blue-100'
 });
 
 const generateVioletColors = (): HomepageColors => ({
@@ -515,7 +553,8 @@ const generateVioletColors = (): HomepageColors => ({
     cardBorder: 'hover:border-violet-200',
     cardHoverBg: 'hover:bg-violet-50/20',
     badgeBg: 'bg-violet-50 text-violet-700'
-  }
+  },
+  layoutBorder: 'border-violet-100'
 });
 
 const generatePurpleColors = (): HomepageColors => ({
@@ -585,7 +624,8 @@ const generatePurpleColors = (): HomepageColors => ({
     cardBorder: 'hover:border-purple-200',
     cardHoverBg: 'hover:bg-purple-50/20',
     badgeBg: 'bg-purple-50 text-purple-700'
-  }
+  },
+  layoutBorder: 'border-purple-100'
 });
 
 const generateIndigoColors = (): HomepageColors => ({
@@ -653,7 +693,8 @@ const generateIndigoColors = (): HomepageColors => ({
     cardBorder: 'hover:border-indigo-200',
     cardHoverBg: 'hover:bg-indigo-50/20',
     badgeBg: 'bg-indigo-50 text-indigo-600'
-  }
+  },
+  layoutBorder: 'border-indigo-100'
 });
 
 const generateSlateColors = (): HomepageColors => ({
@@ -721,7 +762,8 @@ const generateSlateColors = (): HomepageColors => ({
     cardBorder: 'hover:border-slate-200',
     cardHoverBg: 'hover:bg-slate-50/20',
     badgeBg: 'bg-slate-100 text-slate-800'
-  }
+  },
+  layoutBorder: 'border-slate-100'
 });
 
 // Centralized Theme Objects for Shade-based Access
@@ -757,6 +799,81 @@ export const vibecodingTheme = {
   }
 };
 
+const generateDataSlateColors = (): DataColors => ({
+  layoutBorder: 'border-slate-100',
+  card: {
+    border: 'hover:border-slate-400',
+    shadow: 'hover:shadow-slate-100/30',
+    accent: 'from-slate-700 to-slate-700',
+    statusText: 'text-slate-800',
+    iconBg: 'group-hover:bg-slate-100',
+    iconText: 'group-hover:text-slate-800',
+    chevronBg: 'group-hover:bg-slate-100',
+    chevronText: 'group-hover:text-slate-800',
+    menuHover: 'hover:bg-slate-100 hover:text-slate-800',
+    titleHover: 'group-hover:text-slate-800'
+  },
+  toolbar: {
+    focusRing: 'focus:ring-slate-100 focus:border-slate-800/40',
+    bgLight: 'bg-slate-100'
+  },
+  header: {
+    primaryBtn: 'bg-slate-800 text-white hover:bg-slate-900'
+  },
+  statusBadges: {
+    active: 'bg-slate-100 text-slate-800 border-slate-200',
+    draft: 'bg-slate-50 text-slate-400 border-slate-100'
+  },
+  hero: {
+    secondaryHover: 'hover:text-slate-800 hover:bg-slate-100',
+    button: 'bg-slate-800 hover:bg-slate-900 shadow-slate-200/50'
+  },
+  pageWrapper: {
+    blurs: ['bg-slate-200/20', 'bg-slate-300/10', 'bg-slate-100/10']
+  }
+});
+
+const generateDataSkyColors = (): DataColors => ({
+  layoutBorder: 'border-sky-100',
+  card: {
+    border: 'hover:border-sky-400',
+    shadow: 'hover:shadow-sky-100/30',
+    accent: 'from-sky-700 to-sky-700',
+    statusText: 'text-sky-800',
+    iconBg: 'group-hover:bg-sky-50',
+    iconText: 'group-hover:text-sky-800',
+    chevronBg: 'group-hover:bg-sky-50',
+    chevronText: 'group-hover:text-sky-800',
+    menuHover: 'hover:bg-sky-50 hover:text-sky-800',
+    titleHover: 'group-hover:text-sky-800'
+  },
+  toolbar: {
+    focusRing: 'focus:ring-sky-100 focus:border-sky-800/40',
+    bgLight: 'bg-sky-50'
+  },
+  header: {
+    primaryBtn: 'bg-sky-800 text-white shadow-sky-100 hover:bg-sky-900'
+  },
+  statusBadges: {
+    active: 'bg-sky-50 text-sky-800 border-sky-100',
+    draft: 'bg-slate-50 text-slate-500 border-slate-100'
+  },
+  hero: {
+    secondaryHover: 'hover:text-sky-800 hover:bg-sky-50',
+    button: 'bg-sky-800 hover:bg-sky-900 shadow-sky-200/50'
+  },
+  pageWrapper: {
+    blurs: ['bg-sky-400/10', 'bg-indigo-400/10', 'bg-blue-400/5']
+  }
+});
+
+export const dataTheme = {
+  homepage: {
+    slate: generateDataSlateColors(),
+    sky: generateDataSkyColors()
+  }
+};
+
 export const studioThemeColors: Record<string, ModuleColors> = {
   workflow: {
     homepage: workflowTheme.homepage['teal'], // acceptable values: teal, sky
@@ -770,5 +887,8 @@ export const studioThemeColors: Record<string, ModuleColors> = {
   },
   vibecoding: {
     homepage: vibecodingTheme.homepage['indigo'], // acceptable values: indigo, slate
+  },
+  data: {
+    homepage: dataTheme.homepage['slate'],    // acceptable values: slate, sky
   }
 };

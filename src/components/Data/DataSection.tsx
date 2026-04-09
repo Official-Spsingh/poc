@@ -19,10 +19,12 @@ import {
   Type
 } from 'lucide-react';
 import React, { useState } from 'react';
+import { studioThemeColors, DataColors } from '../../constants/themeColors';
 
 interface DataSectionProps {}
 
 const DataSection: React.FC<DataSectionProps> = () => {
+  const theme: DataColors = studioThemeColors.data.homepage as DataColors;
   const [selectedTable, setSelectedTable] = useState('Test_table');
   const [expandedNodes, setExpandedNodes] = useState<string[]>(['database', 'system', 'test-us-18411']);
 
@@ -55,11 +57,11 @@ const DataSection: React.FC<DataSectionProps> = () => {
   return (
     <div className="flex h-full bg-white overflow-hidden">
       {/* Left Sidebar - Database Tree */}
-      <aside className="w-64 border-r border-slate-200 flex flex-col bg-slate-50/50">
-        <div className="p-4 border-b border-slate-200 bg-white">
+      <aside className={`w-64 border-r ${theme.layoutBorder} flex flex-col bg-slate-50/50`}>
+        <div className={`p-4 border-b ${theme.layoutBorder} bg-white`}>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-              <Database size={16} className="text-slate-700" /> Databases
+            <h2 className={`text-sm font-bold ${theme.card.statusText} flex items-center gap-2`}>
+              <Database size={16} /> Databases
             </h2>
             <button className="p-1 hover:bg-slate-100 rounded-md text-slate-500">
               <Plus size={16} />
@@ -70,7 +72,7 @@ const DataSection: React.FC<DataSectionProps> = () => {
             <input 
               type="text" 
               placeholder="Search..." 
-              className="w-full pl-9 pr-3 py-1.5 bg-slate-100 border-transparent focus:bg-white focus:ring-2 focus:ring-slate-200 focus:border-slate-500 rounded-lg text-xs outline-none transition-all"
+              className={`w-full pl-9 pr-3 py-1.5 bg-slate-100 border-transparent focus:bg-white focus:ring-2 ${theme.toolbar.focusRing} rounded-lg text-xs outline-none transition-all`}
             />
           </div>
         </div>
@@ -139,9 +141,9 @@ const DataSection: React.FC<DataSectionProps> = () => {
 
       {/* Main Content - Table Grid */}
       <main className="flex-1 flex flex-col min-w-0 bg-white">
-        <header className="h-14 border-b border-slate-200 px-6 flex items-center justify-between bg-white shrink-0">
+        <header className={`h-14 border-b ${theme.layoutBorder} px-6 flex items-center justify-between bg-white shrink-0`}>
           <div className="flex items-center gap-3">
-            <div className="p-1.5 bg-slate-100 text-slate-700 rounded-lg">
+            <div className={`p-1.5 ${theme.statusBadges.draft} rounded-lg`}>
               <TableIcon size={18} />
             </div>
             <div>
@@ -150,11 +152,11 @@ const DataSection: React.FC<DataSectionProps> = () => {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-lg mr-2">
-              <button className="px-3 py-1 text-[10px] font-bold text-slate-600 bg-white shadow-sm rounded-md uppercase tracking-wider">Table</button>
+            <div className={`flex items-center gap-1 ${theme.statusBadges.draft.split(' ')[0]} p-1 rounded-lg mr-2`}>
+              <button className={`px-3 py-1 text-[10px] font-bold ${theme.card.statusText} bg-white shadow-sm rounded-md uppercase tracking-wider`}>Table</button>
               <button className="px-3 py-1 text-[10px] font-bold text-slate-400 hover:text-slate-600 uppercase tracking-wider">JSON</button>
             </div>
-            <button className="flex items-center gap-2 px-4 py-1.5 bg-slate-700 text-white text-xs font-bold rounded-lg hover:bg-slate-800 transition-all shadow-lg shadow-slate-200">
+            <button className={`flex items-center gap-2 px-4 py-1.5 ${theme.header.primaryBtn} text-white text-xs font-bold rounded-lg transition-all shadow-lg`}>
               <Plus size={14} /> Add Row
             </button>
             <button className="p-2 hover:bg-slate-100 rounded-lg text-slate-400">
@@ -164,7 +166,7 @@ const DataSection: React.FC<DataSectionProps> = () => {
         </header>
 
         {/* Toolbar */}
-        <div className="px-6 py-3 border-b border-slate-100 flex items-center justify-between bg-slate-50/30">
+        <div className={`px-6 py-3 border-b border-slate-100 flex items-center justify-between ${theme.toolbar.bgLight}/30`}>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2 text-xs text-slate-500">
               <Filter size={14} />
@@ -220,11 +222,11 @@ const DataSection: React.FC<DataSectionProps> = () => {
                   <td className="px-4 py-3 text-xs font-bold text-slate-900 text-right font-mono">${row.Total_price.toLocaleString()}</td>
                   <td className="px-4 py-3 text-xs">
                     {row.Approval ? (
-                      <span className="flex items-center gap-1 text-teal-600 font-bold text-[10px] uppercase tracking-wider">
+                      <span className={`flex items-center gap-1 ${theme.statusBadges.active} px-2 py-0.5 rounded-md font-bold text-[10px] uppercase tracking-wider w-fit`}>
                         <CheckCircle2 size={12} /> Approved
                       </span>
                     ) : (
-                      <span className="flex items-center gap-1 text-slate-700 font-bold text-[10px] uppercase tracking-wider">
+                      <span className={`flex items-center gap-1 ${theme.statusBadges.draft} px-2 py-0.5 rounded-md font-bold text-[10px] uppercase tracking-wider w-fit`}>
                         <AlertCircle size={12} /> Pending
                       </span>
                     )}
@@ -246,11 +248,11 @@ const DataSection: React.FC<DataSectionProps> = () => {
         </div>
 
         {/* Pagination */}
-        <footer className="h-12 border-t border-slate-200 px-6 flex items-center justify-between bg-white shrink-0">
+        <footer className={`h-12 border-t ${theme.layoutBorder} px-6 flex items-center justify-between bg-white shrink-0`}>
           <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">1-5 of 5,241 items</p>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-1">
-              <button className="w-8 h-8 flex items-center justify-center rounded-lg bg-slate-700 text-white text-xs font-bold shadow-lg shadow-slate-200">1</button>
+              <button className={`w-8 h-8 flex items-center justify-center rounded-lg ${theme.header.primaryBtn} shadow-lg text-white text-xs font-bold`}>1</button>
               <button className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-slate-100 text-slate-600 text-xs font-bold">2</button>
               <button className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-slate-100 text-slate-600 text-xs font-bold">3</button>
               <span className="px-2 text-slate-300">...</span>
@@ -258,7 +260,7 @@ const DataSection: React.FC<DataSectionProps> = () => {
             </div>
             <div className="flex items-center gap-2">
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Rows per page</span>
-              <select className="text-xs font-bold text-slate-600 bg-slate-50 border-none rounded-lg px-2 py-1 outline-none">
+              <select className={`text-xs font-bold ${theme.card.statusText} bg-slate-50 border-none rounded-lg px-2 py-1 outline-none`}>
                 <option>10</option>
                 <option>25</option>
                 <option>50</option>
@@ -269,10 +271,10 @@ const DataSection: React.FC<DataSectionProps> = () => {
       </main>
 
       {/* Right Sidebar - Column Details */}
-      <aside className="w-64 border-l border-slate-200 flex flex-col bg-white">
-        <header className="h-14 border-b border-slate-200 px-6 flex items-center gap-2 bg-slate-50/30">
-          <Columns size={16} className="text-slate-700" />
-          <h2 className="text-sm font-bold text-slate-900">Column Details</h2>
+      <aside className={`w-64 border-l ${theme.layoutBorder} flex flex-col bg-white`}>
+        <header className={`h-14 border-b ${theme.layoutBorder} px-6 flex items-center gap-2 ${theme.toolbar.bgLight}/30`}>
+          <Columns size={16} className={theme.card.iconText} />
+          <h2 className={`text-sm font-bold ${theme.card.statusText}`}>Column Details</h2>
         </header>
         
         <div className="flex-1 overflow-y-auto p-6 custom-scrollbar">
