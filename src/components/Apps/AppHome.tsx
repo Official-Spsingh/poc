@@ -1,17 +1,10 @@
 
 import {
-  ArrowLeft,
-  CheckCircle2,
   Copy,
   Edit2,
   FileSpreadsheet,
-  FileText,
-  Globe,
-  Grid,
   Image as ImageIcon,
   Layout,
-  LayoutTemplate,
-  LogIn,
   Plus,
   Rocket,
   Settings2,
@@ -20,9 +13,9 @@ import {
   Zap
 } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
-import AppModuleConfig from './AppModuleConfig';
 import { studioThemeColors } from '../../constants/themeColors';
 import { useRandomTitle, useTypewriter } from '../../hooks/useTypewriter';
+import { makeRequest } from '../../utils/makeRequest';
 import StudioCard, { StudioCardSkeleton } from '../Common/StudioCard';
 import StudioEmptyState from '../Common/StudioEmptyState';
 import StudioHeader from '../Common/StudioHeader';
@@ -31,7 +24,7 @@ import StudioPageWrapper, { StudioMain } from '../Common/StudioPageWrapper';
 import StudioTable from '../Common/StudioTable';
 import StudioTipsSection from '../Common/StudioTipsSection';
 import StudioToolbar from '../Common/StudioToolbar';
-import { makeRequest } from '../../utils/makeRequest';
+import AppModuleConfig from './AppModuleConfig';
 
 interface AppItem {
   id: string;

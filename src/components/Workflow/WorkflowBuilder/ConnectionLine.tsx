@@ -1,5 +1,5 @@
 import React from 'react';
-import { ConnectionDrag, Position } from '../../../../types';
+import { Position } from '../../../../types';
 
 interface ConnectionLineProps {
   start: Position;

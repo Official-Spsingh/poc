@@ -1,5 +1,5 @@
-import { motion, AnimatePresence } from 'framer-motion';
-import { History, Clock, CheckCircle2 } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { CheckCircle2, Clock, History } from 'lucide-react';
 import React from 'react';
 import { CombinedTheme } from '../../../constants/themeColors';
 

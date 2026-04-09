@@ -2,8 +2,8 @@ import { motion } from 'framer-motion';
 import { Search } from 'lucide-react';
 import React from 'react';
 import { Workflow, Workspace } from '../../../../types';
-import WorkflowSidebarItem from './WorkflowSidebarItem';
 import { CombinedTheme } from '../../../constants/themeColors';
+import WorkflowSidebarItem from './WorkflowSidebarItem';
 
 interface WorkflowSwitcherPopoverProps {
   workflows: Workflow[];

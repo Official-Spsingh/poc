@@ -1,25 +1,22 @@
 
-import React, { useState } from 'react';
-import { 
-  ArrowLeft, 
-  ArrowRight, 
-  Plus, 
-  LogIn, 
-  LayoutTemplate, 
-  Grid, 
-  FileText, 
-  Globe, 
-  Copy, 
-  Trash2, 
-  FileSpreadsheet, 
-  CheckCircle2, 
-  Sparkles, 
-  Zap, 
+import {
+  ArrowLeft,
+  ArrowRight,
+  CheckCircle2,
   ChevronRight,
-  Rocket,
-  Image as ImageIconIcon // Renamed to avoid name clash if needed, but let's keep it simple
+  Copy,
+  FileSpreadsheet,
+  FileText,
+  Globe,
+  Grid,
+  LayoutTemplate,
+  LogIn,
+  Plus,
+  Sparkles,
+  Trash2,
+  Zap
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState } from 'react';
 
 interface Module {
   id: string;

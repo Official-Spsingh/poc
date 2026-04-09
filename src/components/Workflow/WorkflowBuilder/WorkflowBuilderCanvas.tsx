@@ -1,8 +1,8 @@
 import React from 'react';
 import { Connection, ConnectionDrag, NodeData, NodeType, Position } from '../../../../types';
+import { CombinedTheme } from '../../../constants/themeColors';
 import ConnectionLine from './ConnectionLine';
 import WorkflowNode from './WorkflowNode';
-import { CombinedTheme } from '../../../constants/themeColors';
 
 interface WorkflowBuilderCanvasProps {
   canvasRef: React.RefObject<HTMLDivElement>;

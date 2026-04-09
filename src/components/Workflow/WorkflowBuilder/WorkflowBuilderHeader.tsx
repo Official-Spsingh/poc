@@ -1,30 +1,25 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import {
-  ArrowLeft,
-  ChevronDown,
-  History,
-  Search,
-  Workflow as WorkflowIcon,
-  CheckCircle2,
-  Clock,
   Activity,
-  Play,
-  MoreVertical,
+  ArrowLeft,
   Calendar,
+  ChevronDown,
   Copy,
+  History,
+  Info,
   Link2,
+  MoreVertical,
+  Play,
+  Rocket,
   Settings2,
   Trash2,
-  Info,
-  Rocket,
-  Check
+  Workflow as WorkflowIcon
 } from 'lucide-react';
 import React from 'react';
-import WorkflowSwitcherPopover from './WorkflowSwitcherPopover';
+import { Connection, NodeData, ViewType, Workflow, Workspace } from '../../../../types';
+import { CombinedTheme } from '../../../constants/themeColors';
 import VersionHistoryPopover from './VersionHistoryPopover';
-import { Workflow, Workspace, ViewType, NodeData, Connection } from '../../../../types';
-import WorkflowSidebarItem from './WorkflowSidebarItem';
-import { studioThemeColors, CombinedTheme } from '../../../constants/themeColors';
+import WorkflowSwitcherPopover from './WorkflowSwitcherPopover';
 
 interface WorkflowBuilderHeaderProps {
   workflows: Workflow[];

@@ -1,4 +1,4 @@
-import { AnimatePresence } from 'framer-motion';
+import { LayoutGrid, Network, Sparkles } from 'lucide-react';
 import React, { useState } from 'react';
 import {
   Connection,
@@ -11,24 +11,20 @@ import {
   Workflow,
   Workspace
 } from '../../../../types';
+import { CombinedTheme, studioThemeColors } from '../../../constants/themeColors';
 import AIDrawer from '../../Common/AIDrawer';
-import GuidedTour, { TourStep } from '../../Common/GuidedTour';
-import Modal from '../../Common/Modal';
-import { FormLabel } from './Helpers';
+import GuidedTour from '../../Common/GuidedTour';
+import { useResizableDrawer } from './hooks/useResizableDrawer';
+import { useWorkflowExecution } from './hooks/useWorkflowExecution';
 import WorkflowBuilderCanvas from './WorkflowBuilderCanvas';
 import WorkflowBuilderCommandCenter from './WorkflowBuilderCommandCenter';
+import WorkflowBuilderDeployModal from './WorkflowBuilderDeployModal';
 import WorkflowBuilderHeader from './WorkflowBuilderHeader';
 import WorkflowBuilderNodePropertiesDrawer from './WorkflowBuilderNodePropertiesDrawer';
 import WorkflowBuilderNodesDrawer from './WorkflowBuilderNodesDrawer';
 import WorkflowBuilderRunPanel from './WorkflowBuilderRunPanel';
 import WorkflowBuilderZoomControls from './WorkflowBuilderZoomControls';
-import WorkflowBuilderDeployModal from './WorkflowBuilderDeployModal';
-import { COMPONENT_METADATA, EVENT_TYPES } from '../../../../constants';
-import { useResizableDrawer } from './hooks/useResizableDrawer';
-import { useWorkflowExecution } from './hooks/useWorkflowExecution';
 import { tourSteps } from './WorkflowTourSteps';
-import { LayoutGrid, Sparkles, Network, Check, Globe, HardDrive } from 'lucide-react';
-import { studioThemeColors, CombinedTheme, HomepageColors, WorkflowBuilderColors } from '../../../constants/themeColors';
 
 interface WorkflowBuilderProps {
   workflows: Workflow[];

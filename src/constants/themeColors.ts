@@ -759,8 +759,8 @@ export const vibecodingTheme = {
 
 export const studioThemeColors: Record<string, ModuleColors> = {
   workflow: {
-    homepage: workflowTheme.homepage['sky'], // acceptable values: teal, sky
-    builder: workflowTheme.builder['sky']    // acceptable values: teal, sky
+    homepage: workflowTheme.homepage['teal'], // acceptable values: teal, sky
+    builder: workflowTheme.builder['teal']    // acceptable values: teal, sky
   },
   apps: {
     homepage: appsTheme.homepage['sky'],      // acceptable values: sky, blue

@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 export const useResizableDrawer = (initialWidth = 440) => {
   const [drawerWidth, setDrawerWidth] = useState(initialWidth);

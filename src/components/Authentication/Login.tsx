@@ -2,8 +2,8 @@
 import { ArrowLeft, ArrowRight, Building, Eye, EyeOff, Github, Layout, Mail, Sparkles, Workflow } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import React, { useState } from 'react';
-import Logo from '../Common/Logo';
 import { makeRequest } from '../../utils/makeRequest';
+import Logo from '../Common/Logo';
 
 interface LoginProps {
   onLogin: () => void;

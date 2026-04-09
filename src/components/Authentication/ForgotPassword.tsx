@@ -1,8 +1,8 @@
 import { ArrowLeft, ArrowRight, CheckCircle2, Mail, Sparkles } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import React, { useState } from 'react';
-import Logo from '../Common/Logo';
 import { makeRequest } from '../../utils/makeRequest';
+import Logo from '../Common/Logo';
 
 interface ForgotPasswordProps {
   onBackToLogin: () => void;

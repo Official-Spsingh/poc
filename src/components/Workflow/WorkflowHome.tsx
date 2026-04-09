@@ -25,6 +25,7 @@ import { createPortal } from 'react-dom';
 import { Connection, NodeData, ViewType, Workflow, Workspace } from '../../../types';
 import { studioThemeColors } from '../../constants/themeColors';
 import { useRandomTitle, useTypewriter } from '../../hooks/useTypewriter';
+import { makeRequest } from '../../utils/makeRequest';
 import Modal from '../Common/Modal';
 import StudioCard, { StudioCardSkeleton } from '../Common/StudioCard';
 import StudioEmptyState from '../Common/StudioEmptyState';
@@ -34,7 +35,6 @@ import StudioPageWrapper, { StudioMain } from '../Common/StudioPageWrapper';
 import StudioTable from '../Common/StudioTable';
 import StudioTipsSection from '../Common/StudioTipsSection';
 import StudioToolbar from '../Common/StudioToolbar';
-import { makeRequest } from '../../utils/makeRequest';
 
 interface WorkflowHomeProps {
   workspaces: Workspace[];

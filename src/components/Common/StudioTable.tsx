@@ -1,7 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { LucideIcon, MoreVertical } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
-
 import { TableColors } from '../../constants/themeColors';
 
 export interface MenuItem {
