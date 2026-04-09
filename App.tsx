@@ -1,0 +1,517 @@
+
+import { AnimatePresence, motion } from 'framer-motion';
+import {
+  Plus,
+  Trash2
+} from 'lucide-react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { COMPONENT_METADATA } from './constants';
+import AgentHome from './src/components/Agents/AgentHome';
+import AiAgentBuilder from './src/components/Agents/AiAgentBuilder';
+import AppEditor from './src/components/Apps/AppEditor';
+import AppHome from './src/components/Apps/AppHome';
+import ForgotPassword from './src/components/Authentication/ForgotPassword';
+import Login from './src/components/Authentication/Login';
+import Logo from './src/components/Common/Logo';
+import Sidebar from './src/components/Common/Sidebar';
+import DataSection from './src/components/Data/DataSection';
+import Dashboard from './src/components/HomePage/Dashboard';
+import VibeCoder, { Project, generateProjectFiles } from './src/components/VibeCoding/VibeCoder';
+import VibeHome from './src/components/VibeCoding/VibeHome';
+import WorkflowBuilder from './src/components/Workflow/WorkflowBuilder/index';
+import WorkflowHome from './src/components/Workflow/WorkflowHome';
+import { Connection, ConnectionDrag, EventConfig, NodeData, NodeType, Position, ViewType, Workflow, Workspace } from './types';
+
+// --- App Component ---
+
+const GlobalLoader = () => {
+  const [textIndex, setTextIndex] = useState(0);
+  const loadingTexts = [
+    "Establishing secure connection...",
+    "Syncing workspace metadata...",
+    "Optimizing data pipelines...",
+    "Preparing the studio..."
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTextIndex((prev) => (prev + 1) % loadingTexts.length);
+    }, 800);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      className="fixed inset-0 z-[99999] bg-slate-900/40 backdrop-blur-xl flex items-center justify-center selection:bg-transparent"
+    >
+      <div className="flex flex-col items-center gap-6">
+        <div className="relative flex items-center justify-center">
+          {/* Soft, expanding pulse rings */}
+          <motion.div
+            animate={{ scale: [1, 2.5], opacity: [0.5, 0] }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: "easeOut" }}
+            className="absolute inline-flex w-16 h-16 rounded-full bg-blue-500/20"
+          />
+          <motion.div
+            animate={{ scale: [1, 2.5], opacity: [0.3, 0] }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: "easeOut", delay: 1.25 }}
+            className="absolute inline-flex w-16 h-16 rounded-full bg-emerald-500/20"
+          />
+
+          {/* Core Element */}
+          <motion.div
+            animate={{ scale: [1, 1.05, 1], shadow: ["0 0 20px rgba(59,130,246,0.3)", "0 0 40px rgba(59,130,246,0.6)", "0 0 20px rgba(59,130,246,0.3)"] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="relative z-10 w-16 h-16 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 flex flex-col items-center justify-center text-white"
+          >
+            <Logo size={28} className="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]" />
+          </motion.div>
+        </div>
+
+        {/* Sleek Loading Bar */}
+        <div className="flex flex-col items-center gap-3">
+          <div className="h-[2px] w-32 bg-white/10 rounded-full overflow-hidden relative mb-2">
+            <motion.div
+              className="absolute inset-y-0 left-0 bg-gradient-to-r from-transparent via-blue-400 to-transparent w-full"
+              animate={{ x: ['-100%', '100%'] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            />
+          </div>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={textIndex}
+              initial={{ opacity: 0, y: 5 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -5 }}
+              transition={{ duration: 0.2 }}
+              className="text-white/80 text-xs font-medium tracking-wide"
+            >
+              {loadingTexts[textIndex]}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+const App: React.FC = () => {
+  const [view, setView] = useState<ViewType>('login');
+  const [lastAppView, setLastAppView] = useState<ViewType>('app-list');
+  const [lastWorkflowView, setLastWorkflowView] = useState<ViewType>('workflow-home');
+  const [lastAgentView, setLastAgentView] = useState<ViewType>('agent-home');
+  const [isAiGenerated, setIsAiGenerated] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  // Vibe Projects State
+  const [vibeProjects, setVibeProjects] = useState<Project[]>([
+    {
+      id: '1',
+      name: 'Quantum Commerce Flow',
+      lastEdited: '2m ago',
+      files: generateProjectFiles('Quantum Commerce Flow'),
+      history: [
+        { id: 1, type: 'bot', text: "Welcome to Quantum Commerce Flow. I've initialized the core infrastructure for you.", time: "2m ago" }
+      ]
+    }
+  ]);
+  const [activeVibeProjectId, setActiveVibeProjectId] = useState<string | null>(null);
+  const [vibeInitialPrompt, setVibeInitialPrompt] = useState<string | undefined>(undefined);
+
+  const executeViewChange = useCallback((newView: ViewType) => {
+    setView(newView);
+    if (newView === 'app-list' || newView === 'app-editor') setLastAppView(newView);
+    if (newView === 'workflow-home' || newView === 'workflow-builder') setLastWorkflowView(newView);
+    if (newView === 'agent-home' || newView === 'ai-agent-builder') setLastAgentView(newView);
+  }, []);
+
+  const handleSetView = useCallback((newView: ViewType) => {
+    if (newView === 'data' || (view === 'login' && newView === 'dashboard')) {
+      setIsTransitioning(true);
+      setTimeout(() => {
+        executeViewChange(newView);
+      }, 1000);
+      setTimeout(() => {
+        setIsTransitioning(false);
+      }, 3000);
+    } else {
+      executeViewChange(newView);
+    }
+  }, [view, executeViewChange]);
+
+  const handleNavigate = useCallback((newView: ViewType) => {
+    let targetView = newView;
+    if (newView === 'app-list') targetView = lastAppView;
+    else if (newView === 'workflow-home') targetView = lastWorkflowView;
+    else if (newView === 'agent-home') targetView = lastAgentView;
+
+    if (targetView === 'data') {
+      setIsTransitioning(true);
+      setTimeout(() => {
+        executeViewChange(targetView);
+        setIsTransitioning(false);
+      }, 3000);
+    } else {
+      executeViewChange(targetView);
+    }
+  }, [lastAppView, lastWorkflowView, lastAgentView, executeViewChange]);
+
+  const handleStartVibeProject = (prompt?: string) => {
+    const name = prompt ? (prompt.length > 20 ? prompt.substring(0, 20) + '...' : prompt) : `New Experiment ${vibeProjects.length + 1}`;
+    const newProject: Project = {
+      id: Date.now().toString(),
+      name,
+      lastEdited: 'Just now',
+      files: generateProjectFiles(name),
+      history: [{ id: 1, type: 'bot', text: `Project "${name}" initialized. Syncing your vision...`, time: "Just now" }]
+    };
+    setVibeProjects([newProject, ...vibeProjects]);
+    setActiveVibeProjectId(newProject.id);
+    setVibeInitialPrompt(prompt);
+    executeViewChange('vibe-coder');
+  };
+
+  const handleOpenVibeProject = (id: string) => {
+    setActiveVibeProjectId(id);
+    setVibeInitialPrompt(undefined);
+    executeViewChange('vibe-coder');
+  };
+
+  const [workspaces, setWorkspaces] = useState<Workspace[]>([]);
+  const [workflows, setWorkflows] = useState<Workflow[]>([]);
+
+  useEffect(() => {
+    const token = sessionStorage.getItem('access_token');
+    if (token && view === 'login') {
+      handleSetView('dashboard');
+    }
+  }, [view, handleSetView]);
+  const [activeWorkflowId, setActiveWorkflowId] = useState<string | null>(workflows[0]?.id || null);
+  const [nodes, setNodes] = useState<NodeData[]>([
+    { id: 'start-1', type: 'start', label: 'Start Flow', position: { x: 100, y: 150 }, config: { variables: [], data: [], inputMode: 'table' } },
+    { id: 'js-1', type: 'js-expression', label: 'Logic Gate', position: { x: 400, y: 150 }, events: [], config: { expression: "// Example: return { status: 'success' };\nreturn true;" } },
+    { id: 'stop-1', type: 'stop', label: 'Finish', position: { x: 700, y: 150 }, config: {} },
+  ]);
+  const [connections, setConnections] = useState<Connection[]>([
+    { id: 'c1', sourceId: 'start-1', targetId: 'js-1' },
+    { id: 'c2', sourceId: 'js-1', targetId: 'stop-1' },
+  ]);
+  const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [draggedConnection, setDraggedConnection] = useState<ConnectionDrag | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+
+  const [isActionCenterOpen, setIsActionCenterOpen] = useState(false);
+  const [isFlowsPopoverOpen, setIsFlowsPopoverOpen] = useState(false);
+  const [isComponentSidebarOpen, setIsComponentSidebarOpen] = useState(false);
+
+  const canvasRef = useRef<HTMLDivElement>(null);
+
+  const addNode = (type: NodeType, position?: Position) => {
+    const newNode: NodeData = {
+      id: `${type}-${Date.now()}`,
+      type,
+      label: COMPONENT_METADATA[type].label,
+      position: position || { x: 150, y: 150 },
+      events: type === 'js-expression' ? [] : undefined,
+      config: type === 'start' ? { variables: [], data: [], inputMode: 'table' } : (type === 'js-expression' ? { expression: "// Logic goes here\nreturn true;" } : {})
+    };
+    setNodes(prev => [...prev, newNode]);
+    setSelectedNodeId(newNode.id);
+  };
+
+  const cloneNode = (id: string) => {
+    const original = nodes.find(n => n.id === id);
+    if (!original) return;
+    const newNode: NodeData = {
+      ...original,
+      id: `${original.type}-${Date.now()}`,
+      position: { x: original.position.x + 40, y: original.position.y + 40 }
+    };
+    setNodes(prev => [...prev, newNode]);
+    setSelectedNodeId(newNode.id);
+  };
+
+  const updateNodePosition = useCallback((id: string, position: Position) => {
+    setNodes(prev => prev.map(n => n.id === id ? { ...n, position } : n));
+  }, []);
+
+  const deleteNode = (id: string) => {
+    setNodes(prev => prev.filter(n => n.id !== id));
+    setConnections(prev => prev.filter(c => c.sourceId !== id && c.targetId !== id));
+    if (selectedNodeId === id) {
+      setSelectedNodeId(null);
+      setIsDrawerOpen(false);
+    }
+  };
+
+  const updateNodeConfig = (id: string, updates: Record<string, any>) => {
+    setNodes(prev => prev.map(n => n.id === id ? { ...n, config: { ...(n.config || {}), ...updates } } : n));
+  };
+
+  const deleteWorkflow = (id: string) => {
+    setWorkflows(prev => prev.filter(w => w.id !== id));
+    if (activeWorkflowId === id) setActiveWorkflowId(null);
+  };
+
+
+  const getSourcePos = (id: string): Position => {
+    const node = nodes.find(n => n.id === id);
+    if (!node) return { x: 0, y: 0 };
+    return { x: node.position.x + 180, y: node.position.y + 24 };
+  };
+
+  const getTargetPos = (id: string): Position => {
+    const node = nodes.find(n => n.id === id);
+    if (!node) return { x: 0, y: 0 };
+    return { x: node.position.x, y: node.position.y + 24 };
+  };
+
+  const handleStartConnection = (sourceId: string, e: React.MouseEvent) => {
+    const startPos = getSourcePos(sourceId);
+    setDraggedConnection({
+      sourceId,
+      startX: startPos.x,
+      startY: startPos.y,
+      currentX: startPos.x,
+      currentY: startPos.y
+    });
+
+    const handleMouseMove = (me: MouseEvent) => {
+      if (!canvasRef.current) return;
+      const rect = canvasRef.current.getBoundingClientRect();
+      setDraggedConnection(prev => prev ? {
+        ...prev,
+        currentX: me.clientX - rect.left,
+        currentY: me.clientY - rect.top
+      } : null);
+    };
+
+    const handleMouseUp = () => {
+      setDraggedConnection(null);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
+  };
+
+  const handleEndConnection = (targetId: string) => {
+    if (draggedConnection && draggedConnection.sourceId !== targetId) {
+      const exists = connections.some(c => c.sourceId === draggedConnection.sourceId && c.targetId === targetId);
+      if (!exists) {
+        setConnections(prev => [...prev, {
+          id: `c-${Date.now()}`,
+          sourceId: draggedConnection.sourceId,
+          targetId: targetId
+        }]);
+      }
+    }
+    setDraggedConnection(null);
+  };
+
+  const addEvent = (nodeId: string) => {
+    setNodes(nodes.map(node => {
+      if (node.id === nodeId) {
+        const newEvent: EventConfig = { id: `event-${Date.now()}`, type: 'call', value: '', params: '' };
+        return { ...node, events: [...(node.events || []), newEvent] };
+      }
+      return node;
+    }));
+  };
+
+  const updateEvent = (nodeId: string, eventId: string, updates: Partial<EventConfig>) => {
+    setNodes(nodes.map(node => {
+      if (node.id === nodeId) {
+        return { ...node, events: node.events?.map(e => e.id === eventId ? { ...e, ...updates } : e) };
+      }
+      return node;
+    }));
+  };
+
+  const removeEvent = (nodeId: string, eventId: string) => {
+    setNodes(nodes.map(node => {
+      if (node.id === nodeId) {
+        return { ...node, events: node.events?.filter(e => e.id !== eventId) };
+      }
+      return node;
+    }));
+  };
+
+  const selectedNode = nodes.find(n => n.id === selectedNodeId);
+
+  const FormLabel: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+    <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1 mb-1.5 block">
+      {children}
+    </label>
+  );
+
+  const PayloadTable: React.FC<{
+    items: { key: string; value: string }[];
+    onUpdate: (newItems: { key: string; value: string }[]) => void;
+    placeholderKey?: string;
+    placeholderValue?: string;
+  }> = ({ items, onUpdate, placeholderKey = "Key", placeholderValue = "Value" }) => {
+    const addItem = () => onUpdate([...items, { key: '', value: '' }]);
+    const removeItem = (idx: number) => onUpdate(items.filter((_, i) => i !== idx));
+    const updateItem = (idx: number, updates: Partial<{ key: string; value: string }>) => {
+      onUpdate(items.map((item, i) => i === idx ? { ...item, ...updates } : item));
+    };
+
+    return (
+      <div className="space-y-2">
+        {items.map((item, idx) => (
+          <div key={idx} className="flex gap-2 group/row">
+            <input
+              type="text"
+              placeholder={placeholderKey}
+              value={item.key}
+              onChange={(e) => updateItem(idx, { key: e.target.value })}
+              className="flex-1 px-3 py-1.5 bg-white border border-gray-200 rounded-lg text-xs outline-none focus:border-blue-400 transition-colors"
+            />
+            <input
+              type="text"
+              placeholder={placeholderValue}
+              value={item.value}
+              onChange={(e) => updateItem(idx, { value: e.target.value })}
+              className="flex-1 px-3 py-1.5 bg-white border border-gray-200 rounded-lg text-xs outline-none focus:border-blue-400 transition-colors"
+            />
+            <button
+              onClick={() => removeItem(idx)}
+              className="p-1.5 text-gray-300 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition-colors group-hover/row:text-gray-400"
+            >
+              <Trash2 size={14} />
+            </button>
+          </div>
+        ))}
+        <button
+          onClick={addItem}
+          className="flex items-center gap-1.5 text-[10px] font-bold text-blue-600 hover:text-blue-700 p-1.5 hover:bg-blue-50 rounded-lg transition-all"
+        >
+          <Plus size={12} /> Add Property
+        </button>
+      </div>
+    );
+  };
+
+  return (
+    <>
+      <AnimatePresence>
+        {isTransitioning && <GlobalLoader />}
+      </AnimatePresence>
+
+      {view === 'login' ? (
+        <Login 
+          onLogin={() => handleSetView('dashboard')} 
+          onForgotPassword={() => setView('forgot-password')} 
+        />
+      ) : view === 'forgot-password' ? (
+        <ForgotPassword onBackToLogin={() => setView('login')} />
+      ) : (
+        <div className="flex h-screen w-full bg-gray-50 overflow-hidden text-gray-900">
+          <Sidebar
+            currentView={view}
+            onNavigate={handleNavigate}
+            onLogout={() => {
+              sessionStorage.removeItem('access_token');
+              handleSetView('login');
+            }}
+          />
+
+          <div className="flex-1 flex flex-col overflow-hidden relative pb-[72px] md:pb-0">
+            {view === 'dashboard' && <Dashboard onNavigate={handleSetView} workflows={workflows} />}
+            {view === 'app-list' && <AppHome onSelectApp={() => handleSetView('app-editor')} onStartVibeCoding={() => handleSetView('vibe-home')} />}
+            {view === 'vibe-home' && <VibeHome projects={vibeProjects} onStartProject={handleStartVibeProject} onOpenProject={handleOpenVibeProject} />}
+            {view === 'vibe-coder' && (
+              <VibeCoder 
+                onBack={() => handleSetView('vibe-home')} 
+                projectId={activeVibeProjectId}
+                projects={vibeProjects}
+                initialPrompt={vibeInitialPrompt}
+                onUpdateProjects={setVibeProjects}
+              />
+            )}
+            {view === 'agent-home' && <AgentHome onSelectAgent={() => handleSetView('ai-agent-builder')} onCreateAgent={() => handleSetView('ai-agent-builder')} />}
+            {view === 'app-editor' && <AppEditor onBack={() => handleSetView('app-list')} />}
+            {view === 'data' && <DataSection />}
+
+            {view === 'ai-agent-builder' && (
+              <AiAgentBuilder onBack={() => handleSetView('agent-home')} />
+            )}
+
+            {view === 'workflow-home' && (
+              <WorkflowHome
+                workspaces={workspaces}
+                setWorkspaces={setWorkspaces}
+                workflows={workflows}
+                setWorkflows={setWorkflows}
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+                viewMode={viewMode}
+                setViewMode={setViewMode}
+                setActiveWorkflowId={setActiveWorkflowId}
+                deleteWorkflow={deleteWorkflow}
+                setView={handleSetView}
+                setNodes={setNodes}
+                setConnections={setConnections}
+                setIsAiGenerated={setIsAiGenerated}
+              />
+            )}
+
+            {view === 'workflow-builder' && (
+              <WorkflowBuilder
+                workflows={workflows}
+                setWorkflows={setWorkflows}
+                activeWorkflowId={activeWorkflowId}
+                setActiveWorkflowId={setActiveWorkflowId}
+                workspaces={workspaces}
+                nodes={nodes}
+                setNodes={setNodes}
+                updateNodePosition={updateNodePosition}
+                deleteNode={deleteNode}
+                cloneNode={cloneNode}
+                updateNodeConfig={updateNodeConfig}
+                connections={connections}
+                setConnections={setConnections}
+                selectedNodeId={selectedNodeId}
+                setSelectedNodeId={setSelectedNodeId}
+                isDrawerOpen={isDrawerOpen}
+                setIsDrawerOpen={setIsDrawerOpen}
+                draggedConnection={draggedConnection}
+                setDraggedConnection={setDraggedConnection}
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+                isFlowsPopoverOpen={isFlowsPopoverOpen}
+                setIsFlowsPopoverOpen={setIsFlowsPopoverOpen}
+                isComponentSidebarOpen={isComponentSidebarOpen}
+                setIsComponentSidebarOpen={setIsComponentSidebarOpen}
+                setView={handleSetView}
+                deleteWorkflow={deleteWorkflow}
+                addNode={addNode}
+                handleStartConnection={handleStartConnection}
+                handleEndConnection={handleEndConnection}
+                getSourcePos={getSourcePos}
+                getTargetPos={getTargetPos}
+                addEvent={addEvent}
+                updateEvent={updateEvent}
+                removeEvent={removeEvent}
+                canvasRef={canvasRef}
+                isAiGenerated={isAiGenerated}
+                setIsAiGenerated={setIsAiGenerated}
+              />
+            )}
+          </div>
+
+        </div>
+      )}
+    </>
+  );
+};
+
+export default App;
