@@ -50,6 +50,8 @@ export interface ToolbarColors {
   focusRing: string;
   activeText: string;
   bgLight: string;
+  activeBg: string;
+  menuHover: string;
 }
 
 export interface EmptyStateColors {
@@ -349,11 +351,11 @@ const generateTealColors = (): HomepageColors => ({
     blurs: ['bg-teal-400/10', 'bg-emerald-400/10', 'bg-teal-400/5']
   },
   card: {
-    border: 'hover:border-teal-400',
+    border: 'border-gray-100 hover:border-teal-400',
     shadow: 'hover:shadow-teal-100/30',
     accent: 'from-teal-400 to-teal-400',
-    iconBg: 'group-hover:bg-teal-50',
-    iconText: 'group-hover:text-teal-600',
+    iconBg: 'bg-teal-50',
+    iconText: 'text-teal-600',
     titleHover: 'group-hover:text-teal-700',
     chevronBg: 'group-hover:bg-teal-50',
     chevronText: 'group-hover:text-teal-600',
@@ -368,7 +370,9 @@ const generateTealColors = (): HomepageColors => ({
   toolbar: {
     focusRing: 'focus:ring-teal-100 focus:border-teal-400',
     activeText: 'text-teal-600',
-    bgLight: 'bg-teal-50'
+    bgLight: 'bg-teal-50',
+    activeBg: 'bg-teal-600',
+    menuHover: 'hover:bg-teal-50 hover:text-teal-700'
   },
   emptyState: {
     glow: 'bg-teal-400',
@@ -394,7 +398,7 @@ const generateTealColors = (): HomepageColors => ({
   lineage: {
     mainIconBg: 'bg-teal-600',
     mainIconText: 'text-white',
-    cardBorder: 'hover:border-teal-200',
+    cardBorder: 'border-gray-100 hover:border-teal-200',
     cardHoverBg: 'hover:bg-teal-50/20',
     badgeBg: 'bg-teal-50 text-teal-600'
   },
@@ -419,11 +423,11 @@ const generateSkyColors = (): HomepageColors => ({
     blurs: ['bg-sky-400/10', 'bg-indigo-400/10', 'bg-blue-400/5']
   },
   card: {
-    border: 'hover:border-sky-400',
+    border: 'border-gray-100 hover:border-sky-400',
     shadow: 'hover:shadow-sky-100/30',
     accent: 'from-sky-700 to-sky-700',
-    iconBg: 'group-hover:bg-sky-50',
-    iconText: 'group-hover:text-sky-800',
+    iconBg: 'bg-sky-50',
+    iconText: 'text-sky-800',
     titleHover: 'group-hover:text-sky-800',
     chevronBg: 'group-hover:bg-sky-50',
     chevronText: 'group-hover:text-sky-800',
@@ -438,7 +442,9 @@ const generateSkyColors = (): HomepageColors => ({
   toolbar: {
     focusRing: 'focus:ring-sky-100 focus:border-sky-800/40',
     activeText: 'text-sky-800',
-    bgLight: 'bg-sky-50'
+    bgLight: 'bg-sky-50',
+    activeBg: 'bg-sky-800',
+    menuHover: 'hover:bg-sky-50 hover:text-sky-800'
   },
   emptyState: {
     glow: 'bg-sky-400',
@@ -464,7 +470,7 @@ const generateSkyColors = (): HomepageColors => ({
   lineage: {
     mainIconBg: 'bg-sky-800',
     mainIconText: 'text-white',
-    cardBorder: 'hover:border-sky-200',
+    cardBorder: 'border-gray-100 hover:border-sky-200',
     cardHoverBg: 'hover:bg-sky-50/20',
     badgeBg: 'bg-sky-50 text-sky-800'
   },
@@ -492,8 +498,8 @@ const generateBlueColors = (): HomepageColors => ({
     border: 'hover:border-blue-400',
     shadow: 'hover:shadow-blue-100/30',
     accent: 'from-blue-700 to-blue-700',
-    iconBg: 'group-hover:bg-blue-50',
-    iconText: 'group-hover:text-blue-800',
+    iconBg: 'bg-blue-50',
+    iconText: 'text-blue-800',
     titleHover: 'group-hover:text-blue-800',
     chevronBg: 'group-hover:bg-blue-50',
     chevronText: 'group-hover:text-blue-800',
@@ -508,7 +514,9 @@ const generateBlueColors = (): HomepageColors => ({
   toolbar: {
     focusRing: 'focus:ring-blue-100 focus:border-blue-800/40',
     activeText: 'text-blue-800',
-    bgLight: 'bg-blue-50'
+    bgLight: 'bg-blue-50',
+    activeBg: 'bg-blue-800',
+    menuHover: 'hover:bg-blue-50 hover:text-blue-800'
   },
   emptyState: {
     glow: 'bg-blue-400',
@@ -534,7 +542,7 @@ const generateBlueColors = (): HomepageColors => ({
   lineage: {
     mainIconBg: 'bg-blue-800',
     mainIconText: 'text-white',
-    cardBorder: 'hover:border-blue-200',
+    cardBorder: 'border-gray-100 hover:border-blue-200',
     cardHoverBg: 'hover:bg-blue-50/20',
     badgeBg: 'bg-blue-50 text-blue-800'
   },
@@ -559,11 +567,11 @@ const generateVioletColors = (): HomepageColors => ({
     blurs: ['bg-violet-400/10', 'bg-purple-400/10', 'bg-indigo-400/5']
   },
   card: {
-    border: 'hover:border-violet-400',
+    border: 'border-gray-100 hover:border-violet-400',
     shadow: 'hover:shadow-violet-100/30',
     accent: 'from-violet-400 to-violet-400',
-    iconBg: 'group-hover:bg-violet-50',
-    iconText: 'group-hover:text-violet-600',
+    iconBg: 'bg-violet-50',
+    iconText: 'text-violet-600',
     titleHover: 'group-hover:text-violet-700',
     chevronBg: 'group-hover:bg-violet-50',
     chevronText: 'group-hover:text-violet-600',
@@ -578,7 +586,9 @@ const generateVioletColors = (): HomepageColors => ({
   toolbar: {
     focusRing: 'focus:ring-violet-50 focus:border-violet-700/40',
     activeText: 'text-violet-700',
-    bgLight: 'bg-violet-50'
+    bgLight: 'bg-violet-50',
+    activeBg: 'bg-violet-700',
+    menuHover: 'hover:bg-violet-50 hover:text-violet-700'
   },
   emptyState: {
     glow: 'bg-violet-400',
@@ -606,7 +616,7 @@ const generateVioletColors = (): HomepageColors => ({
   lineage: {
     mainIconBg: 'bg-violet-700',
     mainIconText: 'text-white',
-    cardBorder: 'hover:border-violet-200',
+    cardBorder: 'border-gray-100 hover:border-violet-200',
     cardHoverBg: 'hover:bg-violet-50/20',
     badgeBg: 'bg-violet-50 text-violet-700'
   },
@@ -631,11 +641,11 @@ const generatePurpleColors = (): HomepageColors => ({
     blurs: ['bg-purple-400/10', 'bg-violet-400/10', 'bg-purple-400/5']
   },
   card: {
-    border: 'hover:border-purple-400',
+    border: 'border-gray-100 hover:border-purple-400',
     shadow: 'hover:shadow-purple-100/30',
     accent: 'from-purple-700 to-purple-700',
-    iconBg: 'group-hover:bg-purple-50',
-    iconText: 'group-hover:text-purple-600',
+    iconBg: 'bg-purple-50',
+    iconText: 'text-purple-600',
     titleHover: 'group-hover:text-purple-700',
     chevronBg: 'group-hover:bg-purple-50',
     chevronText: 'group-hover:text-purple-600',
@@ -650,7 +660,9 @@ const generatePurpleColors = (): HomepageColors => ({
   toolbar: {
     focusRing: 'focus:ring-purple-50 focus:border-purple-700/40',
     activeText: 'text-purple-700',
-    bgLight: 'bg-purple-50'
+    bgLight: 'bg-purple-50',
+    activeBg: 'bg-purple-700',
+    menuHover: 'hover:bg-purple-50 hover:text-purple-700'
   },
   emptyState: {
     glow: 'bg-purple-400',
@@ -678,7 +690,7 @@ const generatePurpleColors = (): HomepageColors => ({
   lineage: {
     mainIconBg: 'bg-purple-700',
     mainIconText: 'text-white',
-    cardBorder: 'hover:border-purple-200',
+    cardBorder: 'border-gray-100 hover:border-purple-200',
     cardHoverBg: 'hover:bg-purple-50/20',
     badgeBg: 'bg-purple-50 text-purple-700'
   },
@@ -703,11 +715,11 @@ const generateIndigoColors = (): HomepageColors => ({
     blurs: ['bg-indigo-400/10', 'bg-purple-400/10', 'bg-blue-400/5']
   },
   card: {
-    border: 'hover:border-indigo-400',
+    border: 'border-gray-100 hover:border-indigo-400',
     shadow: 'hover:shadow-indigo-100/30',
     accent: 'from-indigo-600 to-indigo-600',
-    iconBg: 'group-hover:bg-indigo-50',
-    iconText: 'group-hover:text-indigo-600',
+    iconBg: 'bg-indigo-50',
+    iconText: 'text-indigo-600',
     titleHover: 'group-hover:text-indigo-600',
     chevronBg: 'group-hover:bg-indigo-50',
     chevronText: 'group-hover:text-indigo-600',
@@ -722,7 +734,9 @@ const generateIndigoColors = (): HomepageColors => ({
   toolbar: {
     focusRing: 'focus:ring-indigo-100 focus:border-indigo-600/40',
     activeText: 'text-indigo-600',
-    bgLight: 'bg-indigo-50'
+    bgLight: 'bg-indigo-50',
+    activeBg: 'bg-indigo-600',
+    menuHover: 'hover:bg-indigo-50 hover:text-indigo-700'
   },
   emptyState: {
     glow: 'bg-indigo-400',
@@ -748,7 +762,7 @@ const generateIndigoColors = (): HomepageColors => ({
   lineage: {
     mainIconBg: 'bg-indigo-600',
     mainIconText: 'text-white',
-    cardBorder: 'hover:border-indigo-200',
+    cardBorder: 'border-gray-100 hover:border-indigo-200',
     cardHoverBg: 'hover:bg-indigo-50/20',
     badgeBg: 'bg-indigo-50 text-indigo-600'
   },
@@ -773,11 +787,11 @@ const generateSlateColors = (): HomepageColors => ({
     blurs: ['bg-slate-200/20', 'bg-slate-300/10', 'bg-slate-100/10']
   },
   card: {
-    border: 'hover:border-slate-400',
+    border: 'border-gray-100 hover:border-slate-400',
     shadow: 'hover:shadow-slate-100/30',
     accent: 'from-slate-700 to-slate-700',
-    iconBg: 'group-hover:bg-slate-100',
-    iconText: 'group-hover:text-slate-800',
+    iconBg: 'bg-slate-100',
+    iconText: 'text-slate-800',
     titleHover: 'group-hover:text-slate-800',
     chevronBg: 'group-hover:bg-slate-100',
     chevronText: 'group-hover:text-slate-800',
@@ -792,7 +806,9 @@ const generateSlateColors = (): HomepageColors => ({
   toolbar: {
     focusRing: 'focus:ring-slate-100 focus:border-slate-800/40',
     activeText: 'text-slate-800',
-    bgLight: 'bg-slate-100'
+    bgLight: 'bg-slate-100',
+    activeBg: 'bg-slate-800',
+    menuHover: 'hover:bg-slate-100 hover:text-slate-800'
   },
   emptyState: {
     glow: 'bg-slate-400',
@@ -818,7 +834,7 @@ const generateSlateColors = (): HomepageColors => ({
   lineage: {
     mainIconBg: 'bg-slate-800',
     mainIconText: 'text-white',
-    cardBorder: 'hover:border-slate-200',
+    cardBorder: 'border-gray-100 hover:border-slate-200',
     cardHoverBg: 'hover:bg-slate-50/20',
     badgeBg: 'bg-slate-100 text-slate-800'
   },
@@ -837,7 +853,7 @@ const generateTealWorkflowBuilderColors = (): WorkflowBuilderColors => ({
     iconActive: 'bg-teal-600 text-white',
     iconInactive: 'bg-gray-50 text-gray-400',
     primaryBtn: 'bg-teal-600 text-white shadow-teal-100 hover:bg-teal-700',
-    actionMenuHover: 'hover:bg-teal-50',
+    actionMenuHover: 'hover:bg-teal-50 hover:text-teal-700',
     actionMenuIcon: 'text-gray-900',
     lockActive: 'text-amber-600'
   },
@@ -882,7 +898,7 @@ const generateSkyWorkflowBuilderColors = (): WorkflowBuilderColors => ({
     iconActive: 'bg-sky-800 text-white',
     iconInactive: 'bg-gray-50 text-gray-400',
     primaryBtn: 'bg-sky-800 text-white shadow-sky-100 hover:bg-sky-900',
-    actionMenuHover: 'hover:bg-sky-50',
+    actionMenuHover: 'hover:bg-sky-50 hover:text-sky-800',
     actionMenuIcon: 'text-gray-900',
     lockActive: 'text-amber-600'
   },
@@ -923,12 +939,12 @@ const generateSkyWorkflowBuilderColors = (): WorkflowBuilderColors => ({
 const generateDataSlateColors = (): DataColors => ({
   layoutBorder: 'border-slate-100',
   card: {
-    border: 'hover:border-slate-400',
+    border: 'border-gray-100 hover:border-slate-400',
     shadow: 'hover:shadow-slate-100/30',
     accent: 'from-slate-700 to-slate-700',
     statusText: 'text-slate-800',
-    iconBg: 'group-hover:bg-slate-100',
-    iconText: 'group-hover:text-slate-800',
+    iconBg: 'bg-slate-100',
+    iconText: 'text-slate-800',
     chevronBg: 'group-hover:bg-slate-100',
     chevronText: 'group-hover:text-slate-800',
     menuHover: 'hover:bg-slate-100 hover:text-slate-800',
@@ -958,12 +974,12 @@ const generateDataSlateColors = (): DataColors => ({
 const generateDataSkyColors = (): DataColors => ({
   layoutBorder: 'border-sky-100',
   card: {
-    border: 'hover:border-sky-400',
+    border: 'border-gray-100 hover:border-sky-400',
     shadow: 'hover:shadow-sky-100/30',
     accent: 'from-sky-700 to-sky-700',
     statusText: 'text-sky-800',
-    iconBg: 'group-hover:bg-sky-50',
-    iconText: 'group-hover:text-sky-800',
+    iconBg: 'bg-sky-50',
+    iconText: 'text-sky-800',
     chevronBg: 'group-hover:bg-sky-50',
     chevronText: 'group-hover:text-sky-800',
     menuHover: 'hover:bg-sky-50 hover:text-sky-800',

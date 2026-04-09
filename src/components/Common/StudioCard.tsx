@@ -1,8 +1,8 @@
-import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronRight, Clock, Globe, HardDrive, LucideIcon, MoreVertical } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
 
-import { CardColors } from '../../constants/themeColors';
+import { studioThemeColors, CardColors } from '../../constants/themeColors';
+import ActionDropdown from './ActionDropdown';
 
 export interface MenuItem {
   label: string;
@@ -42,19 +42,7 @@ const StudioCard: React.FC<StudioCardProps> = ({
   showDescription = true,
   extraProps
 }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
   const styles = colors;
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setIsMenuOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
 
   return (
     <div 
@@ -87,40 +75,23 @@ const StudioCard: React.FC<StudioCardProps> = ({
             </span>
           )}
           {menuItems && (
-            <div className="relative" ref={menuRef} onClick={(e) => e.stopPropagation()}>
-              <button 
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className={`p-2 rounded-xl transition-all ${isMenuOpen ? styles.statusBg + ' ' + styles.statusText : 'text-gray-400 hover:' + styles.statusText + ' hover:' + styles.statusBg}`}
-              >
-                <MoreVertical size={20} />
-              </button>
-              
-              <AnimatePresence>
-                {isMenuOpen && (
-                  <motion.div 
-                    initial={{ opacity: 0, scale: 0.95, y: 10 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.95, y: 10 }}
-                    className="absolute top-full right-0 mt-2 w-48 bg-white border border-gray-100 rounded-2xl shadow-2xl z-50 py-2 overflow-hidden"
-                  >
-                    {menuItems.map((item, idx) => (
-                      <button 
-                        key={idx}
-                        onClick={() => { item.onClick(); setIsMenuOpen(false); }}
-                        className={`w-full px-4 py-2.5 text-left text-xs font-bold flex items-center gap-3 transition-colors ${
-                          item.variant === 'danger' 
-                          ? 'text-rose-500 hover:bg-rose-50' 
-                          : `text-gray-600 ${styles.menuHover}`
-                        }`}
-                      >
-                        <item.icon size={14} className={item.variant === 'danger' ? '' : 'text-slate-600'} />
-                        {item.label}
-                      </button>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
+            <ActionDropdown
+              theme={studioThemeColors.dashboard.homepage}
+              itemHoverClass={styles.menuHover}
+              trigger={(isOpen) => (
+                <button 
+                  className={`p-2 rounded-xl transition-all ${isOpen ? styles.statusBg + ' ' + styles.statusText : 'text-gray-400 hover:' + styles.statusText + ' hover:' + styles.statusBg}`}
+                >
+                  <MoreVertical size={20} />
+                </button>
+              )}
+              items={menuItems.map(item => ({
+                label: item.label,
+                icon: <item.icon size={14} />,
+                onClick: item.onClick,
+                variant: item.variant
+              }))}
+            />
           )}
         </div>
       </div>

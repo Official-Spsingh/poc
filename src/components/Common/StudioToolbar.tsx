@@ -91,7 +91,7 @@ const StudioToolbar: React.FC<StudioToolbarProps> = ({
                       onFilterChange?.(option.value);
                       setIsFilterOpen(false);
                     }}
-                    className="w-full flex items-center justify-between px-4 py-2.5 text-sm text-gray-600 hover:bg-gray-50 transition-colors"
+                    className={`w-full flex items-center justify-between px-4 py-2.5 text-sm text-gray-600 ${styles.menuHover || 'hover:bg-gray-50'} transition-colors`}
                   >
                     <span className={activeFilter === option.value ? `font-bold ${styles.activeText} whitespace-nowrap` : 'whitespace-nowrap'}>
                       {option.label}

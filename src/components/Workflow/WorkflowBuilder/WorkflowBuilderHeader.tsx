@@ -17,7 +17,8 @@ import {
 } from 'lucide-react';
 import React from 'react';
 import { Connection, NodeData, ViewType, Workflow, Workspace } from '../../../../types';
-import { CombinedTheme } from '../../../constants/themeColors';
+import { CombinedTheme, studioThemeColors } from '../../../constants/themeColors';
+import ActionDropdown from '../../Common/ActionDropdown';
 import VersionHistoryPopover from './VersionHistoryPopover';
 import WorkflowSwitcherPopover from './WorkflowSwitcherPopover';
 
@@ -40,9 +41,6 @@ interface WorkflowBuilderHeaderProps {
   setIsVersionsPopoverOpen: (isOpen: boolean) => void;
   isRunning: boolean;
   setIsRunning: (isRunning: boolean) => void;
-  setIsActionsMenuOpen: (isOpen: boolean) => void;
-  isActionsMenuOpen: boolean;
-  actionsMenuRef: React.RefObject<HTMLDivElement>;
   setIsDeployModalOpen: (isOpen: boolean) => void;
   setNodes: React.Dispatch<React.SetStateAction<NodeData[]>>;
   setConnections: React.Dispatch<React.SetStateAction<Connection[]>>;
@@ -68,9 +66,6 @@ const WorkflowBuilderHeader: React.FC<WorkflowBuilderHeaderProps> = ({
   setIsVersionsPopoverOpen,
   isRunning,
   setIsRunning,
-  setIsActionsMenuOpen,
-  isActionsMenuOpen,
-  actionsMenuRef,
   setIsDeployModalOpen,
   setNodes,
   setConnections,
@@ -230,58 +225,57 @@ const WorkflowBuilderHeader: React.FC<WorkflowBuilderHeaderProps> = ({
           </button>
         </div>
 
-        <div className="relative" ref={actionsMenuRef} id="tour-global-actions">
-          <button
-            onClick={() => setIsActionsMenuOpen(!isActionsMenuOpen)}
-            className={`p-2 rounded-lg transition-all border ${isActionsMenuOpen ? theme.builder.header.buttonActive : `bg-gray-50 border-gray-100 text-gray-600 ${theme.builder.header.actionMenuHover}`}`}
-            title="Workflow Settings"
-          >
-            < MoreVertical size={16} />
-          </button>
-
-          <AnimatePresence>
-            {isActionsMenuOpen && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95, y: 10 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95, y: 10 }}
-                className="absolute top-full right-0 mt-2 w-56 bg-white border border-gray-100 rounded-2xl shadow-2xl z-[10001] py-2 overflow-hidden"
-              >
-                <div className="px-4 py-2 border-b border-gray-50 mb-1">
-                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Global Actions</p>
-                </div>
-
-                <button onClick={() => setIsActionsMenuOpen(false)} className={`w-full px-4 py-2.5 text-left text-xs font-bold text-gray-600 ${theme.builder.header.actionMenuHover} flex items-center gap-3 transition-all`}>
-                  <Calendar size={14} className={theme.builder.header.actionMenuIcon} /> Schedule
-                </button>
-                <button onClick={() => setIsActionsMenuOpen(false)} className={`w-full px-4 py-2.5 text-left text-xs font-bold text-gray-600 ${theme.builder.header.actionMenuHover} flex items-center gap-3 transition-all`}>
-                  <Copy size={14} className={theme.builder.header.actionMenuIcon} /> Duplicate
-                </button>
-                <button onClick={() => setIsActionsMenuOpen(false)} className={`w-full px-4 py-2.5 text-left text-xs font-bold text-gray-600 ${theme.builder.header.actionMenuHover} flex items-center gap-3 transition-all`}>
-                  <Link2 size={14} className={theme.builder.header.actionMenuIcon} /> View Lineage
-                </button>
-                <button onClick={() => setIsActionsMenuOpen(false)} className={`w-full px-4 py-2.5 text-left text-xs font-bold text-gray-600 ${theme.builder.header.actionMenuHover} flex items-center gap-3 transition-all`}>
-                  <Settings2 size={14} className={theme.builder.header.actionMenuIcon} /> Settings
-                </button>
-                <button onClick={() => setIsActionsMenuOpen(false)} className={`w-full px-4 py-2.5 text-left text-xs font-bold text-gray-600 ${theme.builder.header.actionMenuHover} flex items-center gap-3 transition-all`}>
-                  <Info size={14} className={theme.builder.header.actionMenuIcon} /> Workflow Info
-                </button>
-
-                <div className="h-px bg-gray-50 my-1 mx-2" />
-
-                <button
-                  onClick={() => {
-                    if (activeWorkflowId) deleteWorkflow(activeWorkflowId);
-                    setIsActionsMenuOpen(false);
-                  }}
-                  className="w-full px-4 py-2.5 text-left text-xs font-bold text-rose-500 hover:bg-rose-50 flex items-center gap-3 transition-all"
-                >
-                  <Trash2 size={14} /> Delete Pipeline
-                </button>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
+        <ActionDropdown
+          theme={studioThemeColors.dashboard.homepage}
+          header={{
+            title: 'Global Actions'
+          }}
+          itemHoverClass={theme.builder.header.actionMenuHover}
+          trigger={(isOpen) => (
+            <button
+              className={`p-2 rounded-lg transition-all border ${isOpen ? theme.builder.header.buttonActive : `bg-gray-50 border-gray-100 text-gray-600 ${theme.builder.header.actionMenuHover}`}`}
+              title="Workflow Settings"
+            >
+              <MoreVertical size={16} />
+            </button>
+          )}
+          items={[
+            { 
+              label: 'Schedule', 
+              icon: <Calendar size={14} className={theme.builder.header.actionMenuIcon} />, 
+              onClick: () => {} 
+            },
+            { 
+              label: 'Duplicate', 
+              icon: <Copy size={14} className={theme.builder.header.actionMenuIcon} />, 
+              onClick: () => {} 
+            },
+            { 
+              label: 'View Lineage', 
+              icon: <Link2 size={14} className={theme.builder.header.actionMenuIcon} />, 
+              onClick: () => {} 
+            },
+            { 
+              label: 'Settings', 
+              icon: <Settings2 size={14} className={theme.builder.header.actionMenuIcon} />, 
+              onClick: () => {} 
+            },
+            { 
+              label: 'Workflow Info', 
+              icon: <Info size={14} className={theme.builder.header.actionMenuIcon} />, 
+              onClick: () => {} 
+            },
+            { divider: true },
+            { 
+              label: 'Delete Pipeline', 
+              icon: <Trash2 size={14} />, 
+              onClick: () => {
+                if (activeWorkflowId) deleteWorkflow(activeWorkflowId);
+              },
+              variant: 'danger'
+            }
+          ]}
+        />
 
         <button
           onClick={() => setIsDeployModalOpen(true)}

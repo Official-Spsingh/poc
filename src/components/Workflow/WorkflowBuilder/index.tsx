@@ -109,21 +109,14 @@ const WorkflowBuilder: React.FC<WorkflowBuilderProps> = ({
   setIsAiGenerated
 }) => {
   const [isRunning, setIsRunning] = React.useState(false);
-  const [isActionsMenuOpen, setIsActionsMenuOpen] = React.useState(false);
-  const actionsMenuRef = React.useRef<HTMLDivElement>(null);
 
   const [isVersionsPopoverOpen, setIsVersionsPopoverOpen] = React.useState(false);
   const [selectedVersion, setSelectedVersion] = React.useState('v1.0.0 (Live)');
   const [revertToast, setRevertToast] = React.useState('');
 
   React.useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (actionsMenuRef.current && !actionsMenuRef.current.contains(event.target as Node)) {
-        setIsActionsMenuOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    // Version history click-outside logic is handled in the popover or header if needed, 
+    // but the actions menu click-outside is now inside ActionDropdown.
   }, []);
 
   const [isGlobalAiOpen, setIsGlobalAiOpen] = React.useState(false);
@@ -233,9 +226,6 @@ const WorkflowBuilder: React.FC<WorkflowBuilderProps> = ({
           setIsVersionsPopoverOpen={setIsVersionsPopoverOpen}
           isRunning={isRunning}
           setIsRunning={setIsRunning}
-          isActionsMenuOpen={isActionsMenuOpen}
-          setIsActionsMenuOpen={setIsActionsMenuOpen}
-          actionsMenuRef={actionsMenuRef}
           setIsDeployModalOpen={setIsDeployModalOpen}
           setNodes={setNodes}
           setConnections={setConnections}

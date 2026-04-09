@@ -147,7 +147,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate, workflows }) => {
                 onClick={() => onNavigate(option.id)}
                 className={`group relative ${studioThemeColors.dashboard.homepage.toolCard.bg} p-6 md:p-8 rounded-2xl md:rounded-3xl border ${studioThemeColors.dashboard.homepage.toolCard.border} ${studioThemeColors.dashboard.homepage.toolCard.shadow} ${option.theme.card.border} transition-all text-left overflow-hidden cursor-pointer flex flex-col h-full ${option.id === 'data' ? 'hidden md:block' : ''}`}
               >
-                <div className={`absolute top-4 right-4 md:top-6 md:right-6 px-2 py-1 rounded-md ${studioThemeColors.dashboard.homepage.toolCard.tagBadge} ${option.theme.statusBadges.draft} transition-all group-hover:${option.theme.header.primaryBtn.split(' ')[0]} group-hover:text-white group-hover:border-transparent`}>
+                <div className={`absolute top-4 right-4 md:top-6 md:right-6 px-2 py-1 rounded-md ${studioThemeColors.dashboard.homepage.toolCard.tagBadge} ${option.theme.statusBadges.draft} transition-all ${option.theme.statusBadges.active.split(' ').map(c => `group-hover:${c}`).join(' ')} group-hover:border-transparent`}>
                   {option.tag}
                 </div>
                 <div className={`w-12 h-12 md:w-16 md:h-16 ${option.theme.header.primaryBtn.split(' ')[0]} rounded-xl md:rounded-2xl flex items-center justify-center text-white mb-6 md:mb-8 shadow-lg ${option.theme.card.shadow} group-hover:scale-110 transition-transform`}>
