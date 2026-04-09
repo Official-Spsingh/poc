@@ -1,3 +1,14 @@
+/**
+ * SINGLE SOURCE OF TRUTH: THEME REGISTRY
+ * 
+ * This file contains all visual tokens, color palettes, and theme definitions 
+ * for the Lumenore Studio platform. 
+ */
+
+// ==========================================
+// 1. CORE COMPONENT INTERFACES
+// ==========================================
+
 export interface HeroColors {
   badge: string;
   gradient: string;
@@ -121,6 +132,10 @@ export interface BuilderDrawerColors {
   itemHoverText: string;
 }
 
+// ==========================================
+// 2. MODULE THEME INTERFACES
+// ==========================================
+
 export interface WorkflowBuilderColors {
   header: BuilderHeaderColors;
   nodes: BuilderNodeColors;
@@ -229,196 +244,93 @@ export interface GlobalTheme {
   };
 }
 
-const generateGlobalBlueColors = (): GlobalTheme => ({
-  auth: {
-    bg: 'bg-[#F1F5F9]',
-    cardBg: 'bg-white',
-    primaryBtn: 'bg-blue-600',
-    primaryBtnHover: 'hover:bg-blue-700',
-    shadow: 'shadow-blue-600/20',
-    textPrimary: 'text-slate-900',
-    textSecondary: 'text-slate-500',
-    inputBg: 'bg-slate-50',
-    inputBorder: 'border-slate-200',
-    focusRing: 'focus:ring-blue-500/10 focus:border-blue-500/50',
-    errorBg: 'bg-rose-50',
-    errorText: 'text-rose-600',
-    accentGradient: 'from-blue-600 via-blue-600 to-teal-600',
-    accentText: 'text-blue-600',
-    link: 'text-blue-600',
-    linkHover: 'hover:text-blue-500',
-    badgeBg: 'bg-blue-50',
-    badgeText: 'text-blue-600',
-    badgeBorder: 'border-blue-100',
-    glow: 'bg-blue-400/10',
-    selection: 'selection:bg-blue-500/30',
-    activeBorder: 'border-blue-500',
-    activeBg: 'bg-blue-50/50',
-    activeIcon: 'text-blue-600',
-    activeIconBg: 'bg-blue-100'
-  },
-  sidebar: {
-    bg: 'bg-white',
-    border: 'border-slate-200',
-    activeBg: 'bg-blue-700',
-    activeText: 'text-white',
-    activeShadow: 'shadow-lg shadow-blue-100',
-    hoverBg: 'hover:bg-slate-50/80',
-    textDefault: 'text-slate-400'
-  },
-  brand: {
-    logoBg: 'bg-blue-600',
-    logoText: 'text-slate-900',
-    logoSecondary: 'text-blue-600'
-  }
-});
-
-const generateGlobalSlateColors = (): GlobalTheme => ({
-  auth: {
-    bg: 'bg-slate-50',
-    cardBg: 'bg-white',
-    primaryBtn: 'bg-slate-800',
-    primaryBtnHover: 'hover:bg-slate-900',
-    shadow: 'shadow-slate-800/10',
-    textPrimary: 'text-slate-900',
-    textSecondary: 'text-slate-500',
-    inputBg: 'bg-white',
-    inputBorder: 'border-slate-200',
-    focusRing: 'focus:ring-slate-500/10 focus:border-slate-500/50',
-    errorBg: 'bg-rose-50',
-    errorText: 'text-rose-600',
-    accentGradient: 'from-slate-700 via-slate-800 to-slate-900',
-    accentText: 'text-slate-800',
-    link: 'text-slate-800',
-    linkHover: 'hover:text-black',
-    badgeBg: 'bg-slate-100',
-    badgeText: 'text-slate-800',
-    badgeBorder: 'border-slate-200',
-    glow: 'bg-slate-400/10',
-    selection: 'selection:bg-slate-900/30',
-    activeBorder: 'border-slate-900',
-    activeBg: 'bg-slate-50/50',
-    activeIcon: 'text-slate-900',
-    activeIconBg: 'bg-slate-100'
-  },
-  sidebar: {
-    bg: 'bg-white',
-    border: 'border-slate-200',
-    activeBg: 'bg-slate-800',
-    activeText: 'text-white',
-    activeShadow: 'shadow-lg shadow-slate-200',
-    hoverBg: 'hover:bg-slate-50/80',
-    textDefault: 'text-slate-400'
-  },
-  brand: {
-    logoBg: 'bg-slate-800',
-    logoText: 'text-slate-900',
-    logoSecondary: 'text-slate-700'
-  }
-});
-
-export const globalThemes = {
-  blue: generateGlobalBlueColors(),
-  slate: generateGlobalSlateColors()
-};
-
-export const globalTheme = globalThemes['blue'];
-
-export interface ModuleColors {
-  homepage: HomepageColors | DataColors;
-  builder?: WorkflowBuilderColors;
-  [key: string]: any;
+export interface DashboardTheme {
+  page: {
+    bg: string;
+    blurs: string[];
+  };
+  header: {
+    title: string;
+    subtext: string;
+  };
+  toolCard: {
+    bg: string;
+    border: string;
+    shadow: string;
+    tagBadge: string;
+    link: string;
+  };
+  recentActivity: {
+    title: string;
+    viewAll: string;
+    icon: string;
+    card: {
+      bg: string;
+      border: string;
+      shadow: string;
+    };
+  };
+  promoCard: {
+    bg: string;
+    title: string;
+    subtext: string;
+    button: string;
+    buttonHover: string;
+    glow: string;
+    iconGlow: string;
+  };
+  usage: {
+    title: string;
+    label: string;
+    value: string;
+    barContainer: string;
+  };
+  modules: {
+    workflow: HomepageColors;
+    apps: HomepageColors;
+    agents: HomepageColors;
+    data: DataColors;
+    vibecoding: HomepageColors;
+  };
+  aiBot: {
+    buttonBg: string;
+    buttonShadow: string;
+    icon: string;
+    themeColorName: string;
+  };
 }
 
-const generateTealWorkflowBuilderColors = (): WorkflowBuilderColors => ({
-  header: {
-    bg: 'bg-white',
-    border: 'border-gray-100',
-    buttonActive: 'bg-teal-50 border-teal-200 text-teal-700 shadow-sm',
-    buttonInactive: 'bg-white border-transparent text-gray-600 hover:bg-gray-50',
-    iconActive: 'bg-teal-600 text-white',
-    iconInactive: 'bg-gray-50 text-gray-400',
-    primaryBtn: 'bg-teal-600 text-white shadow-teal-100 hover:bg-teal-700',
-    actionMenuHover: 'hover:bg-teal-50',
-    actionMenuIcon: 'text-gray-900',
-    lockActive: 'text-amber-600'
-  },
-  nodes: {
-    selectedBorder: 'border-teal-500',
-    selectedRing: 'ring-teal-50/50',
-    errorBorder: 'border-rose-400',
-    errorRing: 'ring-rose-50',
-    handleHover: 'hover:bg-teal-500 hover:border-teal-500',
-    hoverBorder: 'hover:border-teal-300'
-  },
-  runPanel: {
-    bg: 'bg-white',
-    border: 'border-gray-200',
-    headerIconBg: 'bg-teal-50',
-    headerIconText: 'text-teal-600',
-    tabActive: 'bg-white',
-    tabInactive: 'text-gray-500 hover:text-gray-700',
-    tabActiveText: 'text-teal-700',
-    successBadge: 'bg-teal-50 text-teal-600 border-teal-100'
-  },
-  drawers: {
-    bg: 'bg-[#fcfdfe]',
-    headerBg: 'bg-white',
-    border: 'border-gray-200',
-    inputFocus: 'focus:ring-teal-100 focus:border-teal-400',
-    itemHoverBorder: 'hover:border-teal-300',
-    itemHoverText: 'hover:text-teal-700'
-  },
-  canvas: {
-    bg: '#ffffff',
-    grid: '#f1f5f9'
-  }
-});
+/**
+ * ROOT REGISTRY INTERFACE
+ */
+export interface StudioTheme {
+  workflow: {
+    homepage: HomepageColors;
+    builder: WorkflowBuilderColors;
+  };
+  apps: {
+    homepage: HomepageColors;
+  };
+  agents: {
+    homepage: HomepageColors;
+  };
+  vibecoding: {
+    homepage: HomepageColors;
+  };
+  data: {
+    homepage: DataColors;
+  };
+  dashboard: {
+    homepage: DashboardTheme;
+  };
+  global: GlobalTheme;
+}
 
-const generateSkyWorkflowBuilderColors = (): WorkflowBuilderColors => ({
-  header: {
-    bg: 'bg-white',
-    border: 'border-gray-100',
-    buttonActive: 'bg-sky-50 border-sky-200 text-sky-800 shadow-sm',
-    buttonInactive: 'bg-white border-transparent text-gray-600 hover:bg-gray-50',
-    iconActive: 'bg-sky-800 text-white',
-    iconInactive: 'bg-gray-50 text-gray-400',
-    primaryBtn: 'bg-sky-800 text-white shadow-sky-100 hover:bg-sky-900',
-    actionMenuHover: 'hover:bg-sky-50',
-    actionMenuIcon: 'text-gray-900',
-    lockActive: 'text-amber-600'
-  },
-  nodes: {
-    selectedBorder: 'border-sky-500',
-    selectedRing: 'ring-sky-50/50',
-    errorBorder: 'border-rose-400',
-    errorRing: 'ring-rose-50',
-    handleHover: 'hover:bg-sky-500 hover:border-sky-500',
-    hoverBorder: 'hover:border-sky-300'
-  },
-  runPanel: {
-    bg: 'bg-white',
-    border: 'border-gray-200',
-    headerIconBg: 'bg-sky-50',
-    headerIconText: 'text-sky-800',
-    tabActive: 'bg-white',
-    tabInactive: 'text-gray-500 hover:text-gray-700',
-    tabActiveText: 'text-sky-800',
-    successBadge: 'bg-sky-50 text-sky-800 border-sky-100'
-  },
-  drawers: {
-    bg: 'bg-white',
-    headerBg: 'bg-sky-50',
-    border: 'border-gray-100',
-    inputFocus: 'focus:ring-sky-100 focus:border-sky-800/40',
-    itemHoverBorder: 'hover:border-sky-200',
-    itemHoverText: 'hover:text-sky-800'
-  },
-  canvas: {
-    bg: '#f8fafc',
-    grid: '#e2e8f0'
-  }
-});
+// ==========================================
+// 3. THEME GENERATORS (IMPLEMENTATION)
+// ==========================================
+
+// --- Shared Homepage Generators ---
 
 const generateTealColors = (): HomepageColors => ({
   hero: {
@@ -914,38 +826,99 @@ const generateSlateColors = (): HomepageColors => ({
   sidebarHoverIcon: 'hover:text-slate-700'
 });
 
-// Centralized Theme Objects for Shade-based Access
-export const workflowTheme = {
-  homepage: {
-    teal: generateTealColors(),
-    sky: generateSkyColors()
+// --- Workflow Specific ---
+
+const generateTealWorkflowBuilderColors = (): WorkflowBuilderColors => ({
+  header: {
+    bg: 'bg-white',
+    border: 'border-gray-100',
+    buttonActive: 'bg-teal-50 border-teal-200 text-teal-700 shadow-sm',
+    buttonInactive: 'bg-white border-transparent text-gray-600 hover:bg-gray-50',
+    iconActive: 'bg-teal-600 text-white',
+    iconInactive: 'bg-gray-50 text-gray-400',
+    primaryBtn: 'bg-teal-600 text-white shadow-teal-100 hover:bg-teal-700',
+    actionMenuHover: 'hover:bg-teal-50',
+    actionMenuIcon: 'text-gray-900',
+    lockActive: 'text-amber-600'
   },
-  builder: {
-    teal: generateTealWorkflowBuilderColors(),
-    sky: generateSkyWorkflowBuilderColors()
+  nodes: {
+    selectedBorder: 'border-teal-500',
+    selectedRing: 'ring-teal-50/50',
+    errorBorder: 'border-rose-400',
+    errorRing: 'ring-rose-50',
+    handleHover: 'hover:bg-teal-500 hover:border-teal-500',
+    hoverBorder: 'hover:border-teal-300'
+  },
+  runPanel: {
+    bg: 'bg-white',
+    border: 'border-gray-200',
+    headerIconBg: 'bg-teal-50',
+    headerIconText: 'text-teal-600',
+    tabActive: 'bg-white',
+    tabInactive: 'text-gray-500 hover:text-gray-700',
+    tabActiveText: 'text-teal-700',
+    successBadge: 'bg-teal-50 text-teal-600 border-teal-100'
+  },
+  drawers: {
+    bg: 'bg-[#fcfdfe]',
+    headerBg: 'bg-white',
+    border: 'border-gray-200',
+    inputFocus: 'focus:ring-teal-100 focus:border-teal-400',
+    itemHoverBorder: 'hover:border-teal-300',
+    itemHoverText: 'hover:text-teal-700'
+  },
+  canvas: {
+    bg: '#ffffff',
+    grid: '#f1f5f9'
   }
-};
+});
 
-export const appsTheme = {
-  homepage: {
-    sky: generateSkyColors(),
-    blue: generateBlueColors()
+const generateSkyWorkflowBuilderColors = (): WorkflowBuilderColors => ({
+  header: {
+    bg: 'bg-white',
+    border: 'border-gray-100',
+    buttonActive: 'bg-sky-50 border-sky-200 text-sky-800 shadow-sm',
+    buttonInactive: 'bg-white border-transparent text-gray-600 hover:bg-gray-50',
+    iconActive: 'bg-sky-800 text-white',
+    iconInactive: 'bg-gray-50 text-gray-400',
+    primaryBtn: 'bg-sky-800 text-white shadow-sky-100 hover:bg-sky-900',
+    actionMenuHover: 'hover:bg-sky-50',
+    actionMenuIcon: 'text-gray-900',
+    lockActive: 'text-amber-600'
+  },
+  nodes: {
+    selectedBorder: 'border-sky-500',
+    selectedRing: 'ring-sky-50/50',
+    errorBorder: 'border-rose-400',
+    errorRing: 'ring-rose-50',
+    handleHover: 'hover:bg-sky-500 hover:border-sky-500',
+    hoverBorder: 'hover:border-sky-300'
+  },
+  runPanel: {
+    bg: 'bg-white',
+    border: 'border-gray-200',
+    headerIconBg: 'bg-sky-50',
+    headerIconText: 'text-sky-800',
+    tabActive: 'bg-white',
+    tabInactive: 'text-gray-500 hover:text-gray-700',
+    tabActiveText: 'text-sky-800',
+    successBadge: 'bg-sky-50 text-sky-800 border-sky-100'
+  },
+  drawers: {
+    bg: 'bg-white',
+    headerBg: 'bg-sky-50',
+    border: 'border-gray-100',
+    inputFocus: 'focus:ring-sky-100 focus:border-sky-800/40',
+    itemHoverBorder: 'hover:border-sky-200',
+    itemHoverText: 'hover:text-sky-800'
+  },
+  canvas: {
+    bg: '#f8fafc',
+    grid: '#e2e8f0'
   }
-};
+});
 
-export const agentsTheme = {
-  homepage: {
-    violet: generateVioletColors(),
-    purple: generatePurpleColors()
-  }
-};
-
-export const vibecodingTheme = {
-  homepage: {
-    indigo: generateIndigoColors(),
-    slate: generateSlateColors()
-  }
-};
+// --- Data Specific ---
 
 const generateDataSlateColors = (): DataColors => ({
   layoutBorder: 'border-slate-100',
@@ -1017,6 +990,132 @@ const generateDataSkyColors = (): DataColors => ({
   sidebarHoverIcon: 'hover:text-sky-800'
 });
 
+// --- Global Specific ---
+
+const generateGlobalBlueColors = (): GlobalTheme => ({
+  auth: {
+    bg: 'bg-[#F1F5F9]',
+    cardBg: 'bg-white',
+    primaryBtn: 'bg-blue-600',
+    primaryBtnHover: 'hover:bg-blue-700',
+    shadow: 'shadow-blue-600/20',
+    textPrimary: 'text-slate-900',
+    textSecondary: 'text-slate-500',
+    inputBg: 'bg-slate-50',
+    inputBorder: 'border-slate-200',
+    focusRing: 'focus:ring-blue-500/10 focus:border-blue-500/50',
+    errorBg: 'bg-rose-50',
+    errorText: 'text-rose-600',
+    accentGradient: 'from-blue-600 via-blue-600 to-teal-600',
+    accentText: 'text-blue-600',
+    link: 'text-blue-600',
+    linkHover: 'hover:text-blue-500',
+    badgeBg: 'bg-blue-50',
+    badgeText: 'text-blue-600',
+    badgeBorder: 'border-blue-100',
+    glow: 'bg-blue-400/10',
+    selection: 'selection:bg-blue-500/30',
+    activeBorder: 'border-blue-500',
+    activeBg: 'bg-blue-50/50',
+    activeIcon: 'text-blue-600',
+    activeIconBg: 'bg-blue-100'
+  },
+  sidebar: {
+    bg: 'bg-white',
+    border: 'border-slate-200',
+    activeBg: 'bg-blue-700',
+    activeText: 'text-white',
+    activeShadow: 'shadow-lg shadow-blue-100',
+    hoverBg: 'hover:bg-slate-50/80',
+    textDefault: 'text-slate-400'
+  },
+  brand: {
+    logoBg: 'bg-blue-600',
+    logoText: 'text-slate-900',
+    logoSecondary: 'text-blue-600'
+  }
+});
+
+const generateGlobalSlateColors = (): GlobalTheme => ({
+  auth: {
+    bg: 'bg-slate-50',
+    cardBg: 'bg-white',
+    primaryBtn: 'bg-slate-800',
+    primaryBtnHover: 'hover:bg-slate-900',
+    shadow: 'shadow-slate-800/10',
+    textPrimary: 'text-slate-900',
+    textSecondary: 'text-slate-500',
+    inputBg: 'bg-white',
+    inputBorder: 'border-slate-200',
+    focusRing: 'focus:ring-slate-500/10 focus:border-slate-500/50',
+    errorBg: 'bg-rose-50',
+    errorText: 'text-rose-600',
+    accentGradient: 'from-slate-700 via-slate-800 to-slate-900',
+    accentText: 'text-slate-800',
+    link: 'text-slate-800',
+    linkHover: 'hover:text-black',
+    badgeBg: 'bg-slate-100',
+    badgeText: 'text-slate-800',
+    badgeBorder: 'border-slate-200',
+    glow: 'bg-slate-400/10',
+    selection: 'selection:bg-slate-900/30',
+    activeBorder: 'border-slate-900',
+    activeBg: 'bg-slate-50/50',
+    activeIcon: 'text-slate-900',
+    activeIconBg: 'bg-slate-100'
+  },
+  sidebar: {
+    bg: 'bg-white',
+    border: 'border-slate-200',
+    activeBg: 'bg-slate-800',
+    activeText: 'text-white',
+    activeShadow: 'shadow-lg shadow-slate-200',
+    hoverBg: 'hover:bg-slate-50/80',
+    textDefault: 'text-slate-400'
+  },
+  brand: {
+    logoBg: 'bg-slate-800',
+    logoText: 'text-slate-900',
+    logoSecondary: 'text-slate-700'
+  }
+});
+
+// ==========================================
+// 4. THEME REGISTRIES
+// ==========================================
+
+export const workflowTheme = {
+  homepage: {
+    teal: generateTealColors(),
+    sky: generateSkyColors()
+  },
+  builder: {
+    teal: generateTealWorkflowBuilderColors(),
+    sky: generateSkyWorkflowBuilderColors()
+  }
+};
+
+export const appsTheme = {
+  homepage: {
+    sky: generateSkyColors(),
+    blue: generateBlueColors()
+  }
+};
+
+export const agentsTheme = {
+  homepage: {
+    violet: generateVioletColors(),
+    purple: generatePurpleColors()
+  }
+};
+
+export const vibecodingTheme = {
+  homepage: {
+    indigo: generateIndigoColors(),
+    slate: generateSlateColors()
+  }
+};
+
 export const dataTheme = {
   homepage: {
     slate: generateDataSlateColors(),
@@ -1024,22 +1123,183 @@ export const dataTheme = {
   }
 };
 
-export const studioThemeColors: any = {
-  workflow: {
-    homepage: workflowTheme.homepage['teal'], // acceptable values: teal, sky
-    builder: workflowTheme.builder['teal']    // acceptable values: teal, sky
+export const globalThemes = {
+  blue: generateGlobalBlueColors(),
+  slate: generateGlobalSlateColors()
+};
+
+// ==========================================
+// 5. ACTIVE MODULE THEMES (Must come before Dashboard Generators)
+// ==========================================
+
+const workflowModuleTheme = {
+  homepage: workflowTheme.homepage['teal'], // acceptable values: teal, sky
+  builder: workflowTheme.builder['teal']    // acceptable values: teal, sky
+};
+
+const appsModuleTheme = {
+  homepage: appsTheme.homepage['sky'],      // acceptable values: sky, blue
+};
+
+const agentsModuleTheme = {
+  homepage: agentsTheme.homepage['violet'], // acceptable values: violet, purple
+};
+
+const vibecodingModuleTheme = {
+  homepage: vibecodingTheme.homepage['indigo'], // acceptable values: indigo, slate
+};
+
+const dataModuleTheme = {
+  homepage: dataTheme.homepage['slate'],    // acceptable values: slate, sky
+};
+
+// ==========================================
+// 6. DASHBOARD GENERATORS (Depends on Step 5)
+// ==========================================
+
+const generateDashboardBlueColors = (): DashboardTheme => ({
+  page: {
+    bg: 'bg-white/40',
+    blurs: [
+      'bg-sky-400/10',
+      'bg-violet-400/10',
+      'bg-teal-400/5'
+    ]
   },
-  apps: {
-    homepage: appsTheme.homepage['sky'],      // acceptable values: sky, blue
+  header: {
+    title: 'text-gray-900',
+    subtext: 'text-gray-500'
   },
-  agents: {
-    homepage: agentsTheme.homepage['violet'], // acceptable values: violet, purple
+  toolCard: {
+    bg: 'bg-white',
+    border: 'border-gray-100',
+    shadow: 'shadow-sm hover:shadow-xl',
+    tagBadge: 'text-[9px] font-bold uppercase tracking-wider text-gray-400',
+    link: 'text-gray-400'
   },
-  vibecoding: {
-    homepage: vibecodingTheme.homepage['indigo'], // acceptable values: indigo, slate
+  recentActivity: {
+    title: 'text-gray-900',
+    viewAll: 'text-blue-700 hover:underline',
+    icon: 'text-blue-500',
+    card: {
+      bg: 'bg-white',
+      border: 'border-gray-100',
+      shadow: 'shadow-sm hover:shadow-md'
+    }
   },
-  data: {
-    homepage: dataTheme.homepage['slate'],    // acceptable values: slate, sky
+  promoCard: {
+    bg: 'bg-slate-900',
+    title: 'text-white',
+    subtext: 'text-slate-400',
+    button: 'bg-white text-slate-900',
+    buttonHover: 'hover:bg-slate-50',
+    glow: 'bg-violet-700',
+    iconGlow: 'shadow-violet-500/20'
   },
-  global: globalThemes['blue'] //acceptable values: blue, slate
+  usage: {
+    title: 'text-gray-900',
+    label: 'text-gray-500',
+    value: 'text-gray-900',
+    barContainer: 'bg-gray-100'
+  },
+  modules: {
+    workflow: workflowModuleTheme.homepage,
+    apps: appsModuleTheme.homepage,
+    agents: agentsModuleTheme.homepage,
+    data: dataModuleTheme.homepage,
+    vibecoding: vibecodingModuleTheme.homepage
+  },
+  aiBot: {
+    buttonBg: 'bg-blue-600',
+    buttonShadow: 'shadow-blue-600/20',
+    icon: 'text-white',
+    themeColorName: 'blue'
+  }
+});
+
+const generateDashboardSlateColors = (): DashboardTheme => ({
+  page: {
+    bg: 'bg-slate-50/40',
+    blurs: [
+      'bg-slate-400/10',
+      'bg-slate-600/10',
+      'bg-slate-400/5'
+    ]
+  },
+  header: {
+    title: 'text-slate-900',
+    subtext: 'text-slate-500'
+  },
+  toolCard: {
+    bg: 'bg-white',
+    border: 'border-slate-100',
+    shadow: 'shadow-sm hover:shadow-xl',
+    tagBadge: 'text-[9px] font-bold uppercase tracking-wider text-slate-400',
+    link: 'text-slate-400'
+  },
+  recentActivity: {
+    title: 'text-slate-900',
+    viewAll: 'text-slate-700 hover:underline',
+    icon: 'text-slate-800',
+    card: {
+      bg: 'bg-white',
+      border: 'border-slate-100',
+      shadow: 'shadow-sm hover:shadow-md'
+    }
+  },
+  promoCard: {
+    bg: 'bg-slate-800',
+    title: 'text-white',
+    subtext: 'text-slate-300',
+    button: 'bg-white text-slate-800',
+    buttonHover: 'hover:bg-slate-50',
+    glow: 'bg-slate-700',
+    iconGlow: 'shadow-slate-500/20'
+  },
+  usage: {
+    title: 'text-slate-900',
+    label: 'text-slate-500',
+    value: 'text-slate-900',
+    barContainer: 'bg-slate-100'
+  },
+  modules: {
+    workflow: workflowModuleTheme.homepage,
+    apps: appsModuleTheme.homepage,
+    agents: agentsModuleTheme.homepage,
+    data: dataModuleTheme.homepage,
+    vibecoding: vibecodingModuleTheme.homepage
+  },
+  aiBot: {
+    buttonBg: 'bg-slate-800',
+    buttonShadow: 'shadow-slate-800/20',
+    icon: 'text-white',
+    themeColorName: 'slate'
+  }
+});
+
+export const dashboardTheme = {
+  homepage: {
+    blue: generateDashboardBlueColors(),
+    slate: generateDashboardSlateColors()
+  }
+};
+
+const dashboardModuleTheme = {
+  homepage: dashboardTheme.homepage['blue'],    // acceptable values: blue, slate
+};
+
+const globalModuleTheme = globalThemes['blue']; // acceptable values: blue, slate
+
+// ==========================================
+// 7. THE CENTRAL REGISTRY (STUDIO THEME COLORS)
+// ==========================================
+
+export const studioThemeColors: StudioTheme = {
+  workflow: workflowModuleTheme,
+  apps: appsModuleTheme,
+  agents: agentsModuleTheme,
+  vibecoding: vibecodingModuleTheme,
+  data: dataModuleTheme,
+  dashboard: dashboardModuleTheme,
+  global: globalModuleTheme
 };

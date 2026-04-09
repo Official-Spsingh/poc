@@ -92,11 +92,11 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onNavigate, onLogout }) 
               } ${
                 isActive(item.id) 
                   ? `${studioThemeColors.global.sidebar.activeBg} ${studioThemeColors.global.sidebar.activeText} ${studioThemeColors.global.sidebar.activeShadow}` 
-                  : `${studioThemeColors.global.sidebar.textDefault} ${studioThemeColors.global.sidebar.hoverBg} ${studioThemeColors[item.module].homepage.sidebarHoverIcon}`
+                  : `${studioThemeColors.global.sidebar.textDefault} ${studioThemeColors.global.sidebar.hoverBg} ${studioThemeColors.dashboard.homepage.modules[item.module].sidebarHoverIcon}`
               } ${item.id === 'data' ? 'hidden md:flex' : ''}`}
               title={item.label}
             >
-              <span className={`shrink-0 flex items-center justify-center ${isActive(item.id) ? 'text-white' : `${studioThemeColors[item.module].homepage.sidebarHoverIcon.replace('hover:', 'group-hover:')} transition-colors`}`}>
+              <span className={`shrink-0 flex items-center justify-center ${isActive(item.id) ? 'text-white' : `${studioThemeColors.dashboard.homepage.modules[item.module].sidebarHoverIcon.replace('hover:', 'group-hover:')} transition-colors`}`}>
                 {item.icon}
               </span>
               {isExpanded && (
