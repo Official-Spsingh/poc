@@ -3,6 +3,7 @@ import { Search } from 'lucide-react';
 import React from 'react';
 import { Workflow, Workspace } from '../../../../types';
 import WorkflowSidebarItem from './WorkflowSidebarItem';
+import { CombinedTheme } from '../../../constants/themeColors';
 
 interface WorkflowSwitcherPopoverProps {
   workflows: Workflow[];
@@ -13,6 +14,7 @@ interface WorkflowSwitcherPopoverProps {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
   deleteWorkflow: (id: string) => void;
+  theme: CombinedTheme;
 }
 
 const WorkflowSwitcherPopover: React.FC<WorkflowSwitcherPopoverProps> = ({
@@ -23,7 +25,8 @@ const WorkflowSwitcherPopover: React.FC<WorkflowSwitcherPopoverProps> = ({
   setIsFlowsPopoverOpen,
   searchQuery,
   setSearchQuery,
-  deleteWorkflow
+  deleteWorkflow,
+  theme
 }) => {
   return (
     <>
@@ -49,7 +52,7 @@ const WorkflowSwitcherPopover: React.FC<WorkflowSwitcherPopoverProps> = ({
             <input
               type="text"
               placeholder="Search flows..."
-              className="w-full pl-9 pr-4 py-2 bg-gray-50 border border-gray-100 rounded-xl text-xs outline-none focus:bg-white focus:border-teal-400 transition-all"
+              className={`w-full pl-9 pr-4 py-2.5 bg-gray-50 border border-gray-100 rounded-xl text-xs outline-none focus:bg-white ${theme.builder.drawers.inputFocus} transition-all`}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -73,6 +76,7 @@ const WorkflowSwitcherPopover: React.FC<WorkflowSwitcherPopoverProps> = ({
                   onViewInfo={() => { }}
                   onDuplicate={() => { }}
                   onViewLineage={() => { }}
+                  theme={theme}
                 />
               ))}
           </div>

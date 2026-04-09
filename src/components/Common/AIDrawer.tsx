@@ -31,7 +31,7 @@ interface AIDrawerProps {
   constraintsRef?: React.RefObject<HTMLDivElement>;
   width?: number;
   height?: number | string;
-  themeColor?: 'teal' | 'violet' | 'blue';
+  themeColor?: string;
   placeholder?: string;
   floatingPosition?: string;
   dragPosition?: { x: number | string; y: number | string };
@@ -79,23 +79,33 @@ const AIDrawer: React.FC<AIDrawerProps> = ({
     }
   }, [isOpen, message]);
 
-  const isTeal = themeColor === 'teal';
-  const isBlue = themeColor === 'blue';
-  const isViolet = themeColor === 'violet';
+  const baseColor = themeColor || 'teal';
 
-  const headerBg = isBlue ? 'bg-blue-50/80 backdrop-blur-md' : (isTeal ? 'bg-teal-50/80 backdrop-blur-md' : 'bg-violet-50/80 backdrop-blur-md');
-  const headerBorder = isBlue ? 'border-blue-100/50' : (isTeal ? 'border-teal-100/50' : 'border-violet-100/50');
-  const statusColor = isBlue ? 'text-blue-600/60' : (isTeal ? 'text-teal-600/60' : 'text-violet-600/60');
-  
-  const bubbleUserBg = isBlue ? 'bg-blue-50' : (isTeal ? 'bg-teal-50' : 'bg-violet-50');
-  const bubbleUserText = isBlue ? 'text-blue-700' : (isTeal ? 'text-teal-700' : 'text-violet-700');
-  
-  const sendBtnBg = isBlue ? 'bg-blue-600 hover:bg-blue-700 shadow-blue-100' : (isTeal ? 'bg-teal-600 hover:bg-teal-700 shadow-teal-100' : 'bg-violet-600 hover:bg-violet-700 shadow-violet-100');
-  const ringColor = isBlue ? 'focus:ring-blue-50' : (isTeal ? 'focus:ring-teal-50' : 'focus:ring-violet-50');
-
-  // Muted variants for suggestions and badges
-  const mutedBg = isBlue ? 'bg-blue-50/50' : (isTeal ? 'bg-teal-50/50' : 'bg-violet-50/50');
-  const mutedText = isBlue ? 'text-blue-600/80' : (isTeal ? 'text-teal-600/80' : 'text-violet-600/80');
+  /** 
+   * Dynamic Theme Styles
+   * Tailwind JIT scanner reference for all supported theme colors: 
+   * bg-teal-50/50 bg-sky-50/50 bg-violet-50/50 bg-blue-50/50 bg-emerald-50/50 bg-purple-50/50 bg-indigo-50/50 bg-slate-50/50
+   * bg-teal-100/80 bg-sky-100/80 bg-violet-100/80 bg-blue-100/80 bg-emerald-100/80 bg-purple-100/80 bg-indigo-100/80 bg-slate-100/80
+   * border-teal-100/50 border-sky-100/50 border-violet-100/50 border-blue-100/50 border-emerald-100/50 border-purple-100/50 border-indigo-100/50 border-slate-100/50
+   * border-teal-200/50 border-sky-200/50 border-violet-200/50 border-blue-200/50 border-emerald-200/50 border-purple-200/50 border-indigo-200/50 border-slate-200/50
+   * bg-teal-600 bg-sky-600 bg-violet-600 bg-blue-600 bg-emerald-600 bg-purple-600 bg-indigo-600 bg-slate-600
+   * text-teal-600 text-sky-600 text-violet-600 text-blue-600 text-emerald-600 text-purple-600 text-indigo-600 text-slate-600
+   * bg-teal-50 bg-sky-50 bg-violet-50 bg-blue-50 bg-emerald-50 bg-purple-50 bg-indigo-50 bg-slate-50
+   * bg-teal-500 bg-sky-500 bg-violet-500 bg-blue-500 bg-emerald-500 bg-purple-500 bg-indigo-500 bg-slate-500
+   * text-teal-700 text-sky-700 text-violet-700 text-blue-700 text-emerald-700 text-purple-700 text-indigo-700 text-slate-700
+   */
+  const themeStyles = {
+    headerBg: `bg-${baseColor}-50/50 backdrop-blur-xl`,
+    headerBorder: `border-${baseColor}-100/50`,
+    statusColor: `text-${baseColor}-600/60`,
+    statusDot: `bg-${baseColor}-500`,
+    bubbleBg: `bg-${baseColor}-50`,
+    bubbleText: `text-${baseColor}-700`,
+    sendBg: `bg-${baseColor}-600 hover:bg-${baseColor}-700 shadow-${baseColor}-200/50`,
+    ring: `focus:ring-${baseColor}-100`,
+    mutedBg: `bg-${baseColor}-50`,
+    mutedText: `text-${baseColor}-600`
+  };
 
   const getActionStyles = (actionColor?: string) => {
     switch (actionColor) {
@@ -105,7 +115,7 @@ const AIDrawer: React.FC<AIDrawerProps> = ({
       case 'blue': return 'bg-blue-50 text-blue-700 border-blue-100 hover:bg-blue-100';
       case 'emerald': return 'bg-emerald-50 text-emerald-700 border-emerald-100 hover:bg-emerald-100';
       case 'gray': return 'bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-200';
-      default: return `${bubbleUserBg} ${bubbleUserText} border-gray-100/50 hover:bg-opacity-80`;
+      default: return `${themeStyles.bubbleBg} ${themeStyles.bubbleText} border-gray-100/50 hover:bg-opacity-80`;
     }
   };
 
@@ -154,7 +164,7 @@ const AIDrawer: React.FC<AIDrawerProps> = ({
     >
       <div className="flex flex-col h-full bg-white overflow-hidden text-gray-900">
         {/* Standard Header with Mode Controls - Refined with theme-aware light background */}
-        <div className={`h-16 border-b ${headerBorder} ${headerBg} text-gray-900 flex items-center justify-between shrink-0 px-6 ai-drag-handle ${mode === 'floating' ? 'cursor-move' : ''}`}>
+        <div className={`h-16 border-b ${themeStyles.headerBorder} ${themeStyles.headerBg} text-gray-900 flex items-center justify-between shrink-0 px-6 ai-drag-handle ${mode === 'floating' ? 'cursor-move' : ''}`}>
           <div className="flex items-center gap-3">
             {closeIcon === 'back' && (
               <button
@@ -164,13 +174,13 @@ const AIDrawer: React.FC<AIDrawerProps> = ({
                 <ArrowLeft size={18} />
               </button>
             )}
-            <div className={`w-9 h-9 ${isBlue ? 'bg-blue-50 text-blue-600 shadow-sm shadow-blue-100' : (isTeal ? 'bg-teal-50 text-teal-600 shadow-sm shadow-teal-100' : 'bg-violet-50 text-violet-600 shadow-sm shadow-violet-100')} rounded-xl flex items-center justify-center transition-all`}>
-              <Bot size={18} />
+            <div className={`w-9 h-9 ${themeStyles.mutedBg} shadow-sm shadow-${baseColor}-100 rounded-xl flex items-center justify-center transition-all`}>
+              <Bot size={18} className={themeStyles.mutedText} />
             </div>
             <div>
               <h3 className="font-extrabold text-sm tracking-tight text-gray-900 font-sans">{title}</h3>
-              <p className="text-[10px] text-gray-400 font-medium flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <p className={`text-[10px] ${themeStyles.statusColor} font-medium flex items-center gap-1.5`}>
+                <span className={`w-1.5 h-1.5 rounded-full ${themeStyles.statusDot} animate-pulse`} />
                 {status}
               </p>
             </div>
@@ -180,20 +190,20 @@ const AIDrawer: React.FC<AIDrawerProps> = ({
             {setMode && (
               <div className="flex items-center bg-gray-50 border border-gray-100 p-1 rounded-xl" onClick={(e) => e.stopPropagation()}>
                 <button
-                  onClick={() => setMode('dock-left')}
-                  className={`p-1.5 rounded-lg transition-all ${mode === 'dock-left' ? 'bg-white text-teal-600 shadow-sm' : 'text-gray-400 hover:text-gray-600'}`}
+                  onClick={() => setMode?.('dock-left')}
+                  className={`p-1.5 rounded-lg transition-all ${mode === 'dock-left' ? `bg-white ${themeStyles.mutedText.replace('text-', 'text-')} shadow-sm` : 'text-gray-400 hover:text-gray-600'}`}
                 >
                   <PanelLeft size={14} />
                 </button>
                 <button
-                  onClick={() => setMode('floating')}
-                  className={`p-1.5 rounded-md transition-all ${mode === 'floating' ? 'bg-white text-teal-600 shadow-sm' : 'text-gray-400 hover:text-gray-600'}`}
+                  onClick={() => setMode?.('floating')}
+                  className={`p-1.5 rounded-md transition-all ${mode === 'floating' ? `bg-white ${themeStyles.mutedText.replace('text-', 'text-')} shadow-sm` : 'text-gray-400 hover:text-gray-600'}`}
                 >
                   <Move size={14} />
                 </button>
                 <button
-                  onClick={() => setMode('dock-right')}
-                  className={`p-1.5 rounded-md transition-all ${mode === 'dock-right' ? 'bg-white text-teal-600 shadow-sm' : 'text-gray-400 hover:text-gray-600'}`}
+                  onClick={() => setMode?.('dock-right')}
+                  className={`p-1.5 rounded-md transition-all ${mode === 'dock-right' ? `bg-white ${themeStyles.mutedText.replace('text-', 'text-')} shadow-sm` : 'text-gray-400 hover:text-gray-600'}`}
                 >
                   <PanelRight size={14} />
                 </button>
@@ -214,8 +224,8 @@ const AIDrawer: React.FC<AIDrawerProps> = ({
         <div className="flex-1 overflow-y-auto p-5 space-y-4 custom-scrollbar bg-gray-50/30">
           {history.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center p-8 space-y-5">
-              <div className={`w-16 h-16 ${isBlue ? 'bg-blue-50' : (isTeal ? 'bg-teal-50' : 'bg-violet-50')} rounded-3xl flex items-center justify-center shadow-inner`}>
-                <Sparkles size={32} className={isBlue ? 'text-blue-500' : (isTeal ? 'text-teal-500' : 'text-violet-500')} />
+              <div className={`w-16 h-16 ${themeStyles.bubbleBg} rounded-3xl flex items-center justify-center shadow-inner`}>
+                <Sparkles size={32} className={`${themeStyles.statusDot.replace('bg-', 'text-')} opacity-80`} />
               </div>
               <div className="max-w-[240px]">
                 <p className="text-sm font-bold text-gray-800">Need help building your Workflow?</p>
@@ -231,9 +241,9 @@ const AIDrawer: React.FC<AIDrawerProps> = ({
                   <button
                     key={i}
                     onClick={() => setMessage(item.text)}
-                    className={`px-4 py-2.5 bg-white hover:${isBlue ? 'bg-blue-50' : (isTeal ? 'bg-teal-50/40' : 'bg-violet-50')} border border-gray-100 text-[11px] font-bold text-gray-600 rounded-xl shadow-sm text-left transition-all flex items-center gap-2 group/btn`}
+                    className={`px-4 py-2.5 bg-white hover:${themeStyles.headerBg} border border-gray-100 text-[11px] font-bold text-gray-600 rounded-xl shadow-sm text-left transition-all flex items-center gap-2 group/btn`}
                   >
-                    <span className={`p-1 rounded-lg ${mutedBg} ${mutedText} group-hover/btn:bg-white transition-colors`}>
+                    <span className={`p-1 rounded-lg ${themeStyles.mutedBg} ${themeStyles.mutedText} group-hover/btn:bg-white transition-colors`}>
                       {item.icon}
                     </span>
                     {item.text}
@@ -246,7 +256,7 @@ const AIDrawer: React.FC<AIDrawerProps> = ({
               <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div className={`max-w-[85%] px-4 py-3 rounded-2xl text-[12px] font-medium leading-relaxed ${
                   msg.role === 'user' 
-                    ? `${bubbleUserBg} ${bubbleUserText} rounded-tr-none` 
+                    ? `${themeStyles.bubbleBg} ${themeStyles.bubbleText} rounded-tr-none` 
                     : 'bg-white border border-gray-100 text-gray-700 shadow-sm rounded-tl-none'
                 }`}>
                   {msg.content}
@@ -284,12 +294,12 @@ const AIDrawer: React.FC<AIDrawerProps> = ({
               onKeyDown={(e) => {
                 if (e.key === 'Enter') handleSend();
               }}
-              className={`w-full bg-gray-50 border-none outline-none p-3 pr-10 rounded-xl text-[12px] font-medium focus:ring-2 ${ringColor} transition-all`}
+              className={`w-full bg-gray-50 border-none outline-none p-3 pr-10 rounded-xl text-[12px] font-medium focus:ring-2 ${themeStyles.ring} transition-all`}
             />
           </div>
           <button 
             onClick={handleSend}
-            className={`p-3 text-white rounded-xl ${sendBtnBg} transition-all shadow-lg drop-shadow-sm`}
+            className={`p-3 text-white rounded-xl ${themeStyles.sendBg} transition-all shadow-lg drop-shadow-sm flex items-center justify-center`}
           >
             <Send size={16} />
           </button>

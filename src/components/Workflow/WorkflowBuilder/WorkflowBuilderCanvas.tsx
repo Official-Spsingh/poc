@@ -2,6 +2,7 @@ import React from 'react';
 import { Connection, ConnectionDrag, NodeData, NodeType, Position } from '../../../../types';
 import ConnectionLine from './ConnectionLine';
 import WorkflowNode from './WorkflowNode';
+import { CombinedTheme } from '../../../constants/themeColors';
 
 interface WorkflowBuilderCanvasProps {
   canvasRef: React.RefObject<HTMLDivElement>;
@@ -30,6 +31,7 @@ interface WorkflowBuilderCanvasProps {
   addNode: (type: NodeType, position?: Position) => void;
   isAiGenerated: boolean;
   setIsAiGenerated: (value: boolean) => void;
+  theme: CombinedTheme;
   children?: React.ReactNode;
 }
 
@@ -57,13 +59,14 @@ const WorkflowBuilderCanvas: React.FC<WorkflowBuilderCanvasProps> = ({
   setGlobalAiChatMessage,
   setGlobalAiChatHistory,
   addNode,
+  theme,
   children
 }) => {
   return (
     <div
       ref={canvasRef}
       id="tour-canvas"
-      className="flex-1 relative min-w-0 overflow-hidden canvas-grid bg-[#fcfdfe]"
+      className={`flex-1 relative min-w-0 overflow-hidden canvas-grid ${theme.builder.canvas.bg}`}
       onDragOver={(e) => {
         e.preventDefault();
         e.dataTransfer.dropEffect = 'move';
@@ -84,9 +87,9 @@ const WorkflowBuilderCanvas: React.FC<WorkflowBuilderCanvasProps> = ({
         setIsFlowsPopoverOpen(false);
       }}
       style={{
-        backgroundImage: 'radial-gradient(#e2e8f0 1.5px, transparent 1.5px)',
+        backgroundImage: `radial-gradient(${theme.builder.canvas.grid} 1.5px, transparent 1.5px)`,
         backgroundSize: '30px 30px',
-        backgroundColor: '#f8fafc'
+        backgroundColor: theme.builder.canvas.bg
       }}
     >
       <svg className="absolute inset-0 pointer-events-none w-full h-full">
@@ -141,6 +144,7 @@ const WorkflowBuilderCanvas: React.FC<WorkflowBuilderCanvasProps> = ({
               setNodes(prev => prev.map(n => n.id === nodeId ? { ...n, error: undefined } : n));
             }}
             onRunNode={handleRunNode}
+            theme={theme}
           />
         ))}
       </div>

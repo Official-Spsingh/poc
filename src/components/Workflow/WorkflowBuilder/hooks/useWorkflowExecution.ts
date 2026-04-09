@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { NodeData } from '../../../../types';
+import { NodeData, NodeType } from '../../../../../types';
 
 interface ExecutionResult {
   tableData: { key: string; value: string; type: string }[];

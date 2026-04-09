@@ -5,7 +5,7 @@ import {
   Trash2
 } from 'lucide-react';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { COMPONENT_METADATA } from './constants';
+import { COMPONENT_METADATA } from './src/components/Workflow/WorkflowBuilder/constants';
 import AgentHome from './src/components/Agents/AgentHome';
 import AiAgentBuilder from './src/components/Agents/AiAgentBuilder';
 import AppEditor from './src/components/Apps/AppEditor';

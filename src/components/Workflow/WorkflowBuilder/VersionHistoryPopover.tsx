@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { History, Clock, CheckCircle2 } from 'lucide-react';
 import React from 'react';
+import { CombinedTheme } from '../../../constants/themeColors';
 
 interface Version {
   id: string;
@@ -17,13 +18,14 @@ interface VersionHistoryPopoverProps {
   setRevertToast: (msg: string) => void;
 }
 
-const VersionHistoryPopover: React.FC<VersionHistoryPopoverProps> = ({
+const VersionHistoryPopover: React.FC<VersionHistoryPopoverProps & { theme: CombinedTheme }> = ({
   isOpen,
   onClose,
   versions,
   selectedVersion,
   setSelectedVersion,
-  setRevertToast
+  setRevertToast,
+  theme
 }) => {
   return (
     <AnimatePresence>
@@ -55,13 +57,13 @@ const VersionHistoryPopover: React.FC<VersionHistoryPopoverProps> = ({
                     setRevertToast(`Reverted workflow to ${v.label}`);
                     setTimeout(() => setRevertToast(''), 3000);
                   }}
-                  className={`w-full flex flex-col items-start p-3 rounded-xl transition-all border ${selectedVersion === v.label ? 'bg-blue-50/50 border-blue-200' : 'bg-white border-transparent hover:bg-gray-50 hover:border-gray-100'}`}
+                  className={`w-full flex flex-col items-start p-3 rounded-xl transition-all border ${selectedVersion === v.label ? `${theme.builder.runPanel.headerIconBg} ${theme.builder.runPanel.headerIconBg.replace('bg-', 'border-').replace('50', '200')}` : 'bg-white border-transparent hover:bg-gray-50 hover:border-gray-100'}`}
                 >
                   <div className="flex items-center justify-between w-full mb-1">
-                    <span className={`text-xs font-bold ${selectedVersion === v.label ? 'text-blue-800' : 'text-gray-800'}`}>
+                    <span className={`text-xs font-bold ${selectedVersion === v.label ? theme.builder.runPanel.tabActiveText : 'text-gray-800'}`}>
                       {v.label}
                     </span>
-                    {selectedVersion === v.label && <CheckCircle2 size={14} className="text-blue-700" />}
+                    {selectedVersion === v.label && <CheckCircle2 size={14} className={theme.builder.runPanel.headerIconText} />}
                   </div>
                   <span className="text-[10px] text-gray-400 flex items-center gap-1"><Clock size={10} /> {v.date}</span>
                 </button>

@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { CheckCircle2, FileJson, Loader2, Table as TableIcon, Terminal, X } from 'lucide-react';
 import React from 'react';
 import { NodeData } from '../../../../types';
+import { CombinedTheme } from '../../../constants/themeColors';
 
 interface WorkflowBuilderRunPanelProps {
   isNodeRunPanelOpen: boolean;
@@ -16,6 +17,7 @@ interface WorkflowBuilderRunPanelProps {
     jsonData: object;
     logs: { timestamp: string; level: 'info' | 'success' | 'warn'; message: string }[];
   } | null;
+  theme: CombinedTheme;
 }
 
 const WorkflowBuilderRunPanel: React.FC<WorkflowBuilderRunPanelProps> = ({
@@ -26,7 +28,8 @@ const WorkflowBuilderRunPanel: React.FC<WorkflowBuilderRunPanelProps> = ({
   nodeRunNodeId,
   nodeRunActiveTab,
   setNodeRunActiveTab,
-  nodeRunResult
+  nodeRunResult,
+  theme
 }) => {
   return (
     <AnimatePresence>
@@ -42,7 +45,7 @@ const WorkflowBuilderRunPanel: React.FC<WorkflowBuilderRunPanelProps> = ({
           {/* Header */}
           <div className="flex items-center justify-between px-6 py-3 border-b border-gray-100 shrink-0">
             <div className="flex items-center gap-3">
-              <div className={`p-1.5 rounded-lg ${isNodeRunning ? 'bg-amber-50 text-amber-500' : 'bg-teal-50 text-teal-600'}`}>
+            <div className={`p-1.5 rounded-lg ${isNodeRunning ? 'bg-amber-50 text-amber-500' : `${theme.builder.runPanel.headerIconBg} ${theme.builder.runPanel.headerIconText}`}`}>
                 {isNodeRunning ? <Loader2 size={16} className="animate-spin" /> : <CheckCircle2 size={16} />}
               </div>
               <div>
@@ -52,7 +55,7 @@ const WorkflowBuilderRunPanel: React.FC<WorkflowBuilderRunPanelProps> = ({
                 <p className="text-[10px] text-gray-400 font-mono">{nodeRunNodeId}</p>
               </div>
               {!isNodeRunning && (
-                <span className="px-2 py-0.5 bg-teal-50 text-teal-600 text-[9px] font-bold rounded-full border border-teal-100 uppercase tracking-wider">Success</span>
+                <span className={`px-2 py-0.5 ${theme.builder.runPanel.successBadge} text-[9px] font-bold rounded-full border uppercase tracking-wider`}>Success</span>
               )}
             </div>
             <div className="flex items-center gap-2">
@@ -68,8 +71,8 @@ const WorkflowBuilderRunPanel: React.FC<WorkflowBuilderRunPanelProps> = ({
                     onClick={() => setNodeRunActiveTab(tab.key)}
                     className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[11px] font-bold transition-all leading-none ${
                         nodeRunActiveTab === tab.key
-                        ? 'bg-white text-teal-700 shadow-sm'
-                        : 'text-gray-500 hover:text-gray-700'
+                        ? `${theme.builder.runPanel.tabActive} ${theme.builder.runPanel.tabActiveText} shadow-sm`
+                        : theme.builder.runPanel.tabInactive
                     }`}
                   >
                     <span className="flex items-center shrink-0">{tab.icon}</span>
@@ -90,7 +93,7 @@ const WorkflowBuilderRunPanel: React.FC<WorkflowBuilderRunPanelProps> = ({
           <div className="flex-1 overflow-auto custom-scrollbar">
             {isNodeRunning ? (
               <div className="flex items-center justify-center h-full gap-3">
-                <Loader2 size={20} className="animate-spin text-teal-500" />
+                <Loader2 size={20} className={`animate-spin ${theme.builder.runPanel.headerIconText}`} />
                 <span className="text-sm text-gray-500 font-medium">Executing node logic...</span>
               </div>
             ) : nodeRunResult ? (
@@ -107,7 +110,7 @@ const WorkflowBuilderRunPanel: React.FC<WorkflowBuilderRunPanelProps> = ({
                     </thead>
                     <tbody className="divide-y divide-gray-50">
                       {nodeRunResult.tableData.map((row, i) => (
-                        <tr key={i} className="hover:bg-teal-50/30 transition-colors">
+                        <tr key={i} className={`${theme.homepage.table.hoverBg} transition-colors`}>
                           <td className="px-6 py-2.5 text-xs font-bold text-gray-800">{row.key}</td>
                           <td className="px-6 py-2.5 text-xs text-gray-600 font-mono">{row.value}</td>
                           <td className="px-6 py-2.5">
@@ -141,7 +144,7 @@ const WorkflowBuilderRunPanel: React.FC<WorkflowBuilderRunPanelProps> = ({
                       <div key={i} className="flex items-start gap-3 px-3 py-2 rounded-lg hover:bg-gray-50 transition-colors font-mono">
                         <span className="text-[10px] text-gray-400 shrink-0 pt-0.5 tabular-nums">{log.timestamp}</span>
                         <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded shrink-0 uppercase tracking-wider ${
-                          log.level === 'success' ? 'bg-teal-50 text-teal-600' : log.level === 'warn' ? 'bg-amber-50 text-amber-600' : 'bg-gray-100 text-gray-500'
+                          log.level === 'success' ? theme.builder.runPanel.successBadge : log.level === 'warn' ? 'bg-amber-50 text-amber-600' : 'bg-gray-100 text-gray-500'
                         }`}>
                           {log.level}
                         </span>

@@ -1,18 +1,17 @@
 import { AlertTriangle, Copy, Edit2, MoreVertical, Play, Plus, Settings2, Sparkles, Trash2 } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
-import { COMPONENT_METADATA } from '../../../../constants';
+import { COMPONENT_METADATA } from './constants';
 import { NodeData, Position } from '../../../../types';
+import { CombinedTheme } from '../../../constants/themeColors';
 
 interface NodeActionsDropdownProps {
-  onEdit: () => void;
-  onDelete: () => void;
-  onClone: () => void;
   onRun: () => void;
   onClose: () => void;
+  theme: CombinedTheme;
 }
 
 const NodeActionsDropdown: React.FC<NodeActionsDropdownProps> = ({ 
-  onEdit, onDelete, onClone, onRun, onClose 
+  onEdit, onDelete, onClone, onRun, onClose, theme
 }) => {
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -34,7 +33,7 @@ const NodeActionsDropdown: React.FC<NodeActionsDropdownProps> = ({
     >
       <button 
         onClick={() => { onRun(); onClose(); }} 
-        className="w-full px-4 py-2.5 text-left text-xs text-teal-600 hover:bg-teal-50 flex items-center gap-3 transition-colors font-bold"
+        className={`w-full px-4 py-2.5 text-left text-xs ${theme.homepage.tipsSection.iconText} ${theme.homepage.tipsSection.iconBg} flex items-center gap-3 transition-colors font-bold`}
       >
         <Play size={14} fill="currentColor" /> Run Node
       </button>
@@ -78,13 +77,13 @@ interface WorkflowNodeProps {
   onClone: (id: string) => void;
   onStartConnection: (id: string, e: React.MouseEvent) => void;
   onEndConnection: (id: string) => void;
-  onFixWithAI?: (id: string, error: string) => void;
   onFixManually?: (id: string) => void;
   onRunNode?: (id: string) => void;
+  theme: CombinedTheme;
 }
 
 const WorkflowNode: React.FC<WorkflowNodeProps> = ({ 
-  node, isSelected, onDrag, onSelect, onDelete, onEdit, onClone, onStartConnection, onEndConnection, onFixWithAI, onFixManually, onRunNode
+  node, isSelected, onDrag, onSelect, onDelete, onEdit, onClone, onStartConnection, onEndConnection, onFixWithAI, onFixManually, onRunNode, theme
 }) => {
   const meta = COMPONENT_METADATA[node.type];
   const [showDropdown, setShowDropdown] = useState(false);
@@ -134,7 +133,7 @@ const WorkflowNode: React.FC<WorkflowNodeProps> = ({
       onMouseUp={() => onEndConnection(node.id)}
       style={{ transform: `translate3d(${node.position.x}px, ${node.position.y}px, 0)` }}
       className={`absolute cursor-move select-none flex items-center bg-white rounded-xl border shadow-sm min-w-[180px] p-2 pr-3 group z-10 transition-all duration-75 ${
-        isSelected ? 'border-teal-500 shadow-lg ring-4 ring-teal-50/50' : node.error ? 'border-rose-400 shadow-md ring-2 ring-rose-50' : 'border-gray-200 hover:border-teal-300'
+        isSelected ? `${theme.builder.nodes.selectedBorder} shadow-lg ring-4 ${theme.builder.nodes.selectedRing}` : node.error ? `${theme.builder.nodes.errorBorder} shadow-md ring-2 ${theme.builder.nodes.errorRing}` : `border-gray-200 ${theme.builder.nodes.hoverBorder}`
       }`}
     >
       <div className="absolute top-2 right-2 flex items-center z-20">
@@ -143,7 +142,7 @@ const WorkflowNode: React.FC<WorkflowNodeProps> = ({
             e.stopPropagation(); 
             setShowDropdown(!showDropdown); 
           }}
-          className={`p-1 rounded-lg transition-all opacity-0 group-hover:opacity-100 ${showDropdown ? 'bg-teal-100 text-teal-600 opacity-100' : 'text-gray-400 hover:bg-gray-100 hover:text-gray-600'}`}
+          className={`p-1 rounded-lg transition-all opacity-0 group-hover:opacity-100 ${showDropdown ? `${theme.homepage.tipsSection.iconBg} ${theme.homepage.tipsSection.iconText} opacity-100` : 'text-gray-400 hover:bg-gray-100 hover:text-gray-600'}`}
         >
           <MoreVertical size={16} />
         </button>
@@ -155,6 +154,7 @@ const WorkflowNode: React.FC<WorkflowNodeProps> = ({
             onClone={() => onClone(node.id)}
             onRun={() => onRunNode?.(node.id)}
             onClose={() => setShowDropdown(false)}
+            theme={theme}
           />
         )}
       </div>
@@ -168,10 +168,10 @@ const WorkflowNode: React.FC<WorkflowNodeProps> = ({
       </div>
       
       {/* Handles */}
-      <div className={`absolute -left-1.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 bg-gray-200 border-2 border-white rounded shadow-sm group-hover:border-teal-400 transition-colors z-20 ${node.error ? 'border-rose-300 bg-rose-100' : ''}`} />
+      <div className={`absolute -left-1.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 bg-gray-200 border-2 border-white rounded shadow-sm ${theme.builder.nodes.hoverBorder.replace('hover:', 'group-hover:')} transition-colors z-20 ${node.error ? `${theme.builder.nodes.errorBorder} ${theme.builder.nodes.errorRing}` : ''}`} />
       <div 
         onMouseDown={(e) => { e.stopPropagation(); onStartConnection(node.id, e); }}
-        className={`absolute -right-1.5 top-1/2 -translate-y-1/2 w-4 h-4 bg-gray-200 border-2 border-white rounded shadow-sm transition-all cursor-crosshair z-20 ${node.error ? 'hover:bg-rose-500 hover:border-rose-500 border-rose-300 bg-rose-100' : 'hover:bg-teal-500 hover:border-teal-500'}`}
+        className={`absolute -right-1.5 top-1/2 -translate-y-1/2 w-4 h-4 bg-gray-200 border-2 border-white rounded shadow-sm transition-all cursor-crosshair z-20 ${node.error ? 'hover:bg-rose-500 hover:border-rose-500 border-rose-300 bg-rose-100' : theme.builder.nodes.handleHover}`}
       />
 
       {/* Error Overlay */}
@@ -188,7 +188,7 @@ const WorkflowNode: React.FC<WorkflowNodeProps> = ({
             {onFixWithAI && (
               <button
                 onClick={(e) => { e.stopPropagation(); onFixWithAI(node.id, node.error!); }}
-                className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-violet-50 text-violet-700 hover:bg-violet-600 hover:text-white rounded-lg text-[11px] font-bold transition-all shadow-sm hover:shadow-violet-200/50 whitespace-nowrap"
+                className={`flex-1 flex items-center justify-center gap-2 px-3 py-2 ${theme.homepage.tipsSection.iconBg} ${theme.homepage.tipsSection.iconText} hover:${theme.homepage.emptyState.button.split(' ')[0]} hover:text-white rounded-lg text-[11px] font-bold transition-all shadow-sm hover:shadow-sky-200/50 whitespace-nowrap`}
               >
                 <Sparkles size={14} /> AI Fix
               </button>

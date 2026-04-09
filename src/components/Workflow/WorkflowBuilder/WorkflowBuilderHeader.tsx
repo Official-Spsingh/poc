@@ -24,6 +24,7 @@ import WorkflowSwitcherPopover from './WorkflowSwitcherPopover';
 import VersionHistoryPopover from './VersionHistoryPopover';
 import { Workflow, Workspace, ViewType, NodeData, Connection } from '../../../../types';
 import WorkflowSidebarItem from './WorkflowSidebarItem';
+import { studioThemeColors, CombinedTheme } from '../../../constants/themeColors';
 
 interface WorkflowBuilderHeaderProps {
   workflows: Workflow[];
@@ -50,6 +51,7 @@ interface WorkflowBuilderHeaderProps {
   setIsDeployModalOpen: (isOpen: boolean) => void;
   setNodes: React.Dispatch<React.SetStateAction<NodeData[]>>;
   setConnections: React.Dispatch<React.SetStateAction<Connection[]>>;
+  theme: CombinedTheme;
 }
 
 const WorkflowBuilderHeader: React.FC<WorkflowBuilderHeaderProps> = ({
@@ -76,7 +78,8 @@ const WorkflowBuilderHeader: React.FC<WorkflowBuilderHeaderProps> = ({
   actionsMenuRef,
   setIsDeployModalOpen,
   setNodes,
-  setConnections
+  setConnections,
+  theme
 }) => {
   const mockVersions = [
     { id: 'v1.0.0', label: 'v1.0.0 (Live)', date: 'Today, 10:45 AM' },
@@ -103,11 +106,11 @@ const WorkflowBuilderHeader: React.FC<WorkflowBuilderHeaderProps> = ({
           <button
             onClick={() => setIsFlowsPopoverOpen(!isFlowsPopoverOpen)}
             className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-all border ${isFlowsPopoverOpen
-              ? 'bg-teal-50 border-teal-200 text-teal-700 shadow-sm'
-              : 'bg-white border-transparent text-gray-600 hover:bg-gray-50'
+              ? theme.builder.header.buttonActive
+              : theme.builder.header.buttonInactive
               }`}
           >
-            <div className={`p-1.5 rounded-md transition-all ${isFlowsPopoverOpen ? 'bg-teal-600 text-white' : 'bg-gray-50 text-gray-400'}`}>
+            <div className={`p-1.5 rounded-md transition-all ${isFlowsPopoverOpen ? theme.builder.header.iconActive : theme.builder.header.iconInactive}`}>
               <WorkflowIcon size={14} />
             </div>
             <div className="text-left">
@@ -132,6 +135,7 @@ const WorkflowBuilderHeader: React.FC<WorkflowBuilderHeaderProps> = ({
                 searchQuery={searchQuery}
                 setSearchQuery={setSearchQuery}
                 deleteWorkflow={deleteWorkflow}
+                theme={theme}
               />
             )}
           </AnimatePresence>
@@ -157,12 +161,12 @@ const WorkflowBuilderHeader: React.FC<WorkflowBuilderHeaderProps> = ({
           <button
             onClick={() => setIsVersionsPopoverOpen(!isVersionsPopoverOpen)}
             className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-all border ${isVersionsPopoverOpen
-              ? 'bg-blue-50 border-blue-200 text-blue-700 shadow-sm'
-              : 'bg-white border-transparent text-gray-600 hover:bg-gray-50'
+              ? theme.builder.header.buttonActive
+              : theme.builder.header.buttonInactive
               }`}
             title="Version History"
           >
-            <div className={`p-1.5 rounded-md transition-all ${isVersionsPopoverOpen ? 'bg-blue-700 text-white' : 'bg-gray-50 text-gray-400'}`}>
+            <div className={`p-1.5 rounded-md transition-all ${isVersionsPopoverOpen ? theme.builder.header.iconActive : theme.builder.header.iconInactive}`}>
               <History size={14} />
             </div>
             <div className="text-left">
@@ -183,6 +187,7 @@ const WorkflowBuilderHeader: React.FC<WorkflowBuilderHeaderProps> = ({
             selectedVersion={selectedVersion}
             setSelectedVersion={setSelectedVersion}
             setRevertToast={setRevertToast}
+            theme={theme}
           />
         </div>
 
@@ -210,7 +215,7 @@ const WorkflowBuilderHeader: React.FC<WorkflowBuilderHeaderProps> = ({
               }, 1200);
             }}
             disabled={isRunning}
-            className={`p-2 rounded-lg transition-all ${isRunning ? 'text-teal-400 bg-teal-50 cursor-wait' : 'text-gray-600 hover:text-teal-600 hover:bg-white hover:shadow-sm'}`}
+            className={`p-2 rounded-lg transition-all ${isRunning ? 'text-teal-400 bg-teal-50 cursor-wait' : `text-gray-600 ${theme.builder.header.actionMenuHover}`}`}
             title="Run Flow"
           >
             {isRunning ? <Activity size={16} className="animate-spin" /> : <Play size={16} />}
@@ -233,7 +238,7 @@ const WorkflowBuilderHeader: React.FC<WorkflowBuilderHeaderProps> = ({
         <div className="relative" ref={actionsMenuRef} id="tour-global-actions">
           <button
             onClick={() => setIsActionsMenuOpen(!isActionsMenuOpen)}
-            className={`p-2 rounded-lg transition-all border ${isActionsMenuOpen ? 'bg-teal-50 border-teal-200 text-teal-700 shadow-sm' : 'bg-gray-50 border-gray-100 text-gray-600 hover:text-teal-600 hover:bg-white hover:border-teal-100 hover:shadow-sm'}`}
+            className={`p-2 rounded-lg transition-all border ${isActionsMenuOpen ? theme.builder.header.buttonActive : `bg-gray-50 border-gray-100 text-gray-600 ${theme.builder.header.actionMenuHover}`}`}
             title="Workflow Settings"
           >
             < MoreVertical size={16} />
@@ -251,20 +256,20 @@ const WorkflowBuilderHeader: React.FC<WorkflowBuilderHeaderProps> = ({
                   <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Global Actions</p>
                 </div>
 
-                <button onClick={() => setIsActionsMenuOpen(false)} className="w-full px-4 py-2.5 text-left text-xs font-bold text-gray-600 hover:bg-teal-50 hover:text-teal-700 flex items-center gap-3 transition-all">
-                  <Calendar size={14} className="text-blue-700" /> Schedule
+                <button onClick={() => setIsActionsMenuOpen(false)} className={`w-full px-4 py-2.5 text-left text-xs font-bold text-gray-600 ${theme.builder.header.actionMenuHover} flex items-center gap-3 transition-all`}>
+                  <Calendar size={14} className={theme.builder.header.actionMenuIcon} /> Schedule
                 </button>
-                <button onClick={() => setIsActionsMenuOpen(false)} className="w-full px-4 py-2.5 text-left text-xs font-bold text-gray-600 hover:bg-teal-50 hover:text-teal-700 flex items-center gap-3 transition-all">
-                  <Copy size={14} className="text-violet-700" /> Duplicate
+                <button onClick={() => setIsActionsMenuOpen(false)} className={`w-full px-4 py-2.5 text-left text-xs font-bold text-gray-600 ${theme.builder.header.actionMenuHover} flex items-center gap-3 transition-all`}>
+                  <Copy size={14} className={theme.builder.header.actionMenuIcon} /> Duplicate
                 </button>
-                <button onClick={() => setIsActionsMenuOpen(false)} className="w-full px-4 py-2.5 text-left text-xs font-bold text-gray-600 hover:bg-teal-50 hover:text-teal-700 flex items-center gap-3 transition-all">
-                  <Link2 size={14} className="text-teal-500" /> View Lineage
+                <button onClick={() => setIsActionsMenuOpen(false)} className={`w-full px-4 py-2.5 text-left text-xs font-bold text-gray-600 ${theme.builder.header.actionMenuHover} flex items-center gap-3 transition-all`}>
+                  <Link2 size={14} className={theme.builder.header.actionMenuIcon} /> View Lineage
                 </button>
-                <button onClick={() => setIsActionsMenuOpen(false)} className="w-full px-4 py-2.5 text-left text-xs font-bold text-gray-600 hover:bg-teal-50 hover:text-teal-700 flex items-center gap-3 transition-all">
-                  <Settings2 size={14} className="text-amber-600" /> Settings
+                <button onClick={() => setIsActionsMenuOpen(false)} className={`w-full px-4 py-2.5 text-left text-xs font-bold text-gray-600 ${theme.builder.header.actionMenuHover} flex items-center gap-3 transition-all`}>
+                  <Settings2 size={14} className={theme.builder.header.actionMenuIcon} /> Settings
                 </button>
-                <button onClick={() => setIsActionsMenuOpen(false)} className="w-full px-4 py-2.5 text-left text-xs font-bold text-gray-600 hover:bg-teal-50 hover:text-teal-700 flex items-center gap-3 transition-all">
-                  <Info size={14} className="text-violet-700" /> Workflow Info
+                <button onClick={() => setIsActionsMenuOpen(false)} className={`w-full px-4 py-2.5 text-left text-xs font-bold text-gray-600 ${theme.builder.header.actionMenuHover} flex items-center gap-3 transition-all`}>
+                  <Info size={14} className={theme.builder.header.actionMenuIcon} /> Workflow Info
                 </button>
 
                 <div className="h-px bg-gray-50 my-1 mx-2" />
@@ -285,7 +290,7 @@ const WorkflowBuilderHeader: React.FC<WorkflowBuilderHeaderProps> = ({
 
         <button
           onClick={() => setIsDeployModalOpen(true)}
-          className="flex items-center gap-2 px-5 py-2 bg-teal-600 text-white rounded-xl text-sm font-bold shadow-lg shadow-teal-100 hover:bg-teal-700 transition-all active:scale-95"
+          className={`flex items-center gap-2 px-5 py-2 rounded-xl text-sm font-bold transition-all active:scale-95 ${theme.builder.header.primaryBtn}`}
           id="tour-deploy"
         >
           < Rocket size={16} /> Deploy

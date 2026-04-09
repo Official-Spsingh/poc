@@ -23,10 +23,12 @@ import WorkflowBuilderNodesDrawer from './WorkflowBuilderNodesDrawer';
 import WorkflowBuilderRunPanel from './WorkflowBuilderRunPanel';
 import WorkflowBuilderZoomControls from './WorkflowBuilderZoomControls';
 import WorkflowBuilderDeployModal from './WorkflowBuilderDeployModal';
+import { COMPONENT_METADATA, EVENT_TYPES } from '../../../../constants';
 import { useResizableDrawer } from './hooks/useResizableDrawer';
 import { useWorkflowExecution } from './hooks/useWorkflowExecution';
 import { tourSteps } from './WorkflowTourSteps';
 import { LayoutGrid, Sparkles, Network, Check, Globe, HardDrive } from 'lucide-react';
+import { studioThemeColors, CombinedTheme, HomepageColors, WorkflowBuilderColors } from '../../../constants/themeColors';
 
 interface WorkflowBuilderProps {
   workflows: Workflow[];
@@ -211,8 +213,10 @@ const WorkflowBuilder: React.FC<WorkflowBuilderProps> = ({
     setIsDeployModalOpen(false);
   };
 
+  const activeTheme = studioThemeColors.workflow as unknown as CombinedTheme;
+
   return (
-    <div className="flex h-full w-full overflow-hidden bg-white">
+    <div className={`flex h-full w-full overflow-hidden ${activeTheme.builder.canvas.bg}`}>
       <div className="flex-1 flex flex-col overflow-hidden">
         <WorkflowBuilderHeader
           workflows={workflows}
@@ -239,6 +243,7 @@ const WorkflowBuilder: React.FC<WorkflowBuilderProps> = ({
           setIsDeployModalOpen={setIsDeployModalOpen}
           setNodes={setNodes}
           setConnections={setConnections}
+          theme={activeTheme}
         />
 
         <div className="flex-1 flex overflow-hidden">
@@ -248,6 +253,7 @@ const WorkflowBuilder: React.FC<WorkflowBuilderProps> = ({
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
             addNode={addNode}
+            theme={activeTheme}
           />
 
           <WorkflowBuilderCanvas
@@ -277,6 +283,7 @@ const WorkflowBuilder: React.FC<WorkflowBuilderProps> = ({
             isDrawerOpen={isDrawerOpen}
             isAiGenerated={isAiGenerated}
             setIsAiGenerated={setIsAiGenerated}
+            theme={activeTheme}
           >
             <WorkflowBuilderCommandCenter
               isNodeRunPanelOpen={isNodeRunPanelOpen}
@@ -288,6 +295,7 @@ const WorkflowBuilder: React.FC<WorkflowBuilderProps> = ({
               setIsGlobalAiOpen={setIsGlobalAiOpen}
               setIsDrawerOpen={setIsDrawerOpen}
               setIsTourOpen={setIsTourOpen}
+              theme={activeTheme}
             />
 
             <WorkflowBuilderZoomControls
@@ -305,6 +313,7 @@ const WorkflowBuilder: React.FC<WorkflowBuilderProps> = ({
               nodeRunActiveTab={nodeRunActiveTab}
               setNodeRunActiveTab={setNodeRunActiveTab}
               nodeRunResult={nodeRunResult}
+              theme={activeTheme}
             />
           </WorkflowBuilderCanvas>
 
@@ -321,6 +330,7 @@ const WorkflowBuilder: React.FC<WorkflowBuilderProps> = ({
             addEvent={addEvent}
             updateEvent={updateEvent}
             removeEvent={removeEvent}
+            theme={activeTheme}
           />
 
           <AIDrawer
@@ -342,7 +352,7 @@ const WorkflowBuilder: React.FC<WorkflowBuilderProps> = ({
             title="Lumenore AI"
             status="Workflow Support active"
             constraintsRef={canvasRef}
-            themeColor="teal"
+            themeColor={activeTheme.builder.header.primaryBtn.includes('teal') ? 'teal' : (activeTheme.builder.header.primaryBtn.includes('sky') ? 'sky' : 'violet')}
             quickActions={[
               { label: 'Analyze Flow', icon: <LayoutGrid size={12} />, onClick: () => setGlobalAiChatMessage("Analyze this Flow"), color: 'sky' },
               { label: 'Suggest Nodes', icon: <Sparkles size={12} />, onClick: () => setGlobalAiChatMessage("Suggest Nodes"), color: 'violet' },
@@ -360,6 +370,7 @@ const WorkflowBuilder: React.FC<WorkflowBuilderProps> = ({
         deployForm={deployForm}
         setDeployForm={setDeployForm}
         onPublish={handlePublish}
+        theme={activeTheme}
       />
       <GuidedTour
         isOpen={isTourOpen}

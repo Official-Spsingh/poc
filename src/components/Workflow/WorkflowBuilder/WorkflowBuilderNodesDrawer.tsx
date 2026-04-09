@@ -1,8 +1,9 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { Component, Search, X } from 'lucide-react';
 import React from 'react';
-import { COMPONENT_METADATA } from '../../../../constants';
+import { COMPONENT_METADATA } from './constants';
 import { NodeType, Position } from '../../../../types';
+import { CombinedTheme } from '../../../constants/themeColors';
 
 interface WorkflowBuilderNodesDrawerProps {
   isComponentSidebarOpen: boolean;
@@ -10,6 +11,7 @@ interface WorkflowBuilderNodesDrawerProps {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
   addNode: (type: NodeType, position?: Position) => void;
+  theme: CombinedTheme;
 }
 
 const WorkflowBuilderNodesDrawer: React.FC<WorkflowBuilderNodesDrawerProps> = ({
@@ -17,7 +19,8 @@ const WorkflowBuilderNodesDrawer: React.FC<WorkflowBuilderNodesDrawerProps> = ({
   setIsComponentSidebarOpen,
   searchQuery,
   setSearchQuery,
-  addNode
+  addNode,
+  theme
 }) => {
   return (
     <AnimatePresence>
@@ -31,8 +34,8 @@ const WorkflowBuilderNodesDrawer: React.FC<WorkflowBuilderNodesDrawerProps> = ({
           <div className="w-[256px] flex flex-col h-full shrink-0 border-r border-gray-200">
             <div className="p-5 border-b border-gray-100 flex items-center justify-between h-16 bg-white sticky top-0">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-teal-50 rounded-lg">
-                  <Component size={18} className="text-teal-600" />
+                <div className={`p-2 rounded-lg ${theme.builder.runPanel.headerIconBg}`}>
+                  <Component size={18} className={theme.builder.runPanel.headerIconText} />
                 </div>
                 <span className="font-bold text-sm text-gray-900">Nodes</span>
               </div>
@@ -50,7 +53,7 @@ const WorkflowBuilderNodesDrawer: React.FC<WorkflowBuilderNodesDrawerProps> = ({
                 <input
                   type="text"
                   placeholder="Search nodes..."
-                  className="w-full pl-9 pr-4 py-2.5 bg-gray-50 border border-gray-100 rounded-xl text-xs outline-none focus:bg-white focus:border-teal-400 transition-all"
+                  className={`w-full pl-9 pr-4 py-2.5 bg-gray-50 border border-gray-100 rounded-xl text-xs outline-none focus:bg-white ${theme.builder.drawers.inputFocus} transition-all`}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
@@ -71,12 +74,12 @@ const WorkflowBuilderNodesDrawer: React.FC<WorkflowBuilderNodesDrawerProps> = ({
                         onClick={() => {
                           addNode(type);
                         }}
-                        className="flex flex-col items-center justify-center p-4 rounded-2xl bg-white border border-gray-100 hover:border-blue-400 hover:shadow-xl hover:-translate-y-1 transition-all group"
+                        className={`flex flex-col items-center justify-center p-4 rounded-2xl bg-white border border-gray-100 ${theme.builder.drawers.itemHoverBorder} hover:shadow-xl hover:-translate-y-1 transition-all group`}
                       >
                         <div className={`p-3 rounded-xl ${meta.color} group-hover:scale-110 transition-transform mb-2 shadow-sm`}>
                           {React.cloneElement(meta.icon as React.ReactElement, { size: 18 })}
                         </div>
-                        <span className="text-[10px] font-bold text-gray-600 group-hover:text-blue-600 text-center leading-tight">
+                        <span className={`text-[10px] font-bold text-gray-600 ${theme.builder.drawers.itemHoverText} text-center leading-tight`}>
                           {meta.label}
                         </span>
                       </button>

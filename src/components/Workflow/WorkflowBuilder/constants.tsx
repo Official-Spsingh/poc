@@ -31,7 +31,7 @@ import {
   Workflow as WorkflowIcon
 } from 'lucide-react';
 
-import { NodeType, EventType } from './types';
+import { NodeType, EventType } from '../../../../types';
 
 export const COMPONENT_METADATA: Record<NodeType, { label: string; icon: React.ReactNode; color: string }> = {
   'start': { label: 'Start', icon: <Play size={18} />, color: 'text-emerald-500' },

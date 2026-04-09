@@ -1,6 +1,7 @@
 import { Copy, Edit2, Globe, HardDrive, Info, Link2, MoreVertical, Settings2, Trash2, Workflow as WorkflowIcon } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
 import { Workflow } from '../../../../types';
+import { CombinedTheme } from '../../../constants/themeColors';
 
 interface WorkflowSidebarItemProps {
   workflow: Workflow;
@@ -13,10 +14,11 @@ interface WorkflowSidebarItemProps {
   onViewLineage: (w: Workflow) => void;
   hideActions?: boolean;
   workspaceName?: string;
+  theme?: CombinedTheme;
 }
 
 const WorkflowSidebarItem: React.FC<WorkflowSidebarItemProps> = ({ 
-  workflow, isActive, onEdit, onSettings, onDelete, onViewInfo, onDuplicate, onViewLineage, hideActions, workspaceName 
+  workflow, isActive, onEdit, onSettings, onDelete, onViewInfo, onDuplicate, onViewLineage, hideActions, workspaceName, theme 
 }) => {
   const [showActions, setShowActions] = useState(false);
   const actionRef = useRef<HTMLDivElement>(null);
@@ -32,8 +34,8 @@ const WorkflowSidebarItem: React.FC<WorkflowSidebarItemProps> = ({
   }, []);
 
   return (
-    <div className={`group relative flex items-center p-3 rounded-xl border transition-all cursor-pointer ${isActive ? 'bg-blue-50 border-blue-100 shadow-sm' : 'bg-white border-gray-100 hover:border-gray-200 hover:shadow-sm'}`} onClick={() => onEdit(workflow)}>
-      <div className={`p-2 rounded-lg mr-3 ${isActive ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-400 group-hover:bg-gray-200 group-hover:text-gray-600'}`}>
+    <div className={`group relative flex items-center p-3 rounded-xl border transition-all cursor-pointer ${isActive ? (theme ? `${theme.homepage.tipsSection.iconBg} ${theme.homepage.tipsSection.iconBg.replace('bg-', 'border-').replace('50', '200')} shadow-sm` : 'bg-blue-50 border-blue-100 shadow-sm') : 'bg-white border-gray-100 hover:border-gray-200 hover:shadow-sm'}`} onClick={() => onEdit(workflow)}>
+      <div className={`p-2 rounded-lg mr-3 ${isActive ? (theme ? theme.builder.header.iconActive : 'bg-blue-600 text-white') : theme ? theme.builder.header.iconInactive : 'bg-gray-100 text-gray-400 group-hover:bg-gray-200 group-hover:text-gray-600'}`}>
         <WorkflowIcon size={16} />
       </div>
       <div className="flex-1 min-w-0">

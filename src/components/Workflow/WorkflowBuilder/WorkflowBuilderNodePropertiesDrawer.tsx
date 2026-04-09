@@ -12,8 +12,9 @@ import {
   X
 } from 'lucide-react';
 import React from 'react';
-import { COMPONENT_METADATA, EVENT_TYPES } from '../../../../constants';
+import { COMPONENT_METADATA, EVENT_TYPES } from './constants';
 import { EventConfig, EventType, NodeData } from '../../../../types';
+import { CombinedTheme } from '../../../constants/themeColors';
 import { FormLabel, PayloadTable } from './Helpers';
 
 interface WorkflowBuilderNodePropertiesDrawerProps {
@@ -29,6 +30,7 @@ interface WorkflowBuilderNodePropertiesDrawerProps {
   addEvent: (nodeId: string) => void;
   updateEvent: (nodeId: string, eventId: string, updates: Partial<EventConfig>) => void;
   removeEvent: (nodeId: string, eventId: string) => void;
+  theme: CombinedTheme;
 }
 
 const WorkflowBuilderNodePropertiesDrawer: React.FC<WorkflowBuilderNodePropertiesDrawerProps> = ({
@@ -43,7 +45,8 @@ const WorkflowBuilderNodePropertiesDrawer: React.FC<WorkflowBuilderNodePropertie
   setGlobalAiChatMessage,
   addEvent,
   updateEvent,
-  removeEvent
+  removeEvent,
+  theme
 }) => {
   if (!selectedNode) return null;
 
@@ -94,7 +97,7 @@ const WorkflowBuilderNodePropertiesDrawer: React.FC<WorkflowBuilderNodePropertie
                     type="text"
                     value={selectedNode.label}
                     onChange={(e) => updateNodeConfig(selectedNode.id, { label: e.target.value })}
-                    className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-teal-100 focus:border-teal-400 transition-all"
+                    className={`w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm outline-none focus:ring-2 ${theme.builder.drawers.inputFocus} transition-all`}
                   />
                 </div>
               </section>
@@ -106,8 +109,8 @@ const WorkflowBuilderNodePropertiesDrawer: React.FC<WorkflowBuilderNodePropertie
                     <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Entry Context</span>
                   </div>
                   <div className="flex items-center justify-between p-1 bg-gray-100 rounded-xl mb-4">
-                    <button onClick={() => updateNodeConfig(selectedNode.id, { inputMode: 'table' })} className={`flex-1 flex items-center justify-center gap-2 py-2 text-[10px] font-bold rounded-lg transition-all ${selectedNode.config?.inputMode === 'table' ? 'bg-white text-teal-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}>Table Editor</button>
-                    <button onClick={() => updateNodeConfig(selectedNode.id, { inputMode: 'json' })} className={`flex-1 flex items-center justify-center gap-2 py-2 text-[10px] font-bold rounded-lg transition-all ${selectedNode.config?.inputMode === 'json' ? 'bg-white text-teal-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}>JSON Editor</button>
+                    <button onClick={() => updateNodeConfig(selectedNode.id, { inputMode: 'table' })} className={`flex-1 flex items-center justify-center gap-2 py-2 text-[10px] font-bold rounded-lg transition-all ${selectedNode.config?.inputMode === 'table' ? `${theme.builder.drawers.headerBg} ${theme.builder.drawers.itemHoverText} shadow-sm` : 'text-gray-500 hover:text-gray-700'}`}>Table Editor</button>
+                    <button onClick={() => updateNodeConfig(selectedNode.id, { inputMode: 'json' })} className={`flex-1 flex items-center justify-center gap-2 py-2 text-[10px] font-bold rounded-lg transition-all ${selectedNode.config?.inputMode === 'json' ? `${theme.builder.drawers.headerBg} ${theme.builder.drawers.itemHoverText} shadow-sm` : 'text-gray-500 hover:text-gray-700'}`}>JSON Editor</button>
                   </div>
                   {selectedNode.config?.inputMode === 'json' ? (
                     <textarea rows={10} value={selectedNode.config?.rawJson || ''} onChange={(e) => updateNodeConfig(selectedNode.id, { rawJson: e.target.value })} className="w-full px-3 py-3 bg-[#1e293b] text-blue-300 border-none text-xs outline-none font-mono leading-relaxed rounded-xl"
@@ -141,7 +144,7 @@ const WorkflowBuilderNodePropertiesDrawer: React.FC<WorkflowBuilderNodePropertie
                           setIsGlobalAiOpen(true);
                           setGlobalAiChatMessage(`@${selectedNode.label} `);
                         }}
-                        className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold transition-all border bg-teal-50 text-teal-600 border-teal-100 hover:bg-teal-100`}
+                        className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold transition-all border ${theme.builder.runPanel.successBadge} hover:${theme.builder.runPanel.headerIconBg}`}
                       >
                         <Sparkles size={10} />
                         Get Help with AI
@@ -186,7 +189,7 @@ const WorkflowBuilderNodePropertiesDrawer: React.FC<WorkflowBuilderNodePropertie
                           setIsGlobalAiOpen(true);
                           setGlobalAiChatMessage(`@${selectedNode.label} `);
                         }}
-                        className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold transition-all border bg-teal-50 text-teal-600 border-teal-100 hover:bg-teal-100`}
+                        className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold transition-all border ${theme.builder.runPanel.successBadge} hover:${theme.builder.runPanel.headerIconBg}`}
                       >
                         <Sparkles size={10} />
                         Get Help with AI
@@ -204,7 +207,7 @@ const WorkflowBuilderNodePropertiesDrawer: React.FC<WorkflowBuilderNodePropertie
                   <div className="space-y-6 pt-6 border-t border-gray-100">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2"><ArrowRightLeft size={14} className="text-amber-500" /><span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Return Handlers</span></div>
-                      <button onClick={() => addEvent(selectedNode.id)} className="flex items-center gap-1.5 px-3 py-1.5 bg-teal-50 text-teal-600 rounded-lg text-[10px] font-bold hover:bg-teal-100 transition-all border border-teal-100"><Plus size={12} /> Add Trigger</button>
+                      <button onClick={() => addEvent(selectedNode.id)} className={`flex items-center gap-1.5 px-3 py-1.5 ${theme.builder.runPanel.successBadge} rounded-lg text-[10px] font-bold hover:${theme.builder.runPanel.headerIconBg} transition-all border border-teal-100`}><Plus size={12} /> Add Trigger</button>
                     </div>
                     <div className="space-y-4">
                       {selectedNode.events?.map((event, idx) => (
@@ -214,10 +217,10 @@ const WorkflowBuilderNodePropertiesDrawer: React.FC<WorkflowBuilderNodePropertie
                             <button onClick={() => removeEvent(selectedNode.id, event.id)} className="text-gray-300 hover:text-rose-500 transition-colors"><Trash2 size={14} /></button>
                           </div>
                           <div className="p-4 space-y-4">
-                            <div><FormLabel>Action Type</FormLabel><select value={event.type} onChange={(e) => updateEvent(selectedNode.id, event.id, { type: e.target.value as EventType })} className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-xs outline-none focus:border-teal-400 cursor-pointer">{EVENT_TYPES.map(et => <option key={et.value} value={et.value}>{et.label}</option>)}</select></div>
+                            <div><FormLabel>Action Type</FormLabel><select value={event.type} onChange={(e) => updateEvent(selectedNode.id, event.id, { type: e.target.value as EventType })} className={`w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-xs outline-none focus:${theme.builder.drawers.itemHoverBorder} cursor-pointer`}>{EVENT_TYPES.map(et => <option key={et.value} value={et.value}>{et.label}</option>)}</select></div>
                             <div className="grid grid-cols-2 gap-3">
-                              <div><FormLabel>Value / WID</FormLabel><input type="text" placeholder="Value" value={event.value} onChange={(e) => updateEvent(selectedNode.id, event.id, { value: e.target.value })} className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-xs outline-none focus:border-teal-400" /></div>
-                              <div><FormLabel>Parameters</FormLabel><input type="text" placeholder="Params" value={event.params} onChange={(e) => updateEvent(selectedNode.id, event.id, { params: e.target.value })} className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-xs outline-none focus:border-teal-400" /></div>
+                              <div><FormLabel>Value / WID</FormLabel><input type="text" placeholder="Value" value={event.value} onChange={(e) => updateEvent(selectedNode.id, event.id, { value: e.target.value })} className={`w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-xs outline-none focus:${theme.builder.drawers.itemHoverBorder}`} /></div>
+                              <div><FormLabel>Parameters</FormLabel><input type="text" placeholder="Params" value={event.params} onChange={(e) => updateEvent(selectedNode.id, event.id, { params: e.target.value })} className={`w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-xs outline-none focus:${theme.builder.drawers.itemHoverBorder}`} /></div>
                             </div>
                           </div>
                         </div>

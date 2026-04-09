@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Bot, Compass, LayoutGrid, Lock, Network, Sparkles, Unlock } from 'lucide-react';
 import React from 'react';
+import { CombinedTheme } from '../../../constants/themeColors';
 
 interface WorkflowBuilderCommandCenterProps {
   isNodeRunPanelOpen: boolean;
@@ -12,6 +13,7 @@ interface WorkflowBuilderCommandCenterProps {
   setIsGlobalAiOpen: (isOpen: boolean) => void;
   setIsDrawerOpen: (isOpen: boolean) => void;
   setIsTourOpen: (isOpen: boolean) => void;
+  theme: CombinedTheme;
 }
 
 const WorkflowBuilderCommandCenter: React.FC<WorkflowBuilderCommandCenterProps> = ({
@@ -23,8 +25,15 @@ const WorkflowBuilderCommandCenter: React.FC<WorkflowBuilderCommandCenterProps> 
   isGlobalAiOpen,
   setIsGlobalAiOpen,
   setIsDrawerOpen,
-  setIsTourOpen
+  setIsTourOpen,
+  theme
 }) => {
+  const baseColor = theme.builder.header.primaryBtn.includes('teal') ? 'teal' : 
+                   (theme.builder.header.primaryBtn.includes('sky') ? 'sky' : 
+                   (theme.builder.header.primaryBtn.includes('blue') ? 'blue' : 
+                   (theme.builder.header.primaryBtn.includes('violet') ? 'violet' : 
+                   (theme.builder.header.primaryBtn.includes('emerald') ? 'emerald' : 'teal'))));
+
   return (
     <motion.div
       initial={false}
@@ -38,11 +47,11 @@ const WorkflowBuilderCommandCenter: React.FC<WorkflowBuilderCommandCenterProps> 
         <div className="flex flex-col border-b border-gray-100/50">
           <button
             onClick={() => !isLocked && setIsComponentSidebarOpen(!isComponentSidebarOpen)}
-            className={`p-4 transition-all active:scale-95 group relative ${isComponentSidebarOpen ? 'bg-teal-50 text-teal-600' : 'hover:bg-teal-50 text-gray-500 hover:text-teal-600'} ${isLocked ? 'cursor-not-allowed opacity-50' : ''}`}
+            className={`p-4 transition-all active:scale-95 group relative ${isComponentSidebarOpen ? `${theme.builder.header.buttonActive}` : `hover:${theme.builder.header.actionMenuHover} text-gray-500 hover:${theme.builder.header.buttonActive.split(' ')[2]}`} ${isLocked ? 'cursor-not-allowed opacity-50' : ''}`}
             title={isLocked ? "Locked" : "Toggle Add Node Panel"}
           >
             <LayoutGrid size={20} className={isComponentSidebarOpen ? 'rotate-0' : 'group-hover:scale-110 transition-transform duration-300'} />
-            <div className="absolute left-full ml-3 px-3 py-1.5 bg-gray-900 text-white text-[10px] font-bold rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none uppercase tracking-widest shadow-xl z-50">
+            <div className={`absolute left-full ml-3 px-3 py-1.5 ${theme.builder.header.primaryBtn.split(' ')[0]} text-white text-[10px] font-bold rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none uppercase tracking-widest shadow-xl z-50`}>
               {isComponentSidebarOpen ? 'Close Panel' : 'Add Component'}
             </div>
           </button>
@@ -52,23 +61,23 @@ const WorkflowBuilderCommandCenter: React.FC<WorkflowBuilderCommandCenterProps> 
               setIsGlobalAiOpen(!isGlobalAiOpen);
               if (!isGlobalAiOpen) setIsDrawerOpen(false);
             }}
-            className={`p-4 transition-all active:scale-90 group relative ${isGlobalAiOpen ? 'bg-violet-50 text-violet-600' : 'hover:bg-violet-50 text-violet-500 hover:text-violet-600'}`}
+            className={`p-4 transition-all active:scale-90 group relative ${isGlobalAiOpen ? `bg-${baseColor}-50 text-${baseColor}-600` : `hover:bg-${baseColor}-50 text-${baseColor}-500 hover:text-${baseColor}-600`}`}
             title="AI Workflow Support"
           >
             <div className="relative">
-              <Sparkles size={18} className={isGlobalAiOpen ? 'animate-pulse text-violet-600' : 'group-hover:scale-110 transition-transform'} />
+              <Sparkles size={18} className={isGlobalAiOpen ? `animate-pulse text-${baseColor}-600` : 'group-hover:scale-110 transition-transform'} />
               {isGlobalAiOpen && (
                 <motion.div
                   layoutId="ai-glow"
-                  className="absolute inset-0 bg-violet-400 blur-lg opacity-30 -z-10 rounded-full"
+                  className={`absolute inset-0 bg-${baseColor}-400 blur-lg opacity-30 -z-10 rounded-full`}
                   initial={{ scale: 0.5, opacity: 0 }}
                   animate={{ scale: 1.5, opacity: 0.3 }}
                   transition={{ repeat: Infinity, duration: 2, repeatType: 'reverse' }}
                 />
               )}
             </div>
-            <div className="absolute left-full ml-3 px-3 py-1.5 bg-violet-900 text-white text-[10px] font-bold rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none uppercase tracking-widest shadow-xl flex items-center gap-2 z-50">
-              <Bot size={12} className="text-violet-300" />
+            <div className={`absolute left-full ml-3 px-3 py-1.5 ${theme.builder.header.primaryBtn.split(' ')[0]} text-white text-[10px] font-bold rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none uppercase tracking-widest shadow-xl flex items-center gap-2 z-50`}>
+              <Bot size={12} className={`text-${baseColor}-300`} />
               Lumenore AI Help
             </div>
           </button>
@@ -78,33 +87,33 @@ const WorkflowBuilderCommandCenter: React.FC<WorkflowBuilderCommandCenterProps> 
         <div className="flex flex-col bg-gray-50/20">
           <button
             onClick={() => console.log("Rearranging...")}
-            className="p-4 hover:bg-teal-50 text-gray-400 hover:text-teal-600 transition-all active:scale-90 group relative"
+            className={`p-4 hover:${theme.builder.header.actionMenuHover} text-gray-400 hover:${theme.builder.header.buttonActive.split(' ')[2]} transition-all active:scale-90 group relative`}
             title="Auto Rearrange"
           >
             <Network size={18} />
-            <div className="absolute left-full ml-3 px-3 py-1.5 bg-gray-900 text-white text-[10px] font-bold rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none uppercase tracking-widest shadow-xl z-50">Auto Rearrange</div>
+            <div className={`absolute left-full ml-3 px-3 py-1.5 ${theme.builder.header.primaryBtn.split(' ')[0]} text-white text-[10px] font-bold rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none uppercase tracking-widest shadow-xl z-50`}>Auto Rearrange</div>
           </button>
 
           <div className="h-px bg-gray-100/50 mx-2" />
 
           <button
             onClick={() => setIsLocked(!isLocked)}
-            className={`p-4 transition-all active:scale-90 group relative ${isLocked ? 'text-amber-600' : 'text-gray-400 hover:text-teal-600'}`}
+            className={`p-4 transition-all active:scale-90 group relative ${isLocked ? theme.builder.header.lockActive : `text-gray-400 hover:${theme.builder.header.buttonActive.split(' ')[2]}`}`}
             title={isLocked ? "Unlock Canvas" : "Lock Canvas"}
           >
             {isLocked ? <Lock size={18} /> : <Unlock size={18} />}
-            <div className="absolute left-full ml-3 px-3 py-1.5 bg-gray-900 text-white text-[10px] font-bold rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none uppercase tracking-widest shadow-xl z-50">{isLocked ? 'Unlock Flow' : 'Lock Flow'}</div>
+            <div className={`absolute left-full ml-3 px-3 py-1.5 ${theme.builder.header.primaryBtn.split(' ')[0]} text-white text-[10px] font-bold rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none uppercase tracking-widest shadow-xl z-50`}>{isLocked ? 'Unlock Flow' : 'Lock Flow'}</div>
           </button>
 
           <div className="h-px bg-gray-100/50 mx-2" />
 
           <button
             onClick={() => setIsTourOpen(true)}
-            className="p-4 text-gray-400 hover:text-blue-600 hover:bg-blue-50 transition-all active:scale-90 group relative"
+            className={`p-4 text-gray-400 hover:${theme.builder.header.buttonActive.split(' ')[2]} hover:${theme.builder.header.actionMenuHover} transition-all active:scale-90 group relative`}
             title="Quick Start Tour"
           >
             <Compass size={18} />
-            <div className="absolute left-full ml-3 px-3 py-1.5 bg-blue-900 text-white text-[10px] font-bold rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none uppercase tracking-widest shadow-xl z-50">Launch Tour</div>
+            <div className={`absolute left-full ml-3 px-3 py-1.5 ${theme.builder.header.primaryBtn.split(' ')[0]} text-white text-[10px] font-bold rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none uppercase tracking-widest shadow-xl z-50`}>Launch Tour</div>
           </button>
         </div>
       </div>

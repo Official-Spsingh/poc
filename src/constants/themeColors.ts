@@ -79,6 +79,56 @@ export interface LineageColors {
   badgeBg: string;
 }
 
+export interface BuilderHeaderColors {
+  bg: string;
+  border: string;
+  buttonActive: string;
+  buttonInactive: string;
+  iconActive: string;
+  iconInactive: string;
+  primaryBtn: string;
+  actionMenuHover: string;
+  actionMenuIcon: string;
+  lockActive: string;
+}
+
+export interface BuilderNodeColors {
+  selectedBorder: string;
+  selectedRing: string;
+  errorBorder: string;
+  errorRing: string;
+  handleHover: string;
+  hoverBorder: string;
+}
+
+export interface BuilderRunPanelColors {
+  bg: string;
+  border: string;
+  headerIconBg: string;
+  headerIconText: string;
+  tabActive: string;
+  tabInactive: string;
+  tabActiveText: string;
+  successBadge: string;
+}
+
+export interface BuilderDrawerColors {
+  bg: string;
+  headerBg: string;
+  border: string;
+  inputFocus: string;
+  itemHoverBorder: string;
+  itemHoverText: string;
+}
+
+export interface WorkflowBuilderColors {
+  header: BuilderHeaderColors;
+  nodes: BuilderNodeColors;
+  runPanel: BuilderRunPanelColors;
+  drawers: BuilderDrawerColors;
+  canvas: { bg: string; grid: string };
+}
+
 export interface HomepageColors {
   hero: HeroColors;
   header: HeaderColors;
@@ -93,11 +143,106 @@ export interface HomepageColors {
   lineage: LineageColors;
 }
 
+export interface CombinedTheme {
+  homepage: HomepageColors;
+  builder: WorkflowBuilderColors;
+}
+
 export interface ModuleColors {
   homepage: HomepageColors;
-  variations?: Record<string, HomepageColors>;
+  builder?: WorkflowBuilderColors;
   [key: string]: any;
 }
+
+const generateTealWorkflowBuilderColors = (): WorkflowBuilderColors => ({
+  header: {
+    bg: 'bg-white',
+    border: 'border-gray-100',
+    buttonActive: 'bg-teal-50 border-teal-200 text-teal-700 shadow-sm',
+    buttonInactive: 'bg-white border-transparent text-gray-600 hover:bg-gray-50',
+    iconActive: 'bg-teal-600 text-white',
+    iconInactive: 'bg-gray-50 text-gray-400',
+    primaryBtn: 'bg-teal-600 text-white shadow-teal-100 hover:bg-teal-700',
+    actionMenuHover: 'hover:bg-teal-50',
+    actionMenuIcon: 'text-gray-900',
+    lockActive: 'text-amber-600'
+  },
+  nodes: {
+    selectedBorder: 'border-teal-500',
+    selectedRing: 'ring-teal-50/50',
+    errorBorder: 'border-rose-400',
+    errorRing: 'ring-rose-50',
+    handleHover: 'hover:bg-teal-500 hover:border-teal-500',
+    hoverBorder: 'hover:border-teal-300'
+  },
+  runPanel: {
+    bg: 'bg-white',
+    border: 'border-gray-200',
+    headerIconBg: 'bg-teal-50',
+    headerIconText: 'text-teal-600',
+    tabActive: 'bg-white',
+    tabInactive: 'text-gray-500 hover:text-gray-700',
+    tabActiveText: 'text-teal-700',
+    successBadge: 'bg-teal-50 text-teal-600 border-teal-100'
+  },
+  drawers: {
+    bg: 'bg-[#fcfdfe]',
+    headerBg: 'bg-white',
+    border: 'border-gray-200',
+    inputFocus: 'focus:ring-teal-100 focus:border-teal-400',
+    itemHoverBorder: 'hover:border-teal-300',
+    itemHoverText: 'hover:text-teal-700'
+  },
+  canvas: {
+    bg: '#ffffff',
+    grid: '#f1f5f9'
+  }
+});
+
+const generateSkyWorkflowBuilderColors = (): WorkflowBuilderColors => ({
+  header: {
+    bg: 'bg-white',
+    border: 'border-gray-100',
+    buttonActive: 'bg-sky-50 border-sky-200 text-sky-800 shadow-sm',
+    buttonInactive: 'bg-white border-transparent text-gray-600 hover:bg-gray-50',
+    iconActive: 'bg-sky-800 text-white',
+    iconInactive: 'bg-gray-50 text-gray-400',
+    primaryBtn: 'bg-sky-800 text-white shadow-sky-100 hover:bg-sky-900',
+    actionMenuHover: 'hover:bg-sky-50',
+    actionMenuIcon: 'text-gray-900',
+    lockActive: 'text-amber-600'
+  },
+  nodes: {
+    selectedBorder: 'border-sky-500',
+    selectedRing: 'ring-sky-50/50',
+    errorBorder: 'border-rose-400',
+    errorRing: 'ring-rose-50',
+    handleHover: 'hover:bg-sky-500 hover:border-sky-500',
+    hoverBorder: 'hover:border-sky-300'
+  },
+  runPanel: {
+    bg: 'bg-white',
+    border: 'border-gray-200',
+    headerIconBg: 'bg-sky-50',
+    headerIconText: 'text-sky-800',
+    tabActive: 'bg-white',
+    tabInactive: 'text-gray-500 hover:text-gray-700',
+    tabActiveText: 'text-sky-800',
+    successBadge: 'bg-sky-50 text-sky-800 border-sky-100'
+  },
+  drawers: {
+    bg: 'bg-white',
+    headerBg: 'bg-sky-50',
+    border: 'border-gray-100',
+    inputFocus: 'focus:ring-sky-100 focus:border-sky-800/40',
+    itemHoverBorder: 'hover:border-sky-200',
+    itemHoverText: 'hover:text-sky-800'
+  },
+  canvas: {
+    bg: '#f8fafc',
+    grid: '#e2e8f0'
+  }
+});
 
 const generateTealColors = (): HomepageColors => ({
   hero: {
@@ -164,74 +309,6 @@ const generateTealColors = (): HomepageColors => ({
     cardBorder: 'hover:border-teal-200',
     cardHoverBg: 'hover:bg-teal-50/20',
     badgeBg: 'bg-teal-50 text-teal-600'
-  }
-});
-
-const generateEmeraldColors = (): HomepageColors => ({
-  hero: {
-    badge: 'bg-emerald-50 text-emerald-600',
-    gradient: 'from-emerald-700 to-teal-700',
-    shadow: 'shadow-emerald-50/5',
-    button: 'bg-emerald-600 hover:bg-emerald-700 shadow-emerald-200/50',
-    secondaryHover: 'hover:text-emerald-700 hover:bg-emerald-50',
-    iconColor: 'text-emerald-500'
-  },
-  header: {
-    iconBg: 'bg-slate-50 text-emerald-600 border-slate-100',
-    primaryBtn: 'bg-emerald-600 text-white shadow-emerald-100 hover:bg-emerald-700',
-  },
-  pageWrapper: {
-    blurs: ['bg-emerald-400/10', 'bg-teal-400/10', 'bg-emerald-400/5']
-  },
-  card: {
-    border: 'hover:border-emerald-400',
-    shadow: 'hover:shadow-emerald-100/30',
-    accent: 'from-emerald-400 to-emerald-400',
-    iconBg: 'group-hover:bg-emerald-50',
-    iconText: 'group-hover:text-emerald-600',
-    titleHover: 'group-hover:text-emerald-700',
-    chevronBg: 'group-hover:bg-emerald-50',
-    chevronText: 'group-hover:text-emerald-600',
-    menuHover: 'hover:bg-emerald-50 hover:text-emerald-700',
-    statusBg: 'bg-emerald-50',
-    statusText: 'text-emerald-700'
-  },
-  table: {
-    hoverBg: 'hover:bg-emerald-50/30',
-    menuHover: 'hover:bg-emerald-50 hover:text-emerald-700',
-  },
-  toolbar: {
-    focusRing: 'focus:ring-emerald-100 focus:border-emerald-400',
-    activeText: 'text-emerald-600',
-    bgLight: 'bg-emerald-50'
-  },
-  emptyState: {
-    glow: 'bg-emerald-400',
-    iconBg: 'bg-emerald-50 text-emerald-600',
-    button: 'bg-emerald-600 hover:bg-emerald-700 shadow-emerald-100',
-    secondaryText: 'text-emerald-700',
-    secondaryBg: 'hover:bg-emerald-50'
-  },
-  tipsSection: { iconBg: 'bg-emerald-50', iconText: 'text-emerald-600' },
-  statusBadges: {
-    active: 'bg-emerald-50 text-emerald-600 border-emerald-100',
-    published: 'bg-emerald-50 text-emerald-600 border-emerald-100',
-    draft: 'bg-slate-50 text-slate-500 border-slate-100',
-    error: 'bg-rose-50 text-rose-600 border-rose-100'
-  },
-  modal: {
-    headerBg: 'bg-emerald-50',
-    headerText: 'text-emerald-900',
-    iconBg: 'bg-emerald-600',
-    primaryBtn: 'bg-emerald-600 hover:bg-emerald-700',
-    secondaryBtn: 'hover:bg-emerald-50 text-emerald-600'
-  },
-  lineage: {
-    mainIconBg: 'bg-emerald-600',
-    mainIconText: 'text-white',
-    cardBorder: 'hover:border-emerald-200',
-    cardHoverBg: 'hover:bg-emerald-50/20',
-    badgeBg: 'bg-emerald-50 text-emerald-600'
   }
 });
 
@@ -647,34 +724,51 @@ const generateSlateColors = (): HomepageColors => ({
   }
 });
 
+// Centralized Theme Objects for Shade-based Access
+export const workflowTheme = {
+  homepage: {
+    teal: generateTealColors(),
+    sky: generateSkyColors()
+  },
+  builder: {
+    teal: generateTealWorkflowBuilderColors(),
+    sky: generateSkyWorkflowBuilderColors()
+  }
+};
+
+export const appsTheme = {
+  homepage: {
+    sky: generateSkyColors(),
+    blue: generateBlueColors()
+  }
+};
+
+export const agentsTheme = {
+  homepage: {
+    violet: generateVioletColors(),
+    purple: generatePurpleColors()
+  }
+};
+
+export const vibecodingTheme = {
+  homepage: {
+    indigo: generateIndigoColors(),
+    slate: generateSlateColors()
+  }
+};
+
 export const studioThemeColors: Record<string, ModuleColors> = {
   workflow: {
-    homepage: generateTealColors(),
-    variations: {
-      default: generateTealColors(),
-      alternative: generateEmeraldColors()
-    },
-    workflowBuilder: {}
+    homepage: workflowTheme.homepage['sky'], // acceptable values: teal, sky
+    builder: workflowTheme.builder['sky']    // acceptable values: teal, sky
   },
   apps: {
-    homepage: generateSkyColors(),
-    variations: {
-      default: generateSkyColors(),
-      alternative: generateBlueColors()
-    }
+    homepage: appsTheme.homepage['sky'],      // acceptable values: sky, blue
   },
   agents: {
-    homepage: generateVioletColors(),
-    variations: {
-      default: generateVioletColors(),
-      alternative: generatePurpleColors()
-    }
+    homepage: agentsTheme.homepage['violet'], // acceptable values: violet, purple
   },
   vibecoding: {
-    homepage: generateIndigoColors(),
-    variations: {
-      default: generateIndigoColors(),
-      alternative: generateSlateColors()
-    }
+    homepage: vibecodingTheme.homepage['indigo'], // acceptable values: indigo, slate
   }
 };
