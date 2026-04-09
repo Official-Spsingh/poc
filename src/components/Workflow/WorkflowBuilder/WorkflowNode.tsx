@@ -3,69 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { COMPONENT_METADATA } from './constants';
 import { NodeData, Position } from '../../../../types';
 import { CombinedTheme } from '../../../constants/themeColors';
-
-interface NodeActionsDropdownProps {
-  onRun: () => void;
-  onClose: () => void;
-  theme: CombinedTheme;
-}
-
-const NodeActionsDropdown: React.FC<NodeActionsDropdownProps> = ({ 
-  onEdit, onDelete, onClone, onRun, onClose, theme
-}) => {
-  const menuRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        onClose();
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [onClose]);
-
-  return (
-    <div 
-      ref={menuRef}
-      className="absolute top-0 right-0 mt-10 w-48 bg-white rounded-xl shadow-2xl border border-gray-100 py-2 z-[100] overflow-hidden animate-in fade-in slide-in-from-top-2"
-      onMouseDown={(e) => e.stopPropagation()}
-    >
-      <button 
-        onClick={() => { onRun(); onClose(); }} 
-        className={`w-full px-4 py-2.5 text-left text-xs ${theme.homepage.tipsSection.iconText} ${theme.homepage.tipsSection.iconBg} flex items-center gap-3 transition-colors font-bold`}
-      >
-        <Play size={14} fill="currentColor" /> Run Node
-      </button>
-      <div className="h-px bg-gray-100 my-1" />
-      <button 
-        onClick={() => { onClone(); onClose(); }} 
-        className="w-full px-4 py-2.5 text-left text-xs text-gray-600 hover:bg-gray-50 flex items-center gap-3 transition-colors"
-      >
-        <Copy size={14} className="text-gray-400" /> Clone Node
-      </button>
-      <button 
-        onClick={() => { onClose(); }} 
-        className="w-full px-4 py-2.5 text-left text-xs text-gray-600 hover:bg-gray-50 flex items-center gap-3 transition-colors"
-      >
-        <Plus size={14} className="text-gray-400" /> Add Step
-      </button>
-      <button 
-        onClick={() => { onEdit(); onClose(); }} 
-        className="w-full px-4 py-2.5 text-left text-xs text-gray-700 hover:bg-gray-50 flex items-center gap-3 transition-colors font-medium"
-      >
-        <Edit2 size={14} className="text-gray-400" /> Edit Properties
-      </button>
-      <div className="h-px bg-gray-100 my-1" />
-      <button 
-        onClick={() => { onDelete(); onClose(); }} 
-        className="w-full px-4 py-2.5 text-left text-xs text-rose-500 hover:bg-rose-50 font-semibold flex items-center gap-3 transition-colors"
-      >
-        <Trash2 size={14} /> Delete Node
-      </button>
-    </div>
-  );
-};
+import ActionDropdown from '../../Common/ActionDropdown';
 
 interface WorkflowNodeProps {
   node: NodeData; 
@@ -137,26 +75,51 @@ const WorkflowNode: React.FC<WorkflowNodeProps> = ({
       }`}
     >
       <div className="absolute top-2 right-2 flex items-center z-20">
-        <button 
-          onClick={(e) => { 
-            e.stopPropagation(); 
-            setShowDropdown(!showDropdown); 
-          }}
-          className={`p-1 rounded-lg transition-all opacity-0 group-hover:opacity-100 ${showDropdown ? `${theme.homepage.tipsSection.iconBg} ${theme.homepage.tipsSection.iconText} opacity-100` : 'text-gray-400 hover:bg-gray-100 hover:text-gray-600'}`}
-        >
-          <MoreVertical size={16} />
-        </button>
-        
-        {showDropdown && (
-          <NodeActionsDropdown 
-            onEdit={onEdit}
-            onDelete={() => onDelete(node.id)}
-            onClone={() => onClone(node.id)}
-            onRun={() => onRunNode?.(node.id)}
-            onClose={() => setShowDropdown(false)}
-            theme={theme}
-          />
-        )}
+        <ActionDropdown
+          theme={theme}
+          itemHoverClass={theme.homepage.card.menuHover}
+          trigger={(isOpen) => (
+            <button 
+              className={`p-1 rounded-lg transition-all flex items-center justify-center ${
+                isOpen
+                  ? `${theme.homepage.tipsSection.iconBg} ${theme.homepage.tipsSection.iconText} opacity-100` 
+                  : 'text-gray-400 hover:bg-gray-100 hover:text-gray-600 group-hover:opacity-100 opacity-0'
+              }`}
+            >
+              <MoreVertical size={16} />
+            </button>
+          )}
+          items={[
+            { 
+              label: 'Run Node', 
+              icon: <Play size={14} fill="currentColor" />, 
+              onClick: () => onRunNode?.(node.id) 
+            },
+            { divider: true },
+            { 
+              label: 'Clone Node', 
+              icon: <Copy size={14} />, 
+              onClick: () => onClone(node.id) 
+            },
+            { 
+              label: 'Add Step', 
+              icon: <Plus size={14} />, 
+              onClick: () => {} 
+            },
+            { 
+              label: 'Edit Properties', 
+              icon: <Edit2 size={14} />, 
+              onClick: () => onEdit() 
+            },
+            { divider: true },
+            { 
+              label: 'Delete Node', 
+              icon: <Trash2 size={14} />, 
+              onClick: () => onDelete(node.id),
+              variant: 'danger'
+            }
+          ]}
+        />
       </div>
 
       <div className={`p-1.5 rounded-lg mr-3 pointer-events-none ${node.error ? 'bg-rose-50 text-rose-500' : 'bg-gray-50 ' + meta.color}`}>

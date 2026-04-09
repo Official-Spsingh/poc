@@ -34,6 +34,8 @@ import {
   Zap
 } from 'lucide-react';
 import React, { useState } from 'react';
+import { studioThemeColors } from '../../constants/themeColors';
+import ActionDropdown from '../Common/ActionDropdown';
 
 interface AppEditorProps {
   onBack: () => void;
@@ -64,8 +66,6 @@ const AppEditor: React.FC<AppEditorProps> = ({ onBack }) => {
   ]);
   const [activeModuleId, setActiveModuleId] = useState('mod-1');
   const [activePageId, setActivePageId] = useState('page-1');
-  const [isModuleDropdownOpen, setIsModuleDropdownOpen] = useState(false);
-  const [isPageDropdownOpen, setIsPageDropdownOpen] = useState(false);
 
   const activeModule = modules.find(m => m.id === activeModuleId);
   const activePage = activeModule?.pages.find(p => p.id === activePageId);
@@ -141,118 +141,68 @@ const AppEditor: React.FC<AppEditorProps> = ({ onBack }) => {
         {/* Center-Left Section - Selectors starting after sidebar width */}
         <div className="flex-1 flex items-center gap-2 pl-4">
 
-          {/* Module Selector */}
-          <div className="relative">
-            <button 
-              onClick={() => setIsModuleDropdownOpen(!isModuleDropdownOpen)}
-              className="flex items-center gap-2 px-3 py-1.5 hover:bg-gray-50 rounded-lg transition-all group"
-            >
-              <div className="p-1.5 bg-slate-50 text-sky-800 border border-slate-100 rounded-md group-hover:bg-sky-800 group-hover:text-white transition-all">
-                <Folder size={14} />
-              </div>
-              <div className="text-left">
-                <p className="text-[9px] font-bold text-gray-400 uppercase tracking-tighter leading-none mb-0.5">Module</p>
-                <div className="flex items-center gap-1">
-                  <span className="text-xs font-bold text-gray-800 leading-none">{activeModule?.name}</span>
-                  <ChevronDown size={12} className={`text-gray-400 transition-transform ${isModuleDropdownOpen ? 'rotate-180' : ''}`} />
+          <ActionDropdown
+            theme={studioThemeColors.dashboard.homepage}
+            itemHoverClass={studioThemeColors.apps.homepage.card.menuHover}
+            header={{
+              title: 'Select Module',
+              onAction: handleCreateModule
+            }}
+            trigger={(isOpen) => (
+              <button className="flex items-center gap-2 px-3 py-1.5 hover:bg-gray-50 rounded-lg transition-all group">
+                <div className={`p-1.5 ${isOpen ? 'bg-sky-800 text-white' : 'bg-slate-50 text-sky-800'} border border-slate-100 rounded-md group-hover:bg-sky-800 group-hover:text-white transition-all`}>
+                  <Folder size={14} />
                 </div>
-              </div>
-            </button>
-
-            <AnimatePresence>
-              {isModuleDropdownOpen && (
-                <>
-                  <div className="fixed inset-0 z-40" onClick={() => setIsModuleDropdownOpen(false)} />
-                  <motion.div 
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    className="absolute top-full left-0 mt-2 w-56 bg-white border border-gray-200 rounded-xl shadow-xl z-50 overflow-hidden p-2"
-                  >
-                    <div className="flex items-center justify-between px-3 py-2 mb-1">
-                      <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Select Module</span>
-                      <button onClick={handleCreateModule} className="p-1 hover:bg-slate-100 text-sky-800 rounded">
-                        <Plus size={14} />
-                      </button>
-                    </div>
-                    <div className="space-y-1">
-                      {modules.map(mod => (
-                        <button 
-                          key={mod.id}
-                          onClick={() => {
-                            setActiveModuleId(mod.id);
-                            setActivePageId(mod.pages[0].id);
-                            setIsModuleDropdownOpen(false);
-                          }}
-                          className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium transition-all ${activeModuleId === mod.id ? 'bg-sky-800 text-white shadow-md' : 'hover:bg-slate-50 text-gray-600'}`}
-                        >
-                          <Folder size={14} />
-                          <span className="flex-1 text-left truncate">{mod.name}</span>
-                        </button>
-                      ))}
-                    </div>
-                  </motion.div>
-                </>
-              )}
-            </AnimatePresence>
-          </div>
+                <div className="text-left">
+                  <p className="text-[9px] font-bold text-gray-400 uppercase tracking-tighter leading-none mb-0.5">Module</p>
+                  <div className="flex items-center gap-1">
+                    <span className="text-xs font-bold text-gray-800 leading-none">{activeModule?.name}</span>
+                    <ChevronDown size={12} className={`text-gray-400 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+                  </div>
+                </div>
+              </button>
+            )}
+            items={modules.map(mod => ({
+              label: mod.name,
+              icon: <Folder size={14} />,
+              active: activeModuleId === mod.id,
+              onClick: () => {
+                setActiveModuleId(mod.id);
+                setActivePageId(mod.pages[0].id);
+              }
+            }))}
+          />
 
           <ChevronRight size={14} className="text-gray-300 mx-0.5" />
 
-          {/* Page Selector */}
-          <div className="relative">
-            <button 
-              onClick={() => setIsPageDropdownOpen(!isPageDropdownOpen)}
-              className="flex items-center gap-2 px-3 py-1.5 hover:bg-gray-50 rounded-lg transition-all group"
-            >
-              <div className="p-1.5 bg-slate-50 text-sky-800 border border-slate-100 rounded-md group-hover:bg-sky-800 group-hover:text-white transition-all">
-                <FileText size={14} />
-              </div>
-              <div className="text-left">
-                <p className="text-[9px] font-bold text-gray-400 uppercase tracking-tighter leading-none mb-0.5">Page</p>
-                <div className="flex items-center gap-1">
-                  <span className="text-xs font-bold text-gray-800 leading-none">{activePage?.name}</span>
-                  <ChevronDown size={12} className={`text-gray-400 transition-transform ${isPageDropdownOpen ? 'rotate-180' : ''}`} />
+          <ActionDropdown
+            theme={studioThemeColors.dashboard.homepage}
+            itemHoverClass={studioThemeColors.apps.homepage.card.menuHover}
+            header={{
+              title: 'Module Pages',
+              onAction: () => handleCreatePage(activeModuleId)
+            }}
+            trigger={(isOpen) => (
+              <button className="flex items-center gap-2 px-3 py-1.5 hover:bg-gray-50 rounded-lg transition-all group">
+                <div className={`p-1.5 ${isOpen ? 'bg-sky-800 text-white' : 'bg-slate-50 text-sky-800'} border border-slate-100 rounded-md group-hover:bg-sky-800 group-hover:text-white transition-all`}>
+                  <FileText size={14} />
                 </div>
-              </div>
-            </button>
-
-            <AnimatePresence>
-              {isPageDropdownOpen && (
-                <>
-                  <div className="fixed inset-0 z-40" onClick={() => setIsPageDropdownOpen(false)} />
-                  <motion.div 
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    className="absolute top-full left-0 mt-2 w-56 bg-white border border-gray-200 rounded-xl shadow-xl z-50 overflow-hidden p-2"
-                  >
-                    <div className="flex items-center justify-between px-3 py-2 mb-1">
-                      <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Module Pages</span>
-                      <button onClick={() => handleCreatePage(activeModuleId)} className="p-1 hover:bg-slate-100 text-sky-800 rounded">
-                        <Plus size={14} />
-                      </button>
-                    </div>
-                    <div className="space-y-1">
-                      {activeModule?.pages.map(page => (
-                        <button 
-                          key={page.id}
-                          onClick={() => {
-                            setActivePageId(page.id);
-                            setIsPageDropdownOpen(false);
-                          }}
-                          className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium transition-all ${activePageId === page.id ? 'bg-sky-800 text-white shadow-md' : 'hover:bg-slate-50 text-gray-600'}`}
-                        >
-                          <FileText size={14} />
-                          <span className="flex-1 text-left truncate">{page.name}</span>
-                        </button>
-                      ))}
-                    </div>
-                  </motion.div>
-                </>
-              )}
-            </AnimatePresence>
-          </div>
+                <div className="text-left">
+                  <p className="text-[9px] font-bold text-gray-400 uppercase tracking-tighter leading-none mb-0.5">Page</p>
+                  <div className="flex items-center gap-1">
+                    <span className="text-xs font-bold text-gray-800 leading-none">{activePage?.name}</span>
+                    <ChevronDown size={12} className={`text-gray-400 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+                  </div>
+                </div>
+              </button>
+            )}
+            items={activeModule?.pages.map(page => ({
+              label: page.name,
+              icon: <FileText size={14} />,
+              active: activePageId === page.id,
+              onClick: () => setActivePageId(page.id)
+            })) || []}
+          />
         </div>
 
         {/* Center Section - Viewport Switcher */}

@@ -22,6 +22,9 @@ const WorkflowBuilderNodesDrawer: React.FC<WorkflowBuilderNodesDrawerProps> = ({
   addNode,
   theme
 }) => {
+  const filteredNodes = (Object.keys(COMPONENT_METADATA) as NodeType[])
+    .filter(type => COMPONENT_METADATA[type].label.toLowerCase().includes(searchQuery.toLowerCase()));
+
   return (
     <AnimatePresence>
       {isComponentSidebarOpen && (
@@ -31,8 +34,9 @@ const WorkflowBuilderNodesDrawer: React.FC<WorkflowBuilderNodesDrawerProps> = ({
           exit={{ width: 0, opacity: 0 }}
           style={{ minWidth: 0 }}
         >
-          <div className="w-[256px] flex flex-col h-full shrink-0 border-r border-gray-200">
-            <div className="p-5 border-b border-gray-100 flex items-center justify-between h-16 bg-white sticky top-0">
+          <div className="w-[256px] flex flex-col h-full shrink-0 border-r border-gray-200 bg-white">
+            {/* Header - Fixed */}
+            <div className="p-5 border-b border-gray-100 flex items-center justify-between h-16 shrink-0 bg-white">
               <div className="flex items-center gap-3">
                 <div className={`p-2 rounded-lg ${theme.builder.runPanel.headerIconBg}`}>
                   <Component size={18} className={theme.builder.runPanel.headerIconText} />
@@ -47,22 +51,24 @@ const WorkflowBuilderNodesDrawer: React.FC<WorkflowBuilderNodesDrawerProps> = ({
               </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto custom-scrollbar p-5">
-              <div className="relative mb-6">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={14} />
+            {/* Search - Sticky/Fixed below header */}
+            <div className="p-5 pb-2 shrink-0 bg-white">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
                 <input
                   type="text"
                   placeholder="Search nodes..."
-                  className={`w-full pl-9 pr-4 py-2.5 bg-gray-50 border border-gray-100 rounded-xl text-xs outline-none focus:bg-white ${theme.builder.drawers.inputFocus} transition-all`}
+                  className={`w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm font-medium text-gray-700 placeholder:text-gray-400 outline-none ${theme.builder.drawers.inputFocus} transition-all`}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
               </div>
+            </div>
 
-              <div className="grid grid-cols-2 gap-3 pb-10">
-                {(Object.keys(COMPONENT_METADATA) as NodeType[])
-                  .filter(type => COMPONENT_METADATA[type].label.toLowerCase().includes(searchQuery.toLowerCase()))
-                  .map(type => {
+            <div className="flex-1 overflow-y-auto custom-scrollbar p-5 pt-4">
+              {filteredNodes.length > 0 ? (
+                <div className="grid grid-cols-2 gap-3 pb-10">
+                  {filteredNodes.map(type => {
                     const meta = COMPONENT_METADATA[type];
                     return (
                       <button
@@ -85,7 +91,24 @@ const WorkflowBuilderNodesDrawer: React.FC<WorkflowBuilderNodesDrawerProps> = ({
                       </button>
                     );
                   })}
-              </div>
+                </div>
+              ) : (
+                <div className="flex flex-col items-center justify-center py-12 px-4 text-center animate-in fade-in zoom-in duration-300">
+                  <div className={`w-16 h-16 ${theme.builder.runPanel.headerIconBg} rounded-3xl flex items-center justify-center mb-6 shadow-sm`}>
+                    <Search size={28} className={theme.builder.runPanel.headerIconText} />
+                  </div>
+                  <p className="text-sm font-bold text-gray-900 mb-1">No nodes found</p>
+                  <p className="text-[11px] text-gray-500 mb-6 leading-relaxed">
+                    We couldn't find any nodes matching your search.
+                  </p>
+                  <button
+                    onClick={() => setSearchQuery('')}
+                    className={`px-4 py-2 rounded-xl text-xs font-bold ${theme.builder.runPanel.headerIconBg} ${theme.builder.runPanel.headerIconText} hover:brightness-95 transition-all`}
+                  >
+                    Clear Search
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </motion.aside>

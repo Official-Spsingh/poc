@@ -23,7 +23,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Connection, NodeData, ViewType, Workflow, Workspace } from '../../../types';
-import { studioThemeColors } from '../../constants/themeColors';
+import { CombinedTheme, studioThemeColors } from '../../constants/themeColors';
 import { useRandomTitle, useTypewriter } from '../../hooks/useTypewriter';
 import { makeRequest } from '../../utils/makeRequest';
 import Modal from '../Common/Modal';
@@ -35,6 +35,11 @@ import StudioPageWrapper, { StudioMain } from '../Common/StudioPageWrapper';
 import StudioTable from '../Common/StudioTable';
 import StudioTipsSection from '../Common/StudioTipsSection';
 import StudioToolbar from '../Common/StudioToolbar';
+import WorkflowAIArchitectModal from './Modals/WorkflowAIArchitectModal';
+import WorkflowCreateWorkspaceModal from './Modals/WorkflowCreateWorkspaceModal';
+import WorkflowInfoModal from './Modals/WorkflowInfoModal';
+import WorkflowLineageModal from './Modals/WorkflowLineageModal';
+import WorkflowSettingsModal from './Modals/WorkflowSettingsModal';
 
 interface WorkflowHomeProps {
   workspaces: Workspace[];
@@ -53,11 +58,6 @@ interface WorkflowHomeProps {
   setIsAiGenerated: (value: boolean) => void;
 }
 
-const FormLabel: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1 mb-1.5 block">
-    {children}
-  </label>
-);
 
 const WORKFLOW_PLACEHOLDERS = [
   "Create a customer onboarding flow that sends a welcome email...",
@@ -607,310 +607,48 @@ const WorkflowHome: React.FC<WorkflowHomeProps> = ({
           ]}
         />
 
+
       {/* --- Workflow Home specific Modals --- */}
-
-      {/* Lineage Modal */}
-      <Modal
-        isOpen={!!lineageWorkflow}
+      <WorkflowLineageModal
+        workflow={lineageWorkflow}
         onClose={() => setLineageWorkflow(null)}
-        title={`Lineage: ${lineageWorkflow?.name}`}
-        maxWidth="max-w-2xl"
-      >
-        <div className="space-y-8">
-          <div className={`p-4 rounded-2xl flex items-center gap-4 border ${theme.lineage.badgeBg} ${theme.lineage.cardBorder}`}>
-            <div className={`p-3 rounded-xl shadow-lg ${theme.lineage.mainIconBg} ${theme.lineage.mainIconText}`}>
-              <WorkflowIcon size={24} />
-            </div>
-            <div>
-              <h4 className={`text-sm font-bold ${theme.lineage.mainIconText === 'text-white' ? 'text-gray-900' : theme.lineage.mainIconText}`}>{lineageWorkflow?.name}</h4>
-              <p className={`text-[11px] font-mono mt-0.5 opacity-60`}>{lineageWorkflow?.id}</p>
-            </div>
-          </div>
+        theme={studioThemeColors.workflow}
+      />
 
-          <section className="space-y-4">
-            <h5 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest border-b border-gray-100 pb-2">Active Implementations</h5>
-            <div className="grid gap-3">
-              {[
-                { title: 'Global Header Onboarding', element: 'Button Component', location: 'Dashboard / Home', type: 'trigger' },
-                { title: 'CRM Contact Sync', element: 'Form Submitter', location: 'Settings / Integration', type: 'call' },
-                { title: 'Data Retention Script', element: 'Cron Job', location: 'Background Tasks', type: 'system' },
-              ].map((item, i) => (
-                <div key={i} className={`flex items-center gap-4 p-4 rounded-xl border transition-all group ${theme.lineage.cardBorder} ${theme.lineage.cardHoverBg}`}>
-                  <div className={`p-2.5 rounded-lg transition-all ${theme.lineage.badgeBg} opacity-80 group-hover:opacity-100`}>
-                    {item.type === 'trigger' ? <Zap size={16} /> : item.type === 'call' ? <Layers size={16} /> : <Settings size={16} />}
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-gray-800">{item.title}</span>
-                      <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded uppercase tracking-tighter ${theme.lineage.badgeBg}`}>{item.type}</span>
-                    </div>
-                    <div className="flex items-center gap-2 mt-1 text-[10px] text-gray-400 font-medium">
-                      <span>{item.location}</span>
-                      <ChevronRight size={10} className="text-gray-300" />
-                      <span className={theme.hero.iconColor}>{item.element}</span>
-                    </div>
-                  </div>
-                  <button className="p-2 text-gray-300 hover:text-blue-600 hover:bg-white rounded-lg transition-all opacity-0 group-hover:opacity-100">
-                    <Rocket size={14} />
-                  </button>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <div className="flex justify-end pt-2 border-t border-gray-100">
-            <button onClick={() => setLineageWorkflow(null)} className="px-5 py-2.5 bg-gray-900 text-white text-xs font-bold rounded-xl hover:bg-gray-800 transition-all">Close Viewer</button>
-          </div>
-        </div>
-      </Modal>
-
-      {/* Info Modal */}
-      <Modal
-        isOpen={!!infoWorkflow}
+      <WorkflowInfoModal
+        workflow={infoWorkflow}
         onClose={() => setInfoWorkflow(null)}
-        title="Workflow Information"
-      >
-        <div className="space-y-4">
-          <div>
-            <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1">Full Name</label>
-            <p className="text-sm font-semibold text-gray-800">{infoWorkflow?.name}</p>
-          </div>
-          <div className={`p-4 border rounded-xl ${theme.emptyState.secondaryBg} ${theme.card.border}`}>
-            <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1">Workflow Unique ID</label>
-            <p className={`text-xs font-mono break-all ${theme.emptyState.secondaryText}`}>{infoWorkflow?.id}</p>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div className={`p-3 border rounded-xl ${theme.tipsSection.iconBg} ${theme.card.border}`}>
-              <label className="text-[9px] font-bold text-gray-400 uppercase block mb-1">Visibility</label>
-              <div className="flex items-center gap-2">
-                <Globe size={12} className={infoWorkflow?.isPublic ? theme.hero.iconColor : "text-gray-300"} />
-                <span className="text-[11px] font-bold">{infoWorkflow?.isPublic ? "Public" : "Private"}</span>
-              </div>
-            </div>
-            <div className={`p-3 border rounded-xl ${theme.tipsSection.iconBg}`}>
-              <label className="text-[9px] font-bold text-gray-400 uppercase block mb-1">Data Retention</label>
-              <div className="flex items-center gap-2">
-                <HardDrive size={12} className={infoWorkflow?.saveResponse ? theme.hero.iconColor : "text-gray-300"} />
-                <span className="text-[11px] font-bold">{infoWorkflow?.saveResponse ? "Saving" : "No Saving"}</span>
-              </div>
-            </div>
-          </div>
-          <div className="flex justify-end pt-2">
-            <button onClick={() => setInfoWorkflow(null)} className="px-5 py-2.5 bg-gray-900 text-white text-xs font-bold rounded-xl hover:bg-gray-800 transition-all">Close</button>
-          </div>
-        </div>
-      </Modal>
+        theme={studioThemeColors.workflow}
+      />
 
-      {/* Create Workspace Modal */}
-      <Modal
+      <WorkflowCreateWorkspaceModal
         isOpen={isCreatingWorkspace}
         onClose={() => setIsCreatingWorkspace(false)}
-        title="Create New Workspace"
-      >
-        <div className="space-y-6">
-          <div>
-            <FormLabel>Workspace Name</FormLabel>
-            <input
-              type="text"
-              placeholder="e.g. Production Pipelines"
-              value={workspaceForm.name}
-              onChange={(e) => setWorkspaceForm({ ...workspaceForm, name: e.target.value })}
-              className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all"
-              autoFocus
-            />
-          </div>
-          <div>
-            <FormLabel>Description (Optional)</FormLabel>
-            <textarea
-              placeholder="What is this workspace for?"
-              value={workspaceForm.description}
-              onChange={(e) => setWorkspaceForm({ ...workspaceForm, description: e.target.value })}
-              className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all min-h-[100px]"
-            />
-          </div>
-          <div className="flex gap-2 justify-end pt-4">
-            <button
-              onClick={() => setIsCreatingWorkspace(false)}
-              className="px-4 py-2 text-gray-500 text-xs font-bold hover:bg-gray-100 rounded-xl transition-all"
-            >
-              Cancel
-            </button>
-            <button
-              onClick={handleCreateWorkspace}
-              className={`px-8 py-2.5 text-white text-xs font-bold rounded-xl transition-all shadow-lg flex items-center gap-2 ${theme.header.primaryBtn}`}
-            >
-              <Check size={14} /> Create Workspace
-            </button>
-          </div>
-        </div>
-      </Modal>
+        workspaceForm={workspaceForm}
+        setWorkspaceForm={setWorkspaceForm}
+        onAction={handleCreateWorkspace}
+        theme={studioThemeColors.workflow}
+      />
 
-      {/* Workflow Settings / Creation / Duplicate Modal */}
-      <Modal
-        isOpen={!!settingsWorkflow || !!duplicateWorkflowSource}
+      <WorkflowSettingsModal
+        settingsWorkflow={settingsWorkflow}
+        duplicateWorkflowSource={duplicateWorkflowSource}
         onClose={() => {
           setSettingsWorkflow(null);
           setDuplicateWorkflowSource(null);
         }}
-        title={duplicateWorkflowSource ? "Duplicate Workflow" : "Workflow Settings"}
-      >
-        <div className="space-y-6">
-          <div>
-            <FormLabel>Workflow Name</FormLabel>
-            <input
-              type="text"
-              placeholder="e.g. Analytics Pipeline"
-              value={flowSettingsForm.name}
-              onChange={(e) => setFlowSettingsForm({ ...flowSettingsForm, name: e.target.value })}
-              className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all"
-              autoFocus
-            />
-          </div>
+        flowSettingsForm={flowSettingsForm}
+        setFlowSettingsForm={setFlowSettingsForm}
+        onAction={handleSaveSettings}
+        workspaces={workspaces}
+        theme={studioThemeColors.workflow}
+      />
 
-          <div>
-            <FormLabel>Assign to Workspace</FormLabel>
-            <div className="relative">
-              <select
-                value={flowSettingsForm.workspaceId}
-                onChange={(e) => setFlowSettingsForm({ ...flowSettingsForm, workspaceId: e.target.value })}
-                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all appearance-none"
-              >
-                <option value="">None (Personal)</option>
-                {workspaces.map(ws => (
-                  <option key={ws.id} value={ws.id}>{ws.name}</option>
-                ))}
-              </select>
-              <div className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
-                <ChevronDown size={16} />
-              </div>
-            </div>
-          </div>
-
-          <div className="space-y-3">
-            <FormLabel>Characteristics</FormLabel>
-            <div onClick={(e) => e.stopPropagation()}>
-              <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl border border-gray-100 group hover:border-blue-200 transition-all cursor-pointer" onClick={() => setFlowSettingsForm({ ...flowSettingsForm, isPublic: !flowSettingsForm.isPublic })}>
-                <div className={`p-2 rounded-lg transition-all ${flowSettingsForm.isPublic ? 'bg-teal-600 text-white shadow-lg shadow-teal-100' : 'bg-white text-gray-400'}`}>
-                  <Globe size={16} />
-                </div>
-                <div className="flex-1">
-                  <p className="text-xs font-bold text-gray-800">Make Publicly Accessible</p>
-                  <p className="text-[10px] text-gray-400">Available via public API endpoint</p>
-                </div>
-                <div className={`w-10 h-5 rounded-full transition-all relative ${flowSettingsForm.isPublic ? 'bg-teal-500' : 'bg-gray-200'}`}>
-                  <div className={`absolute top-1 w-3 h-3 bg-white rounded-full transition-all ${flowSettingsForm.isPublic ? 'right-1' : 'left-1'}`} />
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl border border-gray-100 group hover:border-blue-200 transition-all mt-3 cursor-pointer" onClick={() => setFlowSettingsForm({ ...flowSettingsForm, saveResponse: !flowSettingsForm.saveResponse })}>
-                <div className={`p-2 rounded-lg transition-all ${flowSettingsForm.saveResponse ? 'bg-blue-600 text-white shadow-lg shadow-blue-100' : 'bg-white text-gray-400'}`}>
-                  <HardDrive size={16} />
-                </div>
-                <div className="flex-1">
-                  <p className="text-xs font-bold text-gray-800">Save Workflow Response</p>
-                  <p className="text-[10px] text-gray-400">Log all execution results</p>
-                </div>
-                <div className={`w-10 h-5 rounded-full transition-all relative ${flowSettingsForm.saveResponse ? 'bg-blue-500' : 'bg-gray-200'}`}>
-                  <div className={`absolute top-1 w-3 h-3 bg-white rounded-full transition-all ${flowSettingsForm.saveResponse ? 'right-1' : 'left-1'}`} />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex gap-2 justify-end pt-4">
-            <button
-              onClick={() => {
-                setSettingsWorkflow(null);
-                setDuplicateWorkflowSource(null);
-              }}
-              className="px-4 py-2 text-gray-500 text-xs font-bold hover:bg-gray-100 rounded-xl transition-all"
-            >
-              Cancel
-            </button>
-            <button
-              onClick={handleSaveSettings}
-              className="px-8 py-2.5 bg-blue-600 text-white text-xs font-bold rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-100 flex items-center gap-2"
-            >
-              <Check size={14} /> {duplicateWorkflowSource ? 'Create Copy' : 'Save Changes'}
-            </button>
-          </div>
-        </div>
-      </Modal>
-
-      {/* Creation Mode Selection Modal (Removed for Chat-First logic) */}
-
-      {/* Redesigned AI Architecting Modal - Classic yet Standard AI Aesthetic */}
-      {isAiPromptMode && isGenerating && createPortal(
-        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 sm:p-6 selection:bg-transparent">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-slate-900/40 backdrop-blur-md"
-          />
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0, y: 20 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.9, opacity: 0, y: 20 }}
-            className={`relative w-full max-w-2xl bg-white rounded-3xl shadow-[0_0_50px_${theme.hero.badge.includes('teal') ? 'rgba(20,184,166,0.15)' : 'rgba(14,165,233,0.15)'}] overflow-hidden flex flex-col items-center justify-center p-12 lg:p-16`}
-          >
-            {/* AI Grid/Pattern Overlay */}
-            <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: `radial-gradient(${theme.hero.badge.includes('teal') ? '#14b8a6' : '#0ea5e9'} 1px, transparent 1px)`, backgroundSize: '24px 24px' }} />
-            
-            <div className="relative mb-10">
-              <div className={`absolute inset-0 ${theme.hero.badge.includes('teal') ? 'bg-teal-500' : 'bg-sky-500'} rounded-full blur-[60px] opacity-10 animate-pulse`} />
-              <div className={`w-24 h-24 ${theme.tipsSection.iconBg} border border-${theme.tipsSection.iconText.split('-')[1]}-100 rounded-2xl flex items-center justify-center relative shadow-inner group`}>
-                <Sparkles size={48} className={`${theme.tipsSection.iconText} animate-pulse`} />
-                <motion.div 
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                  className={`absolute inset-0 border-2 border-dashed border-${theme.tipsSection.iconText.split('-')[1]}-200/50 rounded-2xl scale-125`}
-                />
-              </div>
-            </div>
-
-            <div className="text-center space-y-6 max-w-sm relative z-10">
-              <div className="space-y-2">
-                <h3 className="text-2xl font-bold text-gray-900 tracking-tight flex items-center justify-center gap-2">
-                  <span className={`${theme.tipsSection.iconText} italic`}>AI</span> Architecting
-                </h3>
-                <p className="text-gray-500 text-sm font-medium leading-relaxed">
-                  Synthesizing node clusters and logic schemas for your workflow...
-                </p>
-              </div>
-
-              <div className="pt-4 flex flex-col items-center gap-4">
-                <div className="flex items-center gap-1.5 h-6">
-                  {[0, 1, 2].map((i) => (
-                    <motion.div 
-                      key={i}
-                      animate={{ 
-                        scale: [1, 1.5, 1],
-                        opacity: [0.3, 1, 0.3],
-                        backgroundColor: ['#94a3b8', theme.hero.gradient.split(' ')[1].replace('to-', '#'), '#94a3b8']
-                      }}
-                      transition={{ 
-                        duration: 1.5, 
-                        repeat: Infinity, 
-                        delay: i * 0.2,
-                        ease: "easeInOut"
-                      }}
-                      className="w-2 h-2 rounded-full"
-                    />
-                  ))}
-                </div>
-                <div className={`text-[10px] font-bold ${theme.tipsSection.iconText} opacity-60 uppercase tracking-[0.2em] font-mono`}>
-                  Optimizing Logic Path...
-                </div>
-              </div>
-            </div>
-
-            {/* Bottom Accent */}
-            <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-${theme.tipsSection.iconText.split('-')[1]}-500/20 to-transparent`} />
-          </motion.div>
-        </div>,
-        document.body
-      )}
+      <WorkflowAIArchitectModal
+        isAiPromptMode={isAiPromptMode}
+        isGenerating={isGenerating}
+        theme={studioThemeColors.workflow}
+      />
     </StudioMain>
   </StudioPageWrapper>
 );
