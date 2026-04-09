@@ -2,6 +2,7 @@ import { ArrowLeft, ArrowRight, CheckCircle2, Mail, Sparkles } from 'lucide-reac
 import { AnimatePresence, motion } from 'motion/react';
 import React, { useState } from 'react';
 import { makeRequest } from '../../utils/makeRequest';
+import { studioThemeColors } from '../../constants/themeColors';
 import Logo from '../Common/Logo';
 
 interface ForgotPasswordProps {
@@ -38,9 +39,9 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onBackToLogin }) => {
   };
 
   return (
-    <div className="flex h-screen w-full bg-[#F1F5F9] overflow-hidden font-sans selection:bg-blue-500/30">
+    <div className={`flex h-screen w-full ${studioThemeColors.global.auth.bg} overflow-hidden font-sans selection:bg-blue-500/30`}>
       {/* Left Side - Immersive Visual (Consistent with Login) */}
-      <div className="hidden lg:flex flex-[1.2] relative overflow-hidden bg-white border-r border-slate-100">
+      <div className={`hidden lg:flex flex-[1.2] relative overflow-hidden ${studioThemeColors.global.auth.cardBg} border-r border-slate-100`}>
         <div className="absolute inset-0 overflow-hidden">
           <motion.div 
             animate={{ 
@@ -50,7 +51,7 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onBackToLogin }) => {
               y: [0, -30, 0]
             }}
             transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-            className="absolute -top-[10%] -left-[10%] w-[60%] h-[60%] bg-blue-400/10 blur-[100px] rounded-full" 
+            className={`absolute -top-[10%] -left-[10%] w-[60%] h-[60%] ${studioThemeColors.global.auth.glow} blur-[100px] rounded-full`} 
           />
           <motion.div 
             animate={{ 
@@ -76,12 +77,12 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onBackToLogin }) => {
             animate={{ opacity: 1, y: 0 }}
             className="flex items-center gap-3 mb-8 xl:mb-12 shrink-0 justify-center lg:justify-start"
           >
-            <div className="w-9 h-9 xl:w-10 xl:h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-xl shadow-blue-500/20">
+            <div className={`w-9 h-9 xl:w-10 xl:h-10 ${studioThemeColors.global.brand.logoBg} rounded-xl flex items-center justify-center text-white shadow-xl ${studioThemeColors.global.auth.shadow}`}>
               <Logo size={20} />
             </div>
             <div className="flex items-baseline gap-1.5">
-              <span className="text-xl xl:text-2xl font-black tracking-tighter text-slate-900 uppercase">LUMENORE</span>
-              <span className="text-xl xl:text-2xl font-medium tracking-tighter text-blue-600 lowercase italic opacity-80">studio</span>
+              <span className={`text-xl xl:text-2xl font-black tracking-tighter ${studioThemeColors.global.brand.logoText} uppercase`}>LUMENORE</span>
+              <span className={`text-xl xl:text-2xl font-medium tracking-tighter ${studioThemeColors.global.brand.logoSecondary} lowercase italic opacity-80`}>studio</span>
             </div>
           </motion.div>
 
@@ -91,19 +92,19 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onBackToLogin }) => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
             >
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-[10px] font-bold uppercase tracking-widest mb-6 border border-blue-100 mx-auto lg:mx-0">
+              <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full ${studioThemeColors.global.auth.badgeBg} ${studioThemeColors.global.auth.badgeText} text-[10px] font-bold uppercase tracking-widest mb-6 border ${studioThemeColors.global.auth.badgeBorder} mx-auto lg:mx-0`}>
                 <Sparkles size={12} className="animate-pulse" />
                 Security & Access Control
               </div>
               
-              <h1 className="text-5xl xl:text-7xl font-black leading-[1] text-slate-900 tracking-tighter mb-6 xl:mb-8">
+              <h1 className={`text-5xl xl:text-7xl font-black leading-[1] ${studioThemeColors.global.auth.textPrimary} tracking-tighter mb-6 xl:mb-8`}>
                 Reset <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-blue-600 to-teal-600 pr-1">
+                <span className={`text-transparent bg-clip-text bg-gradient-to-r ${studioThemeColors.global.auth.accentGradient} pr-1`}>
                   Password.
                 </span>
               </h1>
 
-              <p className="text-lg xl:text-xl text-slate-500 leading-relaxed max-w-lg font-medium mx-auto lg:mx-0">
+              <p className={`text-lg xl:text-xl ${studioThemeColors.global.auth.textSecondary} leading-relaxed max-w-lg font-medium mx-auto lg:mx-0`}>
                 Don't worry, it happens to the best of us. Let's get you back into your studio workspace safely and securely.
               </p>
             </motion.div>
@@ -112,7 +113,7 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onBackToLogin }) => {
       </div>
 
       {/* Right Side - Forgot Password Form */}
-      <div className="flex-1 flex flex-col items-center justify-center bg-white relative overflow-y-auto lg:overflow-hidden scrollbar-none">
+      <div className={`flex-1 flex flex-col items-center justify-center ${studioThemeColors.global.auth.cardBg} relative overflow-y-auto lg:overflow-hidden scrollbar-none`}>
         <motion.div 
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -120,12 +121,12 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onBackToLogin }) => {
         >
           {/* Mobile Logo */}
           <div className="lg:hidden flex items-center gap-2 mb-10 shrink-0">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white shadow-xl shadow-blue-500/20">
+            <div className={`w-8 h-8 ${studioThemeColors.global.brand.logoBg} rounded-lg flex items-center justify-center text-white shadow-xl ${studioThemeColors.global.auth.shadow}`}>
               <Logo size={18} />
             </div>
             <div className="flex items-baseline gap-1">
-              <span className="text-lg font-black tracking-tighter text-slate-900 uppercase">LUMENORE</span>
-              <span className="text-lg font-medium tracking-tighter text-blue-600 lowercase italic opacity-80">studio</span>
+              <span className={`text-lg font-black tracking-tighter ${studioThemeColors.global.brand.logoText} uppercase`}>LUMENORE</span>
+              <span className={`text-lg font-medium tracking-tighter ${studioThemeColors.global.brand.logoSecondary} lowercase italic opacity-80`}>studio</span>
             </div>
           </div>
 
@@ -141,14 +142,14 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onBackToLogin }) => {
                 <div className="space-y-2">
                   <button 
                     onClick={onBackToLogin}
-                    className="flex items-center gap-2 px-0 py-1 text-xs font-bold text-slate-400 hover:text-blue-600 transition-colors uppercase tracking-widest mb-4"
+                    className={`flex items-center gap-2 px-0 py-1 text-xs font-bold text-slate-400 ${studioThemeColors.global.auth.linkHover} transition-colors uppercase tracking-widest mb-4`}
                   >
                     <ArrowLeft size={14} /> Back to Login
                   </button>
-                  <h2 className="text-2xl xl:text-4xl font-black text-slate-900 tracking-tight">
+                  <h2 className={`text-2xl xl:text-4xl font-black ${studioThemeColors.global.auth.textPrimary} tracking-tight`}>
                     Forgot Password
                   </h2>
-                  <p className="text-slate-500 text-xs xl:text-sm font-medium">
+                  <p className={`${studioThemeColors.global.auth.textSecondary} text-xs xl:text-sm font-medium`}>
                     Enter the email associated with your account and we'll send a reset link.
                   </p>
                 </div>
@@ -157,7 +158,7 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onBackToLogin }) => {
                   <motion.div 
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="p-3 bg-rose-50 border border-rose-100 rounded-xl text-rose-600 text-[11px] font-bold flex items-center gap-2"
+                    className={`p-3 ${studioThemeColors.global.auth.errorBg} border border-rose-100 rounded-xl ${studioThemeColors.global.auth.errorText} text-[11px] font-bold flex items-center gap-2`}
                   >
                     <div className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
                     {error}
@@ -174,7 +175,7 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onBackToLogin }) => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="name@company.com"
-                        className="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500/50 transition-all"
+                        className={`w-full pl-12 pr-4 py-3 ${studioThemeColors.global.auth.inputBg} border ${studioThemeColors.global.auth.inputBorder} rounded-xl ${studioThemeColors.global.auth.textPrimary} placeholder:text-slate-400 outline-none focus:ring-2 ${studioThemeColors.global.auth.focusRing} transition-all`}
                         required
                       />
                     </div>
@@ -183,7 +184,7 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onBackToLogin }) => {
                   <button
                     type="submit"
                     disabled={isLoading || !email}
-                    className="w-full py-4 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                    className={`w-full py-4 ${studioThemeColors.global.auth.primaryBtn} text-white rounded-xl font-bold ${studioThemeColors.global.auth.primaryBtnHover} transition-all ${studioThemeColors.global.auth.shadow} flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed`}
                   >
                     {isLoading ? (
                       <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />

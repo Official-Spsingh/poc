@@ -142,6 +142,7 @@ export interface HomepageColors {
   modal: ModalColors;
   lineage: LineageColors;
   layoutBorder: string;
+  sidebarHoverIcon: string;
 }
 
 export interface CombinedTheme {
@@ -181,7 +182,147 @@ export interface DataColors {
   pageWrapper: {
     blurs: string[];
   };
+  sidebarHoverIcon: string;
 }
+
+export interface GlobalTheme {
+  auth: {
+    bg: string;
+    cardBg: string;
+    primaryBtn: string;
+    primaryBtnHover: string;
+    shadow: string;
+    textPrimary: string;
+    textSecondary: string;
+    inputBg: string;
+    inputBorder: string;
+    focusRing: string;
+    errorBg: string;
+    errorText: string;
+    accentGradient: string;
+    accentText: string;
+    link: string;
+    linkHover: string;
+    badgeBg: string;
+    badgeText: string;
+    badgeBorder: string;
+    glow: string;
+    selection: string;
+    activeBorder: string;
+    activeBg: string;
+    activeIcon: string;
+    activeIconBg: string;
+  };
+  sidebar: {
+    bg: string;
+    border: string;
+    activeBg: string;
+    activeText: string;
+    activeShadow: string;
+    hoverBg: string;
+    textDefault: string;
+  };
+  brand: {
+    logoBg: string;
+    logoText: string;
+    logoSecondary: string;
+  };
+}
+
+const generateGlobalBlueColors = (): GlobalTheme => ({
+  auth: {
+    bg: 'bg-[#F1F5F9]',
+    cardBg: 'bg-white',
+    primaryBtn: 'bg-blue-600',
+    primaryBtnHover: 'hover:bg-blue-700',
+    shadow: 'shadow-blue-600/20',
+    textPrimary: 'text-slate-900',
+    textSecondary: 'text-slate-500',
+    inputBg: 'bg-slate-50',
+    inputBorder: 'border-slate-200',
+    focusRing: 'focus:ring-blue-500/10 focus:border-blue-500/50',
+    errorBg: 'bg-rose-50',
+    errorText: 'text-rose-600',
+    accentGradient: 'from-blue-600 via-blue-600 to-teal-600',
+    accentText: 'text-blue-600',
+    link: 'text-blue-600',
+    linkHover: 'hover:text-blue-500',
+    badgeBg: 'bg-blue-50',
+    badgeText: 'text-blue-600',
+    badgeBorder: 'border-blue-100',
+    glow: 'bg-blue-400/10',
+    selection: 'selection:bg-blue-500/30',
+    activeBorder: 'border-blue-500',
+    activeBg: 'bg-blue-50/50',
+    activeIcon: 'text-blue-600',
+    activeIconBg: 'bg-blue-100'
+  },
+  sidebar: {
+    bg: 'bg-white',
+    border: 'border-slate-200',
+    activeBg: 'bg-blue-700',
+    activeText: 'text-white',
+    activeShadow: 'shadow-lg shadow-blue-100',
+    hoverBg: 'hover:bg-slate-50/80',
+    textDefault: 'text-slate-400'
+  },
+  brand: {
+    logoBg: 'bg-blue-600',
+    logoText: 'text-slate-900',
+    logoSecondary: 'text-blue-600'
+  }
+});
+
+const generateGlobalSlateColors = (): GlobalTheme => ({
+  auth: {
+    bg: 'bg-slate-50',
+    cardBg: 'bg-white',
+    primaryBtn: 'bg-slate-800',
+    primaryBtnHover: 'hover:bg-slate-900',
+    shadow: 'shadow-slate-800/10',
+    textPrimary: 'text-slate-900',
+    textSecondary: 'text-slate-500',
+    inputBg: 'bg-white',
+    inputBorder: 'border-slate-200',
+    focusRing: 'focus:ring-slate-500/10 focus:border-slate-500/50',
+    errorBg: 'bg-rose-50',
+    errorText: 'text-rose-600',
+    accentGradient: 'from-slate-700 via-slate-800 to-slate-900',
+    accentText: 'text-slate-800',
+    link: 'text-slate-800',
+    linkHover: 'hover:text-black',
+    badgeBg: 'bg-slate-100',
+    badgeText: 'text-slate-800',
+    badgeBorder: 'border-slate-200',
+    glow: 'bg-slate-400/10',
+    selection: 'selection:bg-slate-900/30',
+    activeBorder: 'border-slate-900',
+    activeBg: 'bg-slate-50/50',
+    activeIcon: 'text-slate-900',
+    activeIconBg: 'bg-slate-100'
+  },
+  sidebar: {
+    bg: 'bg-white',
+    border: 'border-slate-200',
+    activeBg: 'bg-slate-800',
+    activeText: 'text-white',
+    activeShadow: 'shadow-lg shadow-slate-200',
+    hoverBg: 'hover:bg-slate-50/80',
+    textDefault: 'text-slate-400'
+  },
+  brand: {
+    logoBg: 'bg-slate-800',
+    logoText: 'text-slate-900',
+    logoSecondary: 'text-slate-700'
+  }
+});
+
+export const globalThemes = {
+  blue: generateGlobalBlueColors(),
+  slate: generateGlobalSlateColors()
+};
+
+export const globalTheme = globalThemes['blue'];
 
 export interface ModuleColors {
   homepage: HomepageColors | DataColors;
@@ -345,7 +486,8 @@ const generateTealColors = (): HomepageColors => ({
     cardHoverBg: 'hover:bg-teal-50/20',
     badgeBg: 'bg-teal-50 text-teal-600'
   },
-  layoutBorder: 'border-slate-100'
+  layoutBorder: 'border-slate-100',
+  sidebarHoverIcon: 'hover:text-teal-600'
 });
 
 const generateSkyColors = (): HomepageColors => ({
@@ -414,7 +556,8 @@ const generateSkyColors = (): HomepageColors => ({
     cardHoverBg: 'hover:bg-sky-50/20',
     badgeBg: 'bg-sky-50 text-sky-800'
   },
-  layoutBorder: 'border-sky-100'
+  layoutBorder: 'border-sky-100',
+  sidebarHoverIcon: 'hover:text-sky-800'
 });
 
 const generateBlueColors = (): HomepageColors => ({
@@ -483,7 +626,8 @@ const generateBlueColors = (): HomepageColors => ({
     cardHoverBg: 'hover:bg-blue-50/20',
     badgeBg: 'bg-blue-50 text-blue-800'
   },
-  layoutBorder: 'border-blue-100'
+  layoutBorder: 'border-blue-100',
+  sidebarHoverIcon: 'hover:text-blue-700'
 });
 
 const generateVioletColors = (): HomepageColors => ({
@@ -554,7 +698,8 @@ const generateVioletColors = (): HomepageColors => ({
     cardHoverBg: 'hover:bg-violet-50/20',
     badgeBg: 'bg-violet-50 text-violet-700'
   },
-  layoutBorder: 'border-violet-100'
+  layoutBorder: 'border-violet-100',
+  sidebarHoverIcon: 'hover:text-violet-700'
 });
 
 const generatePurpleColors = (): HomepageColors => ({
@@ -625,7 +770,8 @@ const generatePurpleColors = (): HomepageColors => ({
     cardHoverBg: 'hover:bg-purple-50/20',
     badgeBg: 'bg-purple-50 text-purple-700'
   },
-  layoutBorder: 'border-purple-100'
+  layoutBorder: 'border-purple-100',
+  sidebarHoverIcon: 'hover:text-purple-700'
 });
 
 const generateIndigoColors = (): HomepageColors => ({
@@ -694,7 +840,8 @@ const generateIndigoColors = (): HomepageColors => ({
     cardHoverBg: 'hover:bg-indigo-50/20',
     badgeBg: 'bg-indigo-50 text-indigo-600'
   },
-  layoutBorder: 'border-indigo-100'
+  layoutBorder: 'border-indigo-100',
+  sidebarHoverIcon: 'hover:text-indigo-600'
 });
 
 const generateSlateColors = (): HomepageColors => ({
@@ -763,7 +910,8 @@ const generateSlateColors = (): HomepageColors => ({
     cardHoverBg: 'hover:bg-slate-50/20',
     badgeBg: 'bg-slate-100 text-slate-800'
   },
-  layoutBorder: 'border-slate-100'
+  layoutBorder: 'border-slate-100',
+  sidebarHoverIcon: 'hover:text-slate-700'
 });
 
 // Centralized Theme Objects for Shade-based Access
@@ -830,7 +978,8 @@ const generateDataSlateColors = (): DataColors => ({
   },
   pageWrapper: {
     blurs: ['bg-slate-200/20', 'bg-slate-300/10', 'bg-slate-100/10']
-  }
+  },
+  sidebarHoverIcon: 'hover:text-slate-700'
 });
 
 const generateDataSkyColors = (): DataColors => ({
@@ -864,7 +1013,8 @@ const generateDataSkyColors = (): DataColors => ({
   },
   pageWrapper: {
     blurs: ['bg-sky-400/10', 'bg-indigo-400/10', 'bg-blue-400/5']
-  }
+  },
+  sidebarHoverIcon: 'hover:text-sky-800'
 });
 
 export const dataTheme = {
@@ -874,7 +1024,7 @@ export const dataTheme = {
   }
 };
 
-export const studioThemeColors: Record<string, ModuleColors> = {
+export const studioThemeColors: any = {
   workflow: {
     homepage: workflowTheme.homepage['teal'], // acceptable values: teal, sky
     builder: workflowTheme.builder['teal']    // acceptable values: teal, sky
@@ -890,5 +1040,6 @@ export const studioThemeColors: Record<string, ModuleColors> = {
   },
   data: {
     homepage: dataTheme.homepage['slate'],    // acceptable values: slate, sky
-  }
+  },
+  global: globalThemes['blue'] //acceptable values: blue, slate
 };

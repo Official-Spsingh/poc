@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowRight, Building, Eye, EyeOff, Github, Layout, Mail, Spa
 import { AnimatePresence, motion } from 'motion/react';
 import React, { useState } from 'react';
 import { makeRequest } from '../../utils/makeRequest';
+import { studioThemeColors } from '../../constants/themeColors';
 import Logo from '../Common/Logo';
 
 interface LoginProps {
@@ -81,9 +82,9 @@ const Login: React.FC<LoginProps> = ({ onLogin, onForgotPassword }) => {
   };
 
   return (
-    <div className="flex h-screen w-full bg-[#F1F5F9] overflow-hidden font-sans selection:bg-blue-500/30">
+    <div className={`flex h-screen w-full ${studioThemeColors.global.auth.bg} overflow-hidden font-sans ${studioThemeColors.global.auth.selection}`}>
       {/* Left Side - Immersive Visual */}
-      <div className="hidden lg:flex flex-[1.2] relative overflow-hidden bg-white border-r border-slate-100">
+      <div className={`hidden lg:flex flex-[1.2] relative overflow-hidden ${studioThemeColors.global.auth.cardBg} border-r border-slate-100`}>
         {/* Background Mesh Gradients */}
         <div className="absolute inset-0 overflow-hidden">
           <motion.div 
@@ -94,7 +95,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, onForgotPassword }) => {
               y: [0, -30, 0]
             }}
             transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-            className="absolute -top-[10%] -left-[10%] w-[60%] h-[60%] bg-blue-400/10 blur-[100px] rounded-full" 
+            className={`absolute -top-[10%] -left-[10%] w-[60%] h-[60%] ${studioThemeColors.global.auth.glow} blur-[100px] rounded-full`} 
           />
           <motion.div 
             animate={{ 
@@ -122,12 +123,12 @@ const Login: React.FC<LoginProps> = ({ onLogin, onForgotPassword }) => {
             animate={{ opacity: 1, y: 0 }}
             className="flex items-center gap-3 mb-8 xl:mb-12 shrink-0"
           >
-            <div className="w-9 h-9 xl:w-10 xl:h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-xl shadow-blue-500/20">
+            <div className={`w-9 h-9 xl:w-10 xl:h-10 ${studioThemeColors.global.brand.logoBg} rounded-xl flex items-center justify-center text-white shadow-xl ${studioThemeColors.global.auth.shadow}`}>
               <Logo size={20} />
             </div>
             <div className="flex items-baseline gap-1.5">
-              <span className="text-xl xl:text-2xl font-black tracking-tighter text-slate-900 uppercase">LUMENORE</span>
-              <span className="text-xl xl:text-2xl font-medium tracking-tighter text-blue-600 lowercase italic opacity-80">studio</span>
+              <span className={`text-xl xl:text-2xl font-black tracking-tighter ${studioThemeColors.global.brand.logoText} uppercase`}>LUMENORE</span>
+              <span className={`text-xl xl:text-2xl font-medium tracking-tighter ${studioThemeColors.global.brand.logoSecondary} lowercase italic opacity-80`}>studio</span>
             </div>
           </motion.div>
 
@@ -138,19 +139,19 @@ const Login: React.FC<LoginProps> = ({ onLogin, onForgotPassword }) => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
             >
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-[10px] font-bold uppercase tracking-widest mb-6 border border-blue-100">
+              <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full ${studioThemeColors.global.auth.badgeBg} ${studioThemeColors.global.auth.badgeText} text-[10px] font-bold uppercase tracking-widest mb-6 border ${studioThemeColors.global.auth.badgeBorder}`}>
                 <Sparkles size={12} className="animate-pulse" />
                 Low-Code & AI-Driven Platform
               </div>
               
-              <h1 className="text-5xl xl:text-7xl font-black leading-[1] text-slate-900 tracking-tighter mb-6 xl:mb-8">
+              <h1 className={`text-5xl xl:text-7xl font-black leading-[1] ${studioThemeColors.global.auth.textPrimary} tracking-tighter mb-6 xl:mb-8`}>
                 Future, <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-blue-600 to-teal-600 pr-1">
+                <span className={`text-transparent bg-clip-text bg-gradient-to-r ${studioThemeColors.global.auth.accentGradient} pr-1`}>
                   Assembled.
                 </span>
               </h1>
 
-              <p className="text-lg xl:text-xl text-slate-500 leading-relaxed mb-8 xl:mb-12 max-w-lg font-medium">
+              <p className={`text-lg xl:text-xl ${studioThemeColors.global.auth.textSecondary} leading-relaxed mb-8 xl:mb-12 max-w-lg font-medium`}>
                 From brainstorming a revolutionary idea to launching your next game-changing app, automated workflow, or AI agent - our platform empowers you to turn your vision into reality.
               </p>
             </motion.div>
@@ -189,7 +190,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, onForgotPassword }) => {
                 className="flex-1 max-w-[176px] mt-8 xl:mt-12 p-3 xl:p-4 bg-white/90 backdrop-blur-xl border border-slate-200 rounded-2xl shadow-xl shadow-slate-200/50"
               >
                 <div className="flex items-center gap-2 xl:gap-3 mb-3">
-                  <div className="w-7 h-7 xl:w-8 xl:h-8 bg-blue-50 rounded-lg flex items-center justify-center text-blue-600 shrink-0">
+                  <div className={`w-7 h-7 xl:w-8 xl:h-8 ${studioThemeColors.global.auth.activeIconBg} rounded-lg flex items-center justify-center ${studioThemeColors.global.auth.activeIcon} shrink-0`}>
                     <Workflow size={16} />
                   </div>
                   <div className="h-1.5 xl:h-2 w-10 xl:w-14 bg-slate-100 rounded-full" />
@@ -200,7 +201,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, onForgotPassword }) => {
                     <motion.div 
                       animate={{ x: ['-100%', '100%'] }}
                       transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                      className="h-full w-1/2 bg-blue-600 rounded-full" 
+                      className={`h-full w-1/2 ${studioThemeColors.global.auth.primaryBtn} rounded-full`} 
                     />
                   </div>
                   <div className="h-1.5 w-2/3 bg-slate-50 rounded-full" />
@@ -245,7 +246,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, onForgotPassword }) => {
             <div className="flex items-center gap-6">
               <div className="flex flex-col">
                 <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Dev Speed</span>
-                <span className="text-xl font-bold text-blue-600">10x Faster</span>
+                <span className={`text-xl font-bold ${studioThemeColors.global.auth.accentText}`}>10x Faster</span>
               </div>
               <div className="w-px h-8 bg-slate-200" />
               <div className="flex flex-col">
@@ -260,7 +261,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, onForgotPassword }) => {
       </div>
 
       {/* Right Side - Auth Form */}
-      <div className="flex-1 flex flex-col items-center justify-center lg:justify-center bg-white relative overflow-y-auto lg:overflow-hidden scrollbar-none">
+      <div className={`flex-1 flex flex-col items-center justify-center lg:justify-center ${studioThemeColors.global.auth.cardBg} relative overflow-y-auto lg:overflow-hidden scrollbar-none`}>
         <motion.div 
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -268,12 +269,12 @@ const Login: React.FC<LoginProps> = ({ onLogin, onForgotPassword }) => {
         >
           {/* Mobile Logo */}
           <div className="lg:hidden flex items-center gap-2 mb-6 xl:mb-12 shrink-0">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white shadow-xl shadow-blue-500/20">
+            <div className={`w-8 h-8 ${studioThemeColors.global.brand.logoBg} rounded-lg flex items-center justify-center text-white shadow-xl ${studioThemeColors.global.auth.shadow}`}>
               <Logo size={18} />
             </div>
             <div className="flex items-baseline gap-1">
-              <span className="text-lg font-black tracking-tighter text-slate-900 uppercase">LUMENORE</span>
-              <span className="text-lg font-medium tracking-tighter text-blue-600 lowercase italic opacity-80">studio</span>
+              <span className={`text-lg font-black tracking-tighter ${studioThemeColors.global.brand.logoText} uppercase`}>LUMENORE</span>
+              <span className={`text-lg font-medium tracking-tighter ${studioThemeColors.global.brand.logoSecondary} lowercase italic opacity-80`}>studio</span>
             </div>
           </div>
 
@@ -299,7 +300,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, onForgotPassword }) => {
                   <motion.div 
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="p-3 bg-rose-50 border border-rose-100 rounded-xl text-rose-600 text-[11px] font-bold flex items-center gap-2"
+                    className={`p-3 ${studioThemeColors.global.auth.errorBg} border border-rose-100 rounded-xl ${studioThemeColors.global.auth.errorText} text-[11px] font-bold flex items-center gap-2`}
                   >
                     <div className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
                     {error}
@@ -313,7 +314,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, onForgotPassword }) => {
                       <input
                         type="text"
                         placeholder="John Doe"
-                        className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500/50 transition-all"
+                        className={`w-full px-4 py-3 ${studioThemeColors.global.auth.inputBg} border ${studioThemeColors.global.auth.inputBorder} rounded-xl ${studioThemeColors.global.auth.textPrimary} placeholder:text-slate-400 outline-none focus:ring-2 ${studioThemeColors.global.auth.focusRing} transition-all`}
                         required
                       />
                     </div>
@@ -326,7 +327,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, onForgotPassword }) => {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="name@company.com"
-                      className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500/50 transition-all"
+                      className={`w-full px-4 py-3 ${studioThemeColors.global.auth.inputBg} border ${studioThemeColors.global.auth.inputBorder} rounded-xl ${studioThemeColors.global.auth.textPrimary} placeholder:text-slate-400 outline-none focus:ring-2 ${studioThemeColors.global.auth.focusRing} transition-all`}
                       required
                     />
                   </div>
@@ -338,7 +339,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, onForgotPassword }) => {
                         <button 
                           type="button" 
                           onClick={onForgotPassword}
-                          className="text-[10px] font-bold text-blue-600 hover:text-blue-500 uppercase tracking-widest"
+                          className={`text-[10px] font-bold ${studioThemeColors.global.auth.link} ${studioThemeColors.global.auth.linkHover} uppercase tracking-widest`}
                         >
                           Forgot?
                         </button>
@@ -350,7 +351,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, onForgotPassword }) => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="••••••••"
-                        className="w-full px-4 py-2.5 xl:py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500/50 transition-all text-sm"
+                        className={`w-full px-4 py-2.5 xl:py-3 ${studioThemeColors.global.auth.inputBg} border ${studioThemeColors.global.auth.inputBorder} rounded-xl ${studioThemeColors.global.auth.textPrimary} placeholder:text-slate-400 outline-none focus:ring-2 ${studioThemeColors.global.auth.focusRing} transition-all text-sm`}
                         required
                       />
                       <button
@@ -366,7 +367,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, onForgotPassword }) => {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full py-3 xl:py-4 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                    className={`w-full py-3 xl:py-4 ${studioThemeColors.global.auth.primaryBtn} text-white rounded-xl font-bold ${studioThemeColors.global.auth.primaryBtnHover} transition-all ${studioThemeColors.global.auth.shadow} flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed`}
                   >
                     {isLoading ? (
                       <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -401,7 +402,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, onForgotPassword }) => {
                   {isLogin ? "Don't have an account?" : "Already have an account?"}{' '}
                   <button 
                     onClick={() => setIsLogin(!isLogin)}
-                    className="text-blue-600 font-bold hover:text-blue-500 transition-colors"
+                    className={`${studioThemeColors.global.auth.link} font-bold ${studioThemeColors.global.auth.linkHover} transition-colors`}
                   >
                     {isLogin ? 'Sign up for free' : 'Log in here'}
                   </button>
@@ -455,12 +456,12 @@ const Login: React.FC<LoginProps> = ({ onLogin, onForgotPassword }) => {
                         onClick={() => setSelectedOrgId(org.id)}
                         className={`p-4 rounded-xl border-2 cursor-pointer transition-all flex items-center gap-4
                           ${selectedOrgId === org.id 
-                            ? 'border-blue-500 bg-blue-50/50 shadow-sm shadow-blue-500/10' 
+                            ? `${studioThemeColors.global.auth.activeBorder} ${studioThemeColors.global.auth.activeBg} shadow-sm ${studioThemeColors.global.auth.shadow}` 
                             : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50'
                           }`}
                       >
                         <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors
-                          ${selectedOrgId === org.id ? 'bg-blue-100 text-blue-600' : 'bg-slate-100 text-slate-500'}`}
+                          ${selectedOrgId === org.id ? `${studioThemeColors.global.auth.activeIconBg} ${studioThemeColors.global.auth.activeIcon}` : 'bg-slate-100 text-slate-500'}`}
                         >
                           <Building size={20} />
                         </div>
@@ -468,10 +469,10 @@ const Login: React.FC<LoginProps> = ({ onLogin, onForgotPassword }) => {
                           {org.name}
                         </div>
                         <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all
-                          ${selectedOrgId === org.id ? 'border-blue-500' : 'border-slate-300'}`}
+                          ${selectedOrgId === org.id ? studioThemeColors.global.auth.activeBorder : 'border-slate-300'}`}
                         >
                           {selectedOrgId === org.id && (
-                            <div className="w-2.5 h-2.5 bg-blue-500 rounded-full" />
+                            <div className={`w-2.5 h-2.5 ${studioThemeColors.global.auth.primaryBtn} rounded-full`} />
                           )}
                         </div>
                       </div>
@@ -481,7 +482,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, onForgotPassword }) => {
                   <button
                     type="submit"
                     disabled={isLoading || !selectedOrgId}
-                    className="w-full py-4 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                    className={`w-full py-4 ${studioThemeColors.global.auth.primaryBtn} text-white rounded-xl font-bold ${studioThemeColors.global.auth.primaryBtnHover} transition-all ${studioThemeColors.global.auth.shadow} flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed`}
                   >
                     {isLoading ? (
                       <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />

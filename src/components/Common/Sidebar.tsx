@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import React from 'react';
 import { ViewType } from '../../../types';
+import { studioThemeColors } from '../../constants/themeColors';
 import Logo from './Logo';
 
 interface SidebarProps {
@@ -25,12 +26,12 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onNavigate, onLogout }) 
   const [isExpanded, setIsExpanded] = React.useState(false);
 
   const menuItems = [
-    { id: 'dashboard', label: 'Home', icon: <Home size={22} />, color: 'text-blue-700' },
-    { id: 'app-list', label: 'Apps', icon: <Layout size={22} />, color: 'text-sky-800' },
-    { id: 'workflow-home', label: 'Workflows', icon: <Workflow size={22} />, color: 'text-teal-600' },
-    { id: 'agent-home', label: 'AI Agents', icon: <Zap size={22} />, color: 'text-violet-700' },
-    { id: 'vibe-home', label: 'Vibe Coding', icon: <Sparkles size={22} />, color: 'text-indigo-600' },
-    { id: 'data', label: 'Data', icon: <Database size={22} />, color: 'text-slate-700' },
+    { id: 'dashboard', label: 'Home', icon: <Home size={22} />, module: 'vibecoding' },
+    { id: 'app-list', label: 'Apps', icon: <Layout size={22} />, module: 'apps' },
+    { id: 'workflow-home', label: 'Workflows', icon: <Workflow size={22} />, module: 'workflow' },
+    { id: 'agent-home', label: 'AI Agents', icon: <Zap size={22} />, module: 'agents' },
+    { id: 'vibe-home', label: 'Vibe Coding', icon: <Sparkles size={22} />, module: 'vibecoding' },
+    { id: 'data', label: 'Data', icon: <Database size={22} />, module: 'data' },
   ];
 
   const isActive = (id: string) => {
@@ -48,7 +49,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onNavigate, onLogout }) 
         onClick={() => {
           if (!isExpanded) setIsExpanded(true);
         }}
-        className={`hidden md:flex ${isExpanded ? 'w-64' : 'w-20'} bg-white border-r border-slate-200 flex-col shrink-0 z-[70] transition-all duration-300 relative group/sidebar ${!isExpanded ? 'cursor-pointer hover:bg-slate-50/50' : ''}`}
+        className={`hidden md:flex ${isExpanded ? 'w-64' : 'w-20'} ${studioThemeColors.global.sidebar.bg} border-r ${studioThemeColors.global.sidebar.border} flex-col shrink-0 z-[70] transition-all duration-300 relative group/sidebar ${!isExpanded ? 'cursor-pointer hover:bg-slate-50/50' : ''}`}
       >
         {/* Toggle Button */}
         <button 
@@ -56,7 +57,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onNavigate, onLogout }) 
             e.stopPropagation();
             setIsExpanded(!isExpanded);
           }}
-          className="absolute -right-3 top-24 w-6 h-6 bg-white border border-slate-200 rounded-full flex items-center justify-center text-slate-400 hover:text-blue-700 hover:border-blue-700/20 shadow-sm z-[70] transition-all"
+          className={`absolute -right-3 top-24 w-6 h-6 ${studioThemeColors.global.sidebar.bg} border ${studioThemeColors.global.sidebar.border} rounded-full flex items-center justify-center text-slate-400 hover:${studioThemeColors.global.brand.logoSecondary} hover:border-blue-700/20 shadow-sm z-[70] transition-all`}
         >
           {isExpanded ? <ChevronLeft size={14} /> : <ChevronRight size={14} />}
         </button>
@@ -64,13 +65,13 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onNavigate, onLogout }) 
         {/* Logo */}
         <div className={`h-20 flex items-center border-b border-slate-100 transition-all duration-300 ${isExpanded ? 'px-6' : 'justify-center'}`}>
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 bg-blue-700 rounded-lg flex items-center justify-center text-white shadow-lg shadow-blue-500/10 shrink-0">
+            <div className={`w-8 h-8 ${studioThemeColors.global.brand.logoBg} rounded-lg flex items-center justify-center text-white shadow-lg shadow-blue-500/10 shrink-0`}>
               <Logo size={18} />
             </div>
             {isExpanded && (
               <div className="flex items-baseline gap-1">
-                <span className="text-base font-black tracking-tighter text-slate-900 uppercase">LUMENORE</span>
-                <span className="text-base font-semibold tracking-tighter text-blue-700 lowercase italic opacity-90">studio</span>
+                <span className={`text-base font-black tracking-tighter ${studioThemeColors.global.brand.logoText} uppercase`}>LUMENORE</span>
+                <span className={`text-base font-semibold tracking-tighter ${studioThemeColors.global.brand.logoSecondary} lowercase italic opacity-90`}>studio</span>
               </div>
             )}
           </div>
@@ -90,12 +91,12 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onNavigate, onLogout }) 
                 isExpanded ? 'px-4 py-3 gap-4 justify-start' : 'p-3 justify-center'
               } ${
                 isActive(item.id) 
-                  ? `bg-blue-700 text-white shadow-lg shadow-blue-100` 
-                  : 'text-slate-400 hover:bg-slate-50/80 hover:text-blue-700'
+                  ? `${studioThemeColors.global.sidebar.activeBg} ${studioThemeColors.global.sidebar.activeText} ${studioThemeColors.global.sidebar.activeShadow}` 
+                  : `${studioThemeColors.global.sidebar.textDefault} ${studioThemeColors.global.sidebar.hoverBg} ${studioThemeColors[item.module].homepage.sidebarHoverIcon}`
               } ${item.id === 'data' ? 'hidden md:flex' : ''}`}
               title={item.label}
             >
-              <span className={`shrink-0 flex items-center justify-center ${isActive(item.id) ? 'text-white' : `group-hover:${item.color} transition-colors`}`}>
+              <span className={`shrink-0 flex items-center justify-center ${isActive(item.id) ? 'text-white' : `${studioThemeColors[item.module].homepage.sidebarHoverIcon.replace('hover:', 'group-hover:')} transition-colors`}`}>
                 {item.icon}
               </span>
               {isExpanded && (
@@ -129,7 +130,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onNavigate, onLogout }) 
             <div className={`space-y-1 transition-all duration-300 ${isExpanded ? 'mt-4' : 'mt-2 flex flex-col items-center w-full'}`}>
               <button 
                 onClick={(e) => e.stopPropagation()}
-                className={`flex items-center gap-2 text-xs font-medium text-slate-500 hover:text-blue-700 hover:bg-white rounded-lg transition-all ${isExpanded ? 'w-full px-3 py-2' : 'p-2 justify-center'}`}
+                className={`flex items-center gap-2 text-xs font-medium ${studioThemeColors.global.sidebar.textDefault} hover:${studioThemeColors.global.brand.logoSecondary} ${studioThemeColors.global.sidebar.hoverBg} rounded-lg transition-all ${isExpanded ? 'w-full px-3 py-2' : 'p-2 justify-center'}`}
                 title="Settings"
               >
                 <Settings size={14} /> {isExpanded && 'Settings'}
@@ -150,14 +151,14 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onNavigate, onLogout }) 
       </aside>
 
       {/* Mobile Bottom Navigation */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 flex items-center justify-around px-2 py-2 z-50 pb-safe shadow-[0_-4px_12px_-2px_rgba(0,0,0,0.05)]">
+      <nav className={`md:hidden fixed bottom-0 left-0 right-0 ${studioThemeColors.global.sidebar.bg} border-t ${studioThemeColors.global.sidebar.border} flex items-center justify-around px-2 py-2 z-50 pb-safe shadow-[0_-4px_12px_-2px_rgba(0,0,0,0.05)]`}>
         {menuItems.filter(item => item.id !== 'data').map((item) => (
           <button
             key={item.id}
             onClick={() => onNavigate(item.id as ViewType)}
             className={`flex flex-col items-center justify-center p-2 rounded-xl transition-all ${
               isActive(item.id) 
-                ? `text-blue-700 bg-blue-50/50` 
+                ? `${studioThemeColors.global.brand.logoSecondary} bg-blue-50/50` 
                 : 'text-slate-600 hover:text-slate-900 active:bg-slate-50'
             }`}
           >
