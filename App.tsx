@@ -414,7 +414,7 @@ const App: React.FC = () => {
       ) : view === 'forgot-password' ? (
         <ForgotPassword onBackToLogin={() => setView('login')} />
       ) : (
-        <div className="flex h-screen w-full bg-gray-50 overflow-hidden text-gray-900">
+        <div className="flex h-screen w-full bg-shell-bg overflow-hidden text-shell-text">
           <Sidebar
             currentView={view}
             onNavigate={handleNavigate}
