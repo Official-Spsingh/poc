@@ -906,6 +906,7 @@
   --color-mod-modal-primary-hover: var(--mod-modal-primary-hover);
   --color-mod-modal-secondary-hover-bg: var(--mod-modal-secondary-hover-bg);
   --color-mod-modal-secondary-text: var(--mod-modal-secondary-text);
+  --shadow-mod-modal: var(--mod-modal-shadow);
 
   /* Lineage */
   --color-mod-lineage-icon-bg: var(--mod-lineage-icon-bg);

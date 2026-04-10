@@ -132,6 +132,7 @@
   --mod-modal-primary-hover: #1e40af;
   --mod-modal-secondary-hover-bg: #eff6ff;
   --mod-modal-secondary-text: #1d4ed8;
+  --mod-modal-shadow: 0 20px 25px -5px rgba(191, 219, 254, 0.3), 0 8px 10px -6px rgba(191, 219, 254, 0.3);
 
   /* Lineage */
   --mod-lineage-icon-bg: #1d4ed8;
@@ -266,6 +267,7 @@
   --mod-modal-primary-hover: #0f172a;
   --mod-modal-secondary-hover-bg: #f1f5f9;
   --mod-modal-secondary-text: #1e293b;
+  --mod-modal-shadow: 0 20px 25px -5px rgba(203, 213, 225, 0.3), 0 8px 10px -6px rgba(203, 213, 225, 0.3);
 
   /* Lineage */
   --mod-lineage-icon-bg: #1e293b;
@@ -400,6 +402,7 @@
   --mod-modal-primary-hover: #2563eb;
   --mod-modal-secondary-hover-bg: rgba(59, 130, 246, 0.08);
   --mod-modal-secondary-text: #60a5fa;
+  --mod-modal-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 
   /* Lineage */
   --mod-lineage-icon-bg: #3b82f6;
@@ -523,6 +526,7 @@
   --mod-modal-primary-hover: #0f766e;
   --mod-modal-secondary-hover-bg: #f0fdfa;
   --mod-modal-secondary-text: #0d9488;
+  --mod-modal-shadow: 0 20px 25px -5px rgba(153, 246, 228, 0.3), 0 8px 10px -6px rgba(153, 246, 228, 0.3);
 
   --mod-lineage-icon-bg: #0d9488;
   --mod-lineage-icon-text: #ffffff;
@@ -644,6 +648,7 @@
   --mod-modal-primary-hover: #0c4a6e;
   --mod-modal-secondary-hover-bg: #f0f9ff;
   --mod-modal-secondary-text: #075985;
+  --mod-modal-shadow: 0 20px 25px -5px rgba(186, 230, 253, 0.3), 0 8px 10px -6px rgba(186, 230, 253, 0.3);
 
   --mod-lineage-icon-bg: #075985;
   --mod-lineage-icon-text: #ffffff;
@@ -765,6 +770,7 @@
   --mod-modal-primary-hover: #6d28d9;
   --mod-modal-secondary-hover-bg: #f5f3ff;
   --mod-modal-secondary-text: #7c3aed;
+  --mod-modal-shadow: 0 20px 25px -5px rgba(221, 214, 254, 0.3), 0 8px 10px -6px rgba(221, 214, 254, 0.3);
 
   --mod-lineage-icon-bg: #7c3aed;
   --mod-lineage-icon-text: #ffffff;
@@ -886,6 +892,7 @@
   --mod-modal-primary-hover: #581c87;
   --mod-modal-secondary-hover-bg: #faf5ff;
   --mod-modal-secondary-text: #6b21a8;
+  --mod-modal-shadow: 0 20px 25px -5px rgba(233, 213, 255, 0.3), 0 8px 10px -6px rgba(233, 213, 255, 0.3);
 
   --mod-lineage-icon-bg: #6b21a8;
   --mod-lineage-icon-text: #ffffff;
@@ -1007,6 +1014,7 @@
   --mod-modal-primary-hover: #4338ca;
   --mod-modal-secondary-hover-bg: #eef2ff;
   --mod-modal-secondary-text: #4f46e5;
+  --mod-modal-shadow: 0 20px 25px -5px rgba(199, 210, 254, 0.3), 0 8px 10px -6px rgba(199, 210, 254, 0.3);
 
   --mod-lineage-icon-bg: #4f46e5;
   --mod-lineage-icon-text: #ffffff;
