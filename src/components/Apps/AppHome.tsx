@@ -13,7 +13,7 @@ import {
   Zap
 } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
-import { studioThemeColors } from '../../constants/themeColors';
+
 import { useRandomTitle, useTypewriter } from '../../hooks/useTypewriter';
 import { makeRequest } from '../../utils/makeRequest';
 import StudioCard, { StudioCardSkeleton } from '../Common/StudioCard';
@@ -153,7 +153,7 @@ const AppHome: React.FC<AppHomeProps> = ({ onSelectApp, onStartVibeCoding }) => 
     { label: 'Drafts', value: 'draft' }
   ];
 
-  const theme = studioThemeColors.apps.homepage;
+  // Theme is now driven by CSS variables via data-theme on the container div
 
   if (showCreateModal) {
     return (
@@ -165,12 +165,12 @@ const AppHome: React.FC<AppHomeProps> = ({ onSelectApp, onStartVibeCoding }) => 
   }
 
   return (
-    <StudioPageWrapper colors={theme.pageWrapper}>
+    <StudioPageWrapper>
       <StudioHeader
         icon={Layout}
         title="App Studio"
         subtitle="Manage and design your Lumenore applications"
-        colors={theme.header}
+
         buttons={[
           {
             label: "Vibe Coding",
@@ -201,7 +201,7 @@ const AppHome: React.FC<AppHomeProps> = ({ onSelectApp, onStartVibeCoding }) => 
           placeholder={placeholderText}
           isGenerating={isGenerating}
           primaryActionLabel="Generate Application"
-          colors={theme.hero}
+
           secondaryActions={[
             { 
               label: 'Manual', 
@@ -229,7 +229,7 @@ const AppHome: React.FC<AppHomeProps> = ({ onSelectApp, onStartVibeCoding }) => 
           onSearchChange={setSearchQuery}
           viewMode={viewMode}
           onViewModeChange={setViewMode}
-          colors={theme.toolbar}
+
           filterOptions={filterOptions}
           activeFilter={activeFilter}
           onFilterChange={setActiveFilter}
@@ -245,7 +245,7 @@ const AppHome: React.FC<AppHomeProps> = ({ onSelectApp, onStartVibeCoding }) => 
         ) : error || filteredApps.length === 0 ? (
           <StudioEmptyState
             type={apps.length === 0 || error ? 'initial' : (searchQuery && activeFilter !== 'all' ? 'both' : (searchQuery ? 'search' : 'filter'))}
-            colors={theme.emptyState}
+
             searchQuery={searchQuery}
             activeFilterLabel={filterOptions.find(o => o.value === activeFilter)?.label}
             onClear={() => {
@@ -271,7 +271,7 @@ const AppHome: React.FC<AppHomeProps> = ({ onSelectApp, onStartVibeCoding }) => 
                 showDescription={true}
                 lastUpdated={new Date(app.lastModified).toLocaleDateString()}
                 onClick={() => onSelectApp(app.id)}
-                colors={theme.card}
+
                 status={app.status === 'published' ? 'Published' : 'Draft'}
                 menuItems={[
                   { label: 'Edit Application', icon: Edit2, onClick: () => onSelectApp(app.id) },
@@ -285,19 +285,19 @@ const AppHome: React.FC<AppHomeProps> = ({ onSelectApp, onStartVibeCoding }) => 
         ) : (
           <StudioTable<AppItem>
             data={filteredApps}
-            colors={theme.table}
+
             onRowClick={(app) => onSelectApp(app.id)}
             columns={[
               {
                 header: 'App Name',
                 render: (app) => (
                   <div className="flex items-center gap-4">
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-sm ${theme.card.iconBg} ${theme.card.iconText}`}>
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center bg-mod-card-icon-bg text-mod-card-icon-text`}>
                       <Layout size={20} />
                     </div>
                     <div>
-                      <p className="text-sm font-bold text-gray-900">{app.name}</p>
-                      <p className="text-[10px] text-gray-500 truncate max-w-[300px]">{app.description}</p>
+                      <p className="text-sm font-bold text-mod-surface-text-primary">{app.name}</p>
+                      <p className="text-[10px] text-mod-surface-text-secondary truncate max-w-[300px]">{app.description}</p>
                     </div>
                   </div>
                 )
@@ -307,8 +307,8 @@ const AppHome: React.FC<AppHomeProps> = ({ onSelectApp, onStartVibeCoding }) => 
                 render: (app) => (
                   <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${
                     app.status === 'published' 
-                    ? theme.statusBadges.published 
-                    : theme.statusBadges.draft
+                    ? 'bg-mod-status-published-bg text-mod-status-published-text border-mod-status-published-border' 
+                    : 'bg-mod-status-draft-bg text-mod-status-draft-text border-mod-status-draft-border'
                   }`}>
                     {app.status}
                   </span>
@@ -316,7 +316,7 @@ const AppHome: React.FC<AppHomeProps> = ({ onSelectApp, onStartVibeCoding }) => 
               },
               {
                 header: 'Last Modified',
-                render: (app) => <span className="text-xs text-gray-500 font-medium">{new Date(app.lastModified).toLocaleString()}</span>
+                render: (app) => <span className="text-xs text-mod-surface-text-secondary font-medium">{new Date(app.lastModified).toLocaleString()}</span>
               }
             ]}
             menuItems={(app) => [
@@ -328,7 +328,7 @@ const AppHome: React.FC<AppHomeProps> = ({ onSelectApp, onStartVibeCoding }) => 
           />
         )}
         <StudioTipsSection
-          colors={theme.tipsSection}
+
           tips={[
             { icon: Zap, title: 'Quick Start', description: 'Use the "Build from Scratch" button to create a new application, or describe your idea above for AI generation.' },
             { icon: Sparkles, title: 'AI Builder', description: 'Describe the application you want to build in natural language, and our AI will generate the layout and logic for you.' },

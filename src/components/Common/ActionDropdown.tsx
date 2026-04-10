@@ -77,18 +77,18 @@ const ActionDropdown: React.FC<ActionDropdownProps> = ({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
             transition={{ duration: 0.15, ease: 'easeOut' }}
-            className={`absolute z-[100] mt-2 w-52 bg-white rounded-2xl shadow-2xl border border-gray-100 py-2 overflow-hidden ${
+            className={`absolute z-[100] mt-2 w-52 bg-mod-surface-card rounded-2xl border border-mod-surface-border py-2 overflow-hidden ${
               align === 'right' ? 'right-0' : 'left-0'
             }`}
             onClick={(e) => e.stopPropagation()}
           >
             {header && (
-              <div className="flex items-center justify-between px-4 py-2 mb-1 border-b border-gray-50">
-                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{header.title}</span>
+              <div className="flex items-center justify-between px-4 py-2 mb-1 border-b border-mod-surface-divider">
+                <span className="text-[10px] font-bold text-mod-surface-text-muted uppercase tracking-widest">{header.title}</span>
                 {header.onAction && (
                   <button 
                     onClick={(e) => { e.stopPropagation(); header.onAction?.(); }} 
-                    className="p-1 hover:bg-slate-100 text-sky-800 rounded transition-colors"
+                    className="p-1 hover:bg-mod-surface-hover text-mod-header-icon-text rounded transition-colors"
                   >
                     {header.actionIcon || <Plus size={14} />}
                   </button>
@@ -98,7 +98,7 @@ const ActionDropdown: React.FC<ActionDropdownProps> = ({
             <div className="global-action-dropdown-items">
               {items.map((item, index) => (
                 <React.Fragment key={index}>
-                  {item.divider && <div className="h-px bg-gray-50 my-1 mx-2" />}
+                  {item.divider && <div className="h-px bg-mod-surface-divider my-1 mx-2" />}
                   {item.label && (
                     <button
                       onClick={() => {
@@ -107,14 +107,14 @@ const ActionDropdown: React.FC<ActionDropdownProps> = ({
                       }}
                       className={`w-full px-4 py-2.5 text-left text-xs flex items-center gap-3 transition-colors ${
                         item.active
-                          ? `${activeItemClass || 'bg-sky-800'} text-white shadow-md`
+                          ? `${activeItemClass || 'bg-mod-header-btn-bg'} text-white`
                           : item.variant === 'danger'
                             ? 'text-rose-500 hover:bg-rose-50 font-bold'
-                            : `text-gray-700 ${itemHoverClass || 'hover:bg-gray-50'} font-bold`
+                            : `text-mod-surface-text-secondary ${itemHoverClass || 'hover:bg-mod-surface-hover'} font-bold`
                       }`}
                     >
                       {item.icon && (
-                        <span className={`shrink-0 ${item.active ? 'text-white' : item.variant === 'danger' ? 'text-rose-500' : 'text-gray-400'}`}>
+                        <span className={`shrink-0 ${item.active ? 'text-white' : item.variant === 'danger' ? 'text-rose-500' : 'text-mod-surface-text-muted'}`}>
                           {item.icon}
                         </span>
                       )}

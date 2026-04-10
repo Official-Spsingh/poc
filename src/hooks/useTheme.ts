@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-export type StudioTheme = 'light-blue' | 'light-slate' | 'dark-slate';
+export type StudioTheme = 'light-blue' | 'light-slate' | 'dark-blue';
 
 const STORAGE_KEY = 'studio-theme';
 const DEFAULT_THEME: StudioTheme = 'light-blue';

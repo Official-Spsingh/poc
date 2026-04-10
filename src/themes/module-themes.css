@@ -1,0 +1,1068 @@
+/* ==========================================
+   MODULE THEME VARIABLES
+   ==========================================
+   These --mod-* variables power all shared Studio components
+   (StudioCard, StudioHero, StudioHeader, StudioToolbar, etc.)
+   
+   Architecture:
+   - Global themes (light-blue, light-slate, dark-blue) on <html>
+     define auth + sidebar + dash + default --mod-* vars
+   - Module-specific themes (light-teal, light-sky, etc.) on a
+     module container <div> override ONLY --mod-* vars
+   - Shared components use --mod-* vars via Tailwind @theme mappings
+   ========================================== */
+
+/* ==========================================
+   GLOBAL THEME: light-blue (blue module defaults)
+   ========================================== */
+:root,
+[data-theme="light-blue"] {
+  /* Surface — base page/card colors */
+  --mod-surface-bg: #f8fafc;
+  --mod-surface-card: #ffffff;
+  --mod-surface-card-hover: #ffffff;
+  --mod-surface-border: #f3f4f6;
+  --mod-surface-border-strong: #e5e7eb;
+  --mod-surface-text-primary: #111827;
+  --mod-surface-text-secondary: #6b7280;
+  --mod-surface-text-muted: #9ca3af;
+  --mod-surface-input-bg: #ffffff;
+  --mod-surface-input-border: #e5e7eb;
+  --mod-surface-hover: #f9fafb;
+  --mod-surface-skeleton: #f3f4f6;
+  --mod-surface-skeleton-light: #f9fafb;
+  --mod-surface-divider: #f9fafb;
+
+  /* Hero */
+  --mod-hero-badge-bg: #eff6ff;
+  --mod-hero-badge-text: #1d4ed8;
+  --mod-hero-gradient-from: #1d4ed8;
+  --mod-hero-gradient-to: #0369a1;
+  --mod-hero-shadow: rgba(239, 246, 255, 0.05);
+  --mod-hero-btn-bg: #1d4ed8;
+  --mod-hero-btn-hover: #1e40af;
+  --mod-hero-btn-shadow: rgba(191, 219, 254, 0.5);
+  --mod-hero-secondary-hover-text: #1d4ed8;
+  --mod-hero-secondary-hover-bg: #eff6ff;
+  --mod-hero-icon-color: #3b82f6;
+
+  /* Header */
+  --mod-header-icon-bg: #eff6ff;
+  --mod-header-icon-text: #1d4ed8;
+  --mod-header-icon-border: #dbeafe;
+  --mod-header-btn-bg: #1d4ed8;
+  --mod-header-btn-text: #ffffff;
+  --mod-header-btn-shadow: #dbeafe;
+  --mod-header-btn-hover: #1e40af;
+
+  /* Page Wrapper Blurs */
+  --mod-page-blur-1: rgba(96, 165, 250, 0.1);
+  --mod-page-blur-2: rgba(56, 189, 248, 0.1);
+  --mod-page-blur-3: rgba(96, 165, 250, 0.05);
+
+  /* Card */
+  --mod-card-border: #f3f4f6;
+  --mod-card-hover-border: #60a5fa;
+  --mod-card-shadow: rgba(191, 219, 254, 0.3);
+  --mod-card-accent-from: #1d4ed8;
+  --mod-card-accent-to: #1d4ed8;
+  --mod-card-icon-bg: #eff6ff;
+  --mod-card-icon-text: #1d4ed8;
+  --mod-card-title-hover: #1d4ed8;
+  --mod-card-chevron-bg: #eff6ff;
+  --mod-card-chevron-text: #1d4ed8;
+  --mod-card-menu-hover-bg: #eff6ff;
+  --mod-card-menu-hover-text: #1d4ed8;
+  --mod-card-status-bg: #eff6ff;
+  --mod-card-status-text: #1d4ed8;
+
+  /* Table */
+  --mod-table-hover-bg: rgba(239, 246, 255, 0.3);
+  --mod-table-menu-hover-bg: #eff6ff;
+  --mod-table-menu-hover-text: #1d4ed8;
+
+  /* Toolbar */
+  --mod-toolbar-focus-ring: #dbeafe;
+  --mod-toolbar-focus-border: #60a5fa;
+  --mod-toolbar-active-text: #1d4ed8;
+  --mod-toolbar-bg-light: #eff6ff;
+  --mod-toolbar-active-bg: #1d4ed8;
+  --mod-toolbar-menu-hover-bg: #eff6ff;
+  --mod-toolbar-menu-hover-text: #1d4ed8;
+
+  /* Empty State */
+  --mod-empty-glow: #60a5fa;
+  --mod-empty-icon-bg: #eff6ff;
+  --mod-empty-icon-text: #1d4ed8;
+  --mod-empty-btn-bg: #1d4ed8;
+  --mod-empty-btn-hover: #1e40af;
+  --mod-empty-btn-shadow: #dbeafe;
+  --mod-empty-secondary-text: #1d4ed8;
+  --mod-empty-secondary-hover-bg: #eff6ff;
+
+  /* Tips Section */
+  --mod-tips-icon-bg: #eff6ff;
+  --mod-tips-icon-text: #1d4ed8;
+
+  /* Status Badges */
+  --mod-status-active-bg: #eff6ff;
+  --mod-status-active-text: #1d4ed8;
+  --mod-status-active-border: #dbeafe;
+  --mod-status-published-bg: #eff6ff;
+  --mod-status-published-text: #1d4ed8;
+  --mod-status-published-border: #dbeafe;
+  --mod-status-draft-bg: #f8fafc;
+  --mod-status-draft-text: #64748b;
+  --mod-status-draft-border: #f1f5f9;
+  --mod-status-error-bg: #fff1f2;
+  --mod-status-error-text: #e11d48;
+  --mod-status-error-border: #ffe4e6;
+  --mod-status-training-bg: #eff6ff;
+  --mod-status-training-text: #1d4ed8;
+  --mod-status-training-border: #dbeafe;
+  --mod-status-idle-bg: #f8fafc;
+  --mod-status-idle-text: #64748b;
+  --mod-status-idle-border: #f1f5f9;
+
+  /* Modal */
+  --mod-modal-header-bg: #eff6ff;
+  --mod-modal-header-text: #1e3a8a;
+  --mod-modal-icon-bg: #1d4ed8;
+  --mod-modal-primary-bg: #1d4ed8;
+  --mod-modal-primary-hover: #1e40af;
+  --mod-modal-secondary-hover-bg: #eff6ff;
+  --mod-modal-secondary-text: #1d4ed8;
+
+  /* Lineage */
+  --mod-lineage-icon-bg: #1d4ed8;
+  --mod-lineage-icon-text: #ffffff;
+  --mod-lineage-card-border: #f3f4f6;
+  --mod-lineage-card-hover-border: #bfdbfe;
+  --mod-lineage-card-hover-bg: rgba(239, 246, 255, 0.2);
+  --mod-lineage-badge-bg: #eff6ff;
+  --mod-lineage-badge-text: #1d4ed8;
+
+  /* Other */
+  --mod-layout-border: #dbeafe;
+  --mod-sidebar-hover-icon: #1d4ed8;
+}
+
+/* ==========================================
+   GLOBAL THEME: light-slate (slate module defaults)
+   ========================================== */
+[data-theme="light-slate"] {
+  /* Surface — base page/card colors */
+  --mod-surface-bg: #f8fafc;
+  --mod-surface-card: #ffffff;
+  --mod-surface-card-hover: #ffffff;
+  --mod-surface-border: #f3f4f6;
+  --mod-surface-border-strong: #e5e7eb;
+  --mod-surface-text-primary: #111827;
+  --mod-surface-text-secondary: #6b7280;
+  --mod-surface-text-muted: #9ca3af;
+  --mod-surface-input-bg: #ffffff;
+  --mod-surface-input-border: #e5e7eb;
+  --mod-surface-hover: #f9fafb;
+  --mod-surface-skeleton: #f3f4f6;
+  --mod-surface-skeleton-light: #f9fafb;
+  --mod-surface-divider: #f9fafb;
+
+  /* Hero */
+  --mod-hero-badge-bg: #f1f5f9;
+  --mod-hero-badge-text: #1e293b;
+  --mod-hero-gradient-from: #334155;
+  --mod-hero-gradient-to: #0f172a;
+  --mod-hero-shadow: rgba(241, 245, 249, 0.05);
+  --mod-hero-btn-bg: #1e293b;
+  --mod-hero-btn-hover: #0f172a;
+  --mod-hero-btn-shadow: rgba(226, 232, 240, 0.5);
+  --mod-hero-secondary-hover-text: #1e293b;
+  --mod-hero-secondary-hover-bg: #f1f5f9;
+  --mod-hero-icon-color: #64748b;
+
+  /* Header */
+  --mod-header-icon-bg: #f8fafc;
+  --mod-header-icon-text: #1e293b;
+  --mod-header-icon-border: #f1f5f9;
+  --mod-header-btn-bg: #1e293b;
+  --mod-header-btn-text: #ffffff;
+  --mod-header-btn-shadow: #f1f5f9;
+  --mod-header-btn-hover: #0f172a;
+
+  /* Page Wrapper Blurs */
+  --mod-page-blur-1: rgba(148, 163, 184, 0.1);
+  --mod-page-blur-2: rgba(71, 85, 105, 0.1);
+  --mod-page-blur-3: rgba(148, 163, 184, 0.05);
+
+  /* Card */
+  --mod-card-border: #f3f4f6;
+  --mod-card-hover-border: #94a3b8;
+  --mod-card-shadow: rgba(241, 245, 249, 0.3);
+  --mod-card-accent-from: #334155;
+  --mod-card-accent-to: #334155;
+  --mod-card-icon-bg: #f1f5f9;
+  --mod-card-icon-text: #1e293b;
+  --mod-card-title-hover: #1e293b;
+  --mod-card-chevron-bg: #f1f5f9;
+  --mod-card-chevron-text: #1e293b;
+  --mod-card-menu-hover-bg: #f1f5f9;
+  --mod-card-menu-hover-text: #1e293b;
+  --mod-card-status-bg: #f1f5f9;
+  --mod-card-status-text: #1e293b;
+
+  /* Table */
+  --mod-table-hover-bg: rgba(241, 245, 249, 0.3);
+  --mod-table-menu-hover-bg: #f1f5f9;
+  --mod-table-menu-hover-text: #1e293b;
+
+  /* Toolbar */
+  --mod-toolbar-focus-ring: #f1f5f9;
+  --mod-toolbar-focus-border: rgba(30, 41, 59, 0.4);
+  --mod-toolbar-active-text: #1e293b;
+  --mod-toolbar-bg-light: #f1f5f9;
+  --mod-toolbar-active-bg: #1e293b;
+  --mod-toolbar-menu-hover-bg: #f1f5f9;
+  --mod-toolbar-menu-hover-text: #1e293b;
+
+  /* Empty State */
+  --mod-empty-glow: #94a3b8;
+  --mod-empty-icon-bg: #f1f5f9;
+  --mod-empty-icon-text: #1e293b;
+  --mod-empty-btn-bg: #1e293b;
+  --mod-empty-btn-hover: #0f172a;
+  --mod-empty-btn-shadow: #f1f5f9;
+  --mod-empty-secondary-text: #1e293b;
+  --mod-empty-secondary-hover-bg: #f1f5f9;
+
+  /* Tips Section */
+  --mod-tips-icon-bg: #f1f5f9;
+  --mod-tips-icon-text: #334155;
+
+  /* Status Badges */
+  --mod-status-active-bg: #f1f5f9;
+  --mod-status-active-text: #1e293b;
+  --mod-status-active-border: #e2e8f0;
+  --mod-status-published-bg: #f1f5f9;
+  --mod-status-published-text: #1e293b;
+  --mod-status-published-border: #e2e8f0;
+  --mod-status-draft-bg: #f8fafc;
+  --mod-status-draft-text: #94a3b8;
+  --mod-status-draft-border: #f1f5f9;
+  --mod-status-error-bg: #fff1f2;
+  --mod-status-error-text: #e11d48;
+  --mod-status-error-border: #ffe4e6;
+  --mod-status-training-bg: #f1f5f9;
+  --mod-status-training-text: #1e293b;
+  --mod-status-training-border: #e2e8f0;
+  --mod-status-idle-bg: #f8fafc;
+  --mod-status-idle-text: #94a3b8;
+  --mod-status-idle-border: #f1f5f9;
+
+  /* Modal */
+  --mod-modal-header-bg: #f1f5f9;
+  --mod-modal-header-text: #0f172a;
+  --mod-modal-icon-bg: #1e293b;
+  --mod-modal-primary-bg: #1e293b;
+  --mod-modal-primary-hover: #0f172a;
+  --mod-modal-secondary-hover-bg: #f1f5f9;
+  --mod-modal-secondary-text: #1e293b;
+
+  /* Lineage */
+  --mod-lineage-icon-bg: #1e293b;
+  --mod-lineage-icon-text: #ffffff;
+  --mod-lineage-card-border: #f3f4f6;
+  --mod-lineage-card-hover-border: #e2e8f0;
+  --mod-lineage-card-hover-bg: rgba(241, 245, 249, 0.2);
+  --mod-lineage-badge-bg: #f1f5f9;
+  --mod-lineage-badge-text: #1e293b;
+
+  /* Other */
+  --mod-layout-border: #f1f5f9;
+  --mod-sidebar-hover-icon: #334155;
+}
+
+/* ==========================================
+   GLOBAL THEME: dark-blue (dark module defaults)
+   ========================================== */
+[data-theme="dark-blue"] {
+  /* Surface — dark bg matching auth dark-blue (0f172a/1e293b/334155) */
+  --mod-surface-bg: #0f172a;
+  --mod-surface-card: #1e293b;
+  --mod-surface-card-hover: #1e293b;
+  --mod-surface-border: #334155;
+  --mod-surface-border-strong: #475569;
+  --mod-surface-text-primary: #f1f5f9;
+  --mod-surface-text-secondary: #94a3b8;
+  --mod-surface-text-muted: #64748b;
+  --mod-surface-input-bg: #0f172a;
+  --mod-surface-input-border: #334155;
+  --mod-surface-hover: rgba(51, 65, 85, 0.5);
+  --mod-surface-skeleton: #334155;
+  --mod-surface-skeleton-light: #1e293b;
+  --mod-surface-divider: #334155;
+
+  /* Hero — blue accent on dark bg, matching auth dark-blue */
+  --mod-hero-badge-bg: rgba(59, 130, 246, 0.1);
+  --mod-hero-badge-text: #60a5fa;
+  --mod-hero-gradient-from: #3b82f6;
+  --mod-hero-gradient-to: #6366f1;
+  --mod-hero-shadow: rgba(59, 130, 246, 0.1);
+  --mod-hero-btn-bg: #3b82f6;
+  --mod-hero-btn-hover: #2563eb;
+  --mod-hero-btn-shadow: rgba(59, 130, 246, 0.25);
+  --mod-hero-secondary-hover-text: #60a5fa;
+  --mod-hero-secondary-hover-bg: rgba(59, 130, 246, 0.08);
+  --mod-hero-icon-color: #60a5fa;
+
+  /* Header — blue button on dark surface */
+  --mod-header-icon-bg: rgba(59, 130, 246, 0.1);
+  --mod-header-icon-text: #60a5fa;
+  --mod-header-icon-border: #334155;
+  --mod-header-btn-bg: #3b82f6;
+  --mod-header-btn-text: #ffffff;
+  --mod-header-btn-shadow: rgba(59, 130, 246, 0.2);
+  --mod-header-btn-hover: #2563eb;
+
+  /* Page Wrapper Blurs */
+  --mod-page-blur-1: rgba(59, 130, 246, 0.06);
+  --mod-page-blur-2: rgba(45, 212, 191, 0.04);
+  --mod-page-blur-3: rgba(59, 130, 246, 0.03);
+
+  /* Card — same dark surface tones as auth */
+  --mod-card-border: #334155;
+  --mod-card-hover-border: #3b82f6;
+  --mod-card-shadow: rgba(59, 130, 246, 0.15);
+  --mod-card-accent-from: #3b82f6;
+  --mod-card-accent-to: #6366f1;
+  --mod-card-icon-bg: rgba(59, 130, 246, 0.1);
+  --mod-card-icon-text: #60a5fa;
+  --mod-card-title-hover: #60a5fa;
+  --mod-card-chevron-bg: rgba(59, 130, 246, 0.08);
+  --mod-card-chevron-text: #60a5fa;
+  --mod-card-menu-hover-bg: rgba(59, 130, 246, 0.1);
+  --mod-card-menu-hover-text: #60a5fa;
+  --mod-card-status-bg: rgba(59, 130, 246, 0.1);
+  --mod-card-status-text: #60a5fa;
+
+  /* Table */
+  --mod-table-hover-bg: rgba(59, 130, 246, 0.05);
+  --mod-table-menu-hover-bg: rgba(59, 130, 246, 0.1);
+  --mod-table-menu-hover-text: #60a5fa;
+
+  /* Toolbar */
+  --mod-toolbar-focus-ring: rgba(59, 130, 246, 0.15);
+  --mod-toolbar-focus-border: rgba(96, 165, 250, 0.5);
+  --mod-toolbar-active-text: #60a5fa;
+  --mod-toolbar-bg-light: rgba(59, 130, 246, 0.08);
+  --mod-toolbar-active-bg: #3b82f6;
+  --mod-toolbar-menu-hover-bg: rgba(59, 130, 246, 0.1);
+  --mod-toolbar-menu-hover-text: #60a5fa;
+
+  /* Empty State */
+  --mod-empty-glow: #3b82f6;
+  --mod-empty-icon-bg: rgba(59, 130, 246, 0.1);
+  --mod-empty-icon-text: #60a5fa;
+  --mod-empty-btn-bg: #3b82f6;
+  --mod-empty-btn-hover: #2563eb;
+  --mod-empty-btn-shadow: rgba(59, 130, 246, 0.25);
+  --mod-empty-secondary-text: #60a5fa;
+  --mod-empty-secondary-hover-bg: rgba(59, 130, 246, 0.08);
+
+  /* Tips Section */
+  --mod-tips-icon-bg: rgba(59, 130, 246, 0.1);
+  --mod-tips-icon-text: #60a5fa;
+
+  /* Status Badges — blue accent for active/published */
+  --mod-status-active-bg: rgba(59, 130, 246, 0.1);
+  --mod-status-active-text: #60a5fa;
+  --mod-status-active-border: rgba(59, 130, 246, 0.2);
+  --mod-status-published-bg: rgba(59, 130, 246, 0.1);
+  --mod-status-published-text: #60a5fa;
+  --mod-status-published-border: rgba(59, 130, 246, 0.2);
+  --mod-status-draft-bg: rgba(51, 65, 85, 0.3);
+  --mod-status-draft-text: #64748b;
+  --mod-status-draft-border: #334155;
+  --mod-status-error-bg: rgba(225, 29, 72, 0.1);
+  --mod-status-error-text: #fb7185;
+  --mod-status-error-border: rgba(225, 29, 72, 0.2);
+  --mod-status-training-bg: rgba(59, 130, 246, 0.1);
+  --mod-status-training-text: #60a5fa;
+  --mod-status-training-border: rgba(59, 130, 246, 0.2);
+  --mod-status-idle-bg: rgba(51, 65, 85, 0.3);
+  --mod-status-idle-text: #64748b;
+  --mod-status-idle-border: #334155;
+
+  /* Modal */
+  --mod-modal-header-bg: rgba(59, 130, 246, 0.08);
+  --mod-modal-header-text: #f1f5f9;
+  --mod-modal-icon-bg: #3b82f6;
+  --mod-modal-primary-bg: #3b82f6;
+  --mod-modal-primary-hover: #2563eb;
+  --mod-modal-secondary-hover-bg: rgba(59, 130, 246, 0.08);
+  --mod-modal-secondary-text: #60a5fa;
+
+  /* Lineage */
+  --mod-lineage-icon-bg: #3b82f6;
+  --mod-lineage-icon-text: #ffffff;
+  --mod-lineage-card-border: #334155;
+  --mod-lineage-card-hover-border: rgba(59, 130, 246, 0.3);
+  --mod-lineage-card-hover-bg: rgba(59, 130, 246, 0.05);
+  --mod-lineage-badge-bg: rgba(59, 130, 246, 0.1);
+  --mod-lineage-badge-text: #60a5fa;
+
+  /* Other — matching auth dark-blue borders */
+  --mod-layout-border: #334155;
+  --mod-sidebar-hover-icon: #60a5fa;
+}
+
+/* ==========================================
+   MODULE-SPECIFIC: light-teal
+   Used by: Workflow (specific theme 1)
+   ========================================== */
+[data-theme="light-teal"] {
+  --mod-surface-bg: #f8fafc;
+  --mod-surface-card: #ffffff;
+  --mod-surface-card-hover: #ffffff;
+  --mod-surface-border: #f3f4f6;
+  --mod-surface-border-strong: #e5e7eb;
+  --mod-surface-text-primary: #111827;
+  --mod-surface-text-secondary: #6b7280;
+  --mod-surface-text-muted: #9ca3af;
+  --mod-surface-input-bg: #ffffff;
+  --mod-surface-input-border: #e5e7eb;
+  --mod-surface-hover: #f9fafb;
+  --mod-surface-skeleton: #f3f4f6;
+  --mod-surface-skeleton-light: #f9fafb;
+  --mod-surface-divider: #f9fafb;
+  --mod-hero-badge-bg: #f0fdfa;
+  --mod-hero-badge-text: #0d9488;
+  --mod-hero-gradient-from: #0f766e;
+  --mod-hero-gradient-to: #047857;
+  --mod-hero-shadow: rgba(240, 253, 250, 0.05);
+  --mod-hero-btn-bg: #0d9488;
+  --mod-hero-btn-hover: #0f766e;
+  --mod-hero-btn-shadow: rgba(153, 246, 228, 0.5);
+  --mod-hero-secondary-hover-text: #0f766e;
+  --mod-hero-secondary-hover-bg: #f0fdfa;
+  --mod-hero-icon-color: #14b8a6;
+
+  --mod-header-icon-bg: #f8fafc;
+  --mod-header-icon-text: #0d9488;
+  --mod-header-icon-border: #f1f5f9;
+  --mod-header-btn-bg: #0d9488;
+  --mod-header-btn-text: #ffffff;
+  --mod-header-btn-shadow: #ccfbf1;
+  --mod-header-btn-hover: #0f766e;
+
+  --mod-page-blur-1: rgba(45, 212, 191, 0.1);
+  --mod-page-blur-2: rgba(52, 211, 153, 0.1);
+  --mod-page-blur-3: rgba(45, 212, 191, 0.05);
+
+  --mod-card-border: #f3f4f6;
+  --mod-card-hover-border: #2dd4bf;
+  --mod-card-shadow: rgba(204, 251, 241, 0.3);
+  --mod-card-accent-from: #2dd4bf;
+  --mod-card-accent-to: #2dd4bf;
+  --mod-card-icon-bg: #f0fdfa;
+  --mod-card-icon-text: #0d9488;
+  --mod-card-title-hover: #0f766e;
+  --mod-card-chevron-bg: #f0fdfa;
+  --mod-card-chevron-text: #0d9488;
+  --mod-card-menu-hover-bg: #f0fdfa;
+  --mod-card-menu-hover-text: #0f766e;
+  --mod-card-status-bg: #f0fdfa;
+  --mod-card-status-text: #0f766e;
+
+  --mod-table-hover-bg: rgba(240, 253, 250, 0.3);
+  --mod-table-menu-hover-bg: #f0fdfa;
+  --mod-table-menu-hover-text: #0f766e;
+
+  --mod-toolbar-focus-ring: #ccfbf1;
+  --mod-toolbar-focus-border: #2dd4bf;
+  --mod-toolbar-active-text: #0d9488;
+  --mod-toolbar-bg-light: #f0fdfa;
+  --mod-toolbar-active-bg: #0d9488;
+  --mod-toolbar-menu-hover-bg: #f0fdfa;
+  --mod-toolbar-menu-hover-text: #0f766e;
+
+  --mod-empty-glow: #2dd4bf;
+  --mod-empty-icon-bg: #f0fdfa;
+  --mod-empty-icon-text: #0d9488;
+  --mod-empty-btn-bg: #0d9488;
+  --mod-empty-btn-hover: #0f766e;
+  --mod-empty-btn-shadow: #ccfbf1;
+  --mod-empty-secondary-text: #0f766e;
+  --mod-empty-secondary-hover-bg: #f0fdfa;
+
+  --mod-tips-icon-bg: #f0fdfa;
+  --mod-tips-icon-text: #0d9488;
+
+  --mod-status-active-bg: #f0fdfa;
+  --mod-status-active-text: #0d9488;
+  --mod-status-active-border: #ccfbf1;
+  --mod-status-published-bg: #f0fdfa;
+  --mod-status-published-text: #0d9488;
+  --mod-status-published-border: #ccfbf1;
+  --mod-status-draft-bg: #f8fafc;
+  --mod-status-draft-text: #64748b;
+  --mod-status-draft-border: #f1f5f9;
+  --mod-status-error-bg: #fff1f2;
+  --mod-status-error-text: #e11d48;
+  --mod-status-error-border: #ffe4e6;
+  --mod-status-training-bg: #f0fdfa;
+  --mod-status-training-text: #0d9488;
+  --mod-status-training-border: #ccfbf1;
+  --mod-status-idle-bg: #f8fafc;
+  --mod-status-idle-text: #64748b;
+  --mod-status-idle-border: #f1f5f9;
+
+  --mod-modal-header-bg: #f0fdfa;
+  --mod-modal-header-text: #134e4a;
+  --mod-modal-icon-bg: #0d9488;
+  --mod-modal-primary-bg: #0d9488;
+  --mod-modal-primary-hover: #0f766e;
+  --mod-modal-secondary-hover-bg: #f0fdfa;
+  --mod-modal-secondary-text: #0d9488;
+
+  --mod-lineage-icon-bg: #0d9488;
+  --mod-lineage-icon-text: #ffffff;
+  --mod-lineage-card-border: #f3f4f6;
+  --mod-lineage-card-hover-border: #99f6e4;
+  --mod-lineage-card-hover-bg: rgba(240, 253, 250, 0.2);
+  --mod-lineage-badge-bg: #f0fdfa;
+  --mod-lineage-badge-text: #0d9488;
+
+  --mod-layout-border: #f1f5f9;
+  --mod-sidebar-hover-icon: #0d9488;
+}
+
+/* ==========================================
+   MODULE-SPECIFIC: light-sky
+   Used by: Workflow (specific 2), Apps (specific 1), Data (specific 2)
+   ========================================== */
+[data-theme="light-sky"] {
+  --mod-surface-bg: #f8fafc;
+  --mod-surface-card: #ffffff;
+  --mod-surface-card-hover: #ffffff;
+  --mod-surface-border: #f3f4f6;
+  --mod-surface-border-strong: #e5e7eb;
+  --mod-surface-text-primary: #111827;
+  --mod-surface-text-secondary: #6b7280;
+  --mod-surface-text-muted: #9ca3af;
+  --mod-surface-input-bg: #ffffff;
+  --mod-surface-input-border: #e5e7eb;
+  --mod-surface-hover: #f9fafb;
+  --mod-surface-skeleton: #f3f4f6;
+  --mod-surface-skeleton-light: #f9fafb;
+  --mod-surface-divider: #f9fafb;
+  --mod-hero-badge-bg: #f0f9ff;
+  --mod-hero-badge-text: #075985;
+  --mod-hero-gradient-from: #075985;
+  --mod-hero-gradient-to: #1e40af;
+  --mod-hero-shadow: rgba(240, 249, 255, 0.05);
+  --mod-hero-btn-bg: #075985;
+  --mod-hero-btn-hover: #0c4a6e;
+  --mod-hero-btn-shadow: rgba(186, 230, 253, 0.5);
+  --mod-hero-secondary-hover-text: #075985;
+  --mod-hero-secondary-hover-bg: #f0f9ff;
+  --mod-hero-icon-color: #0ea5e9;
+
+  --mod-header-icon-bg: #f0f9ff;
+  --mod-header-icon-text: #075985;
+  --mod-header-icon-border: #e0f2fe;
+  --mod-header-btn-bg: #075985;
+  --mod-header-btn-text: #ffffff;
+  --mod-header-btn-shadow: #e0f2fe;
+  --mod-header-btn-hover: #0c4a6e;
+
+  --mod-page-blur-1: rgba(56, 189, 248, 0.1);
+  --mod-page-blur-2: rgba(129, 140, 248, 0.1);
+  --mod-page-blur-3: rgba(96, 165, 250, 0.05);
+
+  --mod-card-border: #f3f4f6;
+  --mod-card-hover-border: #38bdf8;
+  --mod-card-shadow: rgba(224, 242, 254, 0.3);
+  --mod-card-accent-from: #0369a1;
+  --mod-card-accent-to: #0369a1;
+  --mod-card-icon-bg: #f0f9ff;
+  --mod-card-icon-text: #075985;
+  --mod-card-title-hover: #075985;
+  --mod-card-chevron-bg: #f0f9ff;
+  --mod-card-chevron-text: #075985;
+  --mod-card-menu-hover-bg: #f0f9ff;
+  --mod-card-menu-hover-text: #075985;
+  --mod-card-status-bg: #f0f9ff;
+  --mod-card-status-text: #075985;
+
+  --mod-table-hover-bg: rgba(240, 249, 255, 0.3);
+  --mod-table-menu-hover-bg: #f0f9ff;
+  --mod-table-menu-hover-text: #075985;
+
+  --mod-toolbar-focus-ring: #e0f2fe;
+  --mod-toolbar-focus-border: rgba(7, 89, 133, 0.4);
+  --mod-toolbar-active-text: #075985;
+  --mod-toolbar-bg-light: #f0f9ff;
+  --mod-toolbar-active-bg: #075985;
+  --mod-toolbar-menu-hover-bg: #f0f9ff;
+  --mod-toolbar-menu-hover-text: #075985;
+
+  --mod-empty-glow: #38bdf8;
+  --mod-empty-icon-bg: #f0f9ff;
+  --mod-empty-icon-text: #075985;
+  --mod-empty-btn-bg: #075985;
+  --mod-empty-btn-hover: #0c4a6e;
+  --mod-empty-btn-shadow: #e0f2fe;
+  --mod-empty-secondary-text: #075985;
+  --mod-empty-secondary-hover-bg: #f0f9ff;
+
+  --mod-tips-icon-bg: #f0f9ff;
+  --mod-tips-icon-text: #075985;
+
+  --mod-status-active-bg: #f0f9ff;
+  --mod-status-active-text: #075985;
+  --mod-status-active-border: #e0f2fe;
+  --mod-status-published-bg: #f0f9ff;
+  --mod-status-published-text: #075985;
+  --mod-status-published-border: #e0f2fe;
+  --mod-status-draft-bg: #f8fafc;
+  --mod-status-draft-text: #64748b;
+  --mod-status-draft-border: #f1f5f9;
+  --mod-status-error-bg: #fff1f2;
+  --mod-status-error-text: #e11d48;
+  --mod-status-error-border: #ffe4e6;
+  --mod-status-training-bg: #f0f9ff;
+  --mod-status-training-text: #075985;
+  --mod-status-training-border: #e0f2fe;
+  --mod-status-idle-bg: #f8fafc;
+  --mod-status-idle-text: #64748b;
+  --mod-status-idle-border: #f1f5f9;
+
+  --mod-modal-header-bg: #f0f9ff;
+  --mod-modal-header-text: #0c4a6e;
+  --mod-modal-icon-bg: #075985;
+  --mod-modal-primary-bg: #075985;
+  --mod-modal-primary-hover: #0c4a6e;
+  --mod-modal-secondary-hover-bg: #f0f9ff;
+  --mod-modal-secondary-text: #075985;
+
+  --mod-lineage-icon-bg: #075985;
+  --mod-lineage-icon-text: #ffffff;
+  --mod-lineage-card-border: #f3f4f6;
+  --mod-lineage-card-hover-border: #bae6fd;
+  --mod-lineage-card-hover-bg: rgba(240, 249, 255, 0.2);
+  --mod-lineage-badge-bg: #f0f9ff;
+  --mod-lineage-badge-text: #075985;
+
+  --mod-layout-border: #e0f2fe;
+  --mod-sidebar-hover-icon: #075985;
+}
+
+/* ==========================================
+   MODULE-SPECIFIC: light-violet
+   Used by: Agents (specific theme 1)
+   ========================================== */
+[data-theme="light-violet"] {
+  --mod-surface-bg: #f8fafc;
+  --mod-surface-card: #ffffff;
+  --mod-surface-card-hover: #ffffff;
+  --mod-surface-border: #f3f4f6;
+  --mod-surface-border-strong: #e5e7eb;
+  --mod-surface-text-primary: #111827;
+  --mod-surface-text-secondary: #6b7280;
+  --mod-surface-text-muted: #9ca3af;
+  --mod-surface-input-bg: #ffffff;
+  --mod-surface-input-border: #e5e7eb;
+  --mod-surface-hover: #f9fafb;
+  --mod-surface-skeleton: #f3f4f6;
+  --mod-surface-skeleton-light: #f9fafb;
+  --mod-surface-divider: #f9fafb;
+  --mod-hero-badge-bg: #f5f3ff;
+  --mod-hero-badge-text: #7c3aed;
+  --mod-hero-gradient-from: #6d28d9;
+  --mod-hero-gradient-to: #c026d3;
+  --mod-hero-shadow: rgba(245, 243, 255, 0.05);
+  --mod-hero-btn-bg: #7c3aed;
+  --mod-hero-btn-hover: #6d28d9;
+  --mod-hero-btn-shadow: rgba(221, 214, 254, 0.5);
+  --mod-hero-secondary-hover-text: #6d28d9;
+  --mod-hero-secondary-hover-bg: #f5f3ff;
+  --mod-hero-icon-color: #8b5cf6;
+
+  --mod-header-icon-bg: #f5f3ff;
+  --mod-header-icon-text: #7c3aed;
+  --mod-header-icon-border: #ede9fe;
+  --mod-header-btn-bg: #7c3aed;
+  --mod-header-btn-text: #ffffff;
+  --mod-header-btn-shadow: #ede9fe;
+  --mod-header-btn-hover: #6d28d9;
+
+  --mod-page-blur-1: rgba(167, 139, 250, 0.1);
+  --mod-page-blur-2: rgba(232, 121, 249, 0.1);
+  --mod-page-blur-3: rgba(192, 132, 252, 0.05);
+
+  --mod-card-border: #f3f4f6;
+  --mod-card-hover-border: #a78bfa;
+  --mod-card-shadow: rgba(237, 233, 254, 0.3);
+  --mod-card-accent-from: #8b5cf6;
+  --mod-card-accent-to: #8b5cf6;
+  --mod-card-icon-bg: #f5f3ff;
+  --mod-card-icon-text: #7c3aed;
+  --mod-card-title-hover: #6d28d9;
+  --mod-card-chevron-bg: #f5f3ff;
+  --mod-card-chevron-text: #7c3aed;
+  --mod-card-menu-hover-bg: #f5f3ff;
+  --mod-card-menu-hover-text: #6d28d9;
+  --mod-card-status-bg: #f5f3ff;
+  --mod-card-status-text: #6d28d9;
+
+  --mod-table-hover-bg: rgba(245, 243, 255, 0.3);
+  --mod-table-menu-hover-bg: #f5f3ff;
+  --mod-table-menu-hover-text: #6d28d9;
+
+  --mod-toolbar-focus-ring: #ede9fe;
+  --mod-toolbar-focus-border: #a78bfa;
+  --mod-toolbar-active-text: #7c3aed;
+  --mod-toolbar-bg-light: #f5f3ff;
+  --mod-toolbar-active-bg: #7c3aed;
+  --mod-toolbar-menu-hover-bg: #f5f3ff;
+  --mod-toolbar-menu-hover-text: #6d28d9;
+
+  --mod-empty-glow: #a78bfa;
+  --mod-empty-icon-bg: #f5f3ff;
+  --mod-empty-icon-text: #7c3aed;
+  --mod-empty-btn-bg: #7c3aed;
+  --mod-empty-btn-hover: #6d28d9;
+  --mod-empty-btn-shadow: #ede9fe;
+  --mod-empty-secondary-text: #6d28d9;
+  --mod-empty-secondary-hover-bg: #f5f3ff;
+
+  --mod-tips-icon-bg: #f5f3ff;
+  --mod-tips-icon-text: #7c3aed;
+
+  --mod-status-active-bg: #f5f3ff;
+  --mod-status-active-text: #7c3aed;
+  --mod-status-active-border: #ede9fe;
+  --mod-status-published-bg: #f5f3ff;
+  --mod-status-published-text: #7c3aed;
+  --mod-status-published-border: #ede9fe;
+  --mod-status-draft-bg: #f8fafc;
+  --mod-status-draft-text: #64748b;
+  --mod-status-draft-border: #f1f5f9;
+  --mod-status-error-bg: #fff1f2;
+  --mod-status-error-text: #e11d48;
+  --mod-status-error-border: #ffe4e6;
+  --mod-status-training-bg: #f5f3ff;
+  --mod-status-training-text: #7c3aed;
+  --mod-status-training-border: #ede9fe;
+  --mod-status-idle-bg: #f8fafc;
+  --mod-status-idle-text: #64748b;
+  --mod-status-idle-border: #f1f5f9;
+
+  --mod-modal-header-bg: #f5f3ff;
+  --mod-modal-header-text: #4c1d95;
+  --mod-modal-icon-bg: #7c3aed;
+  --mod-modal-primary-bg: #7c3aed;
+  --mod-modal-primary-hover: #6d28d9;
+  --mod-modal-secondary-hover-bg: #f5f3ff;
+  --mod-modal-secondary-text: #7c3aed;
+
+  --mod-lineage-icon-bg: #7c3aed;
+  --mod-lineage-icon-text: #ffffff;
+  --mod-lineage-card-border: #f3f4f6;
+  --mod-lineage-card-hover-border: #ddd6fe;
+  --mod-lineage-card-hover-bg: rgba(245, 243, 255, 0.2);
+  --mod-lineage-badge-bg: #f5f3ff;
+  --mod-lineage-badge-text: #7c3aed;
+
+  --mod-layout-border: #ede9fe;
+  --mod-sidebar-hover-icon: #7c3aed;
+}
+
+/* ==========================================
+   MODULE-SPECIFIC: light-purple
+   Used by: Agents (specific theme 2)
+   ========================================== */
+[data-theme="light-purple"] {
+  --mod-surface-bg: #f8fafc;
+  --mod-surface-card: #ffffff;
+  --mod-surface-card-hover: #ffffff;
+  --mod-surface-border: #f3f4f6;
+  --mod-surface-border-strong: #e5e7eb;
+  --mod-surface-text-primary: #111827;
+  --mod-surface-text-secondary: #6b7280;
+  --mod-surface-text-muted: #9ca3af;
+  --mod-surface-input-bg: #ffffff;
+  --mod-surface-input-border: #e5e7eb;
+  --mod-surface-hover: #f9fafb;
+  --mod-surface-skeleton: #f3f4f6;
+  --mod-surface-skeleton-light: #f9fafb;
+  --mod-surface-divider: #f9fafb;
+  --mod-hero-badge-bg: #faf5ff;
+  --mod-hero-badge-text: #6b21a8;
+  --mod-hero-gradient-from: #6b21a8;
+  --mod-hero-gradient-to: #c026d3;
+  --mod-hero-shadow: rgba(250, 245, 255, 0.05);
+  --mod-hero-btn-bg: #6b21a8;
+  --mod-hero-btn-hover: #581c87;
+  --mod-hero-btn-shadow: rgba(233, 213, 255, 0.5);
+  --mod-hero-secondary-hover-text: #6b21a8;
+  --mod-hero-secondary-hover-bg: #faf5ff;
+  --mod-hero-icon-color: #a855f7;
+
+  --mod-header-icon-bg: #faf5ff;
+  --mod-header-icon-text: #6b21a8;
+  --mod-header-icon-border: #f3e8ff;
+  --mod-header-btn-bg: #6b21a8;
+  --mod-header-btn-text: #ffffff;
+  --mod-header-btn-shadow: #f3e8ff;
+  --mod-header-btn-hover: #581c87;
+
+  --mod-page-blur-1: rgba(192, 132, 252, 0.1);
+  --mod-page-blur-2: rgba(240, 171, 252, 0.1);
+  --mod-page-blur-3: rgba(192, 132, 252, 0.05);
+
+  --mod-card-border: #f3f4f6;
+  --mod-card-hover-border: #c084fc;
+  --mod-card-shadow: rgba(243, 232, 255, 0.3);
+  --mod-card-accent-from: #6b21a8;
+  --mod-card-accent-to: #9333ea;
+  --mod-card-icon-bg: #faf5ff;
+  --mod-card-icon-text: #6b21a8;
+  --mod-card-title-hover: #6b21a8;
+  --mod-card-chevron-bg: #faf5ff;
+  --mod-card-chevron-text: #6b21a8;
+  --mod-card-menu-hover-bg: #faf5ff;
+  --mod-card-menu-hover-text: #6b21a8;
+  --mod-card-status-bg: #faf5ff;
+  --mod-card-status-text: #6b21a8;
+
+  --mod-table-hover-bg: rgba(250, 245, 255, 0.3);
+  --mod-table-menu-hover-bg: #faf5ff;
+  --mod-table-menu-hover-text: #6b21a8;
+
+  --mod-toolbar-focus-ring: #f3e8ff;
+  --mod-toolbar-focus-border: rgba(107, 33, 168, 0.4);
+  --mod-toolbar-active-text: #6b21a8;
+  --mod-toolbar-bg-light: #faf5ff;
+  --mod-toolbar-active-bg: #6b21a8;
+  --mod-toolbar-menu-hover-bg: #faf5ff;
+  --mod-toolbar-menu-hover-text: #6b21a8;
+
+  --mod-empty-glow: #c084fc;
+  --mod-empty-icon-bg: #faf5ff;
+  --mod-empty-icon-text: #6b21a8;
+  --mod-empty-btn-bg: #6b21a8;
+  --mod-empty-btn-hover: #581c87;
+  --mod-empty-btn-shadow: #f3e8ff;
+  --mod-empty-secondary-text: #6b21a8;
+  --mod-empty-secondary-hover-bg: #faf5ff;
+
+  --mod-tips-icon-bg: #faf5ff;
+  --mod-tips-icon-text: #6b21a8;
+
+  --mod-status-active-bg: #faf5ff;
+  --mod-status-active-text: #6b21a8;
+  --mod-status-active-border: #f3e8ff;
+  --mod-status-published-bg: #faf5ff;
+  --mod-status-published-text: #6b21a8;
+  --mod-status-published-border: #f3e8ff;
+  --mod-status-draft-bg: #f8fafc;
+  --mod-status-draft-text: #64748b;
+  --mod-status-draft-border: #f1f5f9;
+  --mod-status-error-bg: #fff1f2;
+  --mod-status-error-text: #e11d48;
+  --mod-status-error-border: #ffe4e6;
+  --mod-status-training-bg: #faf5ff;
+  --mod-status-training-text: #6b21a8;
+  --mod-status-training-border: #f3e8ff;
+  --mod-status-idle-bg: #f8fafc;
+  --mod-status-idle-text: #64748b;
+  --mod-status-idle-border: #f1f5f9;
+
+  --mod-modal-header-bg: #faf5ff;
+  --mod-modal-header-text: #581c87;
+  --mod-modal-icon-bg: #6b21a8;
+  --mod-modal-primary-bg: #6b21a8;
+  --mod-modal-primary-hover: #581c87;
+  --mod-modal-secondary-hover-bg: #faf5ff;
+  --mod-modal-secondary-text: #6b21a8;
+
+  --mod-lineage-icon-bg: #6b21a8;
+  --mod-lineage-icon-text: #ffffff;
+  --mod-lineage-card-border: #f3f4f6;
+  --mod-lineage-card-hover-border: #e9d5ff;
+  --mod-lineage-card-hover-bg: rgba(250, 245, 255, 0.2);
+  --mod-lineage-badge-bg: #faf5ff;
+  --mod-lineage-badge-text: #6b21a8;
+
+  --mod-layout-border: #f3e8ff;
+  --mod-sidebar-hover-icon: #6b21a8;
+}
+
+/* ==========================================
+   MODULE-SPECIFIC: light-indigo
+   Used by: VibeCoding (specific theme 1)
+   ========================================== */
+[data-theme="light-indigo"] {
+  --mod-surface-bg: #f8fafc;
+  --mod-surface-card: #ffffff;
+  --mod-surface-card-hover: #ffffff;
+  --mod-surface-border: #f3f4f6;
+  --mod-surface-border-strong: #e5e7eb;
+  --mod-surface-text-primary: #111827;
+  --mod-surface-text-secondary: #6b7280;
+  --mod-surface-text-muted: #9ca3af;
+  --mod-surface-input-bg: #ffffff;
+  --mod-surface-input-border: #e5e7eb;
+  --mod-surface-hover: #f9fafb;
+  --mod-surface-skeleton: #f3f4f6;
+  --mod-surface-skeleton-light: #f9fafb;
+  --mod-surface-divider: #f9fafb;
+  --mod-hero-badge-bg: #eef2ff;
+  --mod-hero-badge-text: #4f46e5;
+  --mod-hero-gradient-from: #4338ca;
+  --mod-hero-gradient-to: #6d28d9;
+  --mod-hero-shadow: rgba(238, 242, 255, 0.05);
+  --mod-hero-btn-bg: #4f46e5;
+  --mod-hero-btn-hover: #4338ca;
+  --mod-hero-btn-shadow: rgba(199, 210, 254, 0.5);
+  --mod-hero-secondary-hover-text: #4338ca;
+  --mod-hero-secondary-hover-bg: #eef2ff;
+  --mod-hero-icon-color: #6366f1;
+
+  --mod-header-icon-bg: #eef2ff;
+  --mod-header-icon-text: #4f46e5;
+  --mod-header-icon-border: #e0e7ff;
+  --mod-header-btn-bg: #4f46e5;
+  --mod-header-btn-text: #ffffff;
+  --mod-header-btn-shadow: #e0e7ff;
+  --mod-header-btn-hover: #4338ca;
+
+  --mod-page-blur-1: rgba(129, 140, 248, 0.1);
+  --mod-page-blur-2: rgba(167, 139, 250, 0.1);
+  --mod-page-blur-3: rgba(129, 140, 248, 0.05);
+
+  --mod-card-border: #f3f4f6;
+  --mod-card-hover-border: #818cf8;
+  --mod-card-shadow: rgba(224, 231, 255, 0.3);
+  --mod-card-accent-from: #6366f1;
+  --mod-card-accent-to: #6366f1;
+  --mod-card-icon-bg: #eef2ff;
+  --mod-card-icon-text: #4f46e5;
+  --mod-card-title-hover: #4338ca;
+  --mod-card-chevron-bg: #eef2ff;
+  --mod-card-chevron-text: #4f46e5;
+  --mod-card-menu-hover-bg: #eef2ff;
+  --mod-card-menu-hover-text: #4338ca;
+  --mod-card-status-bg: #eef2ff;
+  --mod-card-status-text: #4338ca;
+
+  --mod-table-hover-bg: rgba(238, 242, 255, 0.3);
+  --mod-table-menu-hover-bg: #eef2ff;
+  --mod-table-menu-hover-text: #4338ca;
+
+  --mod-toolbar-focus-ring: #e0e7ff;
+  --mod-toolbar-focus-border: #818cf8;
+  --mod-toolbar-active-text: #4f46e5;
+  --mod-toolbar-bg-light: #eef2ff;
+  --mod-toolbar-active-bg: #4f46e5;
+  --mod-toolbar-menu-hover-bg: #eef2ff;
+  --mod-toolbar-menu-hover-text: #4338ca;
+
+  --mod-empty-glow: #818cf8;
+  --mod-empty-icon-bg: #eef2ff;
+  --mod-empty-icon-text: #4f46e5;
+  --mod-empty-btn-bg: #4f46e5;
+  --mod-empty-btn-hover: #4338ca;
+  --mod-empty-btn-shadow: #e0e7ff;
+  --mod-empty-secondary-text: #4338ca;
+  --mod-empty-secondary-hover-bg: #eef2ff;
+
+  --mod-tips-icon-bg: #eef2ff;
+  --mod-tips-icon-text: #4f46e5;
+
+  --mod-status-active-bg: #eef2ff;
+  --mod-status-active-text: #4f46e5;
+  --mod-status-active-border: #e0e7ff;
+  --mod-status-published-bg: #eef2ff;
+  --mod-status-published-text: #4f46e5;
+  --mod-status-published-border: #e0e7ff;
+  --mod-status-draft-bg: #f8fafc;
+  --mod-status-draft-text: #64748b;
+  --mod-status-draft-border: #f1f5f9;
+  --mod-status-error-bg: #fff1f2;
+  --mod-status-error-text: #e11d48;
+  --mod-status-error-border: #ffe4e6;
+  --mod-status-training-bg: #eef2ff;
+  --mod-status-training-text: #4f46e5;
+  --mod-status-training-border: #e0e7ff;
+  --mod-status-idle-bg: #f8fafc;
+  --mod-status-idle-text: #64748b;
+  --mod-status-idle-border: #f1f5f9;
+
+  --mod-modal-header-bg: #eef2ff;
+  --mod-modal-header-text: #312e81;
+  --mod-modal-icon-bg: #4f46e5;
+  --mod-modal-primary-bg: #4f46e5;
+  --mod-modal-primary-hover: #4338ca;
+  --mod-modal-secondary-hover-bg: #eef2ff;
+  --mod-modal-secondary-text: #4f46e5;
+
+  --mod-lineage-icon-bg: #4f46e5;
+  --mod-lineage-icon-text: #ffffff;
+  --mod-lineage-card-border: #f3f4f6;
+  --mod-lineage-card-hover-border: #c7d2fe;
+  --mod-lineage-card-hover-bg: rgba(238, 242, 255, 0.2);
+  --mod-lineage-badge-bg: #eef2ff;
+  --mod-lineage-badge-text: #4f46e5;
+
+  --mod-layout-border: #e0e7ff;
+  --mod-sidebar-hover-icon: #4f46e5;
+}
+
+/* ==========================================
+   MODULE UTILITY CLASSES
+   Complex properties (shadows, gradients, focus rings)
+   that cannot be expressed as simple Tailwind color tokens
+   ========================================== */
+
+/* Hero gradient glow behind input */
+.mod-hero-gradient-glow {
+  background: linear-gradient(to right, var(--mod-hero-gradient-from), var(--mod-hero-gradient-to));
+}
+
+/* Hero shadow on input container */
+.mod-hero-input-shadow {
+  box-shadow: 0 2px 8px -2px var(--mod-hero-shadow);
+}
+
+/* Hero button shadow */
+.mod-hero-btn-shadow {
+  box-shadow: 0 2px 4px -1px var(--mod-hero-btn-shadow);
+}
+
+/* Card hover shadow */
+.mod-card-hover-shadow:hover {
+  box-shadow: 0 4px 12px -4px var(--mod-card-shadow);
+}
+
+/* Card gradient accent stripe */
+.mod-card-accent-gradient {
+  background: linear-gradient(to right, var(--mod-card-accent-from), var(--mod-card-accent-to));
+}
+
+/* Toolbar / Search focus ring */
+.mod-toolbar-focus-ring:focus {
+  box-shadow: 0 0 0 3px var(--mod-toolbar-focus-ring);
+  border-color: var(--mod-toolbar-focus-border);
+}
+
+/* Empty state primary button */
+.mod-empty-btn-shadow {
+  box-shadow: 0 2px 4px -1px var(--mod-empty-btn-shadow);
+}
+
+/* Header primary button shadow */
+.mod-header-btn-shadow {
+  box-shadow: 0 2px 4px -1px var(--mod-header-btn-shadow);
+}

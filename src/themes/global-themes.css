@@ -1,0 +1,1093 @@
+/* ==========================================
+   AUTH THEME VARIABLES
+   ========================================== */
+
+/* Default: light-blue (matches the current production look) */
+:root,
+[data-theme="light-blue"] {
+  /* Page */
+  --auth-page-bg: #F1F5F9;
+  --auth-card-bg: #ffffff;
+  --auth-panel-border: #f1f5f9;
+
+  /* Text */
+  --auth-text-primary: #0f172a;
+  --auth-text-secondary: #64748b;
+  --auth-text-muted: #94a3b8;
+  --auth-text-label: #94a3b8;
+  --auth-heading: #0f172a;
+
+  /* Primary / Accent */
+  --auth-primary: #2563eb;
+  --auth-primary-hover: #1d4ed8;
+  --auth-primary-shadow: rgba(37, 99, 235, 0.2);
+  --auth-accent-from: #2563eb;
+  --auth-accent-via: #2563eb;
+  --auth-accent-to: #0d9488;
+  --auth-accent-text: #2563eb;
+
+  /* Inputs */
+  --auth-input-bg: #f8fafc;
+  --auth-input-border: #e2e8f0;
+  --auth-input-focus-ring: rgba(59, 130, 246, 0.1);
+  --auth-input-focus-border: rgba(59, 130, 246, 0.5);
+  --auth-placeholder: #94a3b8;
+
+  /* Badge */
+  --auth-badge-bg: #eff6ff;
+  --auth-badge-text: #2563eb;
+  --auth-badge-border: #dbeafe;
+
+  /* Links */
+  --auth-link: #2563eb;
+  --auth-link-hover: #3b82f6;
+
+  /* Glow / Decorative */
+  --auth-glow-primary: rgba(96, 165, 250, 0.1);
+  --auth-glow-secondary: rgba(45, 212, 191, 0.1);
+  --auth-grid-line: #f8fafc;
+
+  /* Selection */
+  --auth-selection: rgba(59, 130, 246, 0.3);
+
+  /* Error */
+  --auth-error-bg: #fff1f2;
+  --auth-error-text: #e11d48;
+  --auth-error-border: #ffe4e6;
+  --auth-error-dot: #f43f5e;
+
+  /* Success */
+  --auth-success-bg: #ecfdf5;
+  --auth-success-text: #059669;
+  --auth-success-border: #d1fae5;
+
+  /* Org Selection */
+  --auth-active-border: #3b82f6;
+  --auth-active-bg: rgba(239, 246, 255, 0.5);
+  --auth-active-icon: #2563eb;
+  --auth-active-icon-bg: #dbeafe;
+
+  /* Social Buttons */
+  --auth-social-bg: #ffffff;
+  --auth-social-border: #e2e8f0;
+  --auth-social-text: #475569;
+  --auth-social-hover-bg: #f8fafc;
+  --auth-social-hover-border: #cbd5e1;
+
+  /* Divider */
+  --auth-divider: #f1f5f9;
+  --auth-divider-text-bg: #ffffff;
+
+  /* Footer */
+  --auth-footer-text: #94a3b8;
+  --auth-footer-hover: #475569;
+
+  /* Floating Cards (left panel decoration) */
+  --auth-float-card-bg: rgba(255, 255, 255, 0.9);
+  --auth-float-card-border: #e2e8f0;
+  --auth-float-card-shadow: rgba(226, 232, 240, 0.5);
+  --auth-float-skeleton: #f1f5f9;
+  --auth-float-skeleton-light: #f8fafc;
+
+  /* Card icon variants */
+  --auth-card-icon-1-bg: #eef2ff;
+  --auth-card-icon-1-text: #4f46e5;
+  --auth-card-icon-1-grid-bg: #eef2ff;
+  --auth-card-icon-1-grid-border: #e0e7ff;
+  --auth-card-icon-2-bg: #dbeafe;
+  --auth-card-icon-2-text: #2563eb;
+  --auth-card-icon-3-bg: #f0fdfa;
+  --auth-card-icon-3-text: #0d9488;
+  --auth-card-icon-3-shimmer: rgba(204, 251, 241, 0.5);
+  --auth-card-icon-3-dot: #14b8a6;
+  --auth-card-icon-3-glow-bg: rgba(13, 148, 136, 0.1);
+  --auth-card-icon-3-glow-border: rgba(13, 148, 136, 0.2);
+
+  /* Progress bar on workflow card */
+  --auth-progress-bar: #2563eb;
+
+  /* Brand */
+  --auth-brand-logo-bg: #2563eb;
+  --auth-brand-logo-text: #0f172a;
+  --auth-brand-logo-secondary: #2563eb;
+
+  /* Stats */
+  --auth-stat-accent: #2563eb;
+  --auth-stat-secondary: #0d9488;
+  --auth-stat-label: #94a3b8;
+  --auth-stat-divider: #e2e8f0;
+  --auth-stat-footnote: #94a3b8;
+
+  /* Back button */
+  --auth-back-text: #94a3b8;
+  --auth-back-hover: #475569;
+
+  /* Spinner */
+  --auth-spinner-track: rgba(255, 255, 255, 0.3);
+  --auth-spinner-head: #ffffff;
+
+  /* Org card unselected */
+  --auth-org-border: #e2e8f0;
+  --auth-org-bg: #ffffff;
+  --auth-org-hover-border: #cbd5e1;
+  --auth-org-hover-bg: #f8fafc;
+  --auth-org-icon-bg: #f1f5f9;
+  --auth-org-icon-text: #64748b;
+  --auth-org-name: #0f172a;
+  --auth-org-radio-border: #cbd5e1;
+
+  /* Eye toggle */
+  --auth-eye-text: #94a3b8;
+  --auth-eye-hover: #475569;
+
+  /* Button text for primary */
+  --auth-btn-text: #ffffff;
+
+  /* ===== SIDEBAR ===== */
+  --sidebar-bg: #ffffff;
+  --sidebar-border: #e2e8f0;
+  --sidebar-hover-bg: rgba(248, 250, 252, 0.8);
+  --sidebar-hover-collapsed: rgba(248, 250, 252, 0.5);
+  --sidebar-text-default: #94a3b8;
+  --sidebar-text-muted: #94a3b8;
+  --sidebar-active-bg: #1d4ed8;
+  --sidebar-active-text: #ffffff;
+  --sidebar-active-shadow: rgba(191, 219, 254, 1);
+  --sidebar-toggle-hover-text: #2563eb;
+  --sidebar-toggle-hover-border: rgba(29, 78, 216, 0.2);
+  --sidebar-logo-bg: #2563eb;
+  --sidebar-logo-shadow: rgba(59, 130, 246, 0.1);
+  --sidebar-logo-text: #0f172a;
+  --sidebar-logo-secondary: #2563eb;
+  --sidebar-section-label: #94a3b8;
+  --sidebar-profile-bg: #f8fafc;
+  --sidebar-profile-name: #0f172a;
+  --sidebar-profile-sub: #64748b;
+  --sidebar-avatar-from: #2563eb;
+  --sidebar-avatar-to: #7c3aed;
+  --sidebar-avatar-border: #ffffff;
+  --sidebar-settings-hover-text: #2563eb;
+  --sidebar-logout-text: #f43f5e;
+  --sidebar-logout-hover-text: #e11d48;
+  --sidebar-logout-hover-bg: #fff1f2;
+  --sidebar-mobile-active-text: #2563eb;
+  --sidebar-mobile-active-bg: rgba(239, 246, 255, 0.5);
+  --sidebar-mobile-text: #475569;
+  --sidebar-mobile-hover-text: #0f172a;
+  --sidebar-mobile-hover-bg: #f8fafc;
+  --sidebar-mobile-logout-hover-text: #e11d48;
+  --sidebar-mobile-logout-hover-bg: #fff1f2;
+
+  /* ===== DASHBOARD ===== */
+  --dash-page-bg: rgba(255, 255, 255, 0.4);
+  --dash-blur-1: rgba(56, 189, 248, 0.1);
+  --dash-blur-2: rgba(167, 139, 250, 0.1);
+  --dash-blur-3: rgba(45, 212, 191, 0.05);
+  --dash-title: #111827;
+  --dash-subtext: #6b7280;
+  --dash-card-bg: #ffffff;
+  --dash-card-border: #f3f4f6;
+  --dash-card-shadow-hover: rgba(0, 0, 0, 0.1);
+  --dash-tag-text: #9ca3af;
+  --dash-link-text: #9ca3af;
+  --dash-recent-title: #111827;
+  --dash-recent-viewall: #1d4ed8;
+  --dash-recent-icon: #3b82f6;
+  --dash-recent-card-bg: #ffffff;
+  --dash-recent-card-border: #f3f4f6;
+  --dash-promo-bg: #0f172a;
+  --dash-promo-title: #ffffff;
+  --dash-promo-subtext: #94a3b8;
+  --dash-promo-btn-bg: #ffffff;
+  --dash-promo-btn-text: #0f172a;
+  --dash-promo-btn-hover-bg: #f8fafc;
+  --dash-promo-glow: #7c3aed;
+  --dash-promo-icon-shadow: rgba(139, 92, 246, 0.2);
+  --dash-usage-title: #111827;
+  --dash-usage-label: #6b7280;
+  --dash-usage-value: #111827;
+  --dash-usage-bar-bg: #f3f4f6;
+  --dash-ai-btn-bg: #2563eb;
+  --dash-ai-btn-shadow: rgba(37, 99, 235, 0.2);
+  --dash-ai-icon: #ffffff;
+
+  /* App shell */
+  --shell-bg: #f9fafb;
+  --shell-text: #111827;
+}
+
+/* ==========================================
+   LIGHT-SLATE THEME
+   ========================================== */
+[data-theme="light-slate"] {
+  /* Page */
+  --auth-page-bg: #f8fafc;
+  --auth-card-bg: #ffffff;
+  --auth-panel-border: #e2e8f0;
+
+  /* Text */
+  --auth-text-primary: #0f172a;
+  --auth-text-secondary: #64748b;
+  --auth-text-muted: #94a3b8;
+  --auth-text-label: #94a3b8;
+  --auth-heading: #0f172a;
+
+  /* Primary / Accent */
+  --auth-primary: #1e293b;
+  --auth-primary-hover: #0f172a;
+  --auth-primary-shadow: rgba(30, 41, 59, 0.1);
+  --auth-accent-from: #334155;
+  --auth-accent-via: #1e293b;
+  --auth-accent-to: #0f172a;
+  --auth-accent-text: #1e293b;
+
+  /* Inputs */
+  --auth-input-bg: #ffffff;
+  --auth-input-border: #e2e8f0;
+  --auth-input-focus-ring: rgba(100, 116, 139, 0.1);
+  --auth-input-focus-border: rgba(100, 116, 139, 0.5);
+  --auth-placeholder: #94a3b8;
+
+  /* Badge */
+  --auth-badge-bg: #f1f5f9;
+  --auth-badge-text: #1e293b;
+  --auth-badge-border: #e2e8f0;
+
+  /* Links */
+  --auth-link: #1e293b;
+  --auth-link-hover: #000000;
+
+  /* Glow / Decorative */
+  --auth-glow-primary: rgba(148, 163, 184, 0.1);
+  --auth-glow-secondary: rgba(148, 163, 184, 0.08);
+  --auth-grid-line: #f8fafc;
+
+  /* Selection */
+  --auth-selection: rgba(15, 23, 42, 0.3);
+
+  /* Error */
+  --auth-error-bg: #fff1f2;
+  --auth-error-text: #e11d48;
+  --auth-error-border: #ffe4e6;
+  --auth-error-dot: #f43f5e;
+
+  /* Success */
+  --auth-success-bg: #ecfdf5;
+  --auth-success-text: #059669;
+  --auth-success-border: #d1fae5;
+
+  /* Org Selection */
+  --auth-active-border: #0f172a;
+  --auth-active-bg: rgba(241, 245, 249, 0.5);
+  --auth-active-icon: #0f172a;
+  --auth-active-icon-bg: #f1f5f9;
+
+  /* Social Buttons */
+  --auth-social-bg: #ffffff;
+  --auth-social-border: #e2e8f0;
+  --auth-social-text: #475569;
+  --auth-social-hover-bg: #f8fafc;
+  --auth-social-hover-border: #cbd5e1;
+
+  /* Divider */
+  --auth-divider: #e2e8f0;
+  --auth-divider-text-bg: #ffffff;
+
+  /* Footer */
+  --auth-footer-text: #94a3b8;
+  --auth-footer-hover: #475569;
+
+  /* Floating Cards */
+  --auth-float-card-bg: rgba(255, 255, 255, 0.9);
+  --auth-float-card-border: #e2e8f0;
+  --auth-float-card-shadow: rgba(226, 232, 240, 0.5);
+  --auth-float-skeleton: #f1f5f9;
+  --auth-float-skeleton-light: #f8fafc;
+
+  /* Card icon variants */
+  --auth-card-icon-1-bg: #f1f5f9;
+  --auth-card-icon-1-text: #475569;
+  --auth-card-icon-1-grid-bg: #f1f5f9;
+  --auth-card-icon-1-grid-border: #e2e8f0;
+  --auth-card-icon-2-bg: #f1f5f9;
+  --auth-card-icon-2-text: #334155;
+  --auth-card-icon-3-bg: #f1f5f9;
+  --auth-card-icon-3-text: #475569;
+  --auth-card-icon-3-shimmer: rgba(226, 232, 240, 0.5);
+  --auth-card-icon-3-dot: #475569;
+  --auth-card-icon-3-glow-bg: rgba(100, 116, 139, 0.1);
+  --auth-card-icon-3-glow-border: rgba(100, 116, 139, 0.2);
+
+  /* Progress bar */
+  --auth-progress-bar: #1e293b;
+
+  /* Brand */
+  --auth-brand-logo-bg: #1e293b;
+  --auth-brand-logo-text: #0f172a;
+  --auth-brand-logo-secondary: #334155;
+
+  /* Stats */
+  --auth-stat-accent: #1e293b;
+  --auth-stat-secondary: #334155;
+  --auth-stat-label: #94a3b8;
+  --auth-stat-divider: #e2e8f0;
+  --auth-stat-footnote: #94a3b8;
+
+  /* Back button */
+  --auth-back-text: #94a3b8;
+  --auth-back-hover: #475569;
+
+  /* Spinner */
+  --auth-spinner-track: rgba(255, 255, 255, 0.3);
+  --auth-spinner-head: #ffffff;
+
+  /* Org card unselected */
+  --auth-org-border: #e2e8f0;
+  --auth-org-bg: #ffffff;
+  --auth-org-hover-border: #cbd5e1;
+  --auth-org-hover-bg: #f8fafc;
+  --auth-org-icon-bg: #f1f5f9;
+  --auth-org-icon-text: #64748b;
+  --auth-org-name: #0f172a;
+  --auth-org-radio-border: #cbd5e1;
+
+  /* Eye toggle */
+  --auth-eye-text: #94a3b8;
+  --auth-eye-hover: #475569;
+
+  /* Button text */
+  --auth-btn-text: #ffffff;
+
+  /* ===== SIDEBAR ===== */
+  --sidebar-bg: #ffffff;
+  --sidebar-border: #e2e8f0;
+  --sidebar-hover-bg: rgba(248, 250, 252, 0.8);
+  --sidebar-hover-collapsed: rgba(248, 250, 252, 0.5);
+  --sidebar-text-default: #94a3b8;
+  --sidebar-text-muted: #94a3b8;
+  --sidebar-active-bg: #1e293b;
+  --sidebar-active-text: #ffffff;
+  --sidebar-active-shadow: rgba(226, 232, 240, 1);
+  --sidebar-toggle-hover-text: #334155;
+  --sidebar-toggle-hover-border: rgba(30, 41, 59, 0.2);
+  --sidebar-logo-bg: #1e293b;
+  --sidebar-logo-shadow: rgba(30, 41, 59, 0.1);
+  --sidebar-logo-text: #0f172a;
+  --sidebar-logo-secondary: #334155;
+  --sidebar-section-label: #94a3b8;
+  --sidebar-profile-bg: #f8fafc;
+  --sidebar-profile-name: #0f172a;
+  --sidebar-profile-sub: #64748b;
+  --sidebar-avatar-from: #334155;
+  --sidebar-avatar-to: #475569;
+  --sidebar-avatar-border: #ffffff;
+  --sidebar-settings-hover-text: #334155;
+  --sidebar-logout-text: #f43f5e;
+  --sidebar-logout-hover-text: #e11d48;
+  --sidebar-logout-hover-bg: #fff1f2;
+  --sidebar-mobile-active-text: #1e293b;
+  --sidebar-mobile-active-bg: rgba(241, 245, 249, 0.5);
+  --sidebar-mobile-text: #475569;
+  --sidebar-mobile-hover-text: #0f172a;
+  --sidebar-mobile-hover-bg: #f8fafc;
+  --sidebar-mobile-logout-hover-text: #e11d48;
+  --sidebar-mobile-logout-hover-bg: #fff1f2;
+
+  /* ===== DASHBOARD ===== */
+  --dash-page-bg: rgba(248, 250, 252, 0.4);
+  --dash-blur-1: rgba(148, 163, 184, 0.1);
+  --dash-blur-2: rgba(100, 116, 139, 0.1);
+  --dash-blur-3: rgba(148, 163, 184, 0.05);
+  --dash-title: #0f172a;
+  --dash-subtext: #64748b;
+  --dash-card-bg: #ffffff;
+  --dash-card-border: #f1f5f9;
+  --dash-card-shadow-hover: rgba(0, 0, 0, 0.1);
+  --dash-tag-text: #94a3b8;
+  --dash-link-text: #94a3b8;
+  --dash-recent-title: #0f172a;
+  --dash-recent-viewall: #334155;
+  --dash-recent-icon: #1e293b;
+  --dash-recent-card-bg: #ffffff;
+  --dash-recent-card-border: #f1f5f9;
+  --dash-promo-bg: #1e293b;
+  --dash-promo-title: #ffffff;
+  --dash-promo-subtext: #cbd5e1;
+  --dash-promo-btn-bg: #ffffff;
+  --dash-promo-btn-text: #1e293b;
+  --dash-promo-btn-hover-bg: #f8fafc;
+  --dash-promo-glow: #334155;
+  --dash-promo-icon-shadow: rgba(100, 116, 139, 0.2);
+  --dash-usage-title: #0f172a;
+  --dash-usage-label: #64748b;
+  --dash-usage-value: #0f172a;
+  --dash-usage-bar-bg: #f1f5f9;
+  --dash-ai-btn-bg: #1e293b;
+  --dash-ai-btn-shadow: rgba(30, 41, 59, 0.2);
+  --dash-ai-icon: #ffffff;
+
+  /* App shell */
+  --shell-bg: #f9fafb;
+  --shell-text: #0f172a;
+}
+
+/* ==========================================
+   DARK-BLUE THEME
+   ========================================== */
+[data-theme="dark-blue"] {
+  /* Page */
+  --auth-page-bg: #0f172a;
+  --auth-card-bg: #1e293b;
+  --auth-panel-border: #334155;
+
+  /* Text */
+  --auth-text-primary: #f1f5f9;
+  --auth-text-secondary: #94a3b8;
+  --auth-text-muted: #64748b;
+  --auth-text-label: #64748b;
+  --auth-heading: #f8fafc;
+
+  /* Primary / Accent */
+  --auth-primary: #3b82f6;
+  --auth-primary-hover: #2563eb;
+  --auth-primary-shadow: rgba(59, 130, 246, 0.25);
+  --auth-accent-from: #3b82f6;
+  --auth-accent-via: #6366f1;
+  --auth-accent-to: #2dd4bf;
+  --auth-accent-text: #60a5fa;
+
+  /* Inputs */
+  --auth-input-bg: #0f172a;
+  --auth-input-border: #334155;
+  --auth-input-focus-ring: rgba(59, 130, 246, 0.15);
+  --auth-input-focus-border: rgba(96, 165, 250, 0.5);
+  --auth-placeholder: #475569;
+
+  /* Badge */
+  --auth-badge-bg: rgba(59, 130, 246, 0.1);
+  --auth-badge-text: #60a5fa;
+  --auth-badge-border: rgba(59, 130, 246, 0.2);
+
+  /* Links */
+  --auth-link: #60a5fa;
+  --auth-link-hover: #93c5fd;
+
+  /* Glow / Decorative */
+  --auth-glow-primary: rgba(59, 130, 246, 0.08);
+  --auth-glow-secondary: rgba(45, 212, 191, 0.06);
+  --auth-grid-line: rgba(51, 65, 85, 0.5);
+
+  /* Selection */
+  --auth-selection: rgba(96, 165, 250, 0.3);
+
+  /* Error */
+  --auth-error-bg: rgba(225, 29, 72, 0.1);
+  --auth-error-text: #fb7185;
+  --auth-error-border: rgba(225, 29, 72, 0.2);
+  --auth-error-dot: #fb7185;
+
+  /* Success */
+  --auth-success-bg: rgba(5, 150, 105, 0.1);
+  --auth-success-text: #34d399;
+  --auth-success-border: rgba(5, 150, 105, 0.2);
+
+  /* Org Selection */
+  --auth-active-border: #3b82f6;
+  --auth-active-bg: rgba(59, 130, 246, 0.08);
+  --auth-active-icon: #60a5fa;
+  --auth-active-icon-bg: rgba(59, 130, 246, 0.15);
+
+  /* Social Buttons */
+  --auth-social-bg: #1e293b;
+  --auth-social-border: #334155;
+  --auth-social-text: #94a3b8;
+  --auth-social-hover-bg: #334155;
+  --auth-social-hover-border: #475569;
+
+  /* Divider */
+  --auth-divider: #334155;
+  --auth-divider-text-bg: #1e293b;
+
+  /* Footer */
+  --auth-footer-text: #475569;
+  --auth-footer-hover: #94a3b8;
+
+  /* Floating Cards */
+  --auth-float-card-bg: rgba(30, 41, 59, 0.9);
+  --auth-float-card-border: #334155;
+  --auth-float-card-shadow: rgba(0, 0, 0, 0.3);
+  --auth-float-skeleton: #334155;
+  --auth-float-skeleton-light: #1e293b;
+
+  /* Card icon variants */
+  --auth-card-icon-1-bg: rgba(99, 102, 241, 0.1);
+  --auth-card-icon-1-text: #818cf8;
+  --auth-card-icon-1-grid-bg: rgba(99, 102, 241, 0.08);
+  --auth-card-icon-1-grid-border: rgba(99, 102, 241, 0.15);
+  --auth-card-icon-2-bg: rgba(59, 130, 246, 0.15);
+  --auth-card-icon-2-text: #60a5fa;
+  --auth-card-icon-3-bg: rgba(45, 212, 191, 0.1);
+  --auth-card-icon-3-text: #2dd4bf;
+  --auth-card-icon-3-shimmer: rgba(45, 212, 191, 0.1);
+  --auth-card-icon-3-dot: #2dd4bf;
+  --auth-card-icon-3-glow-bg: rgba(45, 212, 191, 0.08);
+  --auth-card-icon-3-glow-border: rgba(45, 212, 191, 0.15);
+
+  /* Progress bar */
+  --auth-progress-bar: #3b82f6;
+
+  /* Brand */
+  --auth-brand-logo-bg: #3b82f6;
+  --auth-brand-logo-text: #f1f5f9;
+  --auth-brand-logo-secondary: #60a5fa;
+
+  /* Stats */
+  --auth-stat-accent: #60a5fa;
+  --auth-stat-secondary: #2dd4bf;
+  --auth-stat-label: #475569;
+  --auth-stat-divider: #334155;
+  --auth-stat-footnote: #475569;
+
+  /* Back button */
+  --auth-back-text: #64748b;
+  --auth-back-hover: #94a3b8;
+
+  /* Spinner */
+  --auth-spinner-track: rgba(255, 255, 255, 0.3);
+  --auth-spinner-head: #ffffff;
+
+  /* Org card unselected */
+  --auth-org-border: #334155;
+  --auth-org-bg: #1e293b;
+  --auth-org-hover-border: #475569;
+  --auth-org-hover-bg: rgba(51, 65, 85, 0.5);
+  --auth-org-icon-bg: #0f172a;
+  --auth-org-icon-text: #94a3b8;
+  --auth-org-name: #f1f5f9;
+  --auth-org-radio-border: #475569;
+
+  /* Eye toggle */
+  --auth-eye-text: #64748b;
+  --auth-eye-hover: #94a3b8;
+
+  /* Button text */
+  --auth-btn-text: #ffffff;
+
+  /* ===== SIDEBAR ===== */
+  --sidebar-bg: #1e293b;
+  --sidebar-border: #334155;
+  --sidebar-hover-bg: rgba(51, 65, 85, 0.5);
+  --sidebar-hover-collapsed: rgba(51, 65, 85, 0.3);
+  --sidebar-text-default: #64748b;
+  --sidebar-text-muted: #475569;
+  --sidebar-active-bg: #3b82f6;
+  --sidebar-active-text: #ffffff;
+  --sidebar-active-shadow: rgba(59, 130, 246, 0.2);
+  --sidebar-toggle-hover-text: #60a5fa;
+  --sidebar-toggle-hover-border: rgba(59, 130, 246, 0.2);
+  --sidebar-logo-bg: #3b82f6;
+  --sidebar-logo-shadow: rgba(59, 130, 246, 0.15);
+  --sidebar-logo-text: #f1f5f9;
+  --sidebar-logo-secondary: #60a5fa;
+  --sidebar-section-label: #475569;
+  --sidebar-profile-bg: #0f172a;
+  --sidebar-profile-name: #f1f5f9;
+  --sidebar-profile-sub: #94a3b8;
+  --sidebar-avatar-from: #3b82f6;
+  --sidebar-avatar-to: #8b5cf6;
+  --sidebar-avatar-border: #334155;
+  --sidebar-settings-hover-text: #60a5fa;
+  --sidebar-logout-text: #fb7185;
+  --sidebar-logout-hover-text: #f43f5e;
+  --sidebar-logout-hover-bg: rgba(225, 29, 72, 0.1);
+  --sidebar-mobile-active-text: #60a5fa;
+  --sidebar-mobile-active-bg: rgba(59, 130, 246, 0.1);
+  --sidebar-mobile-text: #94a3b8;
+  --sidebar-mobile-hover-text: #f1f5f9;
+  --sidebar-mobile-hover-bg: #334155;
+  --sidebar-mobile-logout-hover-text: #f43f5e;
+  --sidebar-mobile-logout-hover-bg: rgba(225, 29, 72, 0.1);
+
+  /* ===== DASHBOARD ===== */
+  --dash-page-bg: rgba(15, 23, 42, 0.4);
+  --dash-blur-1: rgba(59, 130, 246, 0.06);
+  --dash-blur-2: rgba(139, 92, 246, 0.06);
+  --dash-blur-3: rgba(45, 212, 191, 0.04);
+  --dash-title: #f1f5f9;
+  --dash-subtext: #94a3b8;
+  --dash-card-bg: #1e293b;
+  --dash-card-border: #334155;
+  --dash-card-shadow-hover: rgba(0, 0, 0, 0.3);
+  --dash-tag-text: #64748b;
+  --dash-link-text: #64748b;
+  --dash-recent-title: #f1f5f9;
+  --dash-recent-viewall: #60a5fa;
+  --dash-recent-icon: #60a5fa;
+  --dash-recent-card-bg: #1e293b;
+  --dash-recent-card-border: #334155;
+  --dash-promo-bg: #0f172a;
+  --dash-promo-title: #f1f5f9;
+  --dash-promo-subtext: #64748b;
+  --dash-promo-btn-bg: #f1f5f9;
+  --dash-promo-btn-text: #0f172a;
+  --dash-promo-btn-hover-bg: #e2e8f0;
+  --dash-promo-glow: #7c3aed;
+  --dash-promo-icon-shadow: rgba(139, 92, 246, 0.3);
+  --dash-usage-title: #f1f5f9;
+  --dash-usage-label: #94a3b8;
+  --dash-usage-value: #f1f5f9;
+  --dash-usage-bar-bg: #334155;
+  --dash-ai-btn-bg: #3b82f6;
+  --dash-ai-btn-shadow: rgba(59, 130, 246, 0.3);
+  --dash-ai-icon: #ffffff;
+
+  /* App shell */
+  --shell-bg: #0f172a;
+  --shell-text: #f1f5f9;
+}
+
+/* ==========================================
+   TAILWIND v4 THEME EXTENSION
+   ========================================== */
+
+@theme {
+  /* Auth theming colors — all driven by CSS custom properties */
+  --color-auth-page-bg: var(--auth-page-bg);
+  --color-auth-card-bg: var(--auth-card-bg);
+  --color-auth-panel-border: var(--auth-panel-border);
+
+  --color-auth-text-primary: var(--auth-text-primary);
+  --color-auth-text-secondary: var(--auth-text-secondary);
+  --color-auth-text-muted: var(--auth-text-muted);
+  --color-auth-text-label: var(--auth-text-label);
+  --color-auth-heading: var(--auth-heading);
+
+  --color-auth-primary: var(--auth-primary);
+  --color-auth-primary-hover: var(--auth-primary-hover);
+  --color-auth-accent-text: var(--auth-accent-text);
+
+  --color-auth-input-bg: var(--auth-input-bg);
+  --color-auth-input-border: var(--auth-input-border);
+  --color-auth-placeholder: var(--auth-placeholder);
+
+  --color-auth-badge-bg: var(--auth-badge-bg);
+  --color-auth-badge-text: var(--auth-badge-text);
+  --color-auth-badge-border: var(--auth-badge-border);
+
+  --color-auth-link: var(--auth-link);
+  --color-auth-link-hover: var(--auth-link-hover);
+
+  --color-auth-error-bg: var(--auth-error-bg);
+  --color-auth-error-text: var(--auth-error-text);
+  --color-auth-error-border: var(--auth-error-border);
+  --color-auth-error-dot: var(--auth-error-dot);
+
+  --color-auth-success-bg: var(--auth-success-bg);
+  --color-auth-success-text: var(--auth-success-text);
+  --color-auth-success-border: var(--auth-success-border);
+
+  --color-auth-active-border: var(--auth-active-border);
+  --color-auth-active-bg: var(--auth-active-bg);
+  --color-auth-active-icon: var(--auth-active-icon);
+  --color-auth-active-icon-bg: var(--auth-active-icon-bg);
+
+  --color-auth-social-bg: var(--auth-social-bg);
+  --color-auth-social-border: var(--auth-social-border);
+  --color-auth-social-text: var(--auth-social-text);
+  --color-auth-social-hover-bg: var(--auth-social-hover-bg);
+  --color-auth-social-hover-border: var(--auth-social-hover-border);
+
+  --color-auth-divider: var(--auth-divider);
+  --color-auth-divider-text-bg: var(--auth-divider-text-bg);
+
+  --color-auth-footer-text: var(--auth-footer-text);
+  --color-auth-footer-hover: var(--auth-footer-hover);
+
+  --color-auth-float-card-border: var(--auth-float-card-border);
+  --color-auth-float-skeleton: var(--auth-float-skeleton);
+  --color-auth-float-skeleton-light: var(--auth-float-skeleton-light);
+
+  --color-auth-card-icon-1-bg: var(--auth-card-icon-1-bg);
+  --color-auth-card-icon-1-text: var(--auth-card-icon-1-text);
+  --color-auth-card-icon-1-grid-bg: var(--auth-card-icon-1-grid-bg);
+  --color-auth-card-icon-1-grid-border: var(--auth-card-icon-1-grid-border);
+  --color-auth-card-icon-2-bg: var(--auth-card-icon-2-bg);
+  --color-auth-card-icon-2-text: var(--auth-card-icon-2-text);
+  --color-auth-card-icon-3-bg: var(--auth-card-icon-3-bg);
+  --color-auth-card-icon-3-text: var(--auth-card-icon-3-text);
+  --color-auth-card-icon-3-dot: var(--auth-card-icon-3-dot);
+
+  --color-auth-progress-bar: var(--auth-progress-bar);
+
+  --color-auth-brand-logo-bg: var(--auth-brand-logo-bg);
+  --color-auth-brand-logo-text: var(--auth-brand-logo-text);
+  --color-auth-brand-logo-secondary: var(--auth-brand-logo-secondary);
+
+  --color-auth-stat-accent: var(--auth-stat-accent);
+  --color-auth-stat-secondary: var(--auth-stat-secondary);
+  --color-auth-stat-label: var(--auth-stat-label);
+  --color-auth-stat-divider: var(--auth-stat-divider);
+  --color-auth-stat-footnote: var(--auth-stat-footnote);
+
+  --color-auth-back-text: var(--auth-back-text);
+  --color-auth-back-hover: var(--auth-back-hover);
+
+  --color-auth-org-border: var(--auth-org-border);
+  --color-auth-org-bg: var(--auth-org-bg);
+  --color-auth-org-hover-border: var(--auth-org-hover-border);
+  --color-auth-org-hover-bg: var(--auth-org-hover-bg);
+  --color-auth-org-icon-bg: var(--auth-org-icon-bg);
+  --color-auth-org-icon-text: var(--auth-org-icon-text);
+  --color-auth-org-name: var(--auth-org-name);
+  --color-auth-org-radio-border: var(--auth-org-radio-border);
+
+  --color-auth-eye-text: var(--auth-eye-text);
+  --color-auth-eye-hover: var(--auth-eye-hover);
+
+  --color-auth-btn-text: var(--auth-btn-text);
+
+  /* Sidebar colors */
+  --color-sidebar-bg: var(--sidebar-bg);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-text-default: var(--sidebar-text-default);
+  --color-sidebar-text-muted: var(--sidebar-text-muted);
+  --color-sidebar-active-bg: var(--sidebar-active-bg);
+  --color-sidebar-active-text: var(--sidebar-active-text);
+  --color-sidebar-logo-bg: var(--sidebar-logo-bg);
+  --color-sidebar-logo-text: var(--sidebar-logo-text);
+  --color-sidebar-logo-secondary: var(--sidebar-logo-secondary);
+  --color-sidebar-section-label: var(--sidebar-section-label);
+  --color-sidebar-profile-bg: var(--sidebar-profile-bg);
+  --color-sidebar-profile-name: var(--sidebar-profile-name);
+  --color-sidebar-profile-sub: var(--sidebar-profile-sub);
+  --color-sidebar-logout-text: var(--sidebar-logout-text);
+  --color-sidebar-logout-hover-text: var(--sidebar-logout-hover-text);
+  --color-sidebar-logout-hover-bg: var(--sidebar-logout-hover-bg);
+  --color-sidebar-mobile-text: var(--sidebar-mobile-text);
+  --color-sidebar-mobile-active-text: var(--sidebar-mobile-active-text);
+
+  /* Dashboard colors */
+  --color-dash-title: var(--dash-title);
+  --color-dash-subtext: var(--dash-subtext);
+  --color-dash-card-bg: var(--dash-card-bg);
+  --color-dash-card-border: var(--dash-card-border);
+  --color-dash-tag-text: var(--dash-tag-text);
+  --color-dash-link-text: var(--dash-link-text);
+  --color-dash-recent-title: var(--dash-recent-title);
+  --color-dash-recent-viewall: var(--dash-recent-viewall);
+  --color-dash-recent-icon: var(--dash-recent-icon);
+  --color-dash-recent-card-bg: var(--dash-recent-card-bg);
+  --color-dash-recent-card-border: var(--dash-recent-card-border);
+  --color-dash-promo-title: var(--dash-promo-title);
+  --color-dash-promo-subtext: var(--dash-promo-subtext);
+  --color-dash-usage-title: var(--dash-usage-title);
+  --color-dash-usage-label: var(--dash-usage-label);
+  --color-dash-usage-value: var(--dash-usage-value);
+  --color-dash-usage-bar-bg: var(--dash-usage-bar-bg);
+  --color-dash-ai-icon: var(--dash-ai-icon);
+
+  /* Shell color */
+  --color-shell-bg: var(--shell-bg);
+  --color-shell-text: var(--shell-text);
+
+  /* ========== MODULE THEME COLORS ========== */
+  /* Surface */
+  --color-mod-surface-bg: var(--mod-surface-bg);
+  --color-mod-surface-card: var(--mod-surface-card);
+  --color-mod-surface-card-hover: var(--mod-surface-card-hover);
+  --color-mod-surface-border: var(--mod-surface-border);
+  --color-mod-surface-border-strong: var(--mod-surface-border-strong);
+  --color-mod-surface-text-primary: var(--mod-surface-text-primary);
+  --color-mod-surface-text-secondary: var(--mod-surface-text-secondary);
+  --color-mod-surface-text-muted: var(--mod-surface-text-muted);
+  --color-mod-surface-input-bg: var(--mod-surface-input-bg);
+  --color-mod-surface-input-border: var(--mod-surface-input-border);
+  --color-mod-surface-hover: var(--mod-surface-hover);
+  --color-mod-surface-skeleton: var(--mod-surface-skeleton);
+  --color-mod-surface-skeleton-light: var(--mod-surface-skeleton-light);
+  --color-mod-surface-divider: var(--mod-surface-divider);
+
+  /* Hero */
+  --color-mod-hero-badge-bg: var(--mod-hero-badge-bg);
+  --color-mod-hero-badge-text: var(--mod-hero-badge-text);
+  --color-mod-hero-gradient-from: var(--mod-hero-gradient-from);
+  --color-mod-hero-gradient-to: var(--mod-hero-gradient-to);
+  --color-mod-hero-btn-bg: var(--mod-hero-btn-bg);
+  --color-mod-hero-btn-hover: var(--mod-hero-btn-hover);
+  --color-mod-hero-secondary-hover-text: var(--mod-hero-secondary-hover-text);
+  --color-mod-hero-secondary-hover-bg: var(--mod-hero-secondary-hover-bg);
+  --color-mod-hero-icon-color: var(--mod-hero-icon-color);
+
+  /* Header */
+  --color-mod-header-icon-bg: var(--mod-header-icon-bg);
+  --color-mod-header-icon-text: var(--mod-header-icon-text);
+  --color-mod-header-icon-border: var(--mod-header-icon-border);
+  --color-mod-header-btn-bg: var(--mod-header-btn-bg);
+  --color-mod-header-btn-text: var(--mod-header-btn-text);
+  --color-mod-header-btn-hover: var(--mod-header-btn-hover);
+
+  /* Page Wrapper */
+  --color-mod-page-blur-1: var(--mod-page-blur-1);
+  --color-mod-page-blur-2: var(--mod-page-blur-2);
+  --color-mod-page-blur-3: var(--mod-page-blur-3);
+
+  /* Card */
+  --color-mod-card-border: var(--mod-card-border);
+  --color-mod-card-hover-border: var(--mod-card-hover-border);
+  --color-mod-card-icon-bg: var(--mod-card-icon-bg);
+  --color-mod-card-icon-text: var(--mod-card-icon-text);
+  --color-mod-card-title-hover: var(--mod-card-title-hover);
+  --color-mod-card-chevron-bg: var(--mod-card-chevron-bg);
+  --color-mod-card-chevron-text: var(--mod-card-chevron-text);
+  --color-mod-card-menu-hover-bg: var(--mod-card-menu-hover-bg);
+  --color-mod-card-menu-hover-text: var(--mod-card-menu-hover-text);
+  --color-mod-card-status-bg: var(--mod-card-status-bg);
+  --color-mod-card-status-text: var(--mod-card-status-text);
+
+  /* Table */
+  --color-mod-table-hover-bg: var(--mod-table-hover-bg);
+  --color-mod-table-menu-hover-bg: var(--mod-table-menu-hover-bg);
+  --color-mod-table-menu-hover-text: var(--mod-table-menu-hover-text);
+
+  /* Toolbar */
+  --color-mod-toolbar-active-text: var(--mod-toolbar-active-text);
+  --color-mod-toolbar-bg-light: var(--mod-toolbar-bg-light);
+  --color-mod-toolbar-active-bg: var(--mod-toolbar-active-bg);
+  --color-mod-toolbar-menu-hover-bg: var(--mod-toolbar-menu-hover-bg);
+  --color-mod-toolbar-menu-hover-text: var(--mod-toolbar-menu-hover-text);
+
+  /* Empty State */
+  --color-mod-empty-glow: var(--mod-empty-glow);
+  --color-mod-empty-icon-bg: var(--mod-empty-icon-bg);
+  --color-mod-empty-icon-text: var(--mod-empty-icon-text);
+  --color-mod-empty-btn-bg: var(--mod-empty-btn-bg);
+  --color-mod-empty-btn-hover: var(--mod-empty-btn-hover);
+  --color-mod-empty-secondary-text: var(--mod-empty-secondary-text);
+  --color-mod-empty-secondary-hover-bg: var(--mod-empty-secondary-hover-bg);
+
+  /* Tips */
+  --color-mod-tips-icon-bg: var(--mod-tips-icon-bg);
+  --color-mod-tips-icon-text: var(--mod-tips-icon-text);
+
+  /* Status Badges */
+  --color-mod-status-active-bg: var(--mod-status-active-bg);
+  --color-mod-status-active-text: var(--mod-status-active-text);
+  --color-mod-status-active-border: var(--mod-status-active-border);
+  --color-mod-status-published-bg: var(--mod-status-published-bg);
+  --color-mod-status-published-text: var(--mod-status-published-text);
+  --color-mod-status-published-border: var(--mod-status-published-border);
+  --color-mod-status-draft-bg: var(--mod-status-draft-bg);
+  --color-mod-status-draft-text: var(--mod-status-draft-text);
+  --color-mod-status-draft-border: var(--mod-status-draft-border);
+  --color-mod-status-error-bg: var(--mod-status-error-bg);
+  --color-mod-status-error-text: var(--mod-status-error-text);
+  --color-mod-status-error-border: var(--mod-status-error-border);
+  --color-mod-status-training-bg: var(--mod-status-training-bg);
+  --color-mod-status-training-text: var(--mod-status-training-text);
+  --color-mod-status-training-border: var(--mod-status-training-border);
+  --color-mod-status-idle-bg: var(--mod-status-idle-bg);
+  --color-mod-status-idle-text: var(--mod-status-idle-text);
+  --color-mod-status-idle-border: var(--mod-status-idle-border);
+
+  /* Modal */
+  --color-mod-modal-header-bg: var(--mod-modal-header-bg);
+  --color-mod-modal-header-text: var(--mod-modal-header-text);
+  --color-mod-modal-icon-bg: var(--mod-modal-icon-bg);
+  --color-mod-modal-primary-bg: var(--mod-modal-primary-bg);
+  --color-mod-modal-primary-hover: var(--mod-modal-primary-hover);
+  --color-mod-modal-secondary-hover-bg: var(--mod-modal-secondary-hover-bg);
+  --color-mod-modal-secondary-text: var(--mod-modal-secondary-text);
+
+  /* Lineage */
+  --color-mod-lineage-icon-bg: var(--mod-lineage-icon-bg);
+  --color-mod-lineage-icon-text: var(--mod-lineage-icon-text);
+  --color-mod-lineage-card-border: var(--mod-lineage-card-border);
+  --color-mod-lineage-card-hover-border: var(--mod-lineage-card-hover-border);
+  --color-mod-lineage-badge-bg: var(--mod-lineage-badge-bg);
+  --color-mod-lineage-badge-text: var(--mod-lineage-badge-text);
+
+  /* Other */
+  --color-mod-layout-border: var(--mod-layout-border);
+}
+
+@layer utilities {
+  /* ==========================================
+     AUTH THEME UTILITY HELPERS
+     (for properties CSS variables can't directly map to Tailwind)
+     ========================================== */
+
+  /* Selection color */
+  .auth-selection::selection {
+    background-color: var(--auth-selection);
+  }
+  .auth-selection *::selection {
+    background-color: var(--auth-selection);
+  }
+
+  /* Gradient text accent */
+  .auth-accent-gradient {
+    background-image: linear-gradient(to right, var(--auth-accent-from), var(--auth-accent-via), var(--auth-accent-to));
+  }
+
+  /* Glow orbs */
+  .auth-glow-primary {
+    background-color: var(--auth-glow-primary);
+  }
+  .auth-glow-secondary {
+    background-color: var(--auth-glow-secondary);
+  }
+
+  /* Grid overlay */
+  .auth-grid-overlay {
+    background-image: linear-gradient(to right, var(--auth-grid-line) 1px, transparent 1px),
+                      linear-gradient(to bottom, var(--auth-grid-line) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* Input focus ring */
+  .auth-input-focus:focus {
+    box-shadow: 0 0 0 3px var(--auth-input-focus-ring);
+    border-color: var(--auth-input-focus-border);
+  }
+
+  /* Primary button shadow */
+  .auth-primary-shadow {
+    box-shadow: 0 10px 15px -3px var(--auth-primary-shadow), 0 4px 6px -4px var(--auth-primary-shadow);
+  }
+
+  /* Float card shadow */
+  .auth-float-card-shadow {
+    box-shadow: 0 20px 25px -5px var(--auth-float-card-shadow), 0 8px 10px -6px var(--auth-float-card-shadow);
+  }
+
+  /* Float card bg (supports rgba) */
+  .auth-float-card-bg {
+    background-color: var(--auth-float-card-bg);
+  }
+
+  /* Active org card shadow */
+  .auth-active-shadow {
+    box-shadow: 0 1px 3px 0 var(--auth-primary-shadow), 0 1px 2px -1px var(--auth-primary-shadow);
+  }
+
+  /* Card icon 3 shimmer */
+  .auth-card-icon-3-shimmer {
+    background: linear-gradient(to right, transparent, var(--auth-card-icon-3-shimmer), transparent);
+  }
+
+  /* ==========================================
+     SIDEBAR THEME UTILITY HELPERS
+     ========================================== */
+
+  .sidebar-hover-bg {
+    background-color: transparent;
+  }
+  .sidebar-hover-bg:hover {
+    background-color: var(--sidebar-hover-bg);
+  }
+
+  .sidebar-hover-collapsed:hover {
+    background-color: var(--sidebar-hover-collapsed);
+  }
+
+  .sidebar-active-shadow {
+    box-shadow: 0 10px 15px -3px var(--sidebar-active-shadow), 0 4px 6px -4px var(--sidebar-active-shadow);
+  }
+
+  .sidebar-toggle-btn:hover {
+    color: var(--sidebar-toggle-hover-text);
+    border-color: var(--sidebar-toggle-hover-border);
+  }
+
+  .sidebar-logo-shadow {
+    box-shadow: 0 10px 15px -3px var(--sidebar-logo-shadow);
+  }
+
+  .sidebar-avatar-gradient {
+    background-image: linear-gradient(to top right, var(--sidebar-avatar-from), var(--sidebar-avatar-to));
+  }
+
+  .sidebar-settings-hover:hover {
+    color: var(--sidebar-settings-hover-text);
+    background-color: var(--sidebar-hover-bg);
+  }
+
+  .sidebar-mobile-active {
+    color: var(--sidebar-mobile-active-text);
+    background-color: var(--sidebar-mobile-active-bg);
+  }
+
+  .sidebar-mobile-inactive {
+    color: var(--sidebar-mobile-text);
+  }
+  .sidebar-mobile-inactive:hover {
+    color: var(--sidebar-mobile-hover-text);
+    background-color: var(--sidebar-mobile-hover-bg);
+  }
+
+  .sidebar-mobile-logout:hover {
+    color: var(--sidebar-mobile-logout-hover-text);
+    background-color: var(--sidebar-mobile-logout-hover-bg);
+  }
+
+  /* ==========================================
+     DASHBOARD THEME UTILITY HELPERS
+     ========================================== */
+
+  .dash-page-bg {
+    background-color: var(--dash-page-bg);
+  }
+
+  .dash-blur-1 {
+    background-color: var(--dash-blur-1);
+  }
+  .dash-blur-2 {
+    background-color: var(--dash-blur-2);
+  }
+  .dash-blur-3 {
+    background-color: var(--dash-blur-3);
+  }
+
+  .dash-promo-bg {
+    background-color: var(--dash-promo-bg);
+  }
+
+  .dash-promo-btn {
+    background-color: var(--dash-promo-btn-bg);
+    color: var(--dash-promo-btn-text);
+  }
+  .dash-promo-btn:hover {
+    background-color: var(--dash-promo-btn-hover-bg);
+  }
+
+  .dash-promo-glow {
+    background-color: var(--dash-promo-glow);
+  }
+
+  .dash-promo-icon-shadow {
+    box-shadow: 0 10px 15px -3px var(--dash-promo-icon-shadow);
+  }
+
+  .dash-ai-btn {
+    background-color: var(--dash-ai-btn-bg);
+  }
+
+  .dash-ai-btn-shadow {
+    box-shadow: 0 25px 50px -12px var(--dash-ai-btn-shadow);
+  }
+
+  .dash-card-shadow-hover {
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
+  }
+  .dash-card-shadow-hover:hover {
+    box-shadow: 0 20px 25px -5px var(--dash-card-shadow-hover), 0 8px 10px -6px var(--dash-card-shadow-hover);
+  }
+
+  .dash-recent-shadow {
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
+  }
+  .dash-recent-shadow:hover {
+    box-shadow: 0 4px 6px -1px var(--dash-card-shadow-hover), 0 2px 4px -2px var(--dash-card-shadow-hover);
+  }
+}
+

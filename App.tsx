@@ -107,6 +107,121 @@ const App: React.FC = () => {
   const [isAiGenerated, setIsAiGenerated] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
+  /* ==========================================================================
+     THEME MANAGEMENT
+     Global theme: applied on <html> element — affects auth, sidebar, dashboard,
+     AND provides default --mod-* vars for all modules.
+     Module theme: applied on the module container div — overrides --mod-* vars
+     for that specific module only.
+
+     Available global themes:  'light-blue' | 'light-slate' | 'dark-blue'
+     Available module themes:  'light-teal' | 'light-sky' | 'light-violet' |
+                               'light-purple' | 'light-indigo' |
+                               'light-blue' | 'light-slate'  (same as global)
+
+     Each module supports 5 theme options:
+       3 global themes + 2 module-specific themes
+       - Workflow:   global + light-teal, light-sky
+       - Apps:       global + light-sky, light-blue
+       - Agents:     global + light-violet, light-purple
+       - VibeCoding: global + light-indigo, light-violet
+       - Data:       global + light-slate, light-sky
+     ========================================================================== */
+
+  // Default accent themes per module (used when no explicit moduleTheme is set)
+  const DEFAULT_MODULE_THEMES: Record<string, string> = {
+    workflow: 'light-teal',
+    apps: 'light-sky',
+    agents: 'light-violet',
+    vibe: 'light-indigo',
+    data: 'light-slate',
+  };
+
+  // Read persisted themes from localStorage (or use defaults)
+  // When globalTheme is null, CSS :root defaults (light-blue) apply
+  const [globalTheme, setGlobalThemeState] = useState<string | null>(() => {
+    return localStorage.getItem('lum-global-theme');
+  });
+  const [moduleThemes, setModuleThemesState] = useState<Record<string, string>>(() => {
+    try {
+      const stored = localStorage.getItem('lum-module-themes');
+      return stored ? JSON.parse(stored) : {};
+    } catch { return {}; }
+  });
+
+  useEffect(()=>{
+    setGlobalTheme('light-blue')
+    setModuleTheme('workflow', 'light-teal')
+    setModuleTheme('apps', 'light-sky')
+    setModuleTheme('agents', 'light-violet')
+    setModuleTheme('vibe', 'light-indigo')
+    setModuleTheme('data', 'light-slate')
+  },[])
+
+  // Apply global theme on <html> element on mount and whenever it changes
+  // When null, remove data-theme so CSS :root defaults (light-blue) apply
+  useEffect(() => {
+    if (globalTheme) {
+      document.documentElement.setAttribute('data-theme', globalTheme);
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+  }, [globalTheme]);
+
+  /**
+   * Set the global theme for the entire platform.
+   * This changes auth, sidebar, dashboard, AND default module accent.
+   * @param theme - 'light-blue' | 'light-slate' | 'dark-blue' | null (reset to CSS default)
+   *
+   * Usage: setGlobalTheme('dark-blue')
+   *        setGlobalTheme(null)  // reset to CSS :root default (light-blue)
+   */
+  const setGlobalTheme = (theme: string | null) => {
+    setGlobalThemeState(theme);
+    if (theme) {
+      localStorage.setItem('lum-global-theme', theme);
+      document.documentElement.setAttribute('data-theme', theme);
+    } else {
+      localStorage.removeItem('lum-global-theme');
+      document.documentElement.removeAttribute('data-theme');
+    }
+  };
+
+  /**
+   * Set a module-specific theme override.
+   * This ONLY changes --mod-* vars for the given module.
+   * Pass null/undefined to reset to module default.
+   * @param moduleId - 'workflow' | 'apps' | 'agents' | 'vibe' | 'data'
+   * @param theme    - e.g. 'light-teal', 'light-indigo', or null to reset
+   *
+   * Usage: setModuleTheme('workflow', 'light-sky')
+   *        setModuleTheme('agents', null)  // reset to default (light-violet)
+   *
+   * Default module themes (when no override is set):
+   *   workflow → light-teal
+   *   apps     → light-sky
+   *   agents   → light-violet
+   *   vibe     → light-indigo
+   *   data     → light-slate
+   */
+  const setModuleTheme = (moduleId: string, theme: string | null) => {
+    setModuleThemesState(prev => {
+      const next = { ...prev };
+      if (theme) {
+        next[moduleId] = theme;
+      } else {
+        delete next[moduleId];
+      }
+      localStorage.setItem('lum-module-themes', JSON.stringify(next));
+      return next;
+    });
+  };
+
+  /** Get the effective theme for a module (explicit override > module default > global) */
+  const getModuleTheme = (moduleId: string): string => {
+    return moduleThemes[moduleId] || DEFAULT_MODULE_THEMES[moduleId] || globalTheme || 'light-blue';
+  };
+
   // Vibe Projects State
   const [vibeProjects, setVibeProjects] = useState<Project[]>([
     {
@@ -425,9 +540,9 @@ const App: React.FC = () => {
           />
 
           <div className="flex-1 flex flex-col overflow-hidden relative pb-[72px] md:pb-0">
-            {view === 'dashboard' && <Dashboard onNavigate={handleSetView} workflows={workflows} />}
-            {view === 'app-list' && <AppHome onSelectApp={() => handleSetView('app-editor')} onStartVibeCoding={() => handleSetView('vibe-home')} />}
-            {view === 'vibe-home' && <VibeHome projects={vibeProjects} onStartProject={handleStartVibeProject} onOpenProject={handleOpenVibeProject} />}
+            {view === 'dashboard' && <div data-theme={globalTheme}><Dashboard onNavigate={handleSetView} workflows={workflows} /></div>}
+            {view === 'app-list' && <div data-theme={getModuleTheme('apps')} className="flex-1 flex flex-col overflow-hidden"><AppHome onSelectApp={() => handleSetView('app-editor')} onStartVibeCoding={() => handleSetView('vibe-home')} /></div>}
+            {view === 'vibe-home' && <div data-theme={getModuleTheme('vibe')} className="flex-1 flex flex-col overflow-hidden"><VibeHome projects={vibeProjects} onStartProject={handleStartVibeProject} onOpenProject={handleOpenVibeProject} /></div>}
             {view === 'vibe-coder' && (
               <VibeCoder 
                 onBack={() => handleSetView('vibe-home')} 
@@ -437,15 +552,16 @@ const App: React.FC = () => {
                 onUpdateProjects={setVibeProjects}
               />
             )}
-            {view === 'agent-home' && <AgentHome onSelectAgent={() => handleSetView('ai-agent-builder')} onCreateAgent={() => handleSetView('ai-agent-builder')} />}
+            {view === 'agent-home' && <div data-theme={getModuleTheme('agents')} className="flex-1 flex flex-col overflow-hidden"><AgentHome onSelectAgent={() => handleSetView('ai-agent-builder')} onCreateAgent={() => handleSetView('ai-agent-builder')} /></div>}
             {view === 'app-editor' && <AppEditor onBack={() => handleSetView('app-list')} />}
-            {view === 'data' && <DataSection />}
+            {view === 'data' && <div data-theme={getModuleTheme('data')} className="flex-1 flex flex-col overflow-hidden"><DataSection /></div>}
 
             {view === 'ai-agent-builder' && (
               <AiAgentBuilder onBack={() => handleSetView('agent-home')} />
             )}
 
             {view === 'workflow-home' && (
+              <div data-theme={getModuleTheme('workflow')} className="flex-1 flex flex-col overflow-hidden">
               <WorkflowHome
                 workspaces={workspaces}
                 setWorkspaces={setWorkspaces}
@@ -462,6 +578,7 @@ const App: React.FC = () => {
                 setConnections={setConnections}
                 setIsAiGenerated={setIsAiGenerated}
               />
+              </div>
             )}
 
             {view === 'workflow-builder' && (
