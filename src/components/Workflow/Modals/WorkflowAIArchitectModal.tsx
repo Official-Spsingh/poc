@@ -3,6 +3,7 @@ import { Sparkles } from 'lucide-react';
 import React from 'react';
 import { createPortal } from 'react-dom';
 import { CombinedTheme } from '../../../constants/themeColors';
+import { useModuleTheme } from '../../../contexts/ModuleThemeContext';
 
 interface WorkflowAIArchitectModalProps {
   isAiPromptMode: boolean;
@@ -15,12 +16,15 @@ const WorkflowAIArchitectModal: React.FC<WorkflowAIArchitectModalProps> = ({
   isGenerating,
   theme
 }) => {
+  const moduleTheme = useModuleTheme();
+  const resolvedTheme = moduleTheme ?? document.documentElement.getAttribute('data-theme') ?? undefined;
+
   if (!isAiPromptMode || !isGenerating) return null;
 
   const colorKey = theme.homepage.tipsSection.iconText.split('-')[1];
 
   return createPortal(
-    <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 sm:p-6 selection:bg-transparent">
+    <div data-theme={resolvedTheme} className="fixed inset-0 z-[200] flex items-center justify-center p-4 sm:p-6 selection:bg-transparent">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

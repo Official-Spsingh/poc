@@ -20,6 +20,7 @@ import VibeCoder, { Project, generateProjectFiles } from './src/components/VibeC
 import VibeHome from './src/components/VibeCoding/VibeHome';
 import WorkflowBuilder from './src/components/Workflow/WorkflowBuilder/index';
 import WorkflowHome from './src/components/Workflow/WorkflowHome';
+import { ModuleThemeContext } from './src/contexts/ModuleThemeContext';
 import { Connection, ConnectionDrag, EventConfig, NodeData, NodeType, Position, ViewType, Workflow, Workspace } from './types';
 
 // --- App Component ---
@@ -152,7 +153,7 @@ const App: React.FC = () => {
   useEffect(()=>{
     setGlobalTheme('dark-blue')
     setModuleTheme('apps', 'light-sky')
-    setModuleTheme('workflow', 'light-violet')
+    setModuleTheme('workflow', 'dark-blue')
     setModuleTheme('agents', 'light-indigo')
     setModuleTheme('vibe', 'light-violet')
     setModuleTheme('data', 'light-blue')
@@ -540,9 +541,9 @@ const App: React.FC = () => {
           />
 
           <div className="flex-1 flex flex-col overflow-hidden relative pb-[72px] md:pb-0">
-            {view === 'dashboard' && <div data-theme={globalTheme}><Dashboard onNavigate={handleSetView} workflows={workflows} /></div>}
-            {view === 'app-list' && <div data-theme={getModuleTheme('apps')} className="flex-1 flex flex-col overflow-hidden"><AppHome onSelectApp={() => handleSetView('app-editor')} onStartVibeCoding={() => handleSetView('vibe-home')} /></div>}
-            {view === 'vibe-home' && <div data-theme={getModuleTheme('vibe')} className="flex-1 flex flex-col overflow-hidden"><VibeHome projects={vibeProjects} onStartProject={handleStartVibeProject} onOpenProject={handleOpenVibeProject} /></div>}
+            {view === 'dashboard' && <ModuleThemeContext.Provider value={globalTheme}><div data-theme={globalTheme}><Dashboard onNavigate={handleSetView} workflows={workflows} /></div></ModuleThemeContext.Provider>}
+            {view === 'app-list' && <ModuleThemeContext.Provider value={getModuleTheme('apps')}><div data-theme={getModuleTheme('apps')} className="flex-1 flex flex-col overflow-hidden"><AppHome onSelectApp={() => handleSetView('app-editor')} onStartVibeCoding={() => handleSetView('vibe-home')} /></div></ModuleThemeContext.Provider>}
+            {view === 'vibe-home' && <ModuleThemeContext.Provider value={getModuleTheme('vibe')}><div data-theme={getModuleTheme('vibe')} className="flex-1 flex flex-col overflow-hidden"><VibeHome projects={vibeProjects} onStartProject={handleStartVibeProject} onOpenProject={handleOpenVibeProject} /></div></ModuleThemeContext.Provider>}
             {view === 'vibe-coder' && (
               <VibeCoder 
                 onBack={() => handleSetView('vibe-home')} 
@@ -552,15 +553,16 @@ const App: React.FC = () => {
                 onUpdateProjects={setVibeProjects}
               />
             )}
-            {view === 'agent-home' && <div data-theme={getModuleTheme('agents')} className="flex-1 flex flex-col overflow-hidden"><AgentHome onSelectAgent={() => handleSetView('ai-agent-builder')} onCreateAgent={() => handleSetView('ai-agent-builder')} /></div>}
+            {view === 'agent-home' && <ModuleThemeContext.Provider value={getModuleTheme('agents')}><div data-theme={getModuleTheme('agents')} className="flex-1 flex flex-col overflow-hidden"><AgentHome onSelectAgent={() => handleSetView('ai-agent-builder')} onCreateAgent={() => handleSetView('ai-agent-builder')} /></div></ModuleThemeContext.Provider>}
             {view === 'app-editor' && <AppEditor onBack={() => handleSetView('app-list')} />}
-            {view === 'data' && <div data-theme={getModuleTheme('data')} className="flex-1 flex flex-col overflow-hidden"><DataSection /></div>}
+            {view === 'data' && <ModuleThemeContext.Provider value={getModuleTheme('data')}><div data-theme={getModuleTheme('data')} className="flex-1 flex flex-col overflow-hidden"><DataSection /></div></ModuleThemeContext.Provider>}
 
             {view === 'ai-agent-builder' && (
               <AiAgentBuilder onBack={() => handleSetView('agent-home')} />
             )}
 
             {view === 'workflow-home' && (
+              <ModuleThemeContext.Provider value={getModuleTheme('workflow')}>
               <div data-theme={getModuleTheme('workflow')} className="flex-1 flex flex-col overflow-hidden">
               <WorkflowHome
                 workspaces={workspaces}
@@ -579,9 +581,11 @@ const App: React.FC = () => {
                 setIsAiGenerated={setIsAiGenerated}
               />
               </div>
+              </ModuleThemeContext.Provider>
             )}
 
             {view === 'workflow-builder' && (
+              <ModuleThemeContext.Provider value={getModuleTheme('workflow')}>
               <WorkflowBuilder
                 workflows={workflows}
                 setWorkflows={setWorkflows}
@@ -622,6 +626,7 @@ const App: React.FC = () => {
                 isAiGenerated={isAiGenerated}
                 setIsAiGenerated={setIsAiGenerated}
               />
+              </ModuleThemeContext.Provider>
             )}
           </div>
 
