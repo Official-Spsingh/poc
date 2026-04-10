@@ -150,12 +150,12 @@ const App: React.FC = () => {
   });
 
   useEffect(()=>{
-    setGlobalTheme('light-blue')
-    setModuleTheme('workflow', 'light-teal')
+    setGlobalTheme('dark-blue')
     setModuleTheme('apps', 'light-sky')
-    setModuleTheme('agents', 'light-violet')
-    setModuleTheme('vibe', 'light-indigo')
-    setModuleTheme('data', 'light-slate')
+    setModuleTheme('workflow', 'light-violet')
+    setModuleTheme('agents', 'light-indigo')
+    setModuleTheme('vibe', 'light-violet')
+    setModuleTheme('data', 'light-blue')
   },[])
 
   // Apply global theme on <html> element on mount and whenever it changes

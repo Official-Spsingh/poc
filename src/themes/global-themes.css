@@ -789,8 +789,17 @@
   /* Shell color */
   --color-shell-bg: var(--shell-bg);
   --color-shell-text: var(--shell-text);
+}
 
-  /* ========== MODULE THEME COLORS ========== */
+/* ==========================================
+   MODULE THEME TOKENS (inline — resolves dynamically)
+   Using @theme inline so --mod-* vars resolve at the point
+   of use in the DOM tree, not statically at :root.
+   This allows module container divs with data-theme to
+   override these values for their subtree.
+   ========================================== */
+
+@theme inline {
   /* Surface */
   --color-mod-surface-bg: var(--mod-surface-bg);
   --color-mod-surface-card: var(--mod-surface-card);
