@@ -1,7 +1,5 @@
 import { ChevronRight, Clock, Globe, HardDrive, LucideIcon, MoreVertical } from 'lucide-react';
 import React from 'react';
-
-import { studioThemeColors } from '../../constants/themeColors';
 import ActionDropdown from './ActionDropdown';
 
 export interface MenuItem {
@@ -72,8 +70,7 @@ const StudioCard: React.FC<StudioCardProps> = ({
           )}
           {menuItems && (
             <ActionDropdown
-              theme={studioThemeColors.dashboard.homepage}
-              itemHoverClass={`hover:bg-mod-card-menu-hover-bg hover:text-mod-card-menu-hover-text`}
+              itemHoverClass="hover:bg-mod-card-menu-hover-bg hover:text-mod-card-menu-hover-text"
               trigger={(isOpen) => (
                 <button 
                   className={`p-2 rounded-xl transition-all ${isOpen ? 'bg-mod-card-status-bg text-mod-card-status-text' : 'text-mod-surface-text-muted hover:text-mod-card-status-text hover:bg-mod-card-status-bg'}`}

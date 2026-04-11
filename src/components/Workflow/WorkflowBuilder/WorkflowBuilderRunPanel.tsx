@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { CheckCircle2, FileJson, Loader2, Table as TableIcon, Terminal, X } from 'lucide-react';
 import React from 'react';
-import { NodeData } from '../../../../types';
+import { NodeData } from '../../../types';
 
 interface WorkflowBuilderRunPanelProps {
   isNodeRunPanelOpen: boolean;

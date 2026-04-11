@@ -1,7 +1,7 @@
 import { AlertTriangle, Copy, Edit2, MoreVertical, Play, Plus, Settings2, Sparkles, Trash2 } from 'lucide-react';
 import React, { useRef, useState } from 'react';
 import { COMPONENT_METADATA } from './constants';
-import { NodeData, Position } from '../../../../types';
+import { NodeData, Position } from '../../../types';
 import ActionDropdown from '../../Common/ActionDropdown';
 
 interface WorkflowNodeProps {

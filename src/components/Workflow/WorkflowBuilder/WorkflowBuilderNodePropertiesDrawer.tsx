@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 import React from 'react';
 import { COMPONENT_METADATA, EVENT_TYPES } from './constants';
-import { EventConfig, EventType, NodeData } from '../../../../types';
+import { EventConfig, EventType, NodeData } from '../../../types';
 import { FormLabel, PayloadTable } from './Helpers';
 
 interface WorkflowBuilderNodePropertiesDrawerProps {

@@ -1,6 +1,6 @@
 import { Check, Copy, Globe, HardDrive } from 'lucide-react';
 import React, { useState } from 'react';
-import { Workflow } from '../../../../types';
+import { Workflow } from '../../../types';
 import Modal from '../../Common/Modal';
 
 interface WorkflowInfoModalProps {

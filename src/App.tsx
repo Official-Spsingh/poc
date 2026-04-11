@@ -5,22 +5,22 @@ import {
   Trash2
 } from 'lucide-react';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { COMPONENT_METADATA } from './src/components/Workflow/WorkflowBuilder/constants';
-import AgentHome from './src/components/Agents/AgentHome';
-import AiAgentBuilder from './src/components/Agents/AiAgentBuilder';
-import AppEditor from './src/components/Apps/AppEditor';
-import AppHome from './src/components/Apps/AppHome';
-import ForgotPassword from './src/components/Authentication/ForgotPassword';
-import Login from './src/components/Authentication/Login';
-import Logo from './src/components/Common/Logo';
-import Sidebar from './src/components/Common/Sidebar';
-import DataSection from './src/components/Data/DataSection';
-import Dashboard from './src/components/HomePage/Dashboard';
-import VibeCoder, { Project, generateProjectFiles } from './src/components/VibeCoding/VibeCoder';
-import VibeHome from './src/components/VibeCoding/VibeHome';
-import WorkflowBuilder from './src/components/Workflow/WorkflowBuilder/index';
-import WorkflowHome from './src/components/Workflow/WorkflowHome';
-import { ModuleThemeContext } from './src/contexts/ModuleThemeContext';
+import { COMPONENT_METADATA } from './components/Workflow/WorkflowBuilder/constants';
+import AgentHome from './components/Agents/AgentHome';
+import AiAgentBuilder from './components/Agents/AiAgentBuilder';
+import AppEditor from './components/Apps/AppEditor';
+import AppHome from './components/Apps/AppHome';
+import ForgotPassword from './components/Authentication/ForgotPassword';
+import Login from './components/Authentication/Login';
+import Logo from './components/Common/Logo';
+import Sidebar from './components/Common/Sidebar';
+import DataSection from './components/Data/DataSection';
+import Dashboard from './components/HomePage/Dashboard';
+import VibeCoder, { Project, generateProjectFiles } from './components/VibeCoding/VibeCoder';
+import VibeHome from './components/VibeCoding/VibeHome';
+import WorkflowBuilder from './components/Workflow/WorkflowBuilder/index';
+import WorkflowHome from './components/Workflow/WorkflowHome';
+import { ModuleThemeContext } from './contexts/ModuleThemeContext';
 import { Connection, ConnectionDrag, EventConfig, NodeData, NodeType, Position, ViewType, Workflow, Workspace } from './types';
 
 // --- App Component ---

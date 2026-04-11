@@ -1,5 +1,5 @@
 import React from 'react';
-import { Connection, ConnectionDrag, NodeData, NodeType, Position } from '../../../../types';
+import { Connection, ConnectionDrag, NodeData, NodeType, Position } from '../../../types';
 import ConnectionLine from './ConnectionLine';
 import WorkflowNode from './WorkflowNode';
 

@@ -1,8 +1,7 @@
 
 import { ArrowRight, Bot, Clock, Database, ExternalLink, Layout, Plus, Sparkles, Workflow as WorkflowIcon, X, Zap } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
-import { ViewType, Workflow } from '../../../types';
-import { studioThemeColors } from '../../constants/themeColors';
+import { ViewType, Workflow } from '../../types';
 import AIDrawer from '../Common/AIDrawer';
 
 interface DashboardChatProps {
@@ -83,17 +82,13 @@ interface DashboardProps {
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ onNavigate, workflows }) => {
-  // Module-specific accent colors remain bound to their module identity
-  // These are functional per-module colors, not shell chrome
-  const moduleThemes = studioThemeColors.dashboard.homepage.modules;
-
   const options = [
     {
       id: 'app-list' as ViewType,
       title: 'Apps',
       description: 'Create and manage your web applications with a visual drag-and-drop editor.',
       icon: <Layout size={32} />,
-      theme: moduleThemes.apps,
+      moduleTheme: 'light-sky',
       tag: 'Popular'
     },
     {
@@ -101,7 +96,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate, workflows }) => {
       title: 'Workflows',
       description: 'Design complex automation pipelines and logic flows with our node-based builder.',
       icon: <WorkflowIcon size={32} />,
-      theme: moduleThemes.workflow,
+      moduleTheme: 'light-teal',
       tag: 'New'
     },
     {
@@ -109,7 +104,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate, workflows }) => {
       title: 'AI Agents',
       description: 'Build and deploy intelligent AI agents powered by state-of-the-art LLMs.',
       icon: <Zap size={32} />,
-      theme: moduleThemes.agents,
+      moduleTheme: 'light-violet',
       tag: 'Beta'
     },
     {
@@ -117,7 +112,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate, workflows }) => {
       title: 'Data',
       description: 'Manage your database connections, tables, and datasets in a unified interface.',
       icon: <Database size={32} />,
-      theme: moduleThemes.data,
+      moduleTheme: 'light-slate',
       tag: 'Essential'
     }
   ];
@@ -148,13 +143,14 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate, workflows }) => {
             {options.map((option) => (
               <div
                 key={option.id}
+                data-theme={option.moduleTheme}
                 onClick={() => onNavigate(option.id)}
-                className={`group relative bg-dash-card-bg p-6 md:p-8 rounded-2xl md:rounded-3xl border border-dash-card-border dash-card-shadow-hover ${option.theme.card.border.split(' ').filter(c => c.startsWith('hover:')).join(' ')} transition-all text-left overflow-hidden cursor-pointer flex flex-col h-full ${option.id === 'data' ? 'hidden md:block' : ''}`}
+                className={`group relative bg-dash-card-bg p-6 md:p-8 rounded-2xl md:rounded-3xl border border-dash-card-border dash-card-shadow-hover hover:border-mod-hero-icon-color/50 transition-all text-left overflow-hidden cursor-pointer flex flex-col h-full ${option.id === 'data' ? 'hidden md:block' : ''}`}
               >
-                <div className={`absolute top-4 right-4 md:top-6 md:right-6 px-2 py-1 rounded-md text-[9px] font-bold uppercase tracking-wider text-dash-tag-text ${option.theme.statusBadges.draft} transition-all ${option.theme.statusBadges.active.split(' ').map(c => `group-hover:${c}`).join(' ')} group-hover:border-transparent`}>
+                <div className="absolute top-4 right-4 md:top-6 md:right-6 px-2 py-1 rounded-md text-[9px] font-bold uppercase tracking-wider text-dash-tag-text bg-dash-card-border/50 transition-all">
                   {option.tag}
                 </div>
-                <div className={`w-12 h-12 md:w-16 md:h-16 ${option.theme.header.primaryBtn.split(' ')[0]} rounded-xl md:rounded-2xl flex items-center justify-center text-white mb-6 md:mb-8 shadow-lg ${option.theme.card.shadow} group-hover:scale-110 transition-transform`}>
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-mod-hero-btn-bg rounded-xl md:rounded-2xl flex items-center justify-center text-white mb-6 md:mb-8 shadow-lg group-hover:scale-110 transition-transform">
                   {React.cloneElement(option.icon as React.ReactElement, { className: 'w-6 h-6 md:w-8 md:h-8' })}
                 </div>
                 <h3 className="text-xl md:text-2xl font-bold text-dash-title mb-2 md:mb-3">{option.title}</h3>
@@ -162,22 +158,22 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate, workflows }) => {
                   {option.description}
                 </p>
                 <div className="flex items-center justify-between mt-auto">
-                  <div className={`flex items-center gap-2 ${option.theme.card.statusText} font-bold text-xs md:text-sm group-hover:gap-4 transition-all`}>
+                  <div className="flex items-center gap-2 text-mod-hero-icon-color font-bold text-xs md:text-sm group-hover:gap-4 transition-all">
                     Get Started <ArrowRight size={16} />
                   </div>
-                  <a 
-                    href="https://help.lumenore.com" 
-                    target="_blank" 
+                  <a
+                    href="https://help.lumenore.com"
+                    target="_blank"
                     rel="noopener noreferrer"
                     onClick={(e) => e.stopPropagation()}
-                    className={`flex items-center gap-1.5 text-[10px] font-bold text-dash-link-text ${option.theme.hero.secondaryHover.split(' ')[0]} transition-all py-1 group/link cursor-pointer relative z-20`}
+                    className="flex items-center gap-1.5 text-[10px] font-bold text-dash-link-text hover:text-mod-hero-icon-color transition-all py-1 group/link cursor-pointer relative z-20"
                   >
                     <span className="leading-none">Know More</span>
                     <ExternalLink size={10} className="transition-transform group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5 shrink-0" />
                   </a>
                 </div>
-                
-                <div className={`absolute -right-8 -bottom-8 w-24 h-24 md:w-32 md:h-32 ${option.theme.header.primaryBtn.split(' ')[0]} opacity-[0.03] rounded-full group-hover:scale-150 transition-transform`} />
+
+                <div className="absolute -right-8 -bottom-8 w-24 h-24 md:w-32 md:h-32 bg-mod-hero-btn-bg opacity-[0.03] rounded-full group-hover:scale-150 transition-transform" />
               </div>
             ))}
           </div>
@@ -203,29 +199,17 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate, workflows }) => {
                   }}
                 >
                   <div className="flex items-center justify-between mb-4">
-                    <div className={`p-2 rounded-lg ${
-                      project.type === 'workflow' ? moduleThemes.workflow.statusBadges.active : 
-                      project.type === 'app' ? moduleThemes.apps.statusBadges.active : 
-                      moduleThemes.agents.statusBadges.active
-                    }`}>
+                    <div className="p-2 rounded-lg bg-dash-card-border/40 text-dash-recent-icon">
                       {project.type === 'workflow' ? <WorkflowIcon size={18} /> : 
                        project.type === 'app' ? <Layout size={18} /> : 
                        <Zap size={18} />}
                     </div>
                     <span className="text-[9px] font-bold text-dash-tag-text uppercase tracking-widest">{project.status}</span>
                   </div>
-                  <h4 className={`font-bold text-dash-title text-sm mb-1 transition-colors ${
-                    project.type === 'workflow' ? moduleThemes.workflow.card.titleHover : 
-                    project.type === 'app' ? moduleThemes.apps.card.titleHover : 
-                    moduleThemes.agents.card.titleHover
-                  }`}>{project.name}</h4>
+                  <h4 className="font-bold text-dash-title text-sm mb-1 transition-colors group-hover:text-dash-recent-viewall">{project.name}</h4>
                   <div className="mt-auto pt-4 flex items-center justify-between">
                     <span className="text-[10px] text-dash-subtext font-medium">{project.lastModified}</span>
-                    <ArrowRight size={14} className={`text-dash-link-text transition-all group-hover:translate-x-1 ${
-                      project.type === 'workflow' ? moduleThemes.workflow.card.iconText : 
-                      project.type === 'app' ? moduleThemes.apps.card.iconText : 
-                      moduleThemes.agents.card.iconText
-                    }`} />
+                    <ArrowRight size={14} className="text-dash-link-text transition-all group-hover:translate-x-1 group-hover:text-dash-recent-icon" />
                   </div>
                 </div>
               ))}
@@ -250,9 +234,9 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate, workflows }) => {
               <h3 className="text-lg md:text-xl font-bold text-dash-usage-title mb-4 md:mb-6">Studio Usage</h3>
               <div className="space-y-4 md:space-y-6">
                 {[
-                  { label: 'Active Workflows', value: 12, total: 20, color: moduleThemes.workflow.hero.button.split(' ')[0] },
-                  { label: 'Deployed Apps', value: 4, total: 10, color: moduleThemes.apps.hero.button.split(' ')[0] },
-                  { label: 'AI Agents', value: 850, total: 1000, color: moduleThemes.agents.hero.button.split(' ')[0] },
+                  { label: 'Active Workflows', value: 12, total: 20, color: 'bg-teal-600' },
+                  { label: 'Deployed Apps', value: 4, total: 10, color: 'bg-sky-600' },
+                  { label: 'AI Agents', value: 850, total: 1000, color: 'bg-violet-600' },
                 ].map((stat, i) => (
                   <div key={i}>
                     <div className="flex justify-between text-xs font-bold mb-2">

@@ -12,7 +12,7 @@ import {
   Zap
 } from 'lucide-react';
 import React from 'react';
-import { ViewType } from '../../../types';
+import { ViewType } from '../../types';
 import Logo from './Logo';
 
 interface SidebarProps {

@@ -16,7 +16,7 @@ import {
   Workflow as WorkflowIcon
 } from 'lucide-react';
 import React from 'react';
-import { Connection, NodeData, ViewType, Workflow, Workspace } from '../../../../types';
+import { Connection, NodeData, ViewType, Workflow, Workspace } from '../../../types';
 import ActionDropdown from '../../Common/ActionDropdown';
 import VersionHistoryPopover from './VersionHistoryPopover';
 import WorkflowSwitcherPopover from './WorkflowSwitcherPopover';

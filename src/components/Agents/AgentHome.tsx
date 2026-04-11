@@ -13,7 +13,7 @@ import {
   Zap
 } from 'lucide-react';
 import React, { useState } from 'react';
-import { Agent } from '../../../types';
+import { Agent } from '../../types';
 
 import { useRandomTitle, useTypewriter } from '../../hooks/useTypewriter';
 import StudioCard, { StudioCardSkeleton } from '../Common/StudioCard';

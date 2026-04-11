@@ -1,7 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { Plus } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
-import { CombinedTheme } from '../../constants/themeColors';
 
 export interface DropdownItem {
   label: string;
@@ -15,7 +14,6 @@ export interface DropdownItem {
 interface ActionDropdownProps {
   trigger: React.ReactNode | ((isOpen: boolean) => React.ReactNode);
   items: DropdownItem[];
-  theme?: CombinedTheme;
   header?: {
     title: string;
     actionIcon?: React.ReactNode;
@@ -28,10 +26,9 @@ interface ActionDropdownProps {
   itemHoverClass?: string;
 }
 
-const ActionDropdown: React.FC<ActionDropdownProps> = ({ 
-  trigger, 
-  items, 
-  theme, 
+const ActionDropdown: React.FC<ActionDropdownProps> = ({
+  trigger,
+  items,
   header,
   align = 'right',
   className = '',

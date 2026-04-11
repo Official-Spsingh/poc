@@ -1,6 +1,6 @@
 import { Copy, Edit2, Globe, HardDrive, Info, Link2, MoreVertical, Settings2, Trash2, Workflow as WorkflowIcon } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
-import { Workflow } from '../../../../types';
+import { Workflow } from '../../../types';
 
 interface WorkflowSidebarItemProps {
   workflow: Workflow;

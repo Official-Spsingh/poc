@@ -1,6 +1,6 @@
 import { ChevronRight, Layers, Rocket, Settings, Workflow as WorkflowIcon, Zap } from 'lucide-react';
 import React from 'react';
-import { Workflow } from '../../../../types';
+import { Workflow } from '../../../types';
 import Modal from '../../Common/Modal';
 
 interface WorkflowLineageModalProps {

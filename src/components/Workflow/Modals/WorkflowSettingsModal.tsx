@@ -1,6 +1,6 @@
 import { Check, ChevronDown, Globe, HardDrive } from 'lucide-react';
 import React from 'react';
-import { Workflow, Workspace } from '../../../../types';
+import { Workflow, Workspace } from '../../../types';
 import Modal from '../../Common/Modal';
 import { FormLabel } from '../WorkflowBuilder/Helpers';
 

@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Component, Search, X } from 'lucide-react';
 import React from 'react';
 import { COMPONENT_METADATA } from './constants';
-import { NodeType, Position } from '../../../../types';
+import { NodeType, Position } from '../../../types';
 
 interface WorkflowBuilderNodesDrawerProps {
   isComponentSidebarOpen: boolean;

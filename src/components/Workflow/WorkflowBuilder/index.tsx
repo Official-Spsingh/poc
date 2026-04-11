@@ -10,7 +10,7 @@ import {
   ViewType,
   Workflow,
   Workspace
-} from '../../../../types';
+} from '../../../types';
 import AIDrawer from '../../Common/AIDrawer';
 import GuidedTour from '../../Common/GuidedTour';
 import { useResizableDrawer } from './hooks/useResizableDrawer';

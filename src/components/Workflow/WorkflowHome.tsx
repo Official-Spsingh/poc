@@ -22,7 +22,7 @@ import {
 } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { Connection, NodeData, ViewType, Workflow, Workspace } from '../../../types';
+import { Connection, NodeData, ViewType, Workflow, Workspace } from '../../types';
 import { useRandomTitle, useTypewriter } from '../../hooks/useTypewriter';
 import { makeRequest } from '../../utils/makeRequest';
 import Modal from '../Common/Modal';
