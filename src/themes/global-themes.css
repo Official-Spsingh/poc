@@ -1,10 +1,23 @@
 /* ==========================================
-   AUTH THEME VARIABLES
+   GLOBAL THEME VARIABLES
+   ==========================================
+   This file contains vars shared across the entire Studio shell.
+   Each theme block (light-blue, light-slate, dark-blue) covers:
+
+     ===== AUTH =====      Login / org-select / onboarding pages
+     ===== SIDEBAR =====   Left navigation panel
+     ===== DASHBOARD ===== Homepage dashboard (cards, promo, usage)
+     ===== APP SHELL ===== Top-level page background & text
+
+   Module accent vars (hero, card, table, etc.) live in: homepage-themes.css
+   Shared surface vars (--mod-surface-*) live in: module-themes.css
+   Tailwind @theme mappings for --mod-* live at the bottom of this file.
    ========================================== */
 
 /* Default: light-blue (matches the current production look) */
 :root,
 [data-theme="light-blue"] {
+  /* ===== AUTH ===== */
   /* Page */
   --auth-page-bg: #F1F5F9;
   --auth-card-bg: #ffffff;
@@ -211,7 +224,7 @@
   --dash-ai-btn-shadow: rgba(37, 99, 235, 0.2);
   --dash-ai-icon: #ffffff;
 
-  /* App shell */
+  /* ===== APP SHELL ===== */
   --shell-bg: #f9fafb;
   --shell-text: #111827;
 }
@@ -220,6 +233,7 @@
    LIGHT-SLATE THEME
    ========================================== */
 [data-theme="light-slate"] {
+  /* ===== AUTH ===== */
   /* Page */
   --auth-page-bg: #f8fafc;
   --auth-card-bg: #ffffff;
@@ -426,7 +440,7 @@
   --dash-ai-btn-shadow: rgba(30, 41, 59, 0.2);
   --dash-ai-icon: #ffffff;
 
-  /* App shell */
+  /* ===== APP SHELL ===== */
   --shell-bg: #f9fafb;
   --shell-text: #0f172a;
 }
@@ -435,6 +449,7 @@
    DARK-BLUE THEME
    ========================================== */
 [data-theme="dark-blue"] {
+  /* ===== AUTH ===== */
   /* Page */
   --auth-page-bg: #0f172a;
   --auth-card-bg: #1e293b;
@@ -641,7 +656,7 @@
   --dash-ai-btn-shadow: rgba(59, 130, 246, 0.3);
   --dash-ai-icon: #ffffff;
 
-  /* App shell */
+  /* ===== APP SHELL ===== */
   --shell-bg: #0f172a;
   --shell-text: #f1f5f9;
 }
