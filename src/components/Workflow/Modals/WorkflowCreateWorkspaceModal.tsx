@@ -1,6 +1,5 @@
 import { Check } from 'lucide-react';
 import React from 'react';
-import { CombinedTheme } from '../../../constants/themeColors';
 import Modal from '../../Common/Modal';
 import { FormLabel } from '../WorkflowBuilder/Helpers';
 
@@ -10,7 +9,6 @@ interface WorkflowCreateWorkspaceModalProps {
   workspaceForm: { name: string; description: string };
   setWorkspaceForm: (form: { name: string; description: string }) => void;
   onAction: () => void;
-  theme: CombinedTheme;
 }
 
 const WorkflowCreateWorkspaceModal: React.FC<WorkflowCreateWorkspaceModalProps> = ({
@@ -19,7 +17,6 @@ const WorkflowCreateWorkspaceModal: React.FC<WorkflowCreateWorkspaceModalProps> 
   workspaceForm,
   setWorkspaceForm,
   onAction,
-  theme
 }) => {
   return (
     <Modal

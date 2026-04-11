@@ -150,14 +150,14 @@ const App: React.FC = () => {
     } catch { return {}; }
   });
 
-  useEffect(()=>{
+  useEffect(() => {
     setGlobalTheme('dark-blue')
-    setModuleTheme('apps', 'light-sky')
+    // setModuleTheme('apps', 'light-sky')
     setModuleTheme('workflow', 'dark-blue')
-    setModuleTheme('agents', 'light-indigo')
-    setModuleTheme('vibe', 'light-violet')
-    setModuleTheme('data', 'light-blue')
-  },[])
+    // setModuleTheme('agents', 'light-indigo')
+    setModuleTheme('vibe', 'light-teal')
+    // setModuleTheme('data', 'light-blue')
+  }, [])
 
   // Apply global theme on <html> element on mount and whenever it changes
   // When null, remove data-theme so CSS :root defaults (light-blue) apply
@@ -523,9 +523,9 @@ const App: React.FC = () => {
       </AnimatePresence>
 
       {view === 'login' ? (
-        <Login 
-          onLogin={() => handleSetView('dashboard')} 
-          onForgotPassword={() => setView('forgot-password')} 
+        <Login
+          onLogin={() => handleSetView('dashboard')}
+          onForgotPassword={() => setView('forgot-password')}
         />
       ) : view === 'forgot-password' ? (
         <ForgotPassword onBackToLogin={() => setView('login')} />
@@ -541,95 +541,150 @@ const App: React.FC = () => {
           />
 
           <div className="flex-1 flex flex-col overflow-hidden relative pb-[72px] md:pb-0">
-            {view === 'dashboard' && <ModuleThemeContext.Provider value={globalTheme}><div data-theme={globalTheme}><Dashboard onNavigate={handleSetView} workflows={workflows} /></div></ModuleThemeContext.Provider>}
-            {view === 'app-list' && <ModuleThemeContext.Provider value={getModuleTheme('apps')}><div data-theme={getModuleTheme('apps')} className="flex-1 flex flex-col overflow-hidden"><AppHome onSelectApp={() => handleSetView('app-editor')} onStartVibeCoding={() => handleSetView('vibe-home')} /></div></ModuleThemeContext.Provider>}
-            {view === 'vibe-home' && <ModuleThemeContext.Provider value={getModuleTheme('vibe')}><div data-theme={getModuleTheme('vibe')} className="flex-1 flex flex-col overflow-hidden"><VibeHome projects={vibeProjects} onStartProject={handleStartVibeProject} onOpenProject={handleOpenVibeProject} /></div></ModuleThemeContext.Provider>}
-            {view === 'vibe-coder' && (
-              <VibeCoder 
-                onBack={() => handleSetView('vibe-home')} 
-                projectId={activeVibeProjectId}
-                projects={vibeProjects}
-                initialPrompt={vibeInitialPrompt}
-                onUpdateProjects={setVibeProjects}
-              />
-            )}
-            {view === 'agent-home' && <ModuleThemeContext.Provider value={getModuleTheme('agents')}><div data-theme={getModuleTheme('agents')} className="flex-1 flex flex-col overflow-hidden"><AgentHome onSelectAgent={() => handleSetView('ai-agent-builder')} onCreateAgent={() => handleSetView('ai-agent-builder')} /></div></ModuleThemeContext.Provider>}
-            {view === 'app-editor' && <AppEditor onBack={() => handleSetView('app-list')} />}
-            {view === 'data' && <ModuleThemeContext.Provider value={getModuleTheme('data')}><div data-theme={getModuleTheme('data')} className="flex-1 flex flex-col overflow-hidden"><DataSection /></div></ModuleThemeContext.Provider>}
+            {
+              view === 'dashboard' &&
+              (<ModuleThemeContext.Provider value={globalTheme}>
+                <div data-theme={globalTheme}>
+                  <Dashboard onNavigate={handleSetView} workflows={workflows} />
+                </div>
+              </ModuleThemeContext.Provider>)
+            }
+            {
+              view === 'app-list' &&
+              (<ModuleThemeContext.Provider value={getModuleTheme('apps')}>
+                <div data-theme={getModuleTheme('apps')} className="flex-1 flex flex-col overflow-hidden">
+                  <AppHome onSelectApp={() => handleSetView('app-editor')} onStartVibeCoding={() => handleSetView('vibe-home')} />
+                </div>
+              </ModuleThemeContext.Provider>)
+            }
+            {
+              view === 'vibe-home' &&
+              (<ModuleThemeContext.Provider value={getModuleTheme('vibe')}>
+                <div data-theme={getModuleTheme('vibe')} className="flex-1 flex flex-col overflow-hidden">
+                  <VibeHome projects={vibeProjects} onStartProject={handleStartVibeProject} onOpenProject={handleOpenVibeProject} />
+                </div>
+              </ModuleThemeContext.Provider>)
+            }
+            {
+              view === 'vibe-coder' &&
+              (<ModuleThemeContext.Provider value={getModuleTheme('vibe')}>
+                <div data-theme={getModuleTheme('vibe')}>
+                  <VibeCoder
+                    onBack={() => handleSetView('vibe-home')}
+                    projectId={activeVibeProjectId}
+                    projects={vibeProjects}
+                    initialPrompt={vibeInitialPrompt}
+                    onUpdateProjects={setVibeProjects}
+                  />
+                </div>
+              </ModuleThemeContext.Provider>)
+            }
+            {
+              view === 'agent-home' &&
+              (<ModuleThemeContext.Provider value={getModuleTheme('agents')}>
+                <div data-theme={getModuleTheme('agents')} className="flex-1 flex flex-col overflow-hidden">
+                  <AgentHome onSelectAgent={() => handleSetView('ai-agent-builder')} onCreateAgent={() => handleSetView('ai-agent-builder')} />
+                </div>
+              </ModuleThemeContext.Provider>)
+            }
+            {
+              view === 'app-editor' &&
+              (<ModuleThemeContext.Provider value={getModuleTheme('apps')}>
+                <div data-theme={getModuleTheme('apps')}>
+                  <AppEditor onBack={() => handleSetView('app-list')} />
+                </div>
+              </ModuleThemeContext.Provider>)
+            }
+            {
+              view === 'data' &&
+              (<ModuleThemeContext.Provider value={getModuleTheme('data')}>
+                <div data-theme={getModuleTheme('data')} className="flex-1 flex flex-col overflow-hidden">
+                  <DataSection />
+                </div>
+              </ModuleThemeContext.Provider>)
+            }
 
-            {view === 'ai-agent-builder' && (
-              <AiAgentBuilder onBack={() => handleSetView('agent-home')} />
-            )}
-
-            {view === 'workflow-home' && (
-              <ModuleThemeContext.Provider value={getModuleTheme('workflow')}>
-              <div data-theme={getModuleTheme('workflow')} className="flex-1 flex flex-col overflow-hidden">
-              <WorkflowHome
-                workspaces={workspaces}
-                setWorkspaces={setWorkspaces}
-                workflows={workflows}
-                setWorkflows={setWorkflows}
-                searchQuery={searchQuery}
-                setSearchQuery={setSearchQuery}
-                viewMode={viewMode}
-                setViewMode={setViewMode}
-                setActiveWorkflowId={setActiveWorkflowId}
-                deleteWorkflow={deleteWorkflow}
-                setView={handleSetView}
-                setNodes={setNodes}
-                setConnections={setConnections}
-                setIsAiGenerated={setIsAiGenerated}
-              />
-              </div>
+            {
+              view === 'ai-agent-builder' &&
+              (<ModuleThemeContext.Provider value={getModuleTheme('agents')}>
+                <div data-theme={getModuleTheme('agents')}>
+                  <AiAgentBuilder onBack={() => handleSetView('agent-home')} />
+                </div>
               </ModuleThemeContext.Provider>
-            )}
+              )
+            }
 
-            {view === 'workflow-builder' && (
-              <ModuleThemeContext.Provider value={getModuleTheme('workflow')}>
-              <WorkflowBuilder
-                workflows={workflows}
-                setWorkflows={setWorkflows}
-                activeWorkflowId={activeWorkflowId}
-                setActiveWorkflowId={setActiveWorkflowId}
-                workspaces={workspaces}
-                nodes={nodes}
-                setNodes={setNodes}
-                updateNodePosition={updateNodePosition}
-                deleteNode={deleteNode}
-                cloneNode={cloneNode}
-                updateNodeConfig={updateNodeConfig}
-                connections={connections}
-                setConnections={setConnections}
-                selectedNodeId={selectedNodeId}
-                setSelectedNodeId={setSelectedNodeId}
-                isDrawerOpen={isDrawerOpen}
-                setIsDrawerOpen={setIsDrawerOpen}
-                draggedConnection={draggedConnection}
-                setDraggedConnection={setDraggedConnection}
-                searchQuery={searchQuery}
-                setSearchQuery={setSearchQuery}
-                isFlowsPopoverOpen={isFlowsPopoverOpen}
-                setIsFlowsPopoverOpen={setIsFlowsPopoverOpen}
-                isComponentSidebarOpen={isComponentSidebarOpen}
-                setIsComponentSidebarOpen={setIsComponentSidebarOpen}
-                setView={handleSetView}
-                deleteWorkflow={deleteWorkflow}
-                addNode={addNode}
-                handleStartConnection={handleStartConnection}
-                handleEndConnection={handleEndConnection}
-                getSourcePos={getSourcePos}
-                getTargetPos={getTargetPos}
-                addEvent={addEvent}
-                updateEvent={updateEvent}
-                removeEvent={removeEvent}
-                canvasRef={canvasRef}
-                isAiGenerated={isAiGenerated}
-                setIsAiGenerated={setIsAiGenerated}
-              />
-              </ModuleThemeContext.Provider>
-            )}
+            {
+              view === 'workflow-home' &&
+              (<ModuleThemeContext.Provider value={getModuleTheme('workflow')}>
+                <div data-theme={getModuleTheme('workflow')} className="flex-1 flex flex-col overflow-hidden">
+                  <WorkflowHome
+                    workspaces={workspaces}
+                    setWorkspaces={setWorkspaces}
+                    workflows={workflows}
+                    setWorkflows={setWorkflows}
+                    searchQuery={searchQuery}
+                    setSearchQuery={setSearchQuery}
+                    viewMode={viewMode}
+                    setViewMode={setViewMode}
+                    setActiveWorkflowId={setActiveWorkflowId}
+                    deleteWorkflow={deleteWorkflow}
+                    setView={handleSetView}
+                    setNodes={setNodes}
+                    setConnections={setConnections}
+                    setIsAiGenerated={setIsAiGenerated}
+                  />
+                </div>
+              </ModuleThemeContext.Provider>)
+            }
+            {
+              view === 'workflow-builder' &&
+              (<ModuleThemeContext.Provider value={getModuleTheme('workflow')}>
+                <div data-theme={getModuleTheme('workflow')} className="flex-1 flex flex-col overflow-hidden">
+                  <WorkflowBuilder
+                    workflows={workflows}
+                    setWorkflows={setWorkflows}
+                    activeWorkflowId={activeWorkflowId}
+                    setActiveWorkflowId={setActiveWorkflowId}
+                    workspaces={workspaces}
+                    nodes={nodes}
+                    setNodes={setNodes}
+                    updateNodePosition={updateNodePosition}
+                    deleteNode={deleteNode}
+                    cloneNode={cloneNode}
+                    updateNodeConfig={updateNodeConfig}
+                    connections={connections}
+                    setConnections={setConnections}
+                    selectedNodeId={selectedNodeId}
+                    setSelectedNodeId={setSelectedNodeId}
+                    isDrawerOpen={isDrawerOpen}
+                    setIsDrawerOpen={setIsDrawerOpen}
+                    draggedConnection={draggedConnection}
+                    setDraggedConnection={setDraggedConnection}
+                    searchQuery={searchQuery}
+                    setSearchQuery={setSearchQuery}
+                    isFlowsPopoverOpen={isFlowsPopoverOpen}
+                    setIsFlowsPopoverOpen={setIsFlowsPopoverOpen}
+                    isComponentSidebarOpen={isComponentSidebarOpen}
+                    setIsComponentSidebarOpen={setIsComponentSidebarOpen}
+                    setView={handleSetView}
+                    deleteWorkflow={deleteWorkflow}
+                    addNode={addNode}
+                    handleStartConnection={handleStartConnection}
+                    handleEndConnection={handleEndConnection}
+                    getSourcePos={getSourcePos}
+                    getTargetPos={getTargetPos}
+                    addEvent={addEvent}
+                    updateEvent={updateEvent}
+                    removeEvent={removeEvent}
+                    canvasRef={canvasRef}
+                    isAiGenerated={isAiGenerated}
+                    setIsAiGenerated={setIsAiGenerated}
+                  />
+                </div>
+              </ModuleThemeContext.Provider>)
+            }
           </div>
-
         </div>
       )}
     </>

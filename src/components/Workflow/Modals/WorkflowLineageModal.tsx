@@ -1,16 +1,14 @@
 import { ChevronRight, Layers, Rocket, Settings, Workflow as WorkflowIcon, Zap } from 'lucide-react';
 import React from 'react';
 import { Workflow } from '../../../../types';
-import { CombinedTheme } from '../../../constants/themeColors';
 import Modal from '../../Common/Modal';
 
 interface WorkflowLineageModalProps {
   workflow: Workflow | null;
   onClose: () => void;
-  theme: CombinedTheme;
 }
 
-const WorkflowLineageModal: React.FC<WorkflowLineageModalProps> = ({ workflow, onClose, theme }) => {
+const WorkflowLineageModal: React.FC<WorkflowLineageModalProps> = ({ workflow, onClose }) => {
   return (
     <Modal
       isOpen={!!workflow}

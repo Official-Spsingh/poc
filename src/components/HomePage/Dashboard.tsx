@@ -149,7 +149,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate, workflows }) => {
               <div
                 key={option.id}
                 onClick={() => onNavigate(option.id)}
-                className={`group relative bg-dash-card-bg p-6 md:p-8 rounded-2xl md:rounded-3xl border border-dash-card-border dash-card-shadow-hover ${option.theme.card.border} transition-all text-left overflow-hidden cursor-pointer flex flex-col h-full ${option.id === 'data' ? 'hidden md:block' : ''}`}
+                className={`group relative bg-dash-card-bg p-6 md:p-8 rounded-2xl md:rounded-3xl border border-dash-card-border dash-card-shadow-hover ${option.theme.card.border.split(' ').filter(c => c.startsWith('hover:')).join(' ')} transition-all text-left overflow-hidden cursor-pointer flex flex-col h-full ${option.id === 'data' ? 'hidden md:block' : ''}`}
               >
                 <div className={`absolute top-4 right-4 md:top-6 md:right-6 px-2 py-1 rounded-md text-[9px] font-bold uppercase tracking-wider text-dash-tag-text ${option.theme.statusBadges.draft} transition-all ${option.theme.statusBadges.active.split(' ').map(c => `group-hover:${c}`).join(' ')} group-hover:border-transparent`}>
                   {option.tag}

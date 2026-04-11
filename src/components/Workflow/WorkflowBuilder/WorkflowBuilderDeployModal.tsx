@@ -1,7 +1,6 @@
 import { Check, Globe, HardDrive } from 'lucide-react';
 import React from 'react';
 import { Workflow, Workspace } from '../../../../types';
-import { CombinedTheme } from '../../../constants/themeColors';
 import Modal from '../../Common/Modal';
 import { FormLabel } from './Helpers';
 
@@ -23,7 +22,6 @@ interface WorkflowBuilderDeployModalProps {
     workspaceId: string;
   }>>;
   onPublish: () => void;
-  theme: CombinedTheme;
 }
 
 const WorkflowBuilderDeployModal: React.FC<WorkflowBuilderDeployModalProps> = ({
@@ -34,7 +32,6 @@ const WorkflowBuilderDeployModal: React.FC<WorkflowBuilderDeployModalProps> = ({
   deployForm,
   setDeployForm,
   onPublish,
-  theme
 }) => {
   return (
     <Modal

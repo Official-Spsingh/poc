@@ -11,7 +11,6 @@ import {
   Workflow,
   Workspace
 } from '../../../../types';
-import { CombinedTheme, studioThemeColors } from '../../../constants/themeColors';
 import AIDrawer from '../../Common/AIDrawer';
 import GuidedTour from '../../Common/GuidedTour';
 import { useResizableDrawer } from './hooks/useResizableDrawer';
@@ -202,10 +201,8 @@ const WorkflowBuilder: React.FC<WorkflowBuilderProps> = ({
     setIsDeployModalOpen(false);
   };
 
-  const activeTheme = studioThemeColors.workflow as unknown as CombinedTheme;
-
   return (
-    <div className={`flex h-full w-full overflow-hidden ${activeTheme.builder.canvas.bg}`}>
+    <div className="flex h-full w-full overflow-hidden bg-mod-surface-bg">
       <div className="flex-1 flex flex-col overflow-hidden">
         <WorkflowBuilderHeader
           workflows={workflows}
@@ -229,7 +226,6 @@ const WorkflowBuilder: React.FC<WorkflowBuilderProps> = ({
           setIsDeployModalOpen={setIsDeployModalOpen}
           setNodes={setNodes}
           setConnections={setConnections}
-          theme={activeTheme}
         />
 
         <div className="flex-1 flex overflow-hidden">
@@ -239,7 +235,6 @@ const WorkflowBuilder: React.FC<WorkflowBuilderProps> = ({
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
             addNode={addNode}
-            theme={activeTheme}
           />
 
           <WorkflowBuilderCanvas
@@ -269,7 +264,6 @@ const WorkflowBuilder: React.FC<WorkflowBuilderProps> = ({
             isDrawerOpen={isDrawerOpen}
             isAiGenerated={isAiGenerated}
             setIsAiGenerated={setIsAiGenerated}
-            theme={activeTheme}
           >
             <WorkflowBuilderCommandCenter
               isNodeRunPanelOpen={isNodeRunPanelOpen}
@@ -281,7 +275,6 @@ const WorkflowBuilder: React.FC<WorkflowBuilderProps> = ({
               setIsGlobalAiOpen={setIsGlobalAiOpen}
               setIsDrawerOpen={setIsDrawerOpen}
               setIsTourOpen={setIsTourOpen}
-              theme={activeTheme}
             />
 
             <WorkflowBuilderZoomControls
@@ -299,7 +292,6 @@ const WorkflowBuilder: React.FC<WorkflowBuilderProps> = ({
               nodeRunActiveTab={nodeRunActiveTab}
               setNodeRunActiveTab={setNodeRunActiveTab}
               nodeRunResult={nodeRunResult}
-              theme={activeTheme}
             />
           </WorkflowBuilderCanvas>
 
@@ -316,7 +308,6 @@ const WorkflowBuilder: React.FC<WorkflowBuilderProps> = ({
             addEvent={addEvent}
             updateEvent={updateEvent}
             removeEvent={removeEvent}
-            theme={activeTheme}
           />
 
           <AIDrawer
@@ -338,7 +329,7 @@ const WorkflowBuilder: React.FC<WorkflowBuilderProps> = ({
             title="Lumenore AI"
             status="Workflow Support active"
             constraintsRef={canvasRef}
-            themeColor={activeTheme.builder.header.primaryBtn.includes('teal') ? 'teal' : (activeTheme.builder.header.primaryBtn.includes('sky') ? 'sky' : 'violet')}
+            themeColor="violet"
             quickActions={[
               { label: 'Analyze Flow', icon: <LayoutGrid size={12} />, onClick: () => setGlobalAiChatMessage("Analyze this Flow"), color: 'sky' },
               { label: 'Suggest Nodes', icon: <Sparkles size={12} />, onClick: () => setGlobalAiChatMessage("Suggest Nodes"), color: 'violet' },
@@ -356,7 +347,6 @@ const WorkflowBuilder: React.FC<WorkflowBuilderProps> = ({
         deployForm={deployForm}
         setDeployForm={setDeployForm}
         onPublish={handlePublish}
-        theme={activeTheme}
       />
       <GuidedTour
         isOpen={isTourOpen}

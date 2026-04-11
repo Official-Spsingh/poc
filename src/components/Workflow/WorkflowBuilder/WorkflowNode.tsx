@@ -1,12 +1,11 @@
 import { AlertTriangle, Copy, Edit2, MoreVertical, Play, Plus, Settings2, Sparkles, Trash2 } from 'lucide-react';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { COMPONENT_METADATA } from './constants';
 import { NodeData, Position } from '../../../../types';
-import { CombinedTheme } from '../../../constants/themeColors';
 import ActionDropdown from '../../Common/ActionDropdown';
 
 interface WorkflowNodeProps {
-  node: NodeData; 
+  node: NodeData;
   isSelected: boolean;
   onDrag: (id: string, pos: Position) => void;
   onSelect: (id: string) => void;
@@ -15,16 +14,16 @@ interface WorkflowNodeProps {
   onClone: (id: string) => void;
   onStartConnection: (id: string, e: React.MouseEvent) => void;
   onEndConnection: (id: string) => void;
+  onFixWithAI?: (id: string, error: string) => void;
   onFixManually?: (id: string) => void;
   onRunNode?: (id: string) => void;
-  theme: CombinedTheme;
 }
 
-const WorkflowNode: React.FC<WorkflowNodeProps> = ({ 
-  node, isSelected, onDrag, onSelect, onDelete, onEdit, onClone, onStartConnection, onEndConnection, onFixWithAI, onFixManually, onRunNode, theme
+const WorkflowNode: React.FC<WorkflowNodeProps> = ({
+  node, isSelected, onDrag, onSelect, onDelete, onEdit, onClone, onStartConnection, onEndConnection, onFixWithAI, onFixManually, onRunNode
 }) => {
   const meta = COMPONENT_METADATA[node.type];
-  const [showDropdown, setShowDropdown] = useState(false);
+  const [, setShowDropdown] = useState(false);
   const dragRef = useRef<{ startX: number; startY: number; nodeX: number; nodeY: number } | null>(null);
 
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -41,17 +40,16 @@ const WorkflowNode: React.FC<WorkflowNodeProps> = ({
       if (!dragRef.current) return;
       const dx = me.clientX - dragRef.current.startX;
       const dy = me.clientY - dragRef.current.startY;
-      onDrag(node.id, { 
-        x: dragRef.current.nodeX + dx, 
-        y: dragRef.current.nodeY + dy 
+      onDrag(node.id, {
+        x: dragRef.current.nodeX + dx,
+        y: dragRef.current.nodeY + dy
       });
     };
 
     const handleMouseUp = (e: MouseEvent) => {
       const dx = Math.abs(e.clientX - dragRef.current!.startX);
       const dy = Math.abs(e.clientY - dragRef.current!.startY);
-      
-      // If it was just a click (no significant drag), show the dropdown
+
       if (dx < 5 && dy < 5) {
         setShowDropdown(true);
       }
@@ -66,23 +64,26 @@ const WorkflowNode: React.FC<WorkflowNodeProps> = ({
   };
 
   return (
-    <div 
+    <div
       onMouseDown={handleMouseDown}
       onMouseUp={() => onEndConnection(node.id)}
       style={{ transform: `translate3d(${node.position.x}px, ${node.position.y}px, 0)` }}
-      className={`absolute cursor-move select-none flex items-center bg-white rounded-xl border shadow-sm min-w-[180px] p-2 pr-3 group z-10 transition-all duration-75 ${
-        isSelected ? `${theme.builder.nodes.selectedBorder} shadow-lg ring-4 ${theme.builder.nodes.selectedRing}` : node.error ? `${theme.builder.nodes.errorBorder} shadow-md ring-2 ${theme.builder.nodes.errorRing}` : `border-gray-200 ${theme.builder.nodes.hoverBorder}`
+      className={`absolute cursor-move select-none flex items-center bg-mod-surface-card rounded-xl border shadow-sm min-w-[180px] p-2 pr-3 group z-10 transition-all duration-75 ${
+        isSelected
+          ? 'border-mod-hero-icon-color shadow-lg ring-4 ring-mod-hero-badge-bg/50'
+          : node.error
+          ? 'border-rose-400 shadow-md ring-2 ring-rose-50'
+          : 'border-mod-surface-border hover:border-mod-hero-icon-color/50'
       }`}
     >
       <div className="absolute top-2 right-2 flex items-center z-20">
         <ActionDropdown
-          theme={theme}
-          itemHoverClass={theme.homepage.card.menuHover}
+          itemHoverClass="hover:bg-mod-hero-badge-bg hover:text-mod-hero-icon-color"
           trigger={(isOpen) => (
-            <button 
+            <button
               className={`p-1 rounded-lg transition-all flex items-center justify-center ${
                 isOpen
-                  ? `${theme.homepage.tipsSection.iconBg} ${theme.homepage.tipsSection.iconText} opacity-100` 
+                  ? 'bg-mod-hero-badge-bg text-mod-hero-icon-color opacity-100'
                   : 'text-gray-400 hover:bg-gray-100 hover:text-gray-600 group-hover:opacity-100 opacity-0'
               }`}
             >
@@ -90,57 +91,37 @@ const WorkflowNode: React.FC<WorkflowNodeProps> = ({
             </button>
           )}
           items={[
-            { 
-              label: 'Run Node', 
-              icon: <Play size={14} fill="currentColor" />, 
-              onClick: () => onRunNode?.(node.id) 
-            },
-            { divider: true },
-            { 
-              label: 'Clone Node', 
-              icon: <Copy size={14} />, 
-              onClick: () => onClone(node.id) 
-            },
-            { 
-              label: 'Add Step', 
-              icon: <Plus size={14} />, 
-              onClick: () => {} 
-            },
-            { 
-              label: 'Edit Properties', 
-              icon: <Edit2 size={14} />, 
-              onClick: () => onEdit() 
-            },
-            { divider: true },
-            { 
-              label: 'Delete Node', 
-              icon: <Trash2 size={14} />, 
-              onClick: () => onDelete(node.id),
-              variant: 'danger'
-            }
+            { label: 'Run Node', icon: <Play size={14} fill="currentColor" />, onClick: () => onRunNode?.(node.id) },
+            { divider: true, label: '', onClick: () => {} },
+            { label: 'Clone Node', icon: <Copy size={14} />, onClick: () => onClone(node.id) },
+            { label: 'Add Step', icon: <Plus size={14} />, onClick: () => {} },
+            { label: 'Edit Properties', icon: <Edit2 size={14} />, onClick: () => onEdit() },
+            { divider: true, label: '', onClick: () => {} },
+            { label: 'Delete Node', icon: <Trash2 size={14} />, onClick: () => onDelete(node.id), variant: 'danger' }
           ]}
         />
       </div>
 
-      <div className={`p-1.5 rounded-lg mr-3 pointer-events-none ${node.error ? 'bg-rose-50 text-rose-500' : 'bg-gray-50 ' + meta.color}`}>
+      <div className={`p-1.5 rounded-lg mr-3 pointer-events-none ${node.error ? 'bg-rose-50 text-rose-500' : 'bg-mod-surface-skeleton/50 ' + meta.color}`}>
         {node.error ? <AlertTriangle size={18} /> : meta.icon}
       </div>
       <div className="flex-1 overflow-hidden pointer-events-none">
-        <p className="text-xs font-semibold text-gray-800 truncate">{node.label}</p>
-        <p className="text-[10px] text-gray-400 font-mono tracking-tight">ID: {node.id.split('-')[0]}</p>
+        <p className="text-xs font-semibold text-mod-surface-text-primary truncate">{node.label}</p>
+        <p className="text-[10px] text-mod-surface-text-muted font-mono tracking-tight">ID: {node.id.split('-')[0]}</p>
       </div>
-      
-      {/* Handles */}
-      <div className={`absolute -left-1.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 bg-gray-200 border-2 border-white rounded shadow-sm ${theme.builder.nodes.hoverBorder.replace('hover:', 'group-hover:')} transition-colors z-20 ${node.error ? `${theme.builder.nodes.errorBorder} ${theme.builder.nodes.errorRing}` : ''}`} />
-      <div 
+
+      {/* Input handle */}
+      <div className={`absolute -left-1.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 bg-mod-surface-skeleton border-2 border-mod-surface-card rounded shadow-sm group-hover:border-mod-hero-icon-color/50 transition-colors z-20 ${node.error ? 'border-rose-400' : ''}`} />
+      {/* Output handle */}
+      <div
         onMouseDown={(e) => { e.stopPropagation(); onStartConnection(node.id, e); }}
-        className={`absolute -right-1.5 top-1/2 -translate-y-1/2 w-4 h-4 bg-gray-200 border-2 border-white rounded shadow-sm transition-all cursor-crosshair z-20 ${node.error ? 'hover:bg-rose-500 hover:border-rose-500 border-rose-300 bg-rose-100' : theme.builder.nodes.handleHover}`}
+        className={`absolute -right-1.5 top-1/2 -translate-y-1/2 w-4 h-4 bg-mod-surface-skeleton border-2 border-mod-surface-card rounded shadow-sm transition-all cursor-crosshair z-20 ${node.error ? 'hover:bg-rose-500 hover:border-rose-500 border-rose-300 bg-rose-100' : 'hover:bg-mod-hero-icon-color hover:border-mod-hero-icon-color'}`}
       />
 
       {/* Error Overlay */}
       {node.error && (
-        <div 
-          className="absolute top-full left-0 mt-3 w-72 bg-white border border-rose-200 rounded-xl shadow-xl z-50 p-3 flex flex-col gap-2.5 cursor-default"
+        <div
+          className="absolute top-full left-0 mt-3 w-72 bg-mod-surface-card border border-rose-200 rounded-xl shadow-xl z-50 p-3 flex flex-col gap-2.5 cursor-default"
           onMouseDown={(e) => e.stopPropagation()}
         >
           <div className="flex items-start gap-2">
@@ -151,7 +132,7 @@ const WorkflowNode: React.FC<WorkflowNodeProps> = ({
             {onFixWithAI && (
               <button
                 onClick={(e) => { e.stopPropagation(); onFixWithAI(node.id, node.error!); }}
-                className={`flex-1 flex items-center justify-center gap-2 px-3 py-2 ${theme.homepage.tipsSection.iconBg} ${theme.homepage.tipsSection.iconText} hover:${theme.homepage.emptyState.button.split(' ')[0]} hover:text-white rounded-lg text-[11px] font-bold transition-all shadow-sm hover:shadow-sky-200/50 whitespace-nowrap`}
+                className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-mod-hero-badge-bg text-mod-hero-icon-color hover:bg-mod-hero-btn-bg hover:text-white rounded-lg text-[11px] font-bold transition-all shadow-sm whitespace-nowrap"
               >
                 <Sparkles size={14} /> AI Fix
               </button>

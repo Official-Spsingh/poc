@@ -23,7 +23,6 @@ import {
 import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Connection, NodeData, ViewType, Workflow, Workspace } from '../../../types';
-import { CombinedTheme, studioThemeColors } from '../../constants/themeColors';
 import { useRandomTitle, useTypewriter } from '../../hooks/useTypewriter';
 import { makeRequest } from '../../utils/makeRequest';
 import Modal from '../Common/Modal';
@@ -612,13 +611,11 @@ const WorkflowHome: React.FC<WorkflowHomeProps> = ({
       <WorkflowLineageModal
         workflow={lineageWorkflow}
         onClose={() => setLineageWorkflow(null)}
-        theme={studioThemeColors.workflow}
       />
 
       <WorkflowInfoModal
         workflow={infoWorkflow}
         onClose={() => setInfoWorkflow(null)}
-        theme={studioThemeColors.workflow}
       />
 
       <WorkflowCreateWorkspaceModal
@@ -627,7 +624,6 @@ const WorkflowHome: React.FC<WorkflowHomeProps> = ({
         workspaceForm={workspaceForm}
         setWorkspaceForm={setWorkspaceForm}
         onAction={handleCreateWorkspace}
-        theme={studioThemeColors.workflow}
       />
 
       <WorkflowSettingsModal
@@ -641,13 +637,11 @@ const WorkflowHome: React.FC<WorkflowHomeProps> = ({
         setFlowSettingsForm={setFlowSettingsForm}
         onAction={handleSaveSettings}
         workspaces={workspaces}
-        theme={studioThemeColors.workflow}
       />
 
       <WorkflowAIArchitectModal
         isAiPromptMode={isAiPromptMode}
         isGenerating={isGenerating}
-        theme={studioThemeColors.workflow}
       />
     </StudioMain>
   </StudioPageWrapper>

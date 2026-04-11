@@ -1,7 +1,6 @@
 import { Check, ChevronDown, Globe, HardDrive } from 'lucide-react';
 import React from 'react';
 import { Workflow, Workspace } from '../../../../types';
-import { CombinedTheme } from '../../../constants/themeColors';
 import Modal from '../../Common/Modal';
 import { FormLabel } from '../WorkflowBuilder/Helpers';
 
@@ -18,7 +17,6 @@ interface WorkflowSettingsModalProps {
   setFlowSettingsForm: (form: any) => void;
   onAction: () => void;
   workspaces: Workspace[];
-  theme: CombinedTheme;
 }
 
 const WorkflowSettingsModal: React.FC<WorkflowSettingsModalProps> = ({
@@ -29,7 +27,6 @@ const WorkflowSettingsModal: React.FC<WorkflowSettingsModalProps> = ({
   setFlowSettingsForm,
   onAction,
   workspaces,
-  theme
 }) => {
   return (
     <Modal

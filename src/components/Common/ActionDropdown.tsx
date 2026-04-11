@@ -15,7 +15,7 @@ export interface DropdownItem {
 interface ActionDropdownProps {
   trigger: React.ReactNode | ((isOpen: boolean) => React.ReactNode);
   items: DropdownItem[];
-  theme: CombinedTheme;
+  theme?: CombinedTheme;
   header?: {
     title: string;
     actionIcon?: React.ReactNode;

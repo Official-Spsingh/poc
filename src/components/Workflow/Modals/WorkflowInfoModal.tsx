@@ -1,16 +1,14 @@
 import { Check, Copy, Globe, HardDrive } from 'lucide-react';
 import React, { useState } from 'react';
 import { Workflow } from '../../../../types';
-import { CombinedTheme } from '../../../constants/themeColors';
 import Modal from '../../Common/Modal';
 
 interface WorkflowInfoModalProps {
   workflow: Workflow | null;
   onClose: () => void;
-  theme: CombinedTheme;
 }
 
-const WorkflowInfoModal: React.FC<WorkflowInfoModalProps> = ({ workflow, onClose, theme }) => {
+const WorkflowInfoModal: React.FC<WorkflowInfoModalProps> = ({ workflow, onClose }) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
