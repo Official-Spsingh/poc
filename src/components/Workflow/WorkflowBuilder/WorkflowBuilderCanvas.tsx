@@ -84,8 +84,6 @@ const WorkflowBuilderCanvas: React.FC<WorkflowBuilderCanvasProps> = ({
         setIsFlowsPopoverOpen(false);
       }}
       style={{
-        backgroundImage: 'radial-gradient(var(--mod-surface-skeleton) 1.5px, transparent 1.5px)',
-        backgroundSize: '30px 30px',
         backgroundColor: 'var(--mod-surface-bg)',
       }}
     >
