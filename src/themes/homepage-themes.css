@@ -268,115 +268,115 @@
    ========================================== */
 [data-theme="dark-blue"] {
   /* Hero */
-  --mod-hero-badge-bg: rgba(59, 130, 246, 0.1);
+  --mod-hero-badge-bg: rgba(59, 130, 246, 0.15);
   --mod-hero-badge-text: #60a5fa;
   --mod-hero-gradient-from: #3b82f6;
   --mod-hero-gradient-to: #6366f1;
-  --mod-hero-shadow: rgba(59, 130, 246, 0.1);
+  --mod-hero-shadow: rgba(0, 0, 0, 0.4);
   --mod-hero-btn-bg: #3b82f6;
   --mod-hero-btn-hover: #2563eb;
-  --mod-hero-btn-shadow: rgba(59, 130, 246, 0.25);
+  --mod-hero-btn-shadow: rgba(0, 0, 0, 0.3);
   --mod-hero-secondary-hover-text: #60a5fa;
-  --mod-hero-secondary-hover-bg: rgba(59, 130, 246, 0.08);
+  --mod-hero-secondary-hover-bg: rgba(59, 130, 246, 0.12);
   --mod-hero-icon-color: #60a5fa;
-
+ 
   /* Header */
-  --mod-header-icon-bg: rgba(59, 130, 246, 0.1);
+  --mod-header-icon-bg: rgba(59, 130, 246, 0.15);
   --mod-header-icon-text: #60a5fa;
   --mod-header-icon-border: #334155;
   --mod-header-btn-bg: #3b82f6;
   --mod-header-btn-text: #ffffff;
-  --mod-header-btn-shadow: rgba(59, 130, 246, 0.2);
+  --mod-header-btn-shadow: rgba(0, 0, 0, 0.3);
   --mod-header-btn-hover: #2563eb;
-
+ 
   /* Page Background Blurs */
-  --mod-page-blur-1: rgba(59, 130, 246, 0.06);
-  --mod-page-blur-2: rgba(45, 212, 191, 0.04);
-  --mod-page-blur-3: rgba(59, 130, 246, 0.03);
-
+  --mod-page-blur-1: rgba(59, 130, 246, 0.08);
+  --mod-page-blur-2: rgba(45, 212, 191, 0.06);
+  --mod-page-blur-3: rgba(59, 130, 246, 0.04);
+ 
   /* Card */
   --mod-card-border: #334155;
   --mod-card-hover-border: #3b82f6;
-  --mod-card-shadow: rgba(59, 130, 246, 0.15);
+  --mod-card-shadow: rgba(0, 0, 0, 0.4);
   --mod-card-accent-from: #3b82f6;
   --mod-card-accent-to: #6366f1;
-  --mod-card-icon-bg: rgba(59, 130, 246, 0.1);
+  --mod-card-icon-bg: rgba(59, 130, 246, 0.15);
   --mod-card-icon-text: #60a5fa;
   --mod-card-title-hover: #60a5fa;
-  --mod-card-chevron-bg: rgba(59, 130, 246, 0.08);
+  --mod-card-chevron-bg: rgba(51, 65, 85, 0.5);
   --mod-card-chevron-text: #60a5fa;
-  --mod-card-menu-hover-bg: rgba(59, 130, 246, 0.1);
+  --mod-card-menu-hover-bg: rgba(51, 65, 85, 0.6);
   --mod-card-menu-hover-text: #60a5fa;
-  --mod-card-status-bg: rgba(59, 130, 246, 0.1);
+  --mod-card-status-bg: rgba(59, 130, 246, 0.12);
   --mod-card-status-text: #60a5fa;
-
+ 
   /* Table */
-  --mod-table-hover-bg: rgba(59, 130, 246, 0.05);
-  --mod-table-menu-hover-bg: rgba(59, 130, 246, 0.1);
+  --mod-table-hover-bg: rgba(51, 65, 85, 0.3);
+  --mod-table-menu-hover-bg: rgba(51, 65, 85, 0.5);
   --mod-table-menu-hover-text: #60a5fa;
-
+ 
   /* Toolbar */
-  --mod-toolbar-focus-ring: rgba(59, 130, 246, 0.15);
-  --mod-toolbar-focus-border: rgba(96, 165, 250, 0.5);
+  --mod-toolbar-focus-ring: rgba(59, 130, 246, 0.2);
+  --mod-toolbar-focus-border: rgba(96, 165, 250, 0.6);
   --mod-toolbar-active-text: #60a5fa;
-  --mod-toolbar-bg-light: rgba(59, 130, 246, 0.08);
+  --mod-toolbar-bg-light: rgba(30, 41, 59, 0.4);
   --mod-toolbar-active-bg: #3b82f6;
-  --mod-toolbar-menu-hover-bg: rgba(59, 130, 246, 0.1);
+  --mod-toolbar-menu-hover-bg: rgba(51, 65, 85, 0.5);
   --mod-toolbar-menu-hover-text: #60a5fa;
-
+ 
   /* Empty State */
   --mod-empty-glow: #3b82f6;
-  --mod-empty-icon-bg: rgba(59, 130, 246, 0.1);
+  --mod-empty-icon-bg: rgba(59, 130, 246, 0.15);
   --mod-empty-icon-text: #60a5fa;
   --mod-empty-btn-bg: #3b82f6;
   --mod-empty-btn-hover: #2563eb;
-  --mod-empty-btn-shadow: rgba(59, 130, 246, 0.25);
+  --mod-empty-btn-shadow: rgba(0, 0, 0, 0.3);
   --mod-empty-secondary-text: #60a5fa;
-  --mod-empty-secondary-hover-bg: rgba(59, 130, 246, 0.08);
-
+  --mod-empty-secondary-hover-bg: rgba(51, 65, 85, 0.5);
+ 
   /* Tips Section */
-  --mod-tips-icon-bg: rgba(59, 130, 246, 0.1);
+  --mod-tips-icon-bg: rgba(59, 130, 246, 0.15);
   --mod-tips-icon-text: #60a5fa;
-
+ 
   /* Status Badges */
-  --mod-status-active-bg: rgba(59, 130, 246, 0.1);
+  --mod-status-active-bg: rgba(59, 130, 246, 0.12);
   --mod-status-active-text: #60a5fa;
-  --mod-status-active-border: rgba(59, 130, 246, 0.2);
-  --mod-status-published-bg: rgba(59, 130, 246, 0.1);
+  --mod-status-active-border: rgba(59, 130, 246, 0.3);
+  --mod-status-published-bg: rgba(59, 130, 246, 0.12);
   --mod-status-published-text: #60a5fa;
-  --mod-status-published-border: rgba(59, 130, 246, 0.2);
-  --mod-status-draft-bg: rgba(51, 65, 85, 0.3);
-  --mod-status-draft-text: #64748b;
-  --mod-status-draft-border: #334155;
-  --mod-status-error-bg: rgba(225, 29, 72, 0.1);
+  --mod-status-published-border: rgba(59, 130, 246, 0.3);
+  --mod-status-draft-bg: rgba(51, 65, 85, 0.4);
+  --mod-status-draft-text: #94a3b8;
+  --mod-status-draft-border: #475569;
+  --mod-status-error-bg: rgba(225, 29, 72, 0.15);
   --mod-status-error-text: #fb7185;
-  --mod-status-error-border: rgba(225, 29, 72, 0.2);
-  --mod-status-training-bg: rgba(59, 130, 246, 0.1);
+  --mod-status-error-border: rgba(225, 29, 72, 0.3);
+  --mod-status-training-bg: rgba(59, 130, 246, 0.12);
   --mod-status-training-text: #60a5fa;
-  --mod-status-training-border: rgba(59, 130, 246, 0.2);
-  --mod-status-idle-bg: rgba(51, 65, 85, 0.3);
-  --mod-status-idle-text: #64748b;
-  --mod-status-idle-border: #334155;
-
+  --mod-status-training-border: rgba(59, 130, 246, 0.3);
+  --mod-status-idle-bg: rgba(51, 65, 85, 0.4);
+  --mod-status-idle-text: #94a3b8;
+  --mod-status-idle-border: #475569;
+ 
   /* Modal */
-  --mod-modal-header-bg: rgba(59, 130, 246, 0.08);
+  --mod-modal-header-bg: rgba(30, 41, 59, 0.6);
   --mod-modal-header-text: #f1f5f9;
   --mod-modal-icon-bg: #3b82f6;
   --mod-modal-primary-bg: #3b82f6;
   --mod-modal-primary-hover: #2563eb;
-  --mod-modal-secondary-hover-bg: rgba(59, 130, 246, 0.08);
+  --mod-modal-secondary-hover-bg: rgba(51, 65, 85, 0.6);
   --mod-modal-secondary-text: #60a5fa;
-  --mod-modal-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-
+  --mod-modal-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+ 
   /* Lineage */
   --mod-lineage-icon-bg: #3b82f6;
   --mod-lineage-icon-text: #ffffff;
   --mod-lineage-card-border: #334155;
-  --mod-lineage-card-hover-border: rgba(59, 130, 246, 0.3);
-  --mod-lineage-card-hover-bg: rgba(59, 130, 246, 0.05);
-  --mod-lineage-badge-bg: rgba(59, 130, 246, 0.1);
+  --mod-lineage-card-hover-border: #3b82f6;
+  --mod-lineage-card-hover-bg: rgba(30, 41, 59, 0.8);
+  --mod-lineage-badge-bg: rgba(59, 130, 246, 0.15);
   --mod-lineage-badge-text: #60a5fa;
-
+ 
   /* Misc accent */
   --mod-layout-border: #334155;
   --mod-sidebar-hover-icon: #60a5fa;

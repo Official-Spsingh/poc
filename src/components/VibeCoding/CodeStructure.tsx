@@ -139,7 +139,7 @@ const CodeStructure: React.FC<CodeStructureProps> = ({
 }) => {
     return (
         <motion.div key="code" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} className="w-full h-full bg-[#0f172a] overflow-hidden flex">
-            <aside className="w-64 bg-mod-surface-bg border-r border-mod-surface-border flex flex-col pt-4 overflow-y-auto custom-scrollbar shrink-0" style={{ minWidth: '16rem' }}>
+            <aside className="w-64 bg-mod-surface-bg border-r border-mod-surface-border flex flex-col pt-4 overflow-y-auto scrollbar-custom shrink-0 min-w-64">
                <div className="flex items-center justify-between px-4 mb-4">
                  <div className="flex items-center gap-2">
                     <FolderOpen size={14} className="text-mod-hero-icon-color" />
@@ -172,14 +172,13 @@ const CodeStructure: React.FC<CodeStructureProps> = ({
                   </div>
                   <div className="px-2 py-0.5 bg-mod-hero-badge-bg/10 text-mod-hero-icon-color/70 rounded text-[9px] font-black uppercase tracking-tighter">Read/Write Sync</div>
                </div>
-               <div className="flex-1 overflow-auto custom-scrollbar relative">
+               <div className="flex-1 overflow-auto scrollbar-custom relative">
                  <Editor
                    value={activeProject.files[activeFile].content}
                    onValueChange={handleUpdateFile}
                    highlight={(code) => highlightWithPrism(code, activeFile)}
                    padding={24}
                    className="min-h-full font-mono text-[13px] leading-snug text-[#94a3b8] selection:bg-mod-hero-btn-bg/30"
-                   style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace' }}
                    textareaClassName="outline-none"
                  />
                </div>

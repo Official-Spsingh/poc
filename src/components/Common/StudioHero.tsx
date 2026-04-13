@@ -74,7 +74,7 @@ const StudioHero: React.FC<StudioHeroProps> = ({
             className="w-full min-h-[80px] md:min-h-[120px] max-h-[350px] p-4 md:p-5 bg-transparent outline-none text-mod-surface-text-primary resize-none text-sm md:text-lg placeholder:text-mod-surface-text-muted disabled:opacity-50"
             disabled={isGenerating}
           />
-          <div className="flex items-center justify-between p-2.5 gap-2 mt-0.5 border-t border-mod-surface-divider overflow-x-auto scrollbar-none">
+          <div className="flex items-center justify-between p-2.5 gap-2 mt-0.5 border-t border-mod-surface-divider overflow-x-auto scrollbar-hidden">
             <div className="flex items-center gap-1.5 shrink-0">
               {secondaryActions.map((action, idx) => {
                 // First action uses theme color, others use their own or a default palette

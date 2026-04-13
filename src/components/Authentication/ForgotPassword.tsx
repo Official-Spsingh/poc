@@ -108,7 +108,7 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onBackToLogin }) => {
       </div>
 
       {/* Right Side - Forgot Password Form */}
-      <div className="flex-1 flex flex-col items-center justify-center bg-auth-card-bg relative overflow-y-auto lg:overflow-hidden scrollbar-none">
+      <div className="flex-1 flex flex-col items-center justify-center bg-auth-card-bg relative overflow-y-auto lg:overflow-hidden scrollbar-hidden">
         <motion.div 
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}

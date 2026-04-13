@@ -125,7 +125,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate, workflows }) => {
 
   return (
     <>
-      <div className="flex-1 dash-page-bg backdrop-blur-3xl overflow-y-auto overflow-x-hidden custom-scrollbar relative">
+      <div className="flex-1 dash-page-bg backdrop-blur-3xl overflow-y-auto overflow-x-hidden scrollbar-custom relative">
         {/* Background Decorations for Glassmorphism */}
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] dash-blur-1 blur-[120px] rounded-full -z-10 animate-pulse" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] dash-blur-2 blur-[120px] rounded-full -z-10 animate-pulse" style={{ animationDelay: '2s' }} />

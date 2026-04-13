@@ -62,7 +62,7 @@ const WorkflowBuilderNodesDrawer: React.FC<WorkflowBuilderNodesDrawerProps> = ({
               </div>
             </div>
 
-            <div className="flex-1 overflow-y-auto custom-scrollbar p-5 pt-4 bg-mod-surface-bg">
+            <div className="flex-1 overflow-y-auto scrollbar-custom p-5 pt-4 bg-mod-surface-bg">
               {filteredNodes.length > 0 ? (
                 <div className="grid grid-cols-2 gap-3 pb-10">
                   {filteredNodes.map(type => {

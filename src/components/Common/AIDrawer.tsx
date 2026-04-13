@@ -201,7 +201,7 @@ const AIDrawer: React.FC<AIDrawerProps> = ({
         </div>
 
         {/* Scrollable Content */}
-        <div className="flex-1 overflow-y-auto p-5 space-y-4 custom-scrollbar bg-mod-surface-bg">
+        <div className="flex-1 overflow-y-auto p-5 space-y-4 scrollbar-custom bg-mod-surface-bg">
           {history.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center p-8 space-y-5">
               <div className={`w-16 h-16 ${themeStyles.bubbleBg} rounded-3xl flex items-center justify-center shadow-inner`}>
@@ -247,7 +247,7 @@ const AIDrawer: React.FC<AIDrawerProps> = ({
 
         {/* Pinned Quick Actions */}
         {quickActions.length > 0 && (
-          <div className="px-4 py-2 border-t border-mod-surface-border bg-mod-surface-bg flex items-center gap-2 overflow-x-auto scrollbar-none whitespace-nowrap">
+          <div className="px-4 py-2 border-t border-mod-surface-border bg-mod-surface-bg flex items-center gap-2 overflow-x-auto scrollbar-hidden whitespace-nowrap">
             {quickActions.map((action, i) => (
               <button
                 key={i}

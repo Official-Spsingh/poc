@@ -45,7 +45,7 @@ const VersionHistoryPopover: React.FC<VersionHistoryPopoverProps> = ({
             <div className="p-4 border-b border-mod-surface-border bg-mod-surface-skeleton/20 flex items-center justify-between">
               <h3 className="text-[10px] font-bold text-mod-surface-text-muted uppercase tracking-widest flex items-center gap-1.5"><History size={12} /> Version History</h3>
             </div>
-            <div className="p-2 space-y-1 max-h-[300px] overflow-y-auto custom-scrollbar">
+            <div className="p-2 space-y-1 max-h-[300px] overflow-y-auto scrollbar-custom">
               {versions.map((v) => (
                 <button
                   key={v.id}

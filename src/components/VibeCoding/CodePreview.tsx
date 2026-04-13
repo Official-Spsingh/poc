@@ -89,7 +89,7 @@ const CodePreview: React.FC<CodePreviewProps> = ({
                     </div>
                     <button onClick={() => setConsoleLogs([])} className="text-[9px] font-bold text-slate-500 hover:text-white uppercase tracking-widest">Clear</button>
                  </div>
-                 <div className="flex-1 overflow-y-auto p-4 font-mono text-[11px] space-y-1 custom-scrollbar bg-slate-950/50">
+                 <div className="flex-1 overflow-y-auto p-4 font-mono text-[11px] space-y-1 scrollbar-custom bg-slate-950/50">
                     {consoleLogs.length === 0 ? (
                       <div className="h-full flex items-center justify-center text-slate-700 italic text-[11px] font-bold uppercase tracking-widest animate-pulse">Waiting for Studio initialization...</div>
                     ) : (
