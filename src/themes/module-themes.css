@@ -1,0 +1,285 @@
+/* ==========================================
+   MODULE THEME VARIABLES
+   ==========================================
+   This file contains TWO things:
+
+   1. SHARED SURFACE VARIABLES (--mod-surface-*)
+      Neutral background/text/border tokens used by ALL Studio
+      views: homepage listings AND builder canvases.
+      Variable names are identical across themes; only values differ.
+
+   2. BUILDER-SPECIFIC VARIABLE PLACEHOLDERS
+      Each builder section below is reserved for variables that
+      are unique to that builder's canvas/editor UI.
+      Add new --mod-<builder>-* vars here as the builder designs evolve.
+
+   ACCENT / FUNCTIONAL VARIABLES (hero, card, table, toolbar, etc.)
+   live in: homepage-themes.css
+   Those are used exclusively by module homepage / listing pages.
+
+   GLOBAL VARS (auth, sidebar, dashboard, shell) live in: global-themes.css
+   ========================================== */
+
+/* ==========================================
+   GLOBAL THEME: light-blue  (default blue accent)
+   ========================================== */
+:root,
+[data-theme="light-blue"] {
+  /* ===== SHARED SURFACE ===== */
+  --mod-surface-bg: #f8fafc;
+  --mod-surface-card: #ffffff;
+  --mod-surface-card-hover: #ffffff;
+  --mod-surface-border: #f3f4f6;
+  --mod-surface-border-strong: #e5e7eb;
+  --mod-surface-text-primary: #111827;
+  --mod-surface-text-secondary: #6b7280;
+  --mod-surface-text-muted: #9ca3af;
+  --mod-surface-input-bg: #ffffff;
+  --mod-surface-input-border: #e5e7eb;
+  --mod-surface-hover: #f9fafb;
+  --mod-surface-skeleton: #f3f4f6;
+  --mod-surface-skeleton-light: #f9fafb;
+  --mod-surface-divider: #f9fafb;
+}
+
+/* ==========================================
+   GLOBAL THEME: light-slate  (neutral slate accent)
+   ========================================== */
+[data-theme="light-slate"] {
+  /* ===== SHARED SURFACE ===== */
+  --mod-surface-bg: #f8fafc;
+  --mod-surface-card: #ffffff;
+  --mod-surface-card-hover: #ffffff;
+  --mod-surface-border: #f3f4f6;
+  --mod-surface-border-strong: #e5e7eb;
+  --mod-surface-text-primary: #111827;
+  --mod-surface-text-secondary: #6b7280;
+  --mod-surface-text-muted: #9ca3af;
+  --mod-surface-input-bg: #ffffff;
+  --mod-surface-input-border: #e5e7eb;
+  --mod-surface-hover: #f9fafb;
+  --mod-surface-skeleton: #f3f4f6;
+  --mod-surface-skeleton-light: #f9fafb;
+  --mod-surface-divider: #f9fafb;
+}
+
+/* ==========================================
+   GLOBAL THEME: dark-blue  (dark mode)
+   ========================================== */
+[data-theme="dark-blue"] {
+  /* ===== SHARED SURFACE ===== */
+  --mod-surface-bg: #0f172a;
+  --mod-surface-card: #1e293b;
+  --mod-surface-card-hover: #1e293b;
+  --mod-surface-border: #334155;
+  --mod-surface-border-strong: #475569;
+  --mod-surface-text-primary: #f1f5f9;
+  --mod-surface-text-secondary: #94a3b8;
+  --mod-surface-text-muted: #64748b;
+  --mod-surface-input-bg: #0f172a;
+  --mod-surface-input-border: #334155;
+  --mod-surface-hover: rgba(51, 65, 85, 0.5);
+  --mod-surface-skeleton: #334155;
+  --mod-surface-skeleton-light: #1e293b;
+  --mod-surface-divider: #334155;
+}
+
+/* ==========================================
+   MODULE-SPECIFIC: light-teal
+   Used by: Workflow (default accent)
+   ========================================== */
+[data-theme="light-teal"] {
+  /* ===== SHARED SURFACE ===== */
+  --mod-surface-bg: #f8fafc;
+  --mod-surface-card: #ffffff;
+  --mod-surface-card-hover: #ffffff;
+  --mod-surface-border: #f3f4f6;
+  --mod-surface-border-strong: #e5e7eb;
+  --mod-surface-text-primary: #111827;
+  --mod-surface-text-secondary: #6b7280;
+  --mod-surface-text-muted: #9ca3af;
+  --mod-surface-input-bg: #ffffff;
+  --mod-surface-input-border: #e5e7eb;
+  --mod-surface-hover: #f9fafb;
+  --mod-surface-skeleton: #f3f4f6;
+  --mod-surface-skeleton-light: #f9fafb;
+  --mod-surface-divider: #f9fafb;
+}
+
+/* ==========================================
+   MODULE-SPECIFIC: light-sky
+   Used by: Apps (default accent)
+   ========================================== */
+[data-theme="light-sky"] {
+  /* ===== SHARED SURFACE ===== */
+  --mod-surface-bg: #f8fafc;
+  --mod-surface-card: #ffffff;
+  --mod-surface-card-hover: #ffffff;
+  --mod-surface-border: #f3f4f6;
+  --mod-surface-border-strong: #e5e7eb;
+  --mod-surface-text-primary: #111827;
+  --mod-surface-text-secondary: #6b7280;
+  --mod-surface-text-muted: #9ca3af;
+  --mod-surface-input-bg: #ffffff;
+  --mod-surface-input-border: #e5e7eb;
+  --mod-surface-hover: #f9fafb;
+  --mod-surface-skeleton: #f3f4f6;
+  --mod-surface-skeleton-light: #f9fafb;
+  --mod-surface-divider: #f9fafb;
+}
+
+/* ==========================================
+   MODULE-SPECIFIC: light-violet
+   Used by: Agents (default accent)
+   ========================================== */
+[data-theme="light-violet"] {
+  /* ===== SHARED SURFACE ===== */
+  --mod-surface-bg: #f8fafc;
+  --mod-surface-card: #ffffff;
+  --mod-surface-card-hover: #ffffff;
+  --mod-surface-border: #f3f4f6;
+  --mod-surface-border-strong: #e5e7eb;
+  --mod-surface-text-primary: #111827;
+  --mod-surface-text-secondary: #6b7280;
+  --mod-surface-text-muted: #9ca3af;
+  --mod-surface-input-bg: #ffffff;
+  --mod-surface-input-border: #e5e7eb;
+  --mod-surface-hover: #f9fafb;
+  --mod-surface-skeleton: #f3f4f6;
+  --mod-surface-skeleton-light: #f9fafb;
+  --mod-surface-divider: #f9fafb;
+}
+
+/* ==========================================
+   MODULE-SPECIFIC: light-purple
+   Used by: Agents (alternate accent)
+   ========================================== */
+[data-theme="light-purple"] {
+  /* ===== SHARED SURFACE ===== */
+  --mod-surface-bg: #f8fafc;
+  --mod-surface-card: #ffffff;
+  --mod-surface-card-hover: #ffffff;
+  --mod-surface-border: #f3f4f6;
+  --mod-surface-border-strong: #e5e7eb;
+  --mod-surface-text-primary: #111827;
+  --mod-surface-text-secondary: #6b7280;
+  --mod-surface-text-muted: #9ca3af;
+  --mod-surface-input-bg: #ffffff;
+  --mod-surface-input-border: #e5e7eb;
+  --mod-surface-hover: #f9fafb;
+  --mod-surface-skeleton: #f3f4f6;
+  --mod-surface-skeleton-light: #f9fafb;
+  --mod-surface-divider: #f9fafb;
+}
+
+/* ==========================================
+   MODULE-SPECIFIC: light-indigo
+   Used by: VibeCoding (default accent)
+   ========================================== */
+[data-theme="light-indigo"] {
+  /* ===== SHARED SURFACE ===== */
+  --mod-surface-bg: #f8fafc;
+  --mod-surface-card: #ffffff;
+  --mod-surface-card-hover: #ffffff;
+  --mod-surface-border: #f3f4f6;
+  --mod-surface-border-strong: #e5e7eb;
+  --mod-surface-text-primary: #111827;
+  --mod-surface-text-secondary: #6b7280;
+  --mod-surface-text-muted: #9ca3af;
+  --mod-surface-input-bg: #ffffff;
+  --mod-surface-input-border: #e5e7eb;
+  --mod-surface-hover: #f9fafb;
+  --mod-surface-skeleton: #f3f4f6;
+  --mod-surface-skeleton-light: #f9fafb;
+  --mod-surface-divider: #f9fafb;
+}
+
+
+/* ==========================================
+   BUILDER-SPECIFIC VARIABLE SECTIONS
+   ==========================================
+   Each section below is reserved for variables unique to that
+   builder's canvas / editor UI (not the homepage listing page).
+
+   Convention: --mod-<builder>-<element>-<property>
+   Example:    --mod-wf-node-bg, --mod-app-panel-border
+
+   Accent vars for the HOMEPAGE of each module live in homepage-themes.css.
+   Add new vars here only when the builder canvas needs its own tokens.
+   ========================================== */
+
+/* ==========================================
+   WORKFLOW BUILDER
+   Canvas, node palette, edge styles, minimap, etc.
+   ========================================== */
+/* (no builder-specific vars yet — add here as WF builder design matures) */
+
+
+/* ==========================================
+   APPS BUILDER
+   Drag-and-drop canvas, component panel, property inspector, etc.
+   ========================================== */
+/* (no builder-specific vars yet — add here as Apps builder design matures) */
+
+
+/* ==========================================
+   AGENTS BUILDER
+   Agent graph canvas, tool config panel, memory viewer, etc.
+   ========================================== */
+/* (no builder-specific vars yet — add here as Agents builder design matures) */
+
+
+/* ==========================================
+   VIBECODING BUILDER
+   Code editor, file tree, terminal panel, preview pane, etc.
+   ========================================== */
+/* (no builder-specific vars yet — add here as VibeCoding builder design matures) */
+
+
+/* ==========================================
+   MODULE UTILITY CLASSES
+   Complex properties (shadows, gradients, focus rings) that cannot
+   be expressed as simple Tailwind color tokens.
+   These reference --mod-* vars defined in homepage-themes.css.
+   ========================================== */
+
+/* Hero gradient glow behind input */
+.mod-hero-gradient-glow {
+  background: linear-gradient(to right, var(--mod-hero-gradient-from), var(--mod-hero-gradient-to));
+}
+
+/* Hero shadow on input container */
+.mod-hero-input-shadow {
+  box-shadow: 0 2px 8px -2px var(--mod-hero-shadow);
+}
+
+/* Hero button shadow */
+.mod-hero-btn-shadow {
+  box-shadow: 0 2px 4px -1px var(--mod-hero-btn-shadow);
+}
+
+/* Card hover shadow */
+.mod-card-hover-shadow:hover {
+  box-shadow: 0 4px 12px -4px var(--mod-card-shadow);
+}
+
+/* Card gradient accent stripe */
+.mod-card-accent-gradient {
+  background: linear-gradient(to right, var(--mod-card-accent-from), var(--mod-card-accent-to));
+}
+
+/* Toolbar / Search focus ring */
+.mod-toolbar-focus-ring:focus {
+  box-shadow: 0 0 0 3px var(--mod-toolbar-focus-ring);
+  border-color: var(--mod-toolbar-focus-border);
+}
+
+/* Empty state primary button */
+.mod-empty-btn-shadow {
+  box-shadow: 0 2px 4px -1px var(--mod-empty-btn-shadow);
+}
+
+/* Header primary button shadow */
+.mod-header-btn-shadow {
+  box-shadow: 0 2px 4px -1px var(--mod-header-btn-shadow);
+}

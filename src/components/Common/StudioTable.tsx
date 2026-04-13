@@ -1,7 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { LucideIcon, MoreVertical } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
-import { TableColors } from '../../constants/themeColors';
 
 export interface MenuItem {
   label: string;
@@ -24,15 +23,13 @@ interface StudioTableProps<T> {
   data: T[];
   columns: Column<T>[];
   onRowClick?: (item: T) => void;
-  colors: TableColors;
   menuItems?: (item: T) => MenuItem[];
   isLoading?: boolean;
 }
 
-const TableActionMenu: React.FC<{ items: MenuItem[]; colors: TableColors }> = ({ items, colors }) => {
+const TableActionMenu: React.FC<{ items: MenuItem[] }> = ({ items }) => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  const styles = colors;
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -48,7 +45,7 @@ const TableActionMenu: React.FC<{ items: MenuItem[]; colors: TableColors }> = ({
     <div className="relative" ref={menuRef} onClick={(e) => e.stopPropagation()}>
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-xl transition-all"
+        className="p-2 text-mod-surface-text-muted hover:text-mod-surface-text-secondary hover:bg-mod-surface-hover rounded-xl transition-all"
       >
         <MoreVertical size={18} />
       </button>
@@ -59,7 +56,7 @@ const TableActionMenu: React.FC<{ items: MenuItem[]; colors: TableColors }> = ({
             initial={{ opacity: 0, scale: 0.95, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 10 }}
-            className="absolute top-full right-0 mt-2 w-48 bg-white border border-gray-100 rounded-2xl shadow-2xl z-[100] py-2 overflow-hidden"
+            className="absolute top-full right-0 mt-2 w-48 bg-mod-surface-card border border-mod-surface-border rounded-2xl z-[100] py-2 overflow-hidden"
           >
             {items.map((item, idx) => (
               <button 
@@ -68,7 +65,7 @@ const TableActionMenu: React.FC<{ items: MenuItem[]; colors: TableColors }> = ({
                 className={`w-full px-4 py-2.5 text-left text-xs font-bold flex items-center gap-3 transition-colors ${
                   item.variant === 'danger' 
                   ? 'text-rose-500 hover:bg-rose-50' 
-                  : `text-gray-600 ${styles.menuHover}`
+                  : `text-mod-surface-text-secondary hover:bg-mod-table-menu-hover-bg hover:text-mod-table-menu-hover-text`
                 }`}
               >
                 <item.icon size={14} className={item.variant === 'danger' ? '' : 'text-slate-600'} />
@@ -83,19 +80,19 @@ const TableActionMenu: React.FC<{ items: MenuItem[]; colors: TableColors }> = ({
 };
 
 export const StudioTableSkeleton: React.FC<{ columns: number }> = ({ columns }) => (
-  <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden animate-pulse">
-    <div className="bg-gray-50 border-b border-gray-200 h-14 w-full" />
-    <div className="divide-y divide-gray-100">
+  <div className="bg-mod-surface-card rounded-2xl border border-mod-surface-border-strong overflow-hidden animate-pulse">
+    <div className="bg-mod-surface-hover border-b border-mod-surface-border-strong h-14 w-full" />
+    <div className="divide-y divide-mod-surface-divider">
       {[1, 2, 3, 4, 5].map(i => (
         <div key={i} className="px-8 py-5 flex items-center gap-4">
-          <div className="w-10 h-10 bg-gray-100 rounded-xl shrink-0" />
+          <div className="w-10 h-10 bg-mod-surface-skeleton rounded-xl shrink-0" />
           <div className="flex-1 space-y-2">
-            <div className="h-4 bg-gray-100 rounded w-1/4" />
-            <div className="h-3 bg-gray-50 rounded w-1/2" />
+            <div className="h-4 bg-mod-surface-skeleton rounded w-1/4" />
+            <div className="h-3 bg-mod-surface-skeleton-light rounded w-1/2" />
           </div>
-          <div className="w-20 h-4 bg-gray-100 rounded" />
-          <div className="w-24 h-4 bg-gray-100 rounded" />
-          <div className="w-8 h-8 bg-gray-50 rounded-xl" />
+          <div className="w-20 h-4 bg-mod-surface-skeleton rounded" />
+          <div className="w-24 h-4 bg-mod-surface-skeleton rounded" />
+          <div className="w-8 h-8 bg-mod-surface-skeleton-light rounded-xl" />
         </div>
       ))}
     </div>
@@ -106,37 +103,34 @@ export function StudioTable<T>({
   data, 
   columns, 
   onRowClick, 
-  colors, 
   menuItems,
   isLoading 
 }: StudioTableProps<T>) {
   if (isLoading) return <StudioTableSkeleton columns={columns.length + (menuItems ? 1 : 0)} />;
 
-  const styles = colors;
-
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-x-auto">
+    <div className="bg-mod-surface-card rounded-2xl border border-mod-surface-border-strong overflow-x-auto">
       <table className="w-full text-left border-collapse">
         <thead>
-          <tr className="bg-gray-50 border-b border-gray-200">
+          <tr className="bg-mod-surface-hover border-b border-mod-surface-border-strong">
             {columns.map((col, idx) => (
               <th 
                 key={idx} 
-                className={`px-8 py-5 text-[10px] font-bold text-gray-400 uppercase tracking-widest ${col.align === 'center' ? 'text-center' : (col.align === 'right' ? 'text-right' : '')} ${col.className || ''} ${col.headerClassName || ''}`}
+                className={`px-8 py-5 text-[10px] font-bold text-mod-surface-text-muted uppercase tracking-widest ${col.align === 'center' ? 'text-center' : (col.align === 'right' ? 'text-right' : '')} ${col.className || ''} ${col.headerClassName || ''}`}
                 style={{ width: col.width }}
               >
                 {col.header}
               </th>
             ))}
-            {menuItems && <th className="px-8 py-5 text-[10px] font-bold text-gray-400 uppercase tracking-widest text-right">Actions</th>}
+            {menuItems && <th className="px-8 py-5 text-[10px] font-bold text-mod-surface-text-muted uppercase tracking-widest text-right">Actions</th>}
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-100">
+        <tbody className="divide-y divide-mod-surface-divider">
           {data.map((item, rowIdx) => (
             <tr 
               key={rowIdx} 
               onClick={() => onRowClick?.(item)}
-              className={`${styles.hoverBg} cursor-pointer transition-colors group`}
+              className={`hover:bg-mod-table-hover-bg cursor-pointer transition-colors group`}
             >
               {columns.map((col, colIdx) => (
                 <td 
@@ -148,7 +142,7 @@ export function StudioTable<T>({
               ))}
               {menuItems && (
                 <td className="px-8 py-5 text-right">
-                  <TableActionMenu items={menuItems(item)} colors={colors} />
+                  <TableActionMenu items={menuItems(item)} />
                 </td>
               )}
             </tr>

@@ -34,7 +34,6 @@ import {
   Zap
 } from 'lucide-react';
 import React, { useState } from 'react';
-import { studioThemeColors } from '../../constants/themeColors';
 import ActionDropdown from '../Common/ActionDropdown';
 
 interface AppEditorProps {
@@ -142,8 +141,7 @@ const AppEditor: React.FC<AppEditorProps> = ({ onBack }) => {
         <div className="flex-1 flex items-center gap-2 pl-4">
 
           <ActionDropdown
-            theme={studioThemeColors.dashboard.homepage}
-            itemHoverClass={studioThemeColors.apps.homepage.card.menuHover}
+            itemHoverClass="hover:bg-mod-hero-badge-bg hover:text-mod-hero-icon-color"
             header={{
               title: 'Select Module',
               onAction: handleCreateModule
@@ -176,8 +174,7 @@ const AppEditor: React.FC<AppEditorProps> = ({ onBack }) => {
           <ChevronRight size={14} className="text-gray-300 mx-0.5" />
 
           <ActionDropdown
-            theme={studioThemeColors.dashboard.homepage}
-            itemHoverClass={studioThemeColors.apps.homepage.card.menuHover}
+            itemHoverClass="hover:bg-mod-hero-badge-bg hover:text-mod-hero-icon-color"
             header={{
               title: 'Module Pages',
               onAction: () => handleCreatePage(activeModuleId)

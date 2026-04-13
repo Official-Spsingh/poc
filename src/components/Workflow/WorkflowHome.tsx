@@ -22,8 +22,7 @@ import {
 } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { Connection, NodeData, ViewType, Workflow, Workspace } from '../../../types';
-import { CombinedTheme, studioThemeColors } from '../../constants/themeColors';
+import { Connection, NodeData, ViewType, Workflow, Workspace } from '../../types';
 import { useRandomTitle, useTypewriter } from '../../hooks/useTypewriter';
 import { makeRequest } from '../../utils/makeRequest';
 import Modal from '../Common/Modal';
@@ -116,7 +115,7 @@ const WorkflowHome: React.FC<WorkflowHomeProps> = ({
     { label: 'Private', value: 'private' }
   ];
 
-  const theme = studioThemeColors.workflow.homepage;
+  // Theme is now driven by CSS variables via data-theme on the container div
 
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -292,12 +291,12 @@ const WorkflowHome: React.FC<WorkflowHomeProps> = ({
 
 
   return (
-    <StudioPageWrapper colors={theme.pageWrapper}>
+    <StudioPageWrapper>
       <StudioHeader
         icon={WorkflowIcon}
         title="Workflow Studio"
         subtitle="Design and automate your business logic"
-        colors={theme.header}
+
         buttons={[
           {
             label: "New Workspace",
@@ -329,7 +328,7 @@ const WorkflowHome: React.FC<WorkflowHomeProps> = ({
           placeholder={placeholderText}
           isGenerating={isGenerating}
           primaryActionLabel="Generate Workflow"
-          colors={theme.hero}
+
           secondaryActions={[
             { 
               label: 'Manual', 
@@ -352,7 +351,7 @@ const WorkflowHome: React.FC<WorkflowHomeProps> = ({
           onSearchChange={setSearchQuery}
           viewMode={viewMode}
           onViewModeChange={setViewMode}
-          colors={theme.toolbar}
+
           filterOptions={filterOptions}
           activeFilter={activeFilter}
           onFilterChange={setActiveFilter}
@@ -368,7 +367,7 @@ const WorkflowHome: React.FC<WorkflowHomeProps> = ({
         ) : error || filteredWorkflows.length === 0 ? (
           <StudioEmptyState
             type={workflows.length === 0 || error ? 'initial' : (searchQuery && activeFilter !== 'all' ? 'both' : (searchQuery ? 'search' : 'filter'))}
-            colors={theme.emptyState}
+
             searchQuery={searchQuery}
             activeFilterLabel={filterOptions.find(o => o.value === activeFilter)?.label}
             onClear={() => {
@@ -391,19 +390,19 @@ const WorkflowHome: React.FC<WorkflowHomeProps> = ({
                   if (wsWorkflows.length === 0) return null;
                   return (
                     <section key={ws.id} className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                      <div className="flex items-center justify-between mb-6 border-b border-gray-100 pb-4">
+                      <div className="flex items-center justify-between mb-6 border-b border-mod-surface-border pb-4">
                         <div className="flex items-center gap-4">
-                          <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm ${theme.card.iconBg} ${theme.card.iconText}`}>
+                          <div className={`w-12 h-12 rounded-2xl flex items-center justify-center bg-mod-card-icon-bg text-mod-card-icon-text`}>
                             <Layers size={24} />
                           </div>
                           <div>
-                            <h3 className="text-lg font-bold text-gray-900">{ws.name}</h3>
-                            <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">{wsWorkflows.length} Pipelines • Created {new Date(ws.createdAt).toLocaleDateString()}</p>
+                            <h3 className="text-lg font-bold text-mod-surface-text-primary">{ws.name}</h3>
+                            <p className="text-[10px] text-mod-surface-text-muted font-bold uppercase tracking-wider">{wsWorkflows.length} Pipelines • Created {new Date(ws.createdAt).toLocaleDateString()}</p>
                           </div>
                         </div>
                         <button
                           onClick={() => handleCreateBlank(ws.id)}
-                          className={`hidden md:flex px-4 py-2 rounded-xl text-xs font-bold transition-all items-center gap-2 border ${theme.statusBadges.active}`}
+                          className={`hidden md:flex px-4 py-2 rounded-xl text-xs font-bold transition-all items-center gap-2 border bg-mod-status-active-bg text-mod-status-active-text border-mod-status-active-border`}
                         >
                           <Plus size={14} /> Add to Workspace
                         </button>
@@ -423,7 +422,7 @@ const WorkflowHome: React.FC<WorkflowHomeProps> = ({
                                 setActiveWorkflowId(wf.id);
                                 setView('workflow-builder');
                               }}
-                              colors={theme.card}
+
                               status={wf.isPublic ? 'Live' : 'Draft'}
                               extraProps={{ isPublic: wf.isPublic, saveResponse: wf.saveResponse }}
                               menuItems={[
@@ -440,7 +439,7 @@ const WorkflowHome: React.FC<WorkflowHomeProps> = ({
                             wsWorkflows.length > 0 && (
                               <StudioTable<Workflow>
                                 data={wsWorkflows}
-                                colors={theme.table}
+
                                 onRowClick={(wf) => {
                                   setActiveWorkflowId(wf.id);
                                   setView('workflow-builder');
@@ -450,10 +449,10 @@ const WorkflowHome: React.FC<WorkflowHomeProps> = ({
                                     header: 'Workflow Name',
                                     render: (wf) => (
                                       <div className="flex items-center gap-3">
-                                        <div className={`w-9 h-9 rounded-lg flex items-center justify-center shadow-sm ${theme.card.iconBg} ${theme.card.iconText}`}>
+                                        <div className={`w-9 h-9 rounded-lg flex items-center justify-center bg-mod-card-icon-bg text-mod-card-icon-text`}>
                                           <WorkflowIcon size={18} />
                                         </div>
-                                        <span className="text-sm font-bold text-gray-900">{wf.name}</span>
+                                        <span className="text-sm font-bold text-mod-surface-text-primary">{wf.name}</span>
                                       </div>
                                     )
                                   },
@@ -462,9 +461,9 @@ const WorkflowHome: React.FC<WorkflowHomeProps> = ({
                                     render: (wf) => (
                                       <div className="flex items-center gap-2">
                                         {wf.isPublic ? (
-                                          <span className={`px-2 py-0.5 text-[9px] font-bold rounded border uppercase tracking-tighter ${theme.statusBadges.published}`}>PUBLIC</span>
+                                          <span className={`px-2 py-0.5 text-[9px] font-bold rounded border uppercase tracking-tighter bg-mod-status-published-bg text-mod-status-published-text border-mod-status-published-border`}>PUBLIC</span>
                                         ) : (
-                                          <span className={`px-2 py-0.5 text-[9px] font-bold rounded border uppercase tracking-tighter ${theme.statusBadges.draft}`}>PRIVATE</span>
+                                          <span className={`px-2 py-0.5 text-[9px] font-bold rounded border uppercase tracking-tighter bg-mod-status-draft-bg text-mod-status-draft-text border-mod-status-draft-border`}>PRIVATE</span>
                                         )}
                                       </div>
                                     )
@@ -472,11 +471,11 @@ const WorkflowHome: React.FC<WorkflowHomeProps> = ({
                                   {
                                     header: "Nodes",
                                     align: "center",
-                                    render: () => <span className="text-xs font-semibold text-gray-600">{Math.floor(Math.random() * 10) + 3}</span>
+                                    render: () => <span className="text-xs font-semibold text-mod-surface-text-secondary">{Math.floor(Math.random() * 10) + 3}</span>
                                   },
                                   {
                                     header: "Last Modified",
-                                    render: (wf) => <span className="text-xs text-gray-400 font-medium">{new Date(wf.lastModified).toLocaleDateString()}</span>
+                                    render: (wf) => <span className="text-xs text-mod-surface-text-muted font-medium">{new Date(wf.lastModified).toLocaleDateString()}</span>
                                   }
                                 ]}
                                 menuItems={(wf) => [
@@ -498,14 +497,14 @@ const WorkflowHome: React.FC<WorkflowHomeProps> = ({
                 {/* Independent Workflows */}
                 {filteredWorkflows.some(w => !w.workspaceId) && (
                   <section className="animate-in fade-in slide-in-from-bottom-4 duration-500 delay-150">
-                    <div className="flex items-center justify-between mb-6 border-b border-gray-100 pb-4">
+                    <div className="flex items-center justify-between mb-6 border-b border-mod-surface-border pb-4">
                       <div className="flex items-center gap-4">
-                        <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm ${theme.card.iconBg} ${theme.card.iconText}`}>
+                        <div className={`w-12 h-12 rounded-2xl flex items-center justify-center bg-mod-card-icon-bg text-mod-card-icon-text`}>
                           <Zap size={24} />
                         </div>
                         <div>
-                          <h3 className="text-xl font-bold text-gray-900">Personal Workflows</h3>
-                          <p className="text-xs text-gray-400 font-medium">Independent pipelines not assigned to any workspace</p>
+                          <h3 className="text-xl font-bold text-mod-surface-text-primary">Personal Workflows</h3>
+                          <p className="text-xs text-mod-surface-text-muted font-medium">Independent pipelines not assigned to any workspace</p>
                         </div>
                       </div>
                     </div>
@@ -526,7 +525,7 @@ const WorkflowHome: React.FC<WorkflowHomeProps> = ({
                                 setActiveWorkflowId(wf.id);
                                 setView('workflow-builder');
                               }}
-                              colors={theme.card}
+
                               status={wf.isPublic ? 'Live' : 'Draft'}
                               extraProps={{ isPublic: wf.isPublic, saveResponse: wf.saveResponse }}
                               menuItems={[
@@ -543,7 +542,7 @@ const WorkflowHome: React.FC<WorkflowHomeProps> = ({
                     ) : (
                       <StudioTable<Workflow>
                         data={filteredWorkflows.filter(w => !w.workspaceId)}
-                        colors={theme.table}
+
                         onRowClick={(wf) => {
                           setActiveWorkflowId(wf.id);
                           setView('workflow-builder');
@@ -553,10 +552,10 @@ const WorkflowHome: React.FC<WorkflowHomeProps> = ({
                             header: 'Workflow Name',
                             render: (wf) => (
                               <div className="flex items-center gap-3">
-                                <div className={`w-9 h-9 rounded-lg flex items-center justify-center shadow-sm ${theme.card.iconBg} ${theme.card.iconText}`}>
+                                <div className={`w-9 h-9 rounded-lg flex items-center justify-center bg-mod-card-icon-bg text-mod-card-icon-text`}>
                                   <WorkflowIcon size={18} />
                                 </div>
-                                <span className="text-sm font-bold text-gray-900">{wf.name}</span>
+                                <span className="text-sm font-bold text-mod-surface-text-primary">{wf.name}</span>
                               </div>
                             )
                           },
@@ -565,9 +564,9 @@ const WorkflowHome: React.FC<WorkflowHomeProps> = ({
                             render: (wf) => (
                               <div className="flex items-center gap-2">
                                 {wf.isPublic ? (
-                                  <span className={`px-2 py-0.5 text-[9px] font-bold rounded border uppercase tracking-tighter ${theme.statusBadges.published}`}>PUBLIC</span>
+                                  <span className={`px-2 py-0.5 text-[9px] font-bold rounded border uppercase tracking-tighter bg-mod-status-published-bg text-mod-status-published-text border-mod-status-published-border`}>PUBLIC</span>
                                 ) : (
-                                  <span className={`px-2 py-0.5 text-[9px] font-bold rounded border uppercase tracking-tighter ${theme.statusBadges.draft}`}>PRIVATE</span>
+                                  <span className={`px-2 py-0.5 text-[9px] font-bold rounded border uppercase tracking-tighter bg-mod-status-draft-bg text-mod-status-draft-text border-mod-status-draft-border`}>PRIVATE</span>
                                 )}
                               </div>
                             )
@@ -575,11 +574,11 @@ const WorkflowHome: React.FC<WorkflowHomeProps> = ({
                           {
                             header: 'Nodes',
                             align: 'center',
-                            render: () => <span className="text-xs font-semibold text-gray-600">{Math.floor(Math.random() * 10) + 3}</span>
+                            render: () => <span className="text-xs font-semibold text-mod-surface-text-secondary">{Math.floor(Math.random() * 10) + 3}</span>
                           },
                           {
                             header: 'Last Modified',
-                            render: (wf) => <span className="text-xs text-gray-400 font-medium">{new Date(wf.lastModified).toLocaleDateString()}</span>
+                            render: (wf) => <span className="text-xs text-mod-surface-text-muted font-medium">{new Date(wf.lastModified).toLocaleDateString()}</span>
                           }
                         ]}
                         menuItems={(wf) => [
@@ -599,7 +598,7 @@ const WorkflowHome: React.FC<WorkflowHomeProps> = ({
 
 
         <StudioTipsSection
-          colors={theme.tipsSection}
+
           tips={[
             { icon: Zap, title: 'Quick Start', description: 'Use the "Create Workflow" button to start a new project. You can choose to build manually or use our AI architect.' },
             { icon: Sparkles, title: 'AI Architect', description: 'Describe your business logic in natural language, and we\'ll generate the entire node structure for you automatically.' },
@@ -612,13 +611,11 @@ const WorkflowHome: React.FC<WorkflowHomeProps> = ({
       <WorkflowLineageModal
         workflow={lineageWorkflow}
         onClose={() => setLineageWorkflow(null)}
-        theme={studioThemeColors.workflow}
       />
 
       <WorkflowInfoModal
         workflow={infoWorkflow}
         onClose={() => setInfoWorkflow(null)}
-        theme={studioThemeColors.workflow}
       />
 
       <WorkflowCreateWorkspaceModal
@@ -627,7 +624,6 @@ const WorkflowHome: React.FC<WorkflowHomeProps> = ({
         workspaceForm={workspaceForm}
         setWorkspaceForm={setWorkspaceForm}
         onAction={handleCreateWorkspace}
-        theme={studioThemeColors.workflow}
       />
 
       <WorkflowSettingsModal
@@ -641,13 +637,11 @@ const WorkflowHome: React.FC<WorkflowHomeProps> = ({
         setFlowSettingsForm={setFlowSettingsForm}
         onAction={handleSaveSettings}
         workspaces={workspaces}
-        theme={studioThemeColors.workflow}
       />
 
       <WorkflowAIArchitectModal
         isAiPromptMode={isAiPromptMode}
         isGenerating={isGenerating}
-        theme={studioThemeColors.workflow}
       />
     </StudioMain>
   </StudioPageWrapper>

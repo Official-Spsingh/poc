@@ -1,7 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { CheckCircle2, Clock, History } from 'lucide-react';
 import React from 'react';
-import { CombinedTheme } from '../../../constants/themeColors';
 
 interface Version {
   id: string;
@@ -18,14 +17,13 @@ interface VersionHistoryPopoverProps {
   setRevertToast: (msg: string) => void;
 }
 
-const VersionHistoryPopover: React.FC<VersionHistoryPopoverProps & { theme: CombinedTheme }> = ({
+const VersionHistoryPopover: React.FC<VersionHistoryPopoverProps> = ({
   isOpen,
   onClose,
   versions,
   selectedVersion,
   setSelectedVersion,
   setRevertToast,
-  theme
 }) => {
   return (
     <AnimatePresence>
@@ -42,10 +40,10 @@ const VersionHistoryPopover: React.FC<VersionHistoryPopoverProps & { theme: Comb
             initial={{ opacity: 0, y: 10, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.95 }}
-            className="absolute top-full right-0 mt-2 w-72 bg-white border border-gray-200 rounded-2xl shadow-2xl z-[10001] overflow-hidden"
+            className="absolute top-full right-0 mt-2 w-72 bg-mod-surface-card border border-mod-surface-border rounded-2xl shadow-2xl z-[10001] overflow-hidden"
           >
-            <div className="p-4 border-b border-gray-100 bg-gray-50/50 flex items-center justify-between">
-              <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest flex items-center gap-1.5"><History size={12} /> Version History</h3>
+            <div className="p-4 border-b border-mod-surface-border bg-mod-surface-skeleton/20 flex items-center justify-between">
+              <h3 className="text-[10px] font-bold text-mod-surface-text-muted uppercase tracking-widest flex items-center gap-1.5"><History size={12} /> Version History</h3>
             </div>
             <div className="p-2 space-y-1 max-h-[300px] overflow-y-auto custom-scrollbar">
               {versions.map((v) => (
@@ -57,15 +55,15 @@ const VersionHistoryPopover: React.FC<VersionHistoryPopoverProps & { theme: Comb
                     setRevertToast(`Reverted workflow to ${v.label}`);
                     setTimeout(() => setRevertToast(''), 3000);
                   }}
-                  className={`w-full flex flex-col items-start p-3 rounded-xl transition-all border ${selectedVersion === v.label ? `${theme.builder.runPanel.headerIconBg} ${theme.builder.runPanel.headerIconBg.replace('bg-', 'border-').replace('50', '200')}` : 'bg-white border-transparent hover:bg-gray-50 hover:border-gray-100'}`}
+                  className={`w-full flex flex-col items-start p-3 rounded-xl transition-all border ${selectedVersion === v.label ? 'bg-mod-hero-badge-bg border-mod-hero-icon-color/20' : 'bg-transparent border-transparent hover:bg-mod-surface-hover hover:border-mod-surface-border'}`}
                 >
                   <div className="flex items-center justify-between w-full mb-1">
-                    <span className={`text-xs font-bold ${selectedVersion === v.label ? theme.builder.runPanel.tabActiveText : 'text-gray-800'}`}>
+                    <span className={`text-xs font-bold ${selectedVersion === v.label ? 'text-mod-hero-icon-color' : 'text-mod-surface-text-primary'}`}>
                       {v.label}
                     </span>
-                    {selectedVersion === v.label && <CheckCircle2 size={14} className={theme.builder.runPanel.headerIconText} />}
+                    {selectedVersion === v.label && <CheckCircle2 size={14} className="text-mod-hero-icon-color" />}
                   </div>
-                  <span className="text-[10px] text-gray-400 flex items-center gap-1"><Clock size={10} /> {v.date}</span>
+                  <span className="text-[10px] text-mod-surface-text-muted flex items-center gap-1"><Clock size={10} /> {v.date}</span>
                 </button>
               ))}
             </div>

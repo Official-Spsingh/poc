@@ -10,7 +10,7 @@ import {
   Trash2
 } from 'lucide-react';
 import React, { useState } from 'react';
-import { studioThemeColors } from '../../constants/themeColors';
+
 import { useRandomTitle, useTypewriter } from '../../hooks/useTypewriter';
 import StudioCard from '../Common/StudioCard';
 import StudioEmptyState from '../Common/StudioEmptyState';
@@ -57,7 +57,7 @@ const VibeHome: React.FC<VibeHomeProps> = ({ onStartProject, onOpenProject, proj
     { label: 'Recent', value: 'recent' }
   ];
   
-  const theme = studioThemeColors.vibecoding.homepage;
+  // Theme is now driven by CSS variables via data-theme on the container div
   const heroTitle = useRandomTitle(VIBE_HERO_TITLES);
   const placeholderText = useTypewriter(VIBE_PLACEHOLDERS);
 
@@ -73,12 +73,12 @@ const VibeHome: React.FC<VibeHomeProps> = ({ onStartProject, onOpenProject, proj
   });
 
   return (
-    <StudioPageWrapper colors={theme.pageWrapper}>
+    <StudioPageWrapper>
       <StudioHeader
         icon={Sparkles}
         title="Vibe Studio"
         subtitle="Real-time AI application synthesis"
-        colors={theme.header}
+
         buttons={[
           {
             label: "Build Experiment",
@@ -102,7 +102,7 @@ const VibeHome: React.FC<VibeHomeProps> = ({ onStartProject, onOpenProject, proj
           placeholder={placeholderText}
           primaryActionLabel="Synthesize Vibe"
           primaryActionIcon={Rocket}
-          colors={theme.hero}
+
           secondaryActions={[
             { 
               label: 'Manual', 
@@ -125,7 +125,7 @@ const VibeHome: React.FC<VibeHomeProps> = ({ onStartProject, onOpenProject, proj
           onSearchChange={setSearchQuery}
           viewMode={viewMode}
           onViewModeChange={setViewMode}
-          colors={theme.toolbar}
+
           filterOptions={filterOptions}
           activeFilter={activeFilter}
           onFilterChange={setActiveFilter}
@@ -134,7 +134,7 @@ const VibeHome: React.FC<VibeHomeProps> = ({ onStartProject, onOpenProject, proj
         {projects.length === 0 ? (
           <StudioEmptyState
             type="initial"
-            colors={theme.emptyState}
+
             actionLabel="Build Experiment"
             onAction={() => onStartProject()}
             customTitle="Manifest your vision in Vibe"
@@ -143,7 +143,7 @@ const VibeHome: React.FC<VibeHomeProps> = ({ onStartProject, onOpenProject, proj
         ) : filteredProjects.length === 0 ? (
           <StudioEmptyState
             type={searchQuery && activeFilter !== 'all' ? 'both' : (searchQuery ? 'search' : 'filter')}
-            colors={theme.emptyState}
+
             searchQuery={searchQuery}
             activeFilterLabel={filterOptions.find(o => o.value === activeFilter)?.label}
             onClear={() => {
@@ -163,7 +163,7 @@ const VibeHome: React.FC<VibeHomeProps> = ({ onStartProject, onOpenProject, proj
                     showDescription={false}
                     lastUpdated={project.lastEdited}
                     onClick={() => onOpenProject(project.id)}
-                    colors={theme.card}
+
                     status="Live"
                     menuItems={[
                       { label: 'Edit Project', icon: Edit2, onClick: () => onOpenProject(project.id) },
@@ -177,19 +177,19 @@ const VibeHome: React.FC<VibeHomeProps> = ({ onStartProject, onOpenProject, proj
           ) : (
             <StudioTable<Project>
               data={filteredProjects}
-              colors={theme.table}
+
               onRowClick={(project) => onOpenProject(project.id)}
               columns={[
                 {
                   header: 'Project Name',
                   render: (project) => (
                     <div className="flex items-center gap-4">
-                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-sm ${theme.card.iconBg} ${theme.card.iconText}`}>
+                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center bg-mod-card-icon-bg text-mod-card-icon-text`}>
                         <Rocket size={20} />
                       </div>
                       <div>
-                        <p className="text-sm font-bold text-gray-900">{project.name}</p>
-                        <p className="text-[10px] text-gray-500 font-medium">React Prototype • Tailwind CSS</p>
+                        <p className="text-sm font-bold text-mod-surface-text-primary">{project.name}</p>
+                        <p className="text-[10px] text-mod-surface-text-secondary font-medium">React Prototype • Tailwind CSS</p>
                       </div>
                     </div>
                   )
@@ -197,14 +197,14 @@ const VibeHome: React.FC<VibeHomeProps> = ({ onStartProject, onOpenProject, proj
                 {
                   header: 'Status',
                   render: () => (
-                    <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${theme.statusBadges.published || 'bg-green-50 text-green-600 border-green-100'}`}>
+                    <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border bg-mod-status-published-bg text-mod-status-published-text border-mod-status-published-border`}>
                       Live
                     </span>
                   )
                 },
                 {
                   header: 'Last Edited',
-                  render: (project) => <span className="text-xs text-gray-500 font-medium">{project.lastEdited}</span>
+                  render: (project) => <span className="text-xs text-mod-surface-text-secondary font-medium">{project.lastEdited}</span>
                 }
               ]}
               menuItems={(project) => [
@@ -217,7 +217,7 @@ const VibeHome: React.FC<VibeHomeProps> = ({ onStartProject, onOpenProject, proj
           )
         )}
         <StudioTipsSection
-          colors={theme.tipsSection}
+
           tips={[
             { icon: Sparkles, title: 'Instant Prototyping', description: 'Describe your vision in natural language and get a production-grade React prototype generated instantly.' },
             { icon: Rocket, title: 'Live Preview', description: 'See your application come to life in real-time with hot-reloading and interactive previews as you iterate.' },

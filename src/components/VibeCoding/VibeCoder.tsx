@@ -370,8 +370,8 @@ const VibeCoder: React.FC<VibeCoderProps> = ({ onBack, initialPrompt, projectId,
   if (!activeProject) return null;
 
   return (
-    <div className="flex h-screen w-full bg-slate-50 text-slate-900 overflow-hidden relative font-sans">
-      <AIDrawer 
+    <div className="flex h-screen w-full bg-mod-surface-bg text-mod-surface-text-primary overflow-hidden relative font-sans">
+      <AIDrawer
         isOpen={true}
         onClose={onBack}
         closeIcon="back"
@@ -383,63 +383,63 @@ const VibeCoder: React.FC<VibeCoderProps> = ({ onBack, initialPrompt, projectId,
         width={450}
         title={activeProject.name}
         status="Vibe Engine Online"
-        themeColor="violet"
+        themeColor="indigo"
         placeholder="Iterate on this vibe..."
       />
 
-      <main className="flex-1 flex flex-col relative overflow-hidden h-full z-10 bg-slate-50 border-l border-slate-300 shadow-[-10px_0_30px_rgba(0,0,0,0.05)]">
-        {/* Top Header - Spans full width / Matches AppEditor styling */}
-        <header className="h-16 bg-white border-b border-gray-200 flex items-center pr-6 pl-10 justify-between z-30 shadow-sm shrink-0">
-           
+      <main className="flex-1 flex flex-col relative overflow-hidden h-full z-10 bg-mod-surface-bg border-l border-mod-surface-border-strong shadow-[-10px_0_30px_rgba(0,0,0,0.05)]">
+        {/* Top Header - Spans full width */}
+        <header className="h-16 bg-mod-surface-card border-b border-mod-surface-border flex items-center pr-6 pl-10 justify-between z-30 shadow-sm shrink-0">
+
            {/* Left Section - Mode Controls */}
-           <div className="flex bg-gray-100/80 p-1 rounded-xl border border-gray-100 shadow-inner">
+           <div className="flex bg-mod-surface-border/80 p-1 rounded-xl border border-mod-surface-border shadow-inner">
              <button
                onClick={() => setActiveTab('preview')}
-               className={`py-1.5 transition-all flex items-center justify-center rounded-lg ${activeTab === 'preview' ? 'bg-white text-indigo-600 shadow-sm px-4' : 'text-gray-400 hover:text-gray-600 px-4'}`}
+               className={`py-1.5 transition-all flex items-center justify-center rounded-lg ${activeTab === 'preview' ? 'bg-mod-surface-card text-mod-toolbar-active-text shadow-sm px-4' : 'text-mod-surface-text-muted hover:text-mod-surface-text-secondary px-4'}`}
              >
                <span className="text-xs font-bold">Live Visual</span>
              </button>
              <button
                onClick={() => setActiveTab('code')}
-               className={`py-1.5 transition-all flex items-center justify-center rounded-lg ${activeTab === 'code' ? 'bg-white text-indigo-600 shadow-sm px-4' : 'text-gray-400 hover:text-gray-600 px-4'}`}
+               className={`py-1.5 transition-all flex items-center justify-center rounded-lg ${activeTab === 'code' ? 'bg-mod-surface-card text-mod-toolbar-active-text shadow-sm px-4' : 'text-mod-surface-text-muted hover:text-mod-surface-text-secondary px-4'}`}
              >
                <span className="text-xs font-bold">Project Source</span>
              </button>
            </div>
-           
+
            {/* Right Section - Viewport & Deploy */}
            <div className="flex items-center justify-end gap-3">
-              <div className="flex bg-gray-100/80 p-1 rounded-xl border border-gray-100 shadow-inner mr-2">
-                <button 
-                  onClick={() => setDevice('desktop')} 
-                  className={`p-1.5 rounded-lg transition-all flex items-center justify-center ${device === 'desktop' ? 'bg-white text-indigo-600 shadow-sm px-3' : 'text-gray-400 hover:text-gray-600 px-2'}`}
+              <div className="flex bg-mod-surface-border/80 p-1 rounded-xl border border-mod-surface-border shadow-inner mr-2">
+                <button
+                  onClick={() => setDevice('desktop')}
+                  className={`p-1.5 rounded-lg transition-all flex items-center justify-center ${device === 'desktop' ? 'bg-mod-surface-card text-mod-toolbar-active-text shadow-sm px-3' : 'text-mod-surface-text-muted hover:text-mod-surface-text-secondary px-2'}`}
                   title="Desktop View"
                 >
                   <Monitor size={14} />
                 </button>
-                <button 
-                  onClick={() => setDevice('tablet')} 
-                  className={`p-1.5 rounded-lg transition-all flex items-center justify-center ${device === 'tablet' ? 'bg-white text-indigo-600 shadow-sm px-3' : 'text-gray-400 hover:text-gray-600 px-2'}`}
+                <button
+                  onClick={() => setDevice('tablet')}
+                  className={`p-1.5 rounded-lg transition-all flex items-center justify-center ${device === 'tablet' ? 'bg-mod-surface-card text-mod-toolbar-active-text shadow-sm px-3' : 'text-mod-surface-text-muted hover:text-mod-surface-text-secondary px-2'}`}
                   title="Tablet View"
                 >
                   <Tablet size={14} />
                 </button>
-                <button 
-                  onClick={() => setDevice('mobile')} 
-                  className={`p-1.5 rounded-lg transition-all flex items-center justify-center ${device === 'mobile' ? 'bg-white text-indigo-600 shadow-sm px-3' : 'text-gray-400 hover:text-gray-600 px-2'}`}
+                <button
+                  onClick={() => setDevice('mobile')}
+                  className={`p-1.5 rounded-lg transition-all flex items-center justify-center ${device === 'mobile' ? 'bg-mod-surface-card text-mod-toolbar-active-text shadow-sm px-3' : 'text-mod-surface-text-muted hover:text-mod-surface-text-secondary px-2'}`}
                   title="Mobile View"
                 >
                   <Smartphone size={14} />
                 </button>
               </div>
 
-              <button className="px-5 py-2 bg-indigo-600 text-white rounded-xl text-xs font-bold shadow-[0_2px_10px_rgba(79,70,229,0.2)] hover:bg-indigo-700 transition-all flex items-center gap-2 active:scale-95">
+              <button className="px-5 py-2 bg-mod-header-btn-bg text-mod-header-btn-text rounded-xl text-xs font-bold mod-header-btn-shadow hover:bg-mod-hero-btn-hover transition-all flex items-center gap-2 active:scale-95">
                 <Rocket size={14} /> DEPLOY STUDIO
               </button>
            </div>
         </header>
 
-        <div className="flex-1 overflow-hidden relative flex flex-col bg-slate-100">
+        <div className="flex-1 overflow-hidden relative flex flex-col bg-mod-surface-border">
            <AnimatePresence mode="wait">
               {activeTab === 'preview' ? (
                 <CodePreview

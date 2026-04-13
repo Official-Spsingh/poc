@@ -1,4 +1,11 @@
 @import "tailwindcss";
+@import "./themes/global-themes.css";
+@import "./themes/homepage-themes.css";
+@import "./themes/module-themes.css";
+
+/* ==========================================
+   BASE STYLES
+   ========================================== */
 
 @layer base {
   body {

@@ -13,8 +13,8 @@ import {
   Zap
 } from 'lucide-react';
 import React, { useState } from 'react';
-import { Agent } from '../../../types';
-import { studioThemeColors } from '../../constants/themeColors';
+import { Agent } from '../../types';
+
 import { useRandomTitle, useTypewriter } from '../../hooks/useTypewriter';
 import StudioCard, { StudioCardSkeleton } from '../Common/StudioCard';
 import StudioEmptyState from '../Common/StudioEmptyState';
@@ -72,7 +72,7 @@ const AgentHome: React.FC<AgentHomeProps> = ({ onSelectAgent, onCreateAgent }) =
     }, 3000);
   };
 
-  const theme = studioThemeColors.agents.homepage;
+  // Theme is now driven by CSS variables via data-theme on the container div
 
   const [agents] = useState<Agent[]>([
     { id: 'agent-1', name: 'Customer Support AI', description: 'Handles tier 1 support queries and ticket routing.', lastModified: new Date().toISOString(), status: 'active', type: 'support' },
@@ -100,20 +100,20 @@ const AgentHome: React.FC<AgentHomeProps> = ({ onSelectAgent, onCreateAgent }) =
 
   const getStatusColor = (status: Agent['status']) => {
     switch (status) {
-      case 'active': return theme.statusBadges.active;
-      case 'training': return theme.statusBadges.training || theme.statusBadges.active;
-      case 'idle': return theme.statusBadges.idle || theme.statusBadges.draft;
-      default: return theme.statusBadges.draft;
+      case 'active': return 'bg-mod-status-active-bg text-mod-status-active-text border-mod-status-active-border';
+      case 'training': return 'bg-mod-status-training-bg text-mod-status-training-text border-mod-status-training-border';
+      case 'idle': return 'bg-mod-status-idle-bg text-mod-status-idle-text border-mod-status-idle-border';
+      default: return 'bg-mod-status-draft-bg text-mod-status-draft-text border-mod-status-draft-border';
     }
   };
 
   return (
-    <StudioPageWrapper colors={theme.pageWrapper}>
+    <StudioPageWrapper>
       <StudioHeader
         icon={Bot}
         title="AI Agent Studio"
         subtitle="Deploy and manage intelligent autonomous agents"
-        colors={theme.header}
+
         buttons={[
           {
             label: "Configure from Scratch",
@@ -137,7 +137,7 @@ const AgentHome: React.FC<AgentHomeProps> = ({ onSelectAgent, onCreateAgent }) =
           placeholder={placeholderText}
           isGenerating={isGenerating}
           primaryActionLabel="Generate Intelligence"
-          colors={theme.hero}
+
           secondaryActions={[
             { 
               label: 'Manual', 
@@ -153,7 +153,7 @@ const AgentHome: React.FC<AgentHomeProps> = ({ onSelectAgent, onCreateAgent }) =
           onSearchChange={setSearchQuery}
           viewMode={viewMode}
           onViewModeChange={setViewMode}
-          colors={theme.toolbar}
+
           filterOptions={filterOptions}
           activeFilter={activeFilter}
           onFilterChange={setActiveFilter}
@@ -169,7 +169,7 @@ const AgentHome: React.FC<AgentHomeProps> = ({ onSelectAgent, onCreateAgent }) =
         ) : error || filteredAgents.length === 0 ? (
           <StudioEmptyState
             type={agents.length === 0 || error ? 'initial' : (searchQuery && activeFilter !== 'all' ? 'both' : (searchQuery ? 'search' : 'filter'))}
-            colors={theme.emptyState}
+
             searchQuery={searchQuery}
             activeFilterLabel={filterOptions.find(o => o.value === activeFilter)?.label}
             onClear={() => {
@@ -192,7 +192,7 @@ const AgentHome: React.FC<AgentHomeProps> = ({ onSelectAgent, onCreateAgent }) =
                 showDescription={true}
                 lastUpdated={new Date(agent.lastModified).toLocaleDateString()}
                 onClick={() => onSelectAgent(agent.id)}
-                colors={theme.card}
+
                 status={agent.status === 'active' ? 'PUBLISHED' : (agent.status === 'training' ? 'TRAINING' : 'IDLE')}
                 menuItems={[
                   { label: 'Edit Agent', icon: Edit2, onClick: () => onSelectAgent(agent.id) },
@@ -206,26 +206,26 @@ const AgentHome: React.FC<AgentHomeProps> = ({ onSelectAgent, onCreateAgent }) =
         ) : (
           <StudioTable<Agent>
             data={filteredAgents}
-            colors={theme.table}
+
             onRowClick={(agent) => onSelectAgent(agent.id)}
             columns={[
               {
                 header: 'Agent Identity',
                 render: (agent) => (
                   <div className="flex items-center gap-4">
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-sm ${theme.card.iconBg} ${theme.card.iconText}`}>
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center bg-mod-card-icon-bg text-mod-card-icon-text`}>
                       <Bot size={20} />
                     </div>
                     <div>
-                      <p className="text-sm font-bold text-gray-900">{agent.name}</p>
-                      <p className="text-[10px] text-gray-500 truncate max-w-[300px]">{agent.description}</p>
+                      <p className="text-sm font-bold text-mod-surface-text-primary">{agent.name}</p>
+                      <p className="text-[10px] text-mod-surface-text-secondary truncate max-w-[300px]">{agent.description}</p>
                     </div>
                   </div>
                 )
               },
               {
                 header: 'Type',
-                render: (agent) => <span className="text-xs font-medium text-gray-600 capitalize">{agent.type}</span>
+                render: (agent) => <span className="text-xs font-medium text-mod-surface-text-secondary capitalize">{agent.type}</span>
               },
               {
                 header: 'Status',
@@ -237,7 +237,7 @@ const AgentHome: React.FC<AgentHomeProps> = ({ onSelectAgent, onCreateAgent }) =
               },
               {
                 header: 'Last Activity',
-                render: (agent) => <span className="text-xs text-gray-500 font-medium">{new Date(agent.lastModified).toLocaleString()}</span>
+                render: (agent) => <span className="text-xs text-mod-surface-text-secondary font-medium">{new Date(agent.lastModified).toLocaleString()}</span>
               }
             ]}
             menuItems={(agent) => [
@@ -249,7 +249,7 @@ const AgentHome: React.FC<AgentHomeProps> = ({ onSelectAgent, onCreateAgent }) =
           />
         )}
         <StudioTipsSection
-          colors={theme.tipsSection}
+
           tips={[
             { icon: Bot, title: 'Quick Setup', description: 'Use the "Configure from Scratch" button to create a new agent, or describe your needs above for AI generation.' },
             { icon: Brain, title: 'Smart Training', description: 'Upload documents, connect APIs, or define rules to train your agent on your specific domain knowledge.' },
