@@ -26,7 +26,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, maxWidt
             <X size={18} />
           </button>
         </div>
-        <div className="p-6 custom-scrollbar max-h-[85vh] overflow-y-auto bg-mod-surface-card">
+        <div className="p-6 scrollbar-custom max-h-[85vh] overflow-y-auto bg-mod-surface-card">
           {children}
         </div>
       </div>

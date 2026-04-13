@@ -77,7 +77,7 @@ const DataSection: React.FC<DataSectionProps> = () => {
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-2 custom-scrollbar">
+        <div className="flex-1 overflow-y-auto p-2 scrollbar-custom">
           <div className="space-y-1">
             {/* Database Node */}
             <div>
@@ -187,7 +187,7 @@ const DataSection: React.FC<DataSectionProps> = () => {
         </div>
 
         {/* Grid */}
-        <div className="flex-1 overflow-auto custom-scrollbar">
+        <div className="flex-1 overflow-auto scrollbar-custom">
           <table className="w-full border-collapse text-left">
             <thead className="sticky top-0 bg-mod-surface-card z-10">
               <tr className="border-b border-mod-surface-border-strong">
@@ -277,7 +277,7 @@ const DataSection: React.FC<DataSectionProps> = () => {
           <h2 className={`text-sm font-bold text-mod-card-status-text`}>Column Details</h2>
         </header>
         
-        <div className="flex-1 overflow-y-auto p-6 custom-scrollbar">
+        <div className="flex-1 overflow-y-auto p-6 scrollbar-custom">
           <div className="space-y-8">
             {/* Selected Column Info */}
             <div>

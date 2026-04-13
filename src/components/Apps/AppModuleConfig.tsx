@@ -129,7 +129,7 @@ const AppModuleConfig: React.FC<AppModuleConfigProps> = ({
             </button>
           </div>
           
-          <div className="space-y-3 flex-1 overflow-y-auto custom-scrollbar pr-1">
+          <div className="space-y-3 flex-1 overflow-y-auto scrollbar-custom pr-1">
             {modules.map(mod => (
               <button 
                 key={mod.id}
@@ -172,7 +172,7 @@ const AppModuleConfig: React.FC<AppModuleConfigProps> = ({
         </aside>
 
         {/* Main Content - Module Config */}
-        <main className="flex-1 p-8 lg:p-12 overflow-y-auto custom-scrollbar bg-white">
+        <main className="flex-1 p-8 lg:p-12 overflow-y-auto scrollbar-custom bg-white">
           <div className="max-w-3xl mx-auto space-y-10">
             <header className="flex items-center justify-between">
               <div>

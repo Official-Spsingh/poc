@@ -87,7 +87,7 @@ const WorkflowBuilderRunPanel: React.FC<WorkflowBuilderRunPanelProps> = ({
           </div>
 
           {/* Content */}
-          <div className="flex-1 overflow-auto custom-scrollbar">
+          <div className="flex-1 overflow-auto scrollbar-custom">
             {isNodeRunning ? (
               <div className="flex items-center justify-center h-full gap-3">
                 <Loader2 size={20} className="animate-spin text-mod-hero-icon-color" />
@@ -128,7 +128,7 @@ const WorkflowBuilderRunPanel: React.FC<WorkflowBuilderRunPanelProps> = ({
                 {/* JSON Tab */}
                 {nodeRunActiveTab === 'json' && (
                   <div className="p-4">
-                    <pre className="bg-[#0f172a] text-[#e2e8f0] text-xs font-mono p-5 rounded-xl leading-relaxed overflow-auto max-h-[200px] custom-scrollbar">
+                    <pre className="bg-[#0f172a] text-[#e2e8f0] text-xs font-mono p-5 rounded-xl leading-relaxed overflow-auto max-h-[200px] scrollbar-custom">
                       {JSON.stringify(nodeRunResult.jsonData, null, 2)}
                     </pre>
                   </div>

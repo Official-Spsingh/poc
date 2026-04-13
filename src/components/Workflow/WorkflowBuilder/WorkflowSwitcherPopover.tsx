@@ -54,7 +54,7 @@ const WorkflowSwitcherPopover: React.FC<WorkflowSwitcherPopoverProps> = ({
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
-          <div className="space-y-1 max-h-[400px] overflow-y-auto custom-scrollbar pr-1">
+          <div className="space-y-1 max-h-[400px] overflow-y-auto scrollbar-custom pr-1">
             {workflows
               .filter(w => w.name.toLowerCase().includes(searchQuery.toLowerCase()))
               .map(wf => (

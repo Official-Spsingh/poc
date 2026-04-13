@@ -82,7 +82,7 @@ const WorkflowBuilderNodePropertiesDrawer: React.FC<WorkflowBuilderNodePropertie
               </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-6 space-y-10 custom-scrollbar bg-mod-surface-bg">
+            <div className="flex-1 overflow-y-auto p-6 space-y-10 scrollbar-custom bg-mod-surface-bg">
               <section className="space-y-4">
                 <div className="flex items-center gap-2 pb-2 border-b border-mod-surface-border">
                   <Settings2 size={14} className="text-mod-surface-text-muted" />

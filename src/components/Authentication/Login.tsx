@@ -256,7 +256,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, onForgotPassword }) => {
       </div>
 
       {/* Right Side - Auth Form */}
-      <div className="flex-1 flex flex-col items-center justify-center lg:justify-center bg-auth-card-bg relative overflow-y-auto lg:overflow-hidden scrollbar-none">
+      <div className="flex-1 flex flex-col items-center justify-center lg:justify-center bg-auth-card-bg relative overflow-y-auto lg:overflow-hidden scrollbar-hidden">
         <motion.div 
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -444,7 +444,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, onForgotPassword }) => {
                 </div>
 
                 <form onSubmit={handleOrgSubmit} className="space-y-6">
-                  <div className="space-y-3 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
+                  <div className="space-y-3 max-h-[300px] overflow-y-auto pr-2 scrollbar-custom">
                     {organizations.map((org) => (
                       <div
                         key={org.id}

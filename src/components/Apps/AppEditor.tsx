@@ -275,7 +275,7 @@ const AppEditor: React.FC<AppEditorProps> = ({ onBack }) => {
             </div>
           </div>
 
-          <div className="flex-1 overflow-y-auto custom-scrollbar px-3 space-y-6 pb-6">
+          <div className="flex-1 overflow-y-auto scrollbar-custom px-3 space-y-6 pb-6">
             {componentCategories.map((cat) => (
               <div key={cat.name}>
                 <h3 className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-3 px-1">{cat.name}</h3>
@@ -389,7 +389,7 @@ const AppEditor: React.FC<AppEditorProps> = ({ onBack }) => {
             </button>
           </div>
 
-          <div className="flex-1 overflow-y-auto custom-scrollbar p-4 space-y-6">
+          <div className="flex-1 overflow-y-auto scrollbar-custom p-4 space-y-6">
             <section>
               <h3 className="text-[10px] font-bold text-gray-800 uppercase tracking-widest mb-4">GENERAL & LOGIC</h3>
               <div className="space-y-4">

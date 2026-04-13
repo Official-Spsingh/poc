@@ -20,12 +20,15 @@
    GLOBAL VARS (auth, sidebar, dashboard, shell) live in: global-themes.css
    ========================================== */
 
-/* ==========================================
-   GLOBAL THEME: light-blue  (default blue accent)
-   ========================================== */
+/* LIGHT SURFACE (Default for 7 themes) */
 :root,
-[data-theme="light-blue"] {
-  /* ===== SHARED SURFACE ===== */
+[data-theme="light-blue"],
+[data-theme="light-slate"],
+[data-theme="light-teal"],
+[data-theme="light-sky"],
+[data-theme="light-violet"],
+[data-theme="light-purple"],
+[data-theme="light-indigo"] {
   --mod-surface-bg: #f8fafc;
   --mod-surface-card: #ffffff;
   --mod-surface-card-hover: #ffffff;
@@ -42,32 +45,8 @@
   --mod-surface-divider: #f9fafb;
 }
 
-/* ==========================================
-   GLOBAL THEME: light-slate  (neutral slate accent)
-   ========================================== */
-[data-theme="light-slate"] {
-  /* ===== SHARED SURFACE ===== */
-  --mod-surface-bg: #f8fafc;
-  --mod-surface-card: #ffffff;
-  --mod-surface-card-hover: #ffffff;
-  --mod-surface-border: #f3f4f6;
-  --mod-surface-border-strong: #e5e7eb;
-  --mod-surface-text-primary: #111827;
-  --mod-surface-text-secondary: #6b7280;
-  --mod-surface-text-muted: #9ca3af;
-  --mod-surface-input-bg: #ffffff;
-  --mod-surface-input-border: #e5e7eb;
-  --mod-surface-hover: #f9fafb;
-  --mod-surface-skeleton: #f3f4f6;
-  --mod-surface-skeleton-light: #f9fafb;
-  --mod-surface-divider: #f9fafb;
-}
-
-/* ==========================================
-   GLOBAL THEME: dark-blue  (dark mode)
-   ========================================== */
+/* DARK SURFACE (Override for dark mode) */
 [data-theme="dark-blue"] {
-  /* ===== SHARED SURFACE ===== */
   --mod-surface-bg: #0f172a;
   --mod-surface-card: #1e293b;
   --mod-surface-card-hover: #1e293b;
@@ -82,116 +61,6 @@
   --mod-surface-skeleton: #334155;
   --mod-surface-skeleton-light: #1e293b;
   --mod-surface-divider: #334155;
-}
-
-/* ==========================================
-   MODULE-SPECIFIC: light-teal
-   Used by: Workflow (default accent)
-   ========================================== */
-[data-theme="light-teal"] {
-  /* ===== SHARED SURFACE ===== */
-  --mod-surface-bg: #f8fafc;
-  --mod-surface-card: #ffffff;
-  --mod-surface-card-hover: #ffffff;
-  --mod-surface-border: #f3f4f6;
-  --mod-surface-border-strong: #e5e7eb;
-  --mod-surface-text-primary: #111827;
-  --mod-surface-text-secondary: #6b7280;
-  --mod-surface-text-muted: #9ca3af;
-  --mod-surface-input-bg: #ffffff;
-  --mod-surface-input-border: #e5e7eb;
-  --mod-surface-hover: #f9fafb;
-  --mod-surface-skeleton: #f3f4f6;
-  --mod-surface-skeleton-light: #f9fafb;
-  --mod-surface-divider: #f9fafb;
-}
-
-/* ==========================================
-   MODULE-SPECIFIC: light-sky
-   Used by: Apps (default accent)
-   ========================================== */
-[data-theme="light-sky"] {
-  /* ===== SHARED SURFACE ===== */
-  --mod-surface-bg: #f8fafc;
-  --mod-surface-card: #ffffff;
-  --mod-surface-card-hover: #ffffff;
-  --mod-surface-border: #f3f4f6;
-  --mod-surface-border-strong: #e5e7eb;
-  --mod-surface-text-primary: #111827;
-  --mod-surface-text-secondary: #6b7280;
-  --mod-surface-text-muted: #9ca3af;
-  --mod-surface-input-bg: #ffffff;
-  --mod-surface-input-border: #e5e7eb;
-  --mod-surface-hover: #f9fafb;
-  --mod-surface-skeleton: #f3f4f6;
-  --mod-surface-skeleton-light: #f9fafb;
-  --mod-surface-divider: #f9fafb;
-}
-
-/* ==========================================
-   MODULE-SPECIFIC: light-violet
-   Used by: Agents (default accent)
-   ========================================== */
-[data-theme="light-violet"] {
-  /* ===== SHARED SURFACE ===== */
-  --mod-surface-bg: #f8fafc;
-  --mod-surface-card: #ffffff;
-  --mod-surface-card-hover: #ffffff;
-  --mod-surface-border: #f3f4f6;
-  --mod-surface-border-strong: #e5e7eb;
-  --mod-surface-text-primary: #111827;
-  --mod-surface-text-secondary: #6b7280;
-  --mod-surface-text-muted: #9ca3af;
-  --mod-surface-input-bg: #ffffff;
-  --mod-surface-input-border: #e5e7eb;
-  --mod-surface-hover: #f9fafb;
-  --mod-surface-skeleton: #f3f4f6;
-  --mod-surface-skeleton-light: #f9fafb;
-  --mod-surface-divider: #f9fafb;
-}
-
-/* ==========================================
-   MODULE-SPECIFIC: light-purple
-   Used by: Agents (alternate accent)
-   ========================================== */
-[data-theme="light-purple"] {
-  /* ===== SHARED SURFACE ===== */
-  --mod-surface-bg: #f8fafc;
-  --mod-surface-card: #ffffff;
-  --mod-surface-card-hover: #ffffff;
-  --mod-surface-border: #f3f4f6;
-  --mod-surface-border-strong: #e5e7eb;
-  --mod-surface-text-primary: #111827;
-  --mod-surface-text-secondary: #6b7280;
-  --mod-surface-text-muted: #9ca3af;
-  --mod-surface-input-bg: #ffffff;
-  --mod-surface-input-border: #e5e7eb;
-  --mod-surface-hover: #f9fafb;
-  --mod-surface-skeleton: #f3f4f6;
-  --mod-surface-skeleton-light: #f9fafb;
-  --mod-surface-divider: #f9fafb;
-}
-
-/* ==========================================
-   MODULE-SPECIFIC: light-indigo
-   Used by: VibeCoding (default accent)
-   ========================================== */
-[data-theme="light-indigo"] {
-  /* ===== SHARED SURFACE ===== */
-  --mod-surface-bg: #f8fafc;
-  --mod-surface-card: #ffffff;
-  --mod-surface-card-hover: #ffffff;
-  --mod-surface-border: #f3f4f6;
-  --mod-surface-border-strong: #e5e7eb;
-  --mod-surface-text-primary: #111827;
-  --mod-surface-text-secondary: #6b7280;
-  --mod-surface-text-muted: #9ca3af;
-  --mod-surface-input-bg: #ffffff;
-  --mod-surface-input-border: #e5e7eb;
-  --mod-surface-hover: #f9fafb;
-  --mod-surface-skeleton: #f3f4f6;
-  --mod-surface-skeleton-light: #f9fafb;
-  --mod-surface-divider: #f9fafb;
 }
 
 
@@ -245,41 +114,41 @@
 
 /* Hero gradient glow behind input */
 .mod-hero-gradient-glow {
-  background: linear-gradient(to right, var(--mod-hero-gradient-from), var(--mod-hero-gradient-to));
+  background: linear-gradient(to right, var(--mod-hero-gradient-from, #1d4ed8), var(--mod-hero-gradient-to, #0369a1));
 }
 
 /* Hero shadow on input container */
 .mod-hero-input-shadow {
-  box-shadow: 0 2px 8px -2px var(--mod-hero-shadow);
+  box-shadow: 0 2px 8px -2px var(--mod-hero-shadow, rgba(239, 246, 255, 0.05));
 }
 
 /* Hero button shadow */
 .mod-hero-btn-shadow {
-  box-shadow: 0 2px 4px -1px var(--mod-hero-btn-shadow);
+  box-shadow: 0 2px 4px -1px var(--mod-hero-btn-shadow, rgba(191, 219, 254, 0.5));
 }
 
 /* Card hover shadow */
 .mod-card-hover-shadow:hover {
-  box-shadow: 0 4px 12px -4px var(--mod-card-shadow);
+  box-shadow: 0 4px 12px -4px var(--mod-card-shadow, rgba(191, 219, 254, 0.3));
 }
 
 /* Card gradient accent stripe */
 .mod-card-accent-gradient {
-  background: linear-gradient(to right, var(--mod-card-accent-from), var(--mod-card-accent-to));
+  background: linear-gradient(to right, var(--mod-card-accent-from, #1d4ed8), var(--mod-card-accent-to, #1d4ed8));
 }
 
 /* Toolbar / Search focus ring */
 .mod-toolbar-focus-ring:focus {
-  box-shadow: 0 0 0 3px var(--mod-toolbar-focus-ring);
-  border-color: var(--mod-toolbar-focus-border);
+  box-shadow: 0 0 0 3px var(--mod-toolbar-focus-ring, #dbeafe);
+  border-color: var(--mod-toolbar-focus-border, #60a5fa);
 }
 
 /* Empty state primary button */
 .mod-empty-btn-shadow {
-  box-shadow: 0 2px 4px -1px var(--mod-empty-btn-shadow);
+  box-shadow: 0 2px 4px -1px var(--mod-empty-btn-shadow, #dbeafe);
 }
 
 /* Header primary button shadow */
 .mod-header-btn-shadow {
-  box-shadow: 0 2px 4px -1px var(--mod-header-btn-shadow);
+  box-shadow: 0 2px 4px -1px var(--mod-header-btn-shadow, #dbeafe);
 }

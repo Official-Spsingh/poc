@@ -832,107 +832,107 @@
   --color-mod-surface-divider: var(--mod-surface-divider);
 
   /* Hero */
-  --color-mod-hero-badge-bg: var(--mod-hero-badge-bg);
-  --color-mod-hero-badge-text: var(--mod-hero-badge-text);
-  --color-mod-hero-gradient-from: var(--mod-hero-gradient-from);
-  --color-mod-hero-gradient-to: var(--mod-hero-gradient-to);
-  --color-mod-hero-btn-bg: var(--mod-hero-btn-bg);
-  --color-mod-hero-btn-hover: var(--mod-hero-btn-hover);
-  --color-mod-hero-secondary-hover-text: var(--mod-hero-secondary-hover-text);
-  --color-mod-hero-secondary-hover-bg: var(--mod-hero-secondary-hover-bg);
-  --color-mod-hero-icon-color: var(--mod-hero-icon-color);
+  --color-mod-hero-badge-bg: var(--mod-hero-badge-bg, #eff6ff);
+  --color-mod-hero-badge-text: var(--mod-hero-badge-text, #1d4ed8);
+  --color-mod-hero-gradient-from: var(--mod-hero-gradient-from, #1d4ed8);
+  --color-mod-hero-gradient-to: var(--mod-hero-gradient-to, #0369a1);
+  --color-mod-hero-btn-bg: var(--mod-hero-btn-bg, #1d4ed8);
+  --color-mod-hero-btn-hover: var(--mod-hero-btn-hover, #1e40af);
+  --color-mod-hero-secondary-hover-text: var(--mod-hero-secondary-hover-text, #1d4ed8);
+  --color-mod-hero-secondary-hover-bg: var(--mod-hero-secondary-hover-bg, #eff6ff);
+  --color-mod-hero-icon-color: var(--mod-hero-icon-color, #3b82f6);
 
   /* Header */
-  --color-mod-header-icon-bg: var(--mod-header-icon-bg);
-  --color-mod-header-icon-text: var(--mod-header-icon-text);
-  --color-mod-header-icon-border: var(--mod-header-icon-border);
-  --color-mod-header-btn-bg: var(--mod-header-btn-bg);
-  --color-mod-header-btn-text: var(--mod-header-btn-text);
-  --color-mod-header-btn-hover: var(--mod-header-btn-hover);
+  --color-mod-header-icon-bg: var(--mod-header-icon-bg, #eff6ff);
+  --color-mod-header-icon-text: var(--mod-header-icon-text, #1d4ed8);
+  --color-mod-header-icon-border: var(--mod-header-icon-border, #dbeafe);
+  --color-mod-header-btn-bg: var(--mod-header-btn-bg, #1d4ed8);
+  --color-mod-header-btn-text: var(--mod-header-btn-text, #ffffff);
+  --color-mod-header-btn-hover: var(--mod-header-btn-hover, #1e40af);
 
   /* Page Wrapper */
-  --color-mod-page-blur-1: var(--mod-page-blur-1);
-  --color-mod-page-blur-2: var(--mod-page-blur-2);
-  --color-mod-page-blur-3: var(--mod-page-blur-3);
+  --color-mod-page-blur-1: var(--mod-page-blur-1, rgba(96, 165, 250, 0.1));
+  --color-mod-page-blur-2: var(--mod-page-blur-2, rgba(56, 189, 248, 0.1));
+  --color-mod-page-blur-3: var(--mod-page-blur-3, rgba(96, 165, 250, 0.05));
 
   /* Card */
-  --color-mod-card-border: var(--mod-card-border);
-  --color-mod-card-hover-border: var(--mod-card-hover-border);
-  --color-mod-card-icon-bg: var(--mod-card-icon-bg);
-  --color-mod-card-icon-text: var(--mod-card-icon-text);
-  --color-mod-card-title-hover: var(--mod-card-title-hover);
-  --color-mod-card-chevron-bg: var(--mod-card-chevron-bg);
-  --color-mod-card-chevron-text: var(--mod-card-chevron-text);
-  --color-mod-card-menu-hover-bg: var(--mod-card-menu-hover-bg);
-  --color-mod-card-menu-hover-text: var(--mod-card-menu-hover-text);
-  --color-mod-card-status-bg: var(--mod-card-status-bg);
-  --color-mod-card-status-text: var(--mod-card-status-text);
+  --color-mod-card-border: var(--mod-card-border, #f3f4f6);
+  --color-mod-card-hover-border: var(--mod-card-hover-border, #60a5fa);
+  --color-mod-card-icon-bg: var(--mod-card-icon-bg, #eff6ff);
+  --color-mod-card-icon-text: var(--mod-card-icon-text, #1d4ed8);
+  --color-mod-card-title-hover: var(--mod-card-title-hover, #1d4ed8);
+  --color-mod-card-chevron-bg: var(--mod-card-chevron-bg, #eff6ff);
+  --color-mod-card-chevron-text: var(--mod-card-chevron-text, #1d4ed8);
+  --color-mod-card-menu-hover-bg: var(--mod-card-menu-hover-bg, #eff6ff);
+  --color-mod-card-menu-hover-text: var(--mod-card-menu-hover-text, #1d4ed8);
+  --color-mod-card-status-bg: var(--mod-card-status-bg, #eff6ff);
+  --color-mod-card-status-text: var(--mod-card-status-text, #1d4ed8);
 
   /* Table */
-  --color-mod-table-hover-bg: var(--mod-table-hover-bg);
-  --color-mod-table-menu-hover-bg: var(--mod-table-menu-hover-bg);
-  --color-mod-table-menu-hover-text: var(--mod-table-menu-hover-text);
+  --color-mod-table-hover-bg: var(--mod-table-hover-bg, rgba(239, 246, 255, 0.3));
+  --color-mod-table-menu-hover-bg: var(--mod-table-menu-hover-bg, #eff6ff);
+  --color-mod-table-menu-hover-text: var(--mod-table-menu-hover-text, #1d4ed8);
 
   /* Toolbar */
-  --color-mod-toolbar-active-text: var(--mod-toolbar-active-text);
-  --color-mod-toolbar-bg-light: var(--mod-toolbar-bg-light);
-  --color-mod-toolbar-active-bg: var(--mod-toolbar-active-bg);
-  --color-mod-toolbar-menu-hover-bg: var(--mod-toolbar-menu-hover-bg);
-  --color-mod-toolbar-menu-hover-text: var(--mod-toolbar-menu-hover-text);
+  --color-mod-toolbar-active-text: var(--mod-toolbar-active-text, #1d4ed8);
+  --color-mod-toolbar-bg-light: var(--mod-toolbar-bg-light, #eff6ff);
+  --color-mod-toolbar-active-bg: var(--mod-toolbar-active-bg, #1d4ed8);
+  --color-mod-toolbar-menu-hover-bg: var(--mod-toolbar-menu-hover-bg, #eff6ff);
+  --color-mod-toolbar-menu-hover-text: var(--mod-toolbar-menu-hover-text, #1d4ed8);
 
   /* Empty State */
-  --color-mod-empty-glow: var(--mod-empty-glow);
-  --color-mod-empty-icon-bg: var(--mod-empty-icon-bg);
-  --color-mod-empty-icon-text: var(--mod-empty-icon-text);
-  --color-mod-empty-btn-bg: var(--mod-empty-btn-bg);
-  --color-mod-empty-btn-hover: var(--mod-empty-btn-hover);
-  --color-mod-empty-secondary-text: var(--mod-empty-secondary-text);
-  --color-mod-empty-secondary-hover-bg: var(--mod-empty-secondary-hover-bg);
+  --color-mod-empty-glow: var(--mod-empty-glow, #60a5fa);
+  --color-mod-empty-icon-bg: var(--mod-empty-icon-bg, #eff6ff);
+  --color-mod-empty-icon-text: var(--mod-empty-icon-text, #1d4ed8);
+  --color-mod-empty-btn-bg: var(--mod-empty-btn-bg, #1d4ed8);
+  --color-mod-empty-btn-hover: var(--mod-empty-btn-hover, #1e40af);
+  --color-mod-empty-secondary-text: var(--mod-empty-secondary-text, #1d4ed8);
+  --color-mod-empty-secondary-hover-bg: var(--mod-empty-secondary-hover-bg, #eff6ff);
 
   /* Tips */
-  --color-mod-tips-icon-bg: var(--mod-tips-icon-bg);
-  --color-mod-tips-icon-text: var(--mod-tips-icon-text);
+  --color-mod-tips-icon-bg: var(--mod-tips-icon-bg, #eff6ff);
+  --color-mod-tips-icon-text: var(--mod-tips-icon-text, #1d4ed8);
 
   /* Status Badges */
-  --color-mod-status-active-bg: var(--mod-status-active-bg);
-  --color-mod-status-active-text: var(--mod-status-active-text);
-  --color-mod-status-active-border: var(--mod-status-active-border);
-  --color-mod-status-published-bg: var(--mod-status-published-bg);
-  --color-mod-status-published-text: var(--mod-status-published-text);
-  --color-mod-status-published-border: var(--mod-status-published-border);
-  --color-mod-status-draft-bg: var(--mod-status-draft-bg);
-  --color-mod-status-draft-text: var(--mod-status-draft-text);
-  --color-mod-status-draft-border: var(--mod-status-draft-border);
-  --color-mod-status-error-bg: var(--mod-status-error-bg);
-  --color-mod-status-error-text: var(--mod-status-error-text);
-  --color-mod-status-error-border: var(--mod-status-error-border);
-  --color-mod-status-training-bg: var(--mod-status-training-bg);
-  --color-mod-status-training-text: var(--mod-status-training-text);
-  --color-mod-status-training-border: var(--mod-status-training-border);
-  --color-mod-status-idle-bg: var(--mod-status-idle-bg);
-  --color-mod-status-idle-text: var(--mod-status-idle-text);
-  --color-mod-status-idle-border: var(--mod-status-idle-border);
+  --color-mod-status-active-bg: var(--mod-status-active-bg, #eff6ff);
+  --color-mod-status-active-text: var(--mod-status-active-text, #1d4ed8);
+  --color-mod-status-active-border: var(--mod-status-active-border, #dbeafe);
+  --color-mod-status-published-bg: var(--mod-status-published-bg, #eff6ff);
+  --color-mod-status-published-text: var(--mod-status-published-text, #1d4ed8);
+  --color-mod-status-published-border: var(--mod-status-published-border, #dbeafe);
+  --color-mod-status-draft-bg: var(--mod-status-draft-bg, #f8fafc);
+  --color-mod-status-draft-text: var(--mod-status-draft-text, #64748b);
+  --color-mod-status-draft-border: var(--mod-status-draft-border, #f1f5f9);
+  --color-mod-status-error-bg: var(--mod-status-error-bg, #fff1f2);
+  --color-mod-status-error-text: var(--mod-status-error-text, #e11d48);
+  --color-mod-status-error-border: var(--mod-status-error-border, #ffe4e6);
+  --color-mod-status-training-bg: var(--mod-status-training-bg, #eff6ff);
+  --color-mod-status-training-text: var(--mod-status-training-text, #1d4ed8);
+  --color-mod-status-training-border: var(--mod-status-training-border, #dbeafe);
+  --color-mod-status-idle-bg: var(--mod-status-idle-bg, #f8fafc);
+  --color-mod-status-idle-text: var(--mod-status-idle-text, #64748b);
+  --color-mod-status-idle-border: var(--mod-status-idle-border, #f1f5f9);
 
   /* Modal */
-  --color-mod-modal-header-bg: var(--mod-modal-header-bg);
-  --color-mod-modal-header-text: var(--mod-modal-header-text);
-  --color-mod-modal-icon-bg: var(--mod-modal-icon-bg);
-  --color-mod-modal-primary-bg: var(--mod-modal-primary-bg);
-  --color-mod-modal-primary-hover: var(--mod-modal-primary-hover);
-  --color-mod-modal-secondary-hover-bg: var(--mod-modal-secondary-hover-bg);
-  --color-mod-modal-secondary-text: var(--mod-modal-secondary-text);
-  --shadow-mod-modal: var(--mod-modal-shadow);
+  --color-mod-modal-header-bg: var(--mod-modal-header-bg, #eff6ff);
+  --color-mod-modal-header-text: var(--mod-modal-header-text, #1e3a8a);
+  --color-mod-modal-icon-bg: var(--mod-modal-icon-bg, #1d4ed8);
+  --color-mod-modal-primary-bg: var(--mod-modal-primary-bg, #1d4ed8);
+  --color-mod-modal-primary-hover: var(--mod-modal-primary-hover, #1e40af);
+  --color-mod-modal-secondary-hover-bg: var(--mod-modal-secondary-hover-bg, #eff6ff);
+  --color-mod-modal-secondary-text: var(--mod-modal-secondary-text, #1d4ed8);
+  --shadow-mod-modal: var(--mod-modal-shadow, 0 20px 25px -5px rgba(191, 219, 254, 0.3), 0 8px 10px -6px rgba(191, 219, 254, 0.3));
 
   /* Lineage */
-  --color-mod-lineage-icon-bg: var(--mod-lineage-icon-bg);
-  --color-mod-lineage-icon-text: var(--mod-lineage-icon-text);
-  --color-mod-lineage-card-border: var(--mod-lineage-card-border);
-  --color-mod-lineage-card-hover-border: var(--mod-lineage-card-hover-border);
-  --color-mod-lineage-badge-bg: var(--mod-lineage-badge-bg);
-  --color-mod-lineage-badge-text: var(--mod-lineage-badge-text);
+  --color-mod-lineage-icon-bg: var(--mod-lineage-icon-bg, #1d4ed8);
+  --color-mod-lineage-icon-text: var(--mod-lineage-icon-text, #ffffff);
+  --color-mod-lineage-card-border: var(--mod-lineage-card-border, #f3f4f6);
+  --color-mod-lineage-card-hover-border: var(--mod-lineage-card-hover-border, #bfdbfe);
+  --color-mod-lineage-badge-bg: var(--mod-lineage-badge-bg, #eff6ff);
+  --color-mod-lineage-badge-text: var(--mod-lineage-badge-text, #1d4ed8);
 
   /* Other */
-  --color-mod-layout-border: var(--mod-layout-border);
+  --color-mod-layout-border: var(--mod-layout-border, #dbeafe);
 }
 
 @layer utilities {
