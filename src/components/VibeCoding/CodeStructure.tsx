@@ -68,13 +68,13 @@ const FileTreeItem: React.FC<FileTreeItemProps> = ({
         onClick={() => isFile ? onSelectFile(node.path) : setIsOpen(!isOpen)}
         style={{ paddingLeft: `${(depth * 14) + 16}px` }}
         className={`w-full flex items-center justify-between py-1.5 pr-2 text-[11px] transition-all group ${
-          activeFile === node.path 
-            ? 'bg-indigo-50/50 text-indigo-700 font-bold' 
-            : 'text-slate-600 hover:bg-slate-100/50 hover:text-slate-900 font-medium'
+          activeFile === node.path
+            ? 'bg-mod-hero-badge-bg text-mod-hero-badge-text font-bold'
+            : 'text-mod-surface-text-secondary hover:bg-mod-surface-hover hover:text-mod-surface-text-primary font-medium'
         }`}
       >
         <div className="flex items-center gap-2 truncate">
-            <span className="shrink-0 flex items-center justify-center w-4 h-4 text-slate-400 group-hover:text-slate-600">
+            <span className="shrink-0 flex items-center justify-center w-4 h-4 text-mod-surface-text-muted group-hover:text-mod-surface-text-secondary">
               {!isFile ? (
                 <ChevronRight size={14} className={`transition-transform duration-200 ${isOpen ? 'rotate-90' : ''}`} />
               ) : (
@@ -87,12 +87,12 @@ const FileTreeItem: React.FC<FileTreeItemProps> = ({
         <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
            {!isFile && (
               <>
-                 <span onClick={(e) => { e.stopPropagation(); onCreateItem(node.path, 'file'); setIsOpen(true); }} className="p-0.5 text-slate-400 hover:text-indigo-600" title="New File in Folder"><FilePlus size={12} /></span>
-                 <span onClick={(e) => { e.stopPropagation(); onCreateItem(node.path, 'folder'); setIsOpen(true); }} className="p-0.5 text-slate-400 hover:text-indigo-600" title="New Nested Folder"><FolderPlus size={12} /></span>
+                 <span onClick={(e) => { e.stopPropagation(); onCreateItem(node.path, 'file'); setIsOpen(true); }} className="p-0.5 text-mod-surface-text-muted hover:text-mod-hero-icon-color" title="New File in Folder"><FilePlus size={12} /></span>
+                 <span onClick={(e) => { e.stopPropagation(); onCreateItem(node.path, 'folder'); setIsOpen(true); }} className="p-0.5 text-mod-surface-text-muted hover:text-mod-hero-icon-color" title="New Nested Folder"><FolderPlus size={12} /></span>
               </>
            )}
-           <span onClick={handleRename} className="p-0.5 text-slate-400 hover:text-indigo-600" title="Rename"><Edit2 size={12} /></span>
-           <span onClick={(e) => { e.stopPropagation(); onDeleteItem(node.path, node.type); }} className="p-0.5 text-slate-400 hover:text-rose-500" title="Delete"><Trash2 size={12} /></span>
+           <span onClick={handleRename} className="p-0.5 text-mod-surface-text-muted hover:text-mod-hero-icon-color" title="Rename"><Edit2 size={12} /></span>
+           <span onClick={(e) => { e.stopPropagation(); onDeleteItem(node.path, node.type); }} className="p-0.5 text-mod-surface-text-muted hover:text-rose-500" title="Delete"><Trash2 size={12} /></span>
         </div>
       </button>
       
@@ -139,15 +139,15 @@ const CodeStructure: React.FC<CodeStructureProps> = ({
 }) => {
     return (
         <motion.div key="code" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} className="w-full h-full bg-[#0f172a] overflow-hidden flex">
-            <aside className="w-64 bg-slate-50 border-r border-slate-200 flex flex-col pt-4 overflow-y-auto custom-scrollbar shrink-0" style={{ minWidth: '16rem' }}>
+            <aside className="w-64 bg-mod-surface-bg border-r border-mod-surface-border flex flex-col pt-4 overflow-y-auto custom-scrollbar shrink-0" style={{ minWidth: '16rem' }}>
                <div className="flex items-center justify-between px-4 mb-4">
                  <div className="flex items-center gap-2">
-                    <FolderOpen size={14} className="text-indigo-500" />
-                    <span className="text-[10px] font-black uppercase text-slate-700 tracking-widest">Project Graph</span>
+                    <FolderOpen size={14} className="text-mod-hero-icon-color" />
+                    <span className="text-[10px] font-black uppercase text-mod-surface-text-secondary tracking-widest">Project Graph</span>
                  </div>
-                 <div className="flex gap-2 text-slate-400">
-                    <button onClick={() => handleCreateNewItem('', 'file')} className="hover:text-indigo-600 transition-colors" title="New File"><FilePlus size={14} /></button>
-                    <button onClick={() => handleCreateNewItem('', 'folder')} className="hover:textindigo-600 transition-colors" title="New Folder"><FolderPlus size={14} /></button>
+                 <div className="flex gap-2 text-mod-surface-text-muted">
+                    <button onClick={() => handleCreateNewItem('', 'file')} className="hover:text-mod-hero-icon-color transition-colors" title="New File"><FilePlus size={14} /></button>
+                    <button onClick={() => handleCreateNewItem('', 'folder')} className="hover:text-mod-hero-icon-color transition-colors" title="New Folder"><FolderPlus size={14} /></button>
                  </div>
                </div>
                <div className="flex flex-col gap-0.5 pb-6">
@@ -165,12 +165,12 @@ const CodeStructure: React.FC<CodeStructureProps> = ({
                </div>
             </aside>
             <div className="flex-1 flex flex-col relative overflow-hidden bg-[#0f172a]">
-               <div className="h-10 bg-[#0f172a] border-b border-white/5 px-6 flex items-center justify-between font-mono text-[11px] text-slate-500 shrink-0">
+               <div className="h-10 bg-[#0f172a] border-b border-white/5 px-6 flex items-center justify-between font-mono text-[11px] text-slate-400 shrink-0">
                   <div className="flex items-center gap-3">
                      {getFileIcon(activeFile)}
                      <span>{activeFile}</span>
                   </div>
-                  <div className="px-2 py-0.5 bg-white/5 rounded text-[9px] font-black uppercase tracking-tighter">Read/Write Sync</div>
+                  <div className="px-2 py-0.5 bg-mod-hero-badge-bg/10 text-mod-hero-icon-color/70 rounded text-[9px] font-black uppercase tracking-tighter">Read/Write Sync</div>
                </div>
                <div className="flex-1 overflow-auto custom-scrollbar relative">
                  <Editor
@@ -178,7 +178,7 @@ const CodeStructure: React.FC<CodeStructureProps> = ({
                    onValueChange={handleUpdateFile}
                    highlight={(code) => highlightWithPrism(code, activeFile)}
                    padding={24}
-                   className="min-h-full font-mono text-[13px] leading-snug text-[#94a3b8] selection:bg-indigo-500/30"
+                   className="min-h-full font-mono text-[13px] leading-snug text-[#94a3b8] selection:bg-mod-hero-btn-bg/30"
                    style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace' }}
                    textareaClassName="outline-none"
                  />

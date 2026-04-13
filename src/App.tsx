@@ -44,12 +44,11 @@ const App: React.FC = () => {
                                'light-purple' | 'light-indigo' |
                                'light-blue' | 'light-slate'  (same as global)
 
-     Each module supports 5 theme options:
-       3 global themes + 2 module-specific themes
+     Each module supports themes (any global theme + listed accents):
        - Workflow:   global + light-teal, light-sky
        - Apps:       global + light-sky, light-blue
        - Agents:     global + light-violet, light-purple
-       - VibeCoding: global + light-indigo, light-violet
+       - VibeCoding: global + light-indigo, light-violet, light-teal, dark-blue
        - Data:       global + light-slate, light-sky
      ========================================================================== */
 
@@ -77,8 +76,8 @@ const App: React.FC = () => {
   useEffect(() => {
     setGlobalTheme('light-blue')
     setModuleTheme('apps', 'light-sky')
-    setModuleTheme('workflow', 'light-teal')
-    setModuleTheme('agents', 'light-indigo')
+    setModuleTheme('workflow', 'light-violet')
+    setModuleTheme('agents', 'light-violet')
     setModuleTheme('vibe', 'light-teal')
     setModuleTheme('data', 'light-slate')
   }, [])
@@ -468,7 +467,7 @@ const App: React.FC = () => {
             {
               view === 'dashboard' &&
               (<ModuleThemeContext.Provider value={globalTheme}>
-                <div data-theme={globalTheme}>
+                <div data-theme={globalTheme} className="flex-1 flex flex-col overflow-hidden">
                   <Dashboard onNavigate={handleSetView} workflows={workflows} />
                 </div>
               </ModuleThemeContext.Provider>)
@@ -492,7 +491,7 @@ const App: React.FC = () => {
             {
               view === 'vibe-coder' &&
               (<ModuleThemeContext.Provider value={getModuleTheme('vibe')}>
-                <div data-theme={getModuleTheme('vibe')}>
+                <div data-theme={getModuleTheme('vibe')} className="flex-1 flex flex-col overflow-hidden">
                   <VibeCoder
                     onBack={() => handleSetView('vibe-home')}
                     projectId={activeVibeProjectId}
@@ -514,7 +513,7 @@ const App: React.FC = () => {
             {
               view === 'app-editor' &&
               (<ModuleThemeContext.Provider value={getModuleTheme('apps')}>
-                <div data-theme={getModuleTheme('apps')}>
+                <div data-theme={getModuleTheme('apps')} className="flex-1 flex flex-col overflow-hidden">
                   <AppEditor onBack={() => handleSetView('app-list')} />
                 </div>
               </ModuleThemeContext.Provider>)
@@ -531,7 +530,7 @@ const App: React.FC = () => {
             {
               view === 'ai-agent-builder' &&
               (<ModuleThemeContext.Provider value={getModuleTheme('agents')}>
-                <div data-theme={getModuleTheme('agents')}>
+                <div data-theme={getModuleTheme('agents')} className="flex-1 flex flex-col overflow-hidden">
                   <AiAgentBuilder onBack={() => handleSetView('agent-home')} />
                 </div>
               </ModuleThemeContext.Provider>

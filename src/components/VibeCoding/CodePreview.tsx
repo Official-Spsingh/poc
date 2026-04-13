@@ -33,31 +33,31 @@ const CodePreview: React.FC<CodePreviewProps> = ({
       exit={{ opacity: 0 }}
       className="flex-1 overflow-hidden flex flex-col items-center justify-center relative"
     >
-       <div className={`bg-white overflow-hidden flex flex-col relative transition-all duration-300 ease-in-out ${
-           device === 'desktop' ? 'w-full h-full' : 
-           device === 'tablet' ? 'w-[768px] h-[1024px] max-h-full rounded-b-none md:rounded-[32px]' : 
+       <div className={`bg-mod-surface-card overflow-hidden flex flex-col relative transition-all duration-300 ease-in-out ${
+           device === 'desktop' ? 'w-full h-full' :
+           device === 'tablet' ? 'w-[768px] h-[1024px] max-h-full rounded-b-none md:rounded-[32px]' :
            'w-[375px] h-[812px] max-h-full rounded-b-none md:rounded-[40px]'
        }`}>
-          <div className="h-10 bg-gray-50/80 border-b border-gray-200 flex items-center justify-between px-4 shrink-0">
+          <div className="h-10 bg-mod-surface-hover border-b border-mod-surface-border flex items-center justify-between px-4 shrink-0">
             <div className="flex gap-1.5">
               <div className="w-2.5 h-2.5 rounded-full bg-rose-400" />
               <div className="w-2.5 h-2.5 rounded-full bg-amber-400" />
               <div className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
             </div>
-            <div className="px-3 py-1 bg-white border border-gray-100 rounded-md text-[9px] text-gray-400 font-mono tracking-tight w-1/3 text-center truncate">
+            <div className="px-3 py-1 bg-mod-surface-card border border-mod-surface-border rounded-md text-[9px] text-mod-surface-text-muted font-mono tracking-tight w-1/3 text-center truncate">
                vibe-coding-studio.local/preview
             </div>
             <div className="flex gap-3">
-               <button 
-                 onClick={() => setReloadKey(k => k + 1)} 
-                 className="text-gray-400 hover:text-indigo-600 transition-colors"
+               <button
+                 onClick={() => setReloadKey(k => k + 1)}
+                 className="text-mod-surface-text-muted hover:text-mod-hero-icon-color transition-colors"
                  title="Reload Preview"
                >
                   <RotateCw size={12} />
                </button>
-               <button 
-                 onClick={() => setShowConsole(!showConsole)} 
-                 className={`hover:text-indigo-600 transition-colors ${showConsole ? 'text-indigo-600' : 'text-gray-400'}`}
+               <button
+                 onClick={() => setShowConsole(!showConsole)}
+                 className={`transition-colors ${showConsole ? 'text-mod-hero-icon-color' : 'text-mod-surface-text-muted hover:text-mod-hero-icon-color'}`}
                  title="Toggle Console"
                >
                   <ConsoleIcon size={12} />
@@ -83,7 +83,7 @@ const CodePreview: React.FC<CodePreviewProps> = ({
               >
                  <div className="h-10 bg-slate-800 flex items-center justify-between px-6 shrink-0">
                     <div className="flex items-center gap-3">
-                       <ConsoleIcon size={14} className="text-indigo-400" />
+                       <ConsoleIcon size={14} className="text-mod-hero-icon-color" />
                        <span className="text-[10px] font-black uppercase tracking-widest text-slate-300">Sandbox Console</span>
                        <span className="px-2 py-0.5 bg-slate-700 text-slate-400 rounded text-[9px]">{consoleLogs.length} events</span>
                     </div>
@@ -106,8 +106,8 @@ const CodePreview: React.FC<CodePreviewProps> = ({
           </AnimatePresence>
 
           <div className="absolute bottom-4 right-4 z-20">
-             <div className="flex items-center gap-2 px-3 py-1.5 bg-indigo-600 text-white rounded-full text-[9px] font-bold shadow-xl border border-indigo-400/20">
-                <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+             <div className="flex items-center gap-2 px-3 py-1.5 bg-mod-header-btn-bg text-mod-header-btn-text rounded-full text-[9px] font-bold shadow-xl border border-mod-hero-icon-color/20">
+                <span className="w-1.5 h-1.5 rounded-full bg-mod-header-btn-text animate-pulse" />
                 COMPILER SYNCED
              </div>
           </div>
