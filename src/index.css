@@ -14,11 +14,6 @@
 }
 
 @layer utilities {
-  .canvas-grid {
-    background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
-    background-size: 24px 24px;
-  }
-
   /* Hides scrollbar while maintaining scroll functionality */
   .scrollbar-hidden::-webkit-scrollbar {
     display: none;

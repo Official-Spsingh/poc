@@ -74,18 +74,18 @@ const App: React.FC = () => {
   });
 
   useEffect(() => {
-    // setGlobalTheme('light-blue')
-    // setModuleTheme('apps', 'light-sky')
-    // setModuleTheme('workflow', 'light-teal')
-    // setModuleTheme('agents', 'light-violet')
-    // setModuleTheme('vibe', 'light-indigo')
-    // setModuleTheme('data', 'light-slate')
-    setGlobalTheme('dark-blue')
-    setModuleTheme('apps', 'dark-blue')
-    setModuleTheme('workflow', 'dark-blue')
-    setModuleTheme('agents', 'dark-blue')
-    setModuleTheme('vibe', 'dark-blue')
-    setModuleTheme('data', 'dark-blue')
+    setGlobalTheme('light-blue')
+    setModuleTheme('apps', 'light-sky')
+    setModuleTheme('workflow', 'light-teal')
+    setModuleTheme('agents', 'light-violet')
+    setModuleTheme('vibe', 'light-indigo')
+    setModuleTheme('data', 'light-slate')
+    // setGlobalTheme('dark-blue')
+    // setModuleTheme('apps', 'dark-blue')
+    // setModuleTheme('workflow', 'dark-blue')
+    // setModuleTheme('agents', 'dark-blue')
+    // setModuleTheme('vibe', 'dark-blue')
+    // setModuleTheme('data', 'dark-blue')
   }, [])
 
   // Apply global theme on <html> element on mount and whenever it changes

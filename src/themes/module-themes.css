@@ -43,6 +43,9 @@
   --mod-surface-skeleton: #f3f4f6;
   --mod-surface-skeleton-light: #f9fafb;
   --mod-surface-divider: #f9fafb;
+ 
+  /* Builder Specific */
+  --mod-wf-canvas-grid-dot: #e5e7eb;
 }
 
 /* DARK SURFACE (Override for dark mode) */
@@ -61,6 +64,9 @@
   --mod-surface-skeleton: #334155;
   --mod-surface-skeleton-light: #1e293b;
   --mod-surface-divider: #334155;
+ 
+  /* Builder Specific */
+  --mod-wf-canvas-grid-dot: rgba(59, 130, 246, 0.15);
 }
 
 
@@ -120,6 +126,12 @@
 /* Hero shadow on input container */
 .mod-hero-input-shadow {
   box-shadow: 0 2px 8px -2px var(--mod-hero-shadow, rgba(239, 246, 255, 0.05));
+}
+
+/* Canvas Grid utility - moved from index.css */
+.canvas-grid {
+  background-image: radial-gradient(var(--mod-wf-canvas-grid-dot, #e5e7eb) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
 /* Hero button shadow */
