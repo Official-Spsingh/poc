@@ -128,11 +128,11 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onNavigate, onLogout }) 
               }}
             >
               <div className="w-10 h-10 rounded-full sidebar-avatar-gradient flex items-center justify-center text-white font-bold border-2 shadow-md shrink-0" style={{ borderColor: 'var(--sidebar-avatar-border)' }}>
-                AA
+                SP
               </div>
               {isExpanded && (
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-bold text-sidebar-profile-name truncate group-hover/profile:text-sidebar-active-bg transition-colors">Arham Ahmed</p>
+                  <p className="text-sm font-bold text-sidebar-profile-name truncate group-hover/profile:text-sidebar-active-bg transition-colors">Shubham Pratap Singh</p>
                   <p className="text-[10px] text-sidebar-profile-sub font-medium truncate">Pro Plan</p>
                 </div>
               )}
