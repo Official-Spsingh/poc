@@ -4,7 +4,8 @@ import React from 'react';
 
 interface CodePreviewProps {
   device: 'desktop' | 'tablet' | 'mobile';
-  previewData: string | null;
+  baseHTML: string | null;
+  vfsPayload: string;
   reloadKey: number;
   setReloadKey: React.Dispatch<React.SetStateAction<number>>;
   showConsole: boolean;
@@ -14,9 +15,16 @@ interface CodePreviewProps {
   projectId?: string;
 }
 
+const DEVICE_PRESETS = {
+  desktop: { width: '100%', height: '100%', radius: '0px' },
+  tablet: { width: '768px', height: '1024px', radius: '32px' },
+  mobile: { width: '375px', height: '812px', radius: '40px' }
+};
+
 const CodePreview: React.FC<CodePreviewProps> = ({
   device,
-  previewData,
+  baseHTML,
+  vfsPayload,
   reloadKey,
   setReloadKey,
   showConsole,
@@ -25,6 +33,25 @@ const CodePreview: React.FC<CodePreviewProps> = ({
   setConsoleLogs,
   projectId
 }) => {
+  const iframeRef = React.useRef<HTMLIFrameElement>(null);
+  const preset = DEVICE_PRESETS[device];
+
+  // Sync VFS to sandbox whenever it changes
+  React.useEffect(() => {
+    if (iframeRef.current && iframeRef.current.contentWindow && vfsPayload) {
+      // Small timeout to ensure the iframe shell and its listener are ready
+      const sync = () => {
+        iframeRef.current?.contentWindow?.postMessage({
+          type: 'STUDIO_VFS_UPDATE',
+          payload: vfsPayload
+        }, '*');
+      };
+
+      // If its the first load, wait longer for CDNs; otherwise sync immediately
+      sync();
+    }
+  }, [vfsPayload, baseHTML, reloadKey]);
+
   return (
     <motion.div
       key={`preview-${projectId}-${reloadKey}`}
@@ -33,11 +60,16 @@ const CodePreview: React.FC<CodePreviewProps> = ({
       exit={{ opacity: 0 }}
       className="flex-1 overflow-hidden flex flex-col items-center justify-center relative"
     >
-       <div className={`bg-mod-surface-card overflow-hidden flex flex-col relative transition-all duration-300 ease-in-out ${
-           device === 'desktop' ? 'w-full h-full' :
-           device === 'tablet' ? 'w-[768px] h-[1024px] max-h-full rounded-b-none md:rounded-[32px]' :
-           'w-[375px] h-[812px] max-h-full rounded-b-none md:rounded-[40px]'
-       }`}>
+       <div 
+         className="bg-mod-surface-card overflow-hidden flex flex-col relative transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-mod-surface-border"
+         style={{
+           width: preset.width,
+           height: preset.height,
+           borderRadius: preset.radius,
+           maxWidth: '100%',
+           maxHeight: '100%'
+         }}
+       >
           <div className="h-10 bg-mod-surface-hover border-b border-mod-surface-border flex items-center justify-between px-4 shrink-0">
             <div className="flex gap-1.5">
               <div className="w-2.5 h-2.5 rounded-full bg-rose-400" />
@@ -66,11 +98,21 @@ const CodePreview: React.FC<CodePreviewProps> = ({
           </div>
 
           <iframe 
+            ref={iframeRef}
             key={reloadKey}
-            srcDoc={previewData || ''}
+            srcDoc={baseHTML || ''}
             className="flex-1 w-full h-full border-none"
             title="Live Visual Sandbox"
             sandbox="allow-scripts allow-modals allow-same-origin"
+            onLoad={() => {
+              // Initial sync after base shell loads
+              if (iframeRef.current?.contentWindow && vfsPayload) {
+                iframeRef.current.contentWindow.postMessage({
+                  type: 'STUDIO_VFS_UPDATE',
+                  payload: vfsPayload
+                }, '*');
+              }
+            }}
           />
           
           <AnimatePresence>

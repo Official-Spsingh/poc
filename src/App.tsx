@@ -4,7 +4,7 @@ import {
   Plus,
   Trash2
 } from 'lucide-react';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react';
 import AgentHome from './components/Agents/AgentHome';
 import AiAgentBuilder from './components/Agents/AiAgentBuilder';
 import AppEditor from './components/Apps/AppEditor';
@@ -88,15 +88,24 @@ const App: React.FC = () => {
     // setModuleTheme('data', 'dark-blue')
   }, [])
 
-  // Apply global theme on <html> element on mount and whenever it changes
-  // When null, remove data-theme so CSS :root defaults (light-blue) apply
+  // Centralized Theme Persistence & Application
   useEffect(() => {
+    // 1. Global Theme: Persist to localStorage and apply to <html>
     if (globalTheme) {
+      localStorage.setItem('lum-global-theme', globalTheme);
       document.documentElement.setAttribute('data-theme', globalTheme);
     } else {
+      localStorage.removeItem('lum-global-theme');
       document.documentElement.removeAttribute('data-theme');
     }
-  }, [globalTheme]);
+
+    // 2. Module Themes: Persist to localStorage
+    if (Object.keys(moduleThemes).length > 0) {
+      localStorage.setItem('lum-module-themes', JSON.stringify(moduleThemes));
+    } else {
+      localStorage.removeItem('lum-module-themes');
+    }
+  }, [globalTheme, moduleThemes]);
 
   /**
    * Set the global theme for the entire platform.
@@ -108,13 +117,6 @@ const App: React.FC = () => {
    */
   const setGlobalTheme = (theme: string | null) => {
     setGlobalThemeState(theme);
-    if (theme) {
-      localStorage.setItem('lum-global-theme', theme);
-      document.documentElement.setAttribute('data-theme', theme);
-    } else {
-      localStorage.removeItem('lum-global-theme');
-      document.documentElement.removeAttribute('data-theme');
-    }
   };
 
   /**
@@ -142,15 +144,37 @@ const App: React.FC = () => {
       } else {
         delete next[moduleId];
       }
-      localStorage.setItem('lum-module-themes', JSON.stringify(next));
       return next;
     });
   };
 
   /** Get the effective theme for a module (explicit override > module default > global) */
-  const getModuleTheme = (moduleId: string): string => {
+  const getModuleTheme = useCallback((moduleId: string): string => {
     return moduleThemes[moduleId] || DEFAULT_MODULE_THEMES[moduleId] || globalTheme || 'light-blue';
-  };
+  }, [moduleThemes, globalTheme, DEFAULT_MODULE_THEMES]);
+
+  const activeModuleTheme = useMemo(() => {
+    switch (view) {
+      case 'dashboard':
+        return globalTheme || 'light-blue';
+      case 'app-list':
+      case 'app-editor':
+        return getModuleTheme('apps');
+      case 'vibe-home':
+      case 'vibe-coder':
+        return getModuleTheme('vibe');
+      case 'agent-home':
+      case 'ai-agent-builder':
+        return getModuleTheme('agents');
+      case 'data':
+        return getModuleTheme('data');
+      case 'workflow-home':
+      case 'workflow-builder':
+        return getModuleTheme('workflow');
+      default:
+        return globalTheme || 'light-blue';
+    }
+  }, [view, globalTheme, moduleThemes, getModuleTheme]);
 
   // Vibe Projects State
   const [vibeProjects, setVibeProjects] = useState<Project[]>([
@@ -414,34 +438,19 @@ const App: React.FC = () => {
           />
 
           <div className="flex-1 flex flex-col overflow-hidden relative pb-[72px] md:pb-0">
-            {
-              view === 'dashboard' &&
-              (<ModuleThemeContext.Provider value={globalTheme}>
-                <div data-theme={globalTheme} className="flex-1 flex flex-col overflow-hidden">
-                  <Dashboard onNavigate={handleSetView} workflows={workflows} />
-                </div>
-              </ModuleThemeContext.Provider>)
-            }
-            {
-              view === 'app-list' &&
-              (<ModuleThemeContext.Provider value={getModuleTheme('apps')}>
-                <div data-theme={getModuleTheme('apps')} className="flex-1 flex flex-col overflow-hidden">
+            <ModuleThemeContext.Provider value={activeModuleTheme}>
+              <div data-theme={activeModuleTheme} className="flex-1 flex flex-col overflow-hidden">
+                {view === 'dashboard' && <Dashboard onNavigate={handleSetView} workflows={workflows} />}
+                
+                {view === 'app-list' && (
                   <AppHome onSelectApp={() => handleSetView('app-editor')} onStartVibeCoding={() => handleSetView('vibe-home')} />
-                </div>
-              </ModuleThemeContext.Provider>)
-            }
-            {
-              view === 'vibe-home' &&
-              (<ModuleThemeContext.Provider value={getModuleTheme('vibe')}>
-                <div data-theme={getModuleTheme('vibe')} className="flex-1 flex flex-col overflow-hidden">
+                )}
+                
+                {view === 'vibe-home' && (
                   <VibeHome projects={vibeProjects} onStartProject={handleStartVibeProject} onOpenProject={handleOpenVibeProject} />
-                </div>
-              </ModuleThemeContext.Provider>)
-            }
-            {
-              view === 'vibe-coder' &&
-              (<ModuleThemeContext.Provider value={getModuleTheme('vibe')}>
-                <div data-theme={getModuleTheme('vibe')} className="flex-1 flex flex-col overflow-hidden">
+                )}
+                
+                {view === 'vibe-coder' && (
                   <VibeCoder
                     onBack={() => handleSetView('vibe-home')}
                     projectId={activeVibeProjectId}
@@ -449,48 +458,23 @@ const App: React.FC = () => {
                     initialPrompt={vibeInitialPrompt}
                     onUpdateProjects={setVibeProjects}
                   />
-                </div>
-              </ModuleThemeContext.Provider>)
-            }
-            {
-              view === 'agent-home' &&
-              (<ModuleThemeContext.Provider value={getModuleTheme('agents')}>
-                <div data-theme={getModuleTheme('agents')} className="flex-1 flex flex-col overflow-hidden">
+                )}
+                
+                {view === 'agent-home' && (
                   <AgentHome onSelectAgent={() => handleSetView('ai-agent-builder')} onCreateAgent={() => handleSetView('ai-agent-builder')} />
-                </div>
-              </ModuleThemeContext.Provider>)
-            }
-            {
-              view === 'app-editor' &&
-              (<ModuleThemeContext.Provider value={getModuleTheme('apps')}>
-                <div data-theme={getModuleTheme('apps')} className="flex-1 flex flex-col overflow-hidden">
+                )}
+                
+                {view === 'app-editor' && (
                   <AppEditor onBack={() => handleSetView('app-list')} />
-                </div>
-              </ModuleThemeContext.Provider>)
-            }
-            {
-              view === 'data' &&
-              (<ModuleThemeContext.Provider value={getModuleTheme('data')}>
-                <div data-theme={getModuleTheme('data')} className="flex-1 flex flex-col overflow-hidden">
-                  <DataSection />
-                </div>
-              </ModuleThemeContext.Provider>)
-            }
+                )}
+                
+                {view === 'data' && <DataSection />}
 
-            {
-              view === 'ai-agent-builder' &&
-              (<ModuleThemeContext.Provider value={getModuleTheme('agents')}>
-                <div data-theme={getModuleTheme('agents')} className="flex-1 flex flex-col overflow-hidden">
+                {view === 'ai-agent-builder' && (
                   <AiAgentBuilder onBack={() => handleSetView('agent-home')} />
-                </div>
-              </ModuleThemeContext.Provider>
-              )
-            }
+                )}
 
-            {
-              view === 'workflow-home' &&
-              (<ModuleThemeContext.Provider value={getModuleTheme('workflow')}>
-                <div data-theme={getModuleTheme('workflow')} className="flex-1 flex flex-col overflow-hidden">
+                {view === 'workflow-home' && (
                   <WorkflowHome
                     workspaces={workspaces}
                     setWorkspaces={setWorkspaces}
@@ -507,13 +491,9 @@ const App: React.FC = () => {
                     setConnections={setConnections}
                     setIsAiGenerated={setIsAiGenerated}
                   />
-                </div>
-              </ModuleThemeContext.Provider>)
-            }
-            {
-              view === 'workflow-builder' &&
-              (<ModuleThemeContext.Provider value={getModuleTheme('workflow')}>
-                <div data-theme={getModuleTheme('workflow')} className="flex-1 flex flex-col overflow-hidden">
+                )}
+                
+                {view === 'workflow-builder' && (
                   <WorkflowBuilder
                     workflows={workflows}
                     setWorkflows={setWorkflows}
@@ -554,14 +534,15 @@ const App: React.FC = () => {
                     isAiGenerated={isAiGenerated}
                     setIsAiGenerated={setIsAiGenerated}
                   />
-                </div>
-              </ModuleThemeContext.Provider>)
-            }
+                )}
+              </div>
+            </ModuleThemeContext.Provider>
           </div>
         </div>
       )}
     </>
   );
 };
+
 
 export default App;
