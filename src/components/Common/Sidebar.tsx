@@ -6,7 +6,6 @@ import {
   Home,
   Layout,
   LogOut,
-  Settings,
   Sparkles,
   Workflow,
   Zap
@@ -111,29 +110,35 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onNavigate, onLogout }) 
         {/* Profile Section */}
         <div 
           className="p-3 border-t border-sidebar-border auto-cols-auto"
-          onClick={(e) => isExpanded && e.stopPropagation()}
+          onClick={(e) => {
+             if (isExpanded) {
+                 e.stopPropagation();
+                 onNavigate('profile');
+             }
+          }}
         >
-          <div className={`bg-sidebar-profile-bg rounded-2xl transition-all duration-300 overflow-hidden ${isExpanded ? 'p-4' : 'p-2 flex flex-col items-center'}`}>
-            <div className={`flex items-center gap-3 transition-all ${isExpanded ? 'mb-4 w-full' : 'mb-0 justify-center'}`}>
+          <div className={`bg-sidebar-profile-bg rounded-2xl transition-all duration-300 overflow-hidden cursor-pointer group/profile hover:ring-2 hover:ring-sidebar-active-bg/20 ${isActive('profile') ? 'ring-2 ring-sidebar-active-bg' : ''} ${isExpanded ? 'p-4' : 'p-2 flex flex-col items-center'}`}>
+            <div 
+              className={`flex items-center gap-3 transition-all ${isExpanded ? 'mb-4 w-full' : 'mb-0 justify-center'}`}
+              onClick={(e) => {
+                  if (!isExpanded) {
+                      e.stopPropagation();
+                      onNavigate('profile');
+                  }
+              }}
+            >
               <div className="w-10 h-10 rounded-full sidebar-avatar-gradient flex items-center justify-center text-white font-bold border-2 shadow-md shrink-0" style={{ borderColor: 'var(--sidebar-avatar-border)' }}>
-                SP
+                AA
               </div>
               {isExpanded && (
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-bold text-sidebar-profile-name truncate">Shubham Pratap Singh</p>
+                  <p className="text-sm font-bold text-sidebar-profile-name truncate group-hover/profile:text-sidebar-active-bg transition-colors">Arham Ahmed</p>
                   <p className="text-[10px] text-sidebar-profile-sub font-medium truncate">Pro Plan</p>
                 </div>
               )}
             </div>
             
             <div className={`space-y-1 transition-all duration-300 ${isExpanded ? 'mt-4' : 'mt-2 flex flex-col items-center w-full'}`}>
-              <button 
-                onClick={(e) => e.stopPropagation()}
-                className={`flex items-center gap-2 text-xs font-medium text-sidebar-text-default sidebar-settings-hover rounded-lg transition-all ${isExpanded ? 'w-full px-3 py-2' : 'p-2 justify-center'}`}
-                title="Settings"
-              >
-                <Settings size={14} /> {isExpanded && 'Settings'}
-              </button>
               <button 
                 onClick={(e) => {
                   e.stopPropagation();
