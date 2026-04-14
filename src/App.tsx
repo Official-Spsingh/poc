@@ -74,29 +74,38 @@ const App: React.FC = () => {
   });
 
   useEffect(() => {
-    setGlobalTheme('light-blue')
-    setModuleTheme('apps', 'light-sky')
-    setModuleTheme('workflow', 'light-teal')
-    setModuleTheme('agents', 'light-violet')
-    setModuleTheme('vibe', 'light-indigo')
-    setModuleTheme('data', 'light-slate')
-    // setGlobalTheme('dark-blue')
-    // setModuleTheme('apps', 'dark-blue')
-    // setModuleTheme('workflow', 'dark-blue')
-    // setModuleTheme('agents', 'dark-blue')
-    // setModuleTheme('vibe', 'dark-blue')
-    // setModuleTheme('data', 'dark-blue')
+    // setGlobalTheme('light-blue')
+    // setModuleTheme('apps', 'light-sky')
+    // setModuleTheme('workflow', 'light-teal')
+    // setModuleTheme('agents', 'light-violet')
+    // setModuleTheme('vibe', 'light-indigo')
+    // setModuleTheme('data', 'light-slate')
+    setGlobalTheme('dark-blue')
+    setModuleTheme('apps', 'dark-blue')
+    setModuleTheme('workflow', 'dark-blue')
+    setModuleTheme('agents', 'dark-blue')
+    setModuleTheme('vibe', 'dark-blue')
+    setModuleTheme('data', 'dark-blue')
   }, [])
 
-  // Apply global theme on <html> element on mount and whenever it changes
-  // When null, remove data-theme so CSS :root defaults (light-blue) apply
+  // Centralized Theme Persistence & Application
   useEffect(() => {
+    // 1. Global Theme: Persist to localStorage and apply to <html>
     if (globalTheme) {
+      localStorage.setItem('lum-global-theme', globalTheme);
       document.documentElement.setAttribute('data-theme', globalTheme);
     } else {
+      localStorage.removeItem('lum-global-theme');
       document.documentElement.removeAttribute('data-theme');
     }
-  }, [globalTheme]);
+
+    // 2. Module Themes: Persist to localStorage
+    if (Object.keys(moduleThemes).length > 0) {
+      localStorage.setItem('lum-module-themes', JSON.stringify(moduleThemes));
+    } else {
+      localStorage.removeItem('lum-module-themes');
+    }
+  }, [globalTheme, moduleThemes]);
 
   /**
    * Set the global theme for the entire platform.
@@ -108,13 +117,6 @@ const App: React.FC = () => {
    */
   const setGlobalTheme = (theme: string | null) => {
     setGlobalThemeState(theme);
-    if (theme) {
-      localStorage.setItem('lum-global-theme', theme);
-      document.documentElement.setAttribute('data-theme', theme);
-    } else {
-      localStorage.removeItem('lum-global-theme');
-      document.documentElement.removeAttribute('data-theme');
-    }
   };
 
   /**
@@ -142,7 +144,6 @@ const App: React.FC = () => {
       } else {
         delete next[moduleId];
       }
-      localStorage.setItem('lum-module-themes', JSON.stringify(next));
       return next;
     });
   };
