@@ -4,7 +4,8 @@ import React from 'react';
 
 interface CodePreviewProps {
   device: 'desktop' | 'tablet' | 'mobile';
-  previewData: string | null;
+  baseHTML: string | null;
+  vfsPayload: string;
   reloadKey: number;
   setReloadKey: React.Dispatch<React.SetStateAction<number>>;
   showConsole: boolean;
@@ -16,7 +17,8 @@ interface CodePreviewProps {
 
 const CodePreview: React.FC<CodePreviewProps> = ({
   device,
-  previewData,
+  baseHTML,
+  vfsPayload,
   reloadKey,
   setReloadKey,
   showConsole,
@@ -25,6 +27,23 @@ const CodePreview: React.FC<CodePreviewProps> = ({
   setConsoleLogs,
   projectId
 }) => {
+  const iframeRef = React.useRef<HTMLIFrameElement>(null);
+
+  // Sync VFS to sandbox whenever it changes
+  React.useEffect(() => {
+    if (iframeRef.current && iframeRef.current.contentWindow && vfsPayload) {
+      // Small timeout to ensure the iframe shell and its listener are ready
+      const sync = () => {
+        iframeRef.current?.contentWindow?.postMessage({
+          type: 'STUDIO_VFS_UPDATE',
+          payload: vfsPayload
+        }, '*');
+      };
+
+      // If its the first load, wait longer for CDNs; otherwise sync immediately
+      sync();
+    }
+  }, [vfsPayload, baseHTML, reloadKey]);
   return (
     <motion.div
       key={`preview-${projectId}-${reloadKey}`}
@@ -66,11 +85,21 @@ const CodePreview: React.FC<CodePreviewProps> = ({
           </div>
 
           <iframe 
+            ref={iframeRef}
             key={reloadKey}
-            srcDoc={previewData || ''}
+            srcDoc={baseHTML || ''}
             className="flex-1 w-full h-full border-none"
             title="Live Visual Sandbox"
             sandbox="allow-scripts allow-modals allow-same-origin"
+            onLoad={() => {
+              // Initial sync after base shell loads
+              if (iframeRef.current?.contentWindow && vfsPayload) {
+                iframeRef.current.contentWindow.postMessage({
+                  type: 'STUDIO_VFS_UPDATE',
+                  payload: vfsPayload
+                }, '*');
+              }
+            }}
           />
           
           <AnimatePresence>

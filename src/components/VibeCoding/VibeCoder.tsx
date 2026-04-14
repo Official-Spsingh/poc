@@ -10,7 +10,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import AIDrawer from '../Common/AIDrawer';
 import CodePreview from './CodePreview';
 import CodeStructure, { FileNode } from './CodeStructure';
-import { generateSandboxHTML } from './utils/vibeSandboxUtils';
+import { generateSandboxBaseHTML } from './utils/vibeSandboxUtils';
 
 interface VibeCoderProps {
   onBack: () => void;
@@ -140,19 +140,20 @@ const VibeCoder: React.FC<VibeCoderProps> = ({ onBack, initialPrompt, projectId,
     return () => window.removeEventListener('message', handleMessage);
   }, []);
 
-  const previewData = useMemo(() => {
+  const baseHTML = useMemo(() => {
     if (!activeProject) return null;
-    const vfsPayload = Object.keys(activeProject.files).reduce((acc, path) => {
+    const indexCss = (activeProject.files['src/index.css']?.content || '').replace(/@tailwind.*;/g, ''); 
+    return generateSandboxBaseHTML(indexCss);
+  }, [activeProject?.files['src/index.css'], reloadKey]);
+
+  const vfsPayload = useMemo(() => {
+    if (!activeProject) return "";
+    const payload = Object.keys(activeProject.files).reduce((acc, path) => {
       acc[path] = activeProject.files[path].content;
       return acc;
     }, {} as any);
-
-    const indexCss = (activeProject.files['src/index.css']?.content || '').replace(/@tailwind.*;/g, ''); 
-    const sanitizedSourceJSON = btoa(unescape(encodeURIComponent(JSON.stringify(vfsPayload))));
-    
-    return generateSandboxHTML(sanitizedSourceJSON, indexCss);
-
-  }, [activeProject, activeProject?.files, reloadKey]);
+    return btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+  }, [activeProject?.files]);
 
   const handleUpdateFile = (content: string) => {
     if (!projectId) return;
@@ -346,7 +347,8 @@ const VibeCoder: React.FC<VibeCoderProps> = ({ onBack, initialPrompt, projectId,
               {activeTab === 'preview' ? (
                 <CodePreview
                   device={device}
-                  previewData={previewData}
+                  baseHTML={baseHTML}
+                  vfsPayload={vfsPayload}
                   reloadKey={reloadKey}
                   setReloadKey={setReloadKey}
                   showConsole={showConsole}
