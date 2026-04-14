@@ -1,5 +1,5 @@
 
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'motion/react';
 import {
   Plus,
   Trash2
@@ -15,6 +15,7 @@ import GlobalLoader from './components/Common/GlobalLoader';
 import Sidebar from './components/Common/Sidebar';
 import DataSection from './components/Data/DataSection';
 import Dashboard from './components/HomePage/Dashboard';
+import Profile from './components/Profile/Profile';
 import VibeCoder, { Project, generateProjectFiles } from './components/VibeCoding/VibeCoder';
 import VibeHome from './components/VibeCoding/VibeHome';
 import { COMPONENT_METADATA } from './components/Workflow/WorkflowBuilder/constants';
@@ -171,6 +172,8 @@ const App: React.FC = () => {
       case 'workflow-home':
       case 'workflow-builder':
         return getModuleTheme('workflow');
+      case 'profile':
+        return globalTheme || 'light-blue';
       default:
         return globalTheme || 'light-blue';
     }
@@ -469,6 +472,8 @@ const App: React.FC = () => {
                 )}
                 
                 {view === 'data' && <DataSection />}
+
+                {view === 'profile' && <Profile onBack={() => handleSetView('dashboard')} />}
 
                 {view === 'ai-agent-builder' && (
                   <AiAgentBuilder onBack={() => handleSetView('agent-home')} />

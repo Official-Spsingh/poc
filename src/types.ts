@@ -30,7 +30,7 @@ export type NodeType =
   | 'login'
   | 'workflow-caller';
 
-export type ViewType = 'login' | 'forgot-password' | 'dashboard' | 'app-list' | 'app-editor' | 'workflow-builder' | 'workflow-home' | 'agent-home' | 'ai-agent-builder' | 'data' | 'vibe-coder' | 'vibe-home';
+export type ViewType = 'login' | 'forgot-password' | 'dashboard' | 'app-list' | 'app-editor' | 'workflow-builder' | 'workflow-home' | 'agent-home' | 'ai-agent-builder' | 'data' | 'vibe-coder' | 'vibe-home' | 'profile';
 
 export type EventType = 
   | 'call' 
