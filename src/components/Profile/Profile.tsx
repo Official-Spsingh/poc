@@ -23,8 +23,8 @@ interface ProfileProps {
 }
 
 const Profile: React.FC<ProfileProps> = ({ onBack }) => {
-  const [fullName, setFullName] = useState('Arham Ahmed');
-  const [email] = useState('aahmed@lumenore.com');
+  const [fullName, setFullName] = useState('Shubham Pratap SIngh');
+  const [email] = useState('spsingh@lumenore.com');
   const [profilePic, setProfilePic] = useState<string | null>(null);
   
   // Password State
