@@ -58,7 +58,7 @@ const CodePreview: React.FC<CodePreviewProps> = ({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="flex-1 overflow-hidden flex flex-col items-center justify-center relative p-6 md:p-10"
+      className="flex-1 overflow-hidden flex flex-col items-center justify-center relative"
     >
        <div 
          className="bg-mod-surface-card overflow-hidden flex flex-col relative transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-mod-surface-border"
