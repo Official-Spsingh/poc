@@ -223,7 +223,7 @@ const CodePreview: React.FC<CodePreviewProps> = ({
           )}
         </AnimatePresence>
 
-        <div className="absolute bottom-4 right-4 z-20">
+        <div className="fixed bottom-4 right-4 z-20">
           <div className="flex items-center gap-2 px-3 py-1.5 bg-mod-header-btn-bg text-mod-header-btn-text rounded-full text-[9px] font-bold shadow-xl border border-mod-hero-icon-color/20">
             <span className="w-1.5 h-1.5 rounded-full bg-mod-header-btn-text animate-pulse" />
             COMPILER SYNCED

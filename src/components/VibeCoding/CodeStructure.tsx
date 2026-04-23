@@ -19,33 +19,22 @@ import {
   Trash2,
   X,
 } from 'lucide-react';
-import Prism from 'prismjs';
-import 'prismjs/components/prism-css';
-import 'prismjs/components/prism-javascript';
-import 'prismjs/components/prism-json';
-import 'prismjs/components/prism-jsx';
-import 'prismjs/components/prism-tsx';
-import 'prismjs/components/prism-typescript';
-import 'prismjs/themes/prism-tomorrow.css';
 import React, { useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
-import Editor from 'react-simple-code-editor';
+import Editor from '@monaco-editor/react';
 import { Project } from './VibeCoder';
 
 export type FileNode = { name: string; path: string; type: 'file' | 'folder'; children?: FileNode[] };
 
 // ── Syntax highlight ───────────────────────────────────────────────────────────
-const highlightWithPrism = (code: string, filename: string) => {
-  let lang = 'typescript';
-  if (filename.endsWith('.css'))  lang = 'css';
-  else if (filename.endsWith('.json')) lang = 'json';
-  else if (filename.endsWith('.jsx'))  lang = 'jsx';
-  else if (filename.endsWith('.js'))   lang = 'javascript';
-  else if (filename.endsWith('.tsx'))  lang = 'tsx';
-  else if (filename.endsWith('.html')) lang = 'markup';
-  const grammar = Prism.languages[lang] || Prism.languages.typescript || Prism.languages.javascript;
-  if (!grammar) return code;
-  return Prism.highlight(code, grammar, lang);
+const getMonacoLanguage = (filename: string) => {
+  const ext = filename.split('.').pop() ?? '';
+  if (ext === 'tsx' || ext === 'ts') return 'typescript';
+  if (ext === 'jsx' || ext === 'js') return 'javascript';
+  if (ext === 'css')  return 'css';
+  if (ext === 'json') return 'json';
+  if (ext === 'html') return 'html';
+  return 'plaintext';
 };
 
 // ── File icons ─────────────────────────────────────────────────────────────────
@@ -604,12 +593,50 @@ const CodeStructure: React.FC<CodeStructureProps> = ({
         {/* Code editor */}
         <div className="flex-1 overflow-auto scrollbar-custom relative">
           <Editor
+            height="100%"
+            language={getMonacoLanguage(activeFile)}
             value={currentFileContent}
-            onValueChange={handleUpdateFile}
-            highlight={code => highlightWithPrism(code, activeFile)}
-            padding={24}
-            className="min-h-full font-mono text-[13px] leading-relaxed text-[#94a3b8] selection:bg-indigo-500/30"
-            textareaClassName="outline-none caret-indigo-400"
+            onChange={value => handleUpdateFile(value ?? '')}
+            theme="vs-dark"
+            onMount={(editor, monaco) => {
+              monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
+                target: monaco.languages.typescript.ScriptTarget.ESNext,
+                allowNonTsExtensions: true,
+                moduleResolution: monaco.languages.typescript.ModuleResolutionKind.NodeJs,
+                module: monaco.languages.typescript.ModuleKind.ESNext,
+                noEmit: true,
+                esModuleInterop: true,
+                jsx: monaco.languages.typescript.JsxEmit.React,
+                reactNamespace: 'React',
+                allowJs: true,
+                typeRoots: ['node_modules/@types']
+              });
+
+              // Suppress "Cannot find module" errors (2792) since we use CDN imports in the sandbox
+              monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
+                diagnosticCodesToIgnore: [2792],
+                noSemanticValidation: false,
+                noSyntaxValidation: false,
+              });
+            }}
+            options={{
+              minimap: { enabled: false },
+              fontSize: 13,
+              fontFamily: "'Fira Code', 'Cascadia Code', Consolas, monospace",
+              fontLigatures: true,
+              lineNumbers: 'on',
+              roundedSelection: true,
+              scrollBeyondLastLine: false,
+              readOnly: false,
+              automaticLayout: true,
+              padding: { top: 16, bottom: 16 },
+              cursorSmoothCaretAnimation: 'on',
+              smoothScrolling: true,
+              contextmenu: true,
+              suggestOnTriggerCharacters: true,
+              acceptSuggestionOnEnter: 'on',
+              tabSize: 2,
+            }}
           />
         </div>
       </div>
