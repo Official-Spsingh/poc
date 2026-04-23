@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { Minimize2, Terminal as ConsoleIcon } from 'lucide-react';
+import { Minimize2, Terminal as ConsoleIcon, Zap } from 'lucide-react';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -22,6 +22,40 @@ const DEVICE_PRESETS = {
   mobile: { width: '375px', height: '812px', radius: '40px' }
 };
 
+interface LoadingOverlayProps {
+  isVisible: boolean;
+  size?: 'normal' | 'large';
+}
+
+const LoadingOverlay: React.FC<LoadingOverlayProps> = ({ isVisible, size = 'normal' }) => {
+  const isLarge = size === 'large';
+  
+  return (
+    <AnimatePresence>
+      {isVisible && (
+        <motion.div
+          initial={{ opacity: 1 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="absolute inset-0 top-10 flex flex-col items-center justify-center bg-mod-surface-card z-10"
+        >
+          <div className={`relative flex items-center justify-center ${isLarge ? 'w-16 h-16 mb-6' : 'w-12 h-12 mb-5'}`}>
+            <div className={`absolute inset-0 rounded-full ${isLarge ? 'border-4' : 'border-[3px]'} border-mod-surface-border`} />
+            <div className={`absolute inset-0 rounded-full ${isLarge ? 'border-4' : 'border-[3px]'} border-mod-hero-icon-color border-t-transparent animate-spin`} />
+            <Zap size={isLarge ? 20 : 16} className="text-mod-hero-icon-color animate-pulse" />
+          </div>
+          <div className={`${isLarge ? 'text-xs' : 'text-[11px]'} font-black uppercase tracking-[0.2em] text-mod-surface-text-primary mb-2`}>
+            Building Visual
+          </div>
+          <div className={`${isLarge ? 'text-[11px]' : 'text-[10px]'} font-semibold text-mod-surface-text-muted`}>
+            Transpiling and rendering{isLarge ? ' components...' : '...'}
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
+
 const CodePreview: React.FC<CodePreviewProps> = ({
   device,
   baseHTML,
@@ -37,6 +71,21 @@ const CodePreview: React.FC<CodePreviewProps> = ({
   const iframeRef = React.useRef<HTMLIFrameElement>(null);
   const fsIframeRef = React.useRef<HTMLIFrameElement>(null);
   const preset = DEVICE_PRESETS[device];
+
+  const [loadedKey, setLoadedKey] = React.useState(-1);
+  const [loadedHtml, setLoadedHtml] = React.useState<string | null>(null);
+  const [fsLoadedKey, setFsLoadedKey] = React.useState(-1);
+  const [fsLoadedHtml, setFsLoadedHtml] = React.useState<string | null>(null);
+
+  const isLoading = loadedKey !== reloadKey || loadedHtml !== baseHTML;
+  const fsIsLoading = fsLoadedKey !== reloadKey || fsLoadedHtml !== baseHTML;
+
+  React.useEffect(() => {
+    if (!isFullscreen) {
+      setFsLoadedKey(-1);
+      setFsLoadedHtml(null);
+    }
+  }, [isFullscreen]);
 
   React.useEffect(() => {
     if (!vfsPayload) return;
@@ -75,15 +124,18 @@ const CodePreview: React.FC<CodePreviewProps> = ({
             ref={fsIframeRef}
             key={`fs-${reloadKey}`}
             srcDoc={baseHTML || ''}
-            style={{ flex: 1, width: '100%', border: 'none' }}
+            style={{ flex: 1, width: '100%', border: 'none', opacity: fsIsLoading ? 0 : 1, transition: 'opacity 0.3s' }}
             title="Live Visual Fullscreen"
             sandbox="allow-scripts allow-modals allow-same-origin"
             onLoad={() => {
+              setFsLoadedKey(reloadKey);
+              setFsLoadedHtml(baseHTML);
               if (fsIframeRef.current?.contentWindow && vfsPayload) {
                 fsIframeRef.current.contentWindow.postMessage({ type: 'STUDIO_VFS_UPDATE', payload: vfsPayload }, '*');
               }
             }}
           />
+          <LoadingOverlay isVisible={fsIsLoading} size="large" />
         </motion.div>
       )}
     </AnimatePresence>,
@@ -125,15 +177,19 @@ const CodePreview: React.FC<CodePreviewProps> = ({
           ref={iframeRef}
           key={reloadKey}
           srcDoc={baseHTML || ''}
-          className="flex-1 w-full h-full border-none"
+          className={`flex-1 w-full h-full border-none transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
           title="Live Visual Sandbox"
           sandbox="allow-scripts allow-modals allow-same-origin"
           onLoad={() => {
+            setLoadedKey(reloadKey);
+            setLoadedHtml(baseHTML);
             if (iframeRef.current?.contentWindow && vfsPayload) {
               iframeRef.current.contentWindow.postMessage({ type: 'STUDIO_VFS_UPDATE', payload: vfsPayload }, '*');
             }
           }}
         />
+
+        <LoadingOverlay isVisible={isLoading} size="normal" />
 
         <AnimatePresence>
           {showConsole && (

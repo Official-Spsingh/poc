@@ -206,6 +206,12 @@ const AIDrawer: React.FC<AIDrawerProps> = ({
   const syncHeight = () => {
     const el = textareaRef.current;
     if (!el) return;
+    
+    if (!message) {
+      el.style.height = '36px';
+      return;
+    }
+    
     el.style.height = 'auto';
     el.style.height = `${Math.min(el.scrollHeight, 120)}px`;
   };

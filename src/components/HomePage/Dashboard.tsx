@@ -1,5 +1,5 @@
 
-import { ArrowRight, Bot, Clock, Database, ExternalLink, Layout, Plus, Sparkles, Workflow as WorkflowIcon, X, Zap } from 'lucide-react';
+import { ArrowRight, Bot, Clock, Database, ExternalLink, Layout, Plus, Rocket, Sparkles, Workflow as WorkflowIcon, X, Zap } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { ViewType, Workflow } from '../../types';
 import AIDrawer from '../Common/AIDrawer';
@@ -107,6 +107,14 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate, workflows }) => {
       moduleTheme: 'light-violet',
       tag: 'Beta'
     },
+    // {
+    //   id: 'vibe-home' as ViewType,
+    //   title: 'Vibe Coding',
+    //   description: 'Generate code and full applications instantly using natural language prompts.',
+    //   icon: <Sparkles size={32} />,
+    //   moduleTheme: 'light-indigo',
+    //   tag: 'New'
+    // },
     {
       id: 'data' as ViewType,
       title: 'Data',
