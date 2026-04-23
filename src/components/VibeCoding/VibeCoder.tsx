@@ -198,22 +198,21 @@ const VibeCoder: React.FC<VibeCoderProps> = ({ onBack, initialPrompt, projectId,
     } : p));
   };
 
-  const handleCreateNewItem = (parentPath: string, type: 'file' | 'folder') => {
-    const parentFolder = parentPath ? (parentPath.endsWith('/') ? parentPath : `${parentPath}/`) : 'src/';
-    const name = window.prompt(`Enter name for new ${type} in ${parentFolder}:`, type === 'file' ? 'NewFile.tsx' : 'NewFolder');
+  const handleCreateNewItem = (parentPath: string, type: 'file' | 'folder', name: string) => {
     if (!name || !projectId) return;
+    const parentFolder = parentPath ? (parentPath.endsWith('/') ? parentPath : `${parentPath}/`) : 'src/';
     let path = `${parentFolder}${name}`.replace(/\/\//g, '/');
     if (type === 'folder' && !name.includes('.')) path = `${path.replace(/\/$/, '')}/.gitkeep`;
     onUpdateProjects(projects.map(p => {
       if (p.id !== projectId) return p;
-      if (p.files[path]) { alert(`${type} already exists!`); return p; }
+      if (p.files[path]) return p;
       return { ...p, files: { ...p.files, [path]: { language: path.endsWith('.css') ? 'css' : path.endsWith('.json') ? 'json' : 'typescript', content: type === 'folder' ? '' : '// Start...\n' } } };
     }));
     setActiveFile(path);
   };
 
   const handleDeleteItem = (path: string, type: 'file' | 'folder') => {
-    if (!projectId || !window.confirm(`Delete this ${type}?`)) return;
+    if (!projectId) return;
     onUpdateProjects(projects.map(p => {
       if (p.id !== projectId) return p;
       const newFiles = { ...p.files };
