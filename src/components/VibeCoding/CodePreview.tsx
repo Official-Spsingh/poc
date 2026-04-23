@@ -236,4 +236,4 @@ const CodePreview: React.FC<CodePreviewProps> = ({
   );
 };
 
-export default CodePreview;
+export default React.memo(CodePreview);

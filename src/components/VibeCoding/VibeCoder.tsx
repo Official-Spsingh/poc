@@ -15,11 +15,12 @@ import {
   Terminal as ConsoleIcon,
   X,
 } from 'lucide-react';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { type Attachment } from '../Common/AIDrawer';
 import AIDrawer from '../Common/AIDrawer';
 import CodePreview from './CodePreview';
-import CodeStructure, { FileNode } from './CodeStructure';
+import CodeStructure from './CodeStructure';
+import { FileNode } from './fileTreeUtils';
 import { generateSandboxBaseHTML } from './utils/vibeSandboxUtils';
 
 interface VibeCoderProps {
@@ -85,9 +86,17 @@ export const generateProjectFiles = (name: string): { [key: string]: ProjectFile
 const VibeCoder: React.FC<VibeCoderProps> = ({ onBack, initialPrompt, projectId, projects, onUpdateProjects }) => {
   const activeProject = useMemo(() => projects.find(p => p.id === projectId), [projects, projectId]);
 
-  // Always-fresh ref so timeouts don't close over stale projects
+  // Always-fresh refs so callbacks never close over stale values
   const latestProjects = useRef(projects);
   useEffect(() => { latestProjects.current = projects; }, [projects]);
+  const onUpdateProjectsRef = useRef(onUpdateProjects);
+  useEffect(() => { onUpdateProjectsRef.current = onUpdateProjects; }, [onUpdateProjects]);
+
+  // Changes only when files are added/removed/renamed — not when content is edited
+  const filePathsKey = useMemo(
+    () => Object.keys(activeProject?.files ?? {}).sort().join('|'),
+    [activeProject?.files]
+  );
 
   const fileTree = useMemo(() => {
     if (!activeProject) return [];
@@ -112,9 +121,12 @@ const VibeCoder: React.FC<VibeCoderProps> = ({ onBack, initialPrompt, projectId,
     };
     sortNodes(root);
     return root;
-  }, [activeProject?.files]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filePathsKey]);
 
   const [activeFile, setActiveFile] = useState('src/Dashboard.tsx');
+  const latestActiveFile = useRef(activeFile);
+  useEffect(() => { latestActiveFile.current = activeFile; }, [activeFile]);
   const [activeTab, setActiveTab] = useState<'preview' | 'code'>('preview');
   const [device, setDevice] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
   const [prompt, setPrompt] = useState('');
@@ -181,39 +193,43 @@ const VibeCoder: React.FC<VibeCoderProps> = ({ onBack, initialPrompt, projectId,
     return generateSandboxBaseHTML(indexCss);
   }, [activeProject?.files['src/index.css'], reloadKey]);
 
+  // Skip the expensive JSON+base64 encode while the user is in the code editor
   const vfsPayload = useMemo(() => {
-    if (!activeProject) return '';
+    if (activeTab !== 'preview' || !activeProject) return '';
     const payload = Object.keys(activeProject.files).reduce((acc, path) => {
       acc[path] = activeProject.files[path].content;
       return acc;
     }, {} as Record<string, string>);
     return btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
-  }, [activeProject?.files]);
+  }, [activeTab, activeProject?.files]);
 
-  const handleUpdateFile = (content: string) => {
+  // useCallback + ref pattern: stable references that never close over stale state.
+  // This allows FileTreeItem (React.memo'd) to skip re-renders during typing.
+  const handleUpdateFile = useCallback((content: string) => {
     if (!projectId) return;
-    onUpdateProjects(projects.map(p => p.id === projectId ? {
+    const af = latestActiveFile.current;
+    onUpdateProjectsRef.current(latestProjects.current.map(p => p.id === projectId ? {
       ...p,
-      files: { ...p.files, [activeFile]: { ...p.files[activeFile], content } },
+      files: { ...p.files, [af]: { ...p.files[af], content } },
     } : p));
-  };
+  }, [projectId]);
 
-  const handleCreateNewItem = (parentPath: string, type: 'file' | 'folder', name: string) => {
+  const handleCreateNewItem = useCallback((parentPath: string, type: 'file' | 'folder', name: string) => {
     if (!name || !projectId) return;
     const parentFolder = parentPath ? (parentPath.endsWith('/') ? parentPath : `${parentPath}/`) : 'src/';
     let path = `${parentFolder}${name}`.replace(/\/\//g, '/');
     if (type === 'folder' && !name.includes('.')) path = `${path.replace(/\/$/, '')}/.gitkeep`;
-    onUpdateProjects(projects.map(p => {
+    onUpdateProjectsRef.current(latestProjects.current.map(p => {
       if (p.id !== projectId) return p;
       if (p.files[path]) return p;
       return { ...p, files: { ...p.files, [path]: { language: path.endsWith('.css') ? 'css' : path.endsWith('.json') ? 'json' : 'typescript', content: type === 'folder' ? '' : '// Start...\n' } } };
     }));
     setActiveFile(path);
-  };
+  }, [projectId]);
 
-  const handleDeleteItem = (path: string, type: 'file' | 'folder') => {
+  const handleDeleteItem = useCallback((path: string, type: 'file' | 'folder') => {
     if (!projectId) return;
-    onUpdateProjects(projects.map(p => {
+    onUpdateProjectsRef.current(latestProjects.current.map(p => {
       if (p.id !== projectId) return p;
       const newFiles = { ...p.files };
       if (type === 'folder') {
@@ -222,12 +238,12 @@ const VibeCoder: React.FC<VibeCoderProps> = ({ onBack, initialPrompt, projectId,
       } else delete newFiles[path];
       return { ...p, files: newFiles };
     }));
-    if (activeFile.startsWith(path)) setActiveFile('src/main.tsx');
-  };
+    if (latestActiveFile.current.startsWith(path)) setActiveFile('src/main.tsx');
+  }, [projectId]);
 
-  const handleRenameItem = (oldPath: string, newPath: string) => {
+  const handleRenameItem = useCallback((oldPath: string, newPath: string) => {
     if (!projectId || !newPath || oldPath === newPath) return;
-    onUpdateProjects(projects.map(p => {
+    onUpdateProjectsRef.current(latestProjects.current.map(p => {
       if (p.id !== projectId) return p;
       const newFiles = { ...p.files };
       const isFolder = !oldPath.includes('.') || oldPath.endsWith('/');
@@ -240,8 +256,9 @@ const VibeCoder: React.FC<VibeCoderProps> = ({ onBack, initialPrompt, projectId,
       } else { newFiles[newPath] = newFiles[oldPath]; delete newFiles[oldPath]; }
       return { ...p, files: newFiles };
     }));
-    if (activeFile.startsWith(oldPath)) setActiveFile(activeFile.replace(oldPath, newPath));
-  };
+    const af = latestActiveFile.current;
+    if (af.startsWith(oldPath)) setActiveFile(af.replace(oldPath, newPath));
+  }, [projectId]);
 
   const handleGenerate = (msg: string, atts?: Attachment[]) => {
     if ((!msg.trim() && !atts?.length) || !projectId) return;

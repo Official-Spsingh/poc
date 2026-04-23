@@ -3,15 +3,9 @@ import {
   ChevronDown,
   ChevronRight,
   ChevronsUpDown,
-  FileCode,
-  FileJson,
   FilePlus,
-  FileText,
   Folder,
-  FolderOpen,
   FolderPlus,
-  Globe,
-  Hash,
   MoreHorizontal,
   Pencil,
   Plus,
@@ -19,256 +13,34 @@ import {
   Trash2,
   X,
 } from 'lucide-react';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { startTransition, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import Editor from '@monaco-editor/react';
 import { Project } from './VibeCoder';
+import FileTreeItem from './FileTreeItem';
+import InlineNewItem from './InlineNewItem';
+import MonacoLoader from './MonacoLoader';
+import { FileNode, getFileIcon, getLanguageLabel, getMonacoLanguage } from './fileTreeUtils';
 
-export type FileNode = { name: string; path: string; type: 'file' | 'folder'; children?: FileNode[] };
-
-// ── Syntax highlight ───────────────────────────────────────────────────────────
-const getMonacoLanguage = (filename: string) => {
-  const ext = filename.split('.').pop() ?? '';
-  if (ext === 'tsx' || ext === 'ts') return 'typescript';
-  if (ext === 'jsx' || ext === 'js') return 'javascript';
-  if (ext === 'css')  return 'css';
-  if (ext === 'json') return 'json';
-  if (ext === 'html') return 'html';
-  return 'plaintext';
-};
-
-// ── File icons ─────────────────────────────────────────────────────────────────
-export const getFileIcon = (filename: string, size = 13) => {
-  if (filename.endsWith('.tsx') || filename.endsWith('.ts'))
-    return <FileCode size={size} className="text-blue-400" />;
-  if (filename.endsWith('.jsx') || filename.endsWith('.js'))
-    return <FileCode size={size} className="text-yellow-400" />;
-  if (filename.endsWith('.css'))
-    return <Hash size={size} className="text-pink-400" />;
-  if (filename.endsWith('.json'))
-    return <FileJson size={size} className="text-amber-400" />;
-  if (filename.endsWith('.html'))
-    return <Globe size={size} className="text-orange-400" />;
-  return <FileText size={size} className="text-slate-400" />;
-};
-
-const LANG_LABEL: Record<string, string> = {
-  tsx: 'TSX', ts: 'TypeScript', jsx: 'JSX', js: 'JavaScript',
-  css: 'CSS', json: 'JSON', html: 'HTML', txt: 'Text',
-};
-const getLanguageLabel = (filename: string) => {
-  const ext = filename.split('.').pop() ?? '';
-  return LANG_LABEL[ext] ?? ext.toUpperCase();
-};
-
-// ── Inline new-item input ──────────────────────────────────────────────────────
-const InlineNewItem: React.FC<{
-  type: 'file' | 'folder';
-  depth: number;
-  onCommit: (name: string) => void;
-  onCancel: () => void;
-}> = ({ type, depth, onCommit, onCancel }) => {
-  const [name, setName] = useState(type === 'file' ? 'NewFile.tsx' : 'NewFolder');
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    setTimeout(() => { inputRef.current?.focus(); inputRef.current?.select(); }, 30);
-  }, []);
-
-  return (
-    <div
-      style={{ paddingLeft: `${depth * 12 + 6}px` }}
-      className="flex items-center gap-1 pr-2 h-7 mx-1"
-    >
-      <span className="w-3.5 shrink-0" />
-      <span className="shrink-0 flex items-center justify-center">
-        {type === 'file' ? getFileIcon(name || 'file.tsx') : <Folder size={13} className="text-amber-400" />}
-      </span>
-      <input
-        ref={inputRef}
-        value={name}
-        onChange={e => setName(e.target.value)}
-        onKeyDown={e => {
-          if (e.key === 'Enter')  { e.stopPropagation(); name.trim() ? onCommit(name.trim()) : onCancel(); }
-          if (e.key === 'Escape') { e.stopPropagation(); onCancel(); }
-        }}
-        onBlur={() => { name.trim() ? onCommit(name.trim()) : onCancel(); }}
-        className="flex-1 bg-mod-surface-bg border border-mod-hero-icon-color/60 rounded px-1.5 py-0.5 text-[11px] text-mod-surface-text-primary outline-none min-w-0 ml-1"
-      />
-    </div>
-  );
-};
-
-// ── FileTreeItem ───────────────────────────────────────────────────────────────
-interface FileTreeItemProps {
-  node: FileNode;
-  depth?: number;
-  activeFile: string;
-  collapseKey: number;
-  renamingPath: string | null;
-  onSelectFile: (path: string) => void;
-  onRenameItem: (oldPath: string, newPath: string) => void;
-  onRenameCancel: () => void;
-  onOpenContextMenu: (path: string, type: 'file' | 'folder', x: number, y: number) => void;
-  pendingCreate: { parentPath: string; type: 'file' | 'folder' } | null;
-  setPendingCreate: React.Dispatch<React.SetStateAction<{ parentPath: string; type: 'file' | 'folder' } | null>>;
-  onCommitCreate: (parentPath: string, type: 'file' | 'folder', name: string) => void;
-}
-
-const FileTreeItem: React.FC<FileTreeItemProps> = ({
-  node, depth = 0, activeFile, collapseKey, renamingPath,
-  onSelectFile, onRenameItem, onRenameCancel, onOpenContextMenu,
-  pendingCreate, setPendingCreate, onCommitCreate,
-}) => {
-  const [isOpen, setIsOpen]         = useState(depth < 2);
-  const [renameValue, setRenameValue] = useState('');
-  const renameInputRef = useRef<HTMLInputElement>(null);
-  const isFile      = node.type === 'file';
-  const isActive    = isFile && activeFile === node.path;
-  const isRenaming  = renamingPath === node.path;
-  const isCreatingHere = !isFile && pendingCreate?.parentPath === node.path;
-
-  // Collapse all
-  useEffect(() => { if (!isFile) setIsOpen(false); }, [collapseKey]);
-
-  // Start rename when triggered from context menu
-  useEffect(() => {
-    if (isRenaming) {
-      setRenameValue(node.name);
-      setTimeout(() => { renameInputRef.current?.focus(); renameInputRef.current?.select(); }, 30);
-    }
-  }, [isRenaming]);
-
-  // Auto-open folder when a create is requested inside it
-  useEffect(() => {
-    if (isCreatingHere) setIsOpen(true);
-  }, [pendingCreate]);
-
-  const commitRename = () => {
-    const trimmed = renameValue.trim();
-    if (trimmed && trimmed !== node.name) {
-      const lastSlash = node.path.lastIndexOf('/');
-      const newPath = lastSlash >= 0 ? `${node.path.substring(0, lastSlash)}/${trimmed}` : trimmed;
-      onRenameItem(node.path, newPath);
-    }
-    onRenameCancel();
-  };
-
-  const handleClick = () => {
-    if (isRenaming) return;
-    if (isFile) onSelectFile(node.path);
-    else setIsOpen(v => !v);
-  };
-
-  const handleMenuBtn = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
-    onOpenContextMenu(node.path, node.type, rect.left, rect.bottom);
-  };
-
-  return (
-    <div className="w-full">
-      <div
-        onClick={handleClick}
-        style={{ paddingLeft: `${depth * 12 + 6}px` }}
-        className={`group relative flex items-center gap-1 pr-1 h-7 mx-1 rounded-md cursor-pointer transition-colors ${
-          isActive
-            ? 'bg-mod-hero-badge-bg/50 text-mod-surface-text-primary'
-            : 'text-mod-surface-text-secondary hover:bg-mod-surface-hover hover:text-mod-surface-text-primary'
-        }`}
-      >
-        {isActive && (
-          <span className="absolute left-0 top-1 bottom-1 w-0.5 bg-mod-hero-icon-color rounded-r-full" />
-        )}
-
-        <span className="w-3.5 shrink-0 flex items-center justify-center">
-          {!isFile && (
-            <ChevronRight
-              size={11}
-              className={`text-mod-surface-text-muted transition-transform duration-150 ${isOpen ? 'rotate-90' : ''}`}
-            />
-          )}
-        </span>
-
-        <span className="shrink-0 flex items-center justify-center">
-          {isFile
-            ? getFileIcon(node.name)
-            : isOpen
-              ? <FolderOpen size={13} className="text-mod-hero-icon-color" />
-              : <Folder     size={13} className="text-amber-400" />
-          }
-        </span>
-
-        {isRenaming ? (
-          <input
-            ref={renameInputRef}
-            value={renameValue}
-            onChange={e => setRenameValue(e.target.value)}
-            onKeyDown={e => {
-              if (e.key === 'Enter')  { e.stopPropagation(); commitRename(); }
-              if (e.key === 'Escape') { e.stopPropagation(); onRenameCancel(); }
-            }}
-            onBlur={commitRename}
-            onClick={e => e.stopPropagation()}
-            className="flex-1 bg-mod-surface-bg border border-mod-hero-icon-color/60 rounded px-1.5 py-0.5 text-[11px] text-mod-surface-text-primary outline-none min-w-0 ml-1"
-          />
-        ) : (
-          <span className="flex-1 truncate text-[11px] font-medium ml-1 leading-none select-none">
-            {node.name}
-          </span>
-        )}
-
-        {!isRenaming && (
-          <button
-            onClick={handleMenuBtn}
-            className="opacity-0 group-hover:opacity-100 p-1 rounded hover:bg-mod-surface-hover text-mod-surface-text-muted hover:text-mod-surface-text-primary transition-all shrink-0"
-            title="More actions"
-          >
-            <MoreHorizontal size={12} />
-          </button>
-        )}
-      </div>
-
-      <AnimatePresence initial={false}>
-        {!isFile && isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.15, ease: 'easeInOut' }}
-            className="overflow-hidden"
-          >
-            {isCreatingHere && (
-              <InlineNewItem
-                type={pendingCreate!.type}
-                depth={depth + 1}
-                onCommit={name => { onCommitCreate(node.path, pendingCreate!.type, name); setPendingCreate(null); }}
-                onCancel={() => setPendingCreate(null)}
-              />
-            )}
-            {node.children?.map(child => (
-              <FileTreeItem
-                key={child.path}
-                node={child}
-                depth={depth + 1}
-                activeFile={activeFile}
-                collapseKey={collapseKey}
-                renamingPath={renamingPath}
-                onSelectFile={onSelectFile}
-                onRenameItem={onRenameItem}
-                onRenameCancel={onRenameCancel}
-                onOpenContextMenu={onOpenContextMenu}
-                pendingCreate={pendingCreate}
-                setPendingCreate={setPendingCreate}
-                onCommitCreate={onCommitCreate}
-              />
-            ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-};
+// Static editor options — outside component to avoid recreation on every render
+const EDITOR_OPTIONS = {
+  minimap: { enabled: false },
+  fontSize: 13,
+  fontFamily: "'Fira Code', 'Cascadia Code', Consolas, monospace",
+  fontLigatures: true,
+  lineNumbers: 'on' as const,
+  roundedSelection: true,
+  scrollBeyondLastLine: false,
+  readOnly: false,
+  automaticLayout: true,
+  padding: { top: 16, bottom: 16 },
+  cursorSmoothCaretAnimation: 'off' as const,
+  smoothScrolling: true,
+  contextmenu: true,
+  suggestOnTriggerCharacters: true,
+  acceptSuggestionOnEnter: 'on' as const,
+  tabSize: 2,
+} as const;
 
 // ── CodeStructure ──────────────────────────────────────────────────────────────
 interface CodeStructureProps {
@@ -292,6 +64,7 @@ const CodeStructure: React.FC<CodeStructureProps> = ({
   handleDeleteItem,
   handleRenameItem,
 }) => {
+  const [isEditorReady, setIsEditorReady] = useState(false);
   const [filterText, setFilterText]   = useState('');
   const [showNewMenu, setShowNewMenu] = useState(false);
   const [collapseKey, setCollapseKey] = useState(0);
@@ -300,6 +73,17 @@ const CodeStructure: React.FC<CodeStructureProps> = ({
   const [contextMenu, setContextMenu]    = useState<{ path: string; type: 'file' | 'folder'; x: number; y: number } | null>(null);
   const newMenuRef     = useRef<HTMLDivElement>(null);
   const contextMenuRef = useRef<HTMLDivElement>(null);
+
+  // Editor refs — used to drive Monaco without the controlled-component re-render loop
+  const editorRef       = useRef<any>(null);
+  const activeFileRef   = useRef(activeFile);
+  const latestFilesRef  = useRef(activeProject.files);
+  // When we call editor.setValue() programmatically (file switch / mount), Monaco fires
+  // onChange synchronously. At that moment VibeCoder's latestActiveFile ref hasn't been
+  // updated yet (parent effects run after children), so handleUpdateFile would write the
+  // new content to the wrong file path. This flag suppresses those spurious saves.
+  const suppressSaveRef = useRef(false);
+  useEffect(() => { latestFilesRef.current = activeProject.files; }, [activeProject.files]);
 
   // Close new-menu on outside click
   useEffect(() => {
@@ -323,12 +107,63 @@ const CodeStructure: React.FC<CodeStructureProps> = ({
     return () => document.removeEventListener('mousedown', handler);
   }, [contextMenu]);
 
-  const onCommitCreate = (parentPath: string, type: 'file' | 'folder', name: string) => {
-    handleCreateNewItem(parentPath, type, name);
-  };
+  // Only sync editor on file switch — never on content changes while typing.
+  // activeFileRef is always updated first so handleEditorMount can read the correct
+  // file even if Monaco hadn't finished loading when the switch happened.
+  useEffect(() => {
+    const prevFile = activeFileRef.current;
+    activeFileRef.current = activeFile; // always track latest, even before editor is ready
+    if (!editorRef.current || activeFile === prevFile) return;
+    suppressSaveRef.current = true;
+    editorRef.current.setValue(latestFilesRef.current[activeFile]?.content ?? '');
+    suppressSaveRef.current = false;
+  }, [activeFile]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Flat file list for filter mode
-  const flatFiles = (() => {
+  // Stable callbacks to avoid re-renders in memoized children
+  const handleRenameCancel = useCallback(() => setRenamingPath(null), []);
+
+  const handleOpenContextMenu = useCallback((path: string, type: 'file' | 'folder', x: number, y: number) => {
+    setContextMenu({ path, type, x, y });
+  }, []);
+
+  const onCommitCreate = useCallback((parentPath: string, type: 'file' | 'folder', name: string) => {
+    handleCreateNewItem(parentPath, type, name);
+  }, [handleCreateNewItem]);
+
+  const handleEditorChange = useCallback((value: string | undefined) => {
+    if (suppressSaveRef.current) return; // fired by setValue, not user input — skip
+    startTransition(() => handleUpdateFile(value ?? ''));
+  }, [handleUpdateFile]);
+
+  const handleEditorMount = useCallback((editor: any, monaco: any) => {
+    editorRef.current = editor;
+    // If the user switched files while Monaco was loading, defaultValue would be stale —
+    // force-sync the correct content now. Suppress onChange so it doesn't save to wrong file.
+    suppressSaveRef.current = true;
+    editor.setValue(latestFilesRef.current[activeFileRef.current]?.content ?? '');
+    suppressSaveRef.current = false;
+    setIsEditorReady(true);
+    monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
+      target: monaco.languages.typescript.ScriptTarget.ESNext,
+      allowNonTsExtensions: true,
+      moduleResolution: monaco.languages.typescript.ModuleResolutionKind.NodeJs,
+      module: monaco.languages.typescript.ModuleKind.ESNext,
+      noEmit: true,
+      esModuleInterop: true,
+      jsx: monaco.languages.typescript.JsxEmit.React,
+      reactNamespace: 'React',
+      allowJs: true,
+      typeRoots: ['node_modules/@types'],
+    });
+    monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
+      diagnosticCodesToIgnore: [2792],
+      noSemanticValidation: false,
+      noSyntaxValidation: false,
+    });
+  }, []);
+
+  // Memoized derived values — only recomputed when dependencies change
+  const flatFiles = useMemo(() => {
     const result: FileNode[] = [];
     const walk = (nodes: FileNode[]) => nodes.forEach(n => {
       if (n.type === 'file') result.push(n);
@@ -336,23 +171,33 @@ const CodeStructure: React.FC<CodeStructureProps> = ({
     });
     walk(fileTree);
     return result;
-  })();
+  }, [fileTree]);
 
-  const filteredFiles = filterText.trim()
-    ? flatFiles.filter(f => f.name.toLowerCase().includes(filterText.toLowerCase()))
-    : null;
-
-  const totalFiles   = flatFiles.length;
-  const totalFolders = (() => {
+  const totalFolders = useMemo(() => {
     let c = 0;
-    const walk = (nodes: FileNode[]) => nodes.forEach(n => { if (n.type === 'folder') { c++; if (n.children) walk(n.children); } });
+    const walk = (nodes: FileNode[]) => nodes.forEach(n => {
+      if (n.type === 'folder') { c++; if (n.children) walk(n.children); }
+    });
     walk(fileTree);
     return c;
-  })();
+  }, [fileTree]);
 
-  const breadcrumbs = activeFile.split('/');
-  const langLabel   = getLanguageLabel(activeFile);
-  const currentFileContent = activeProject.files[activeFile]?.content ?? '';
+  const filteredFiles = useMemo(() =>
+    filterText.trim()
+      ? flatFiles.filter(f => f.name.toLowerCase().includes(filterText.toLowerCase()))
+      : null,
+    [filterText, flatFiles]
+  );
+
+  const breadcrumbs = useMemo(() => activeFile.split('/'), [activeFile]);
+  const langLabel   = useMemo(() => getLanguageLabel(activeFile), [activeFile]);
+  const lineCount   = useMemo(
+    () => (activeProject.files[activeFile]?.content ?? '').split('\n').length,
+    [activeProject.files, activeFile]
+  );
+
+  // defaultValue for Monaco — only used at initial mount; file switches go through the useEffect
+  const [defaultEditorContent] = useState(() => activeProject.files[activeFile]?.content ?? '');
 
   // ── Context menu portal ─────────────────────────────────────────────────────
   const contextMenuPortal = contextMenu ? ReactDOM.createPortal(
@@ -534,8 +379,8 @@ const CodeStructure: React.FC<CodeStructureProps> = ({
                   renamingPath={renamingPath}
                   onSelectFile={setActiveFile}
                   onRenameItem={handleRenameItem}
-                  onRenameCancel={() => setRenamingPath(null)}
-                  onOpenContextMenu={(path, type, x, y) => setContextMenu({ path, type, x, y })}
+                  onRenameCancel={handleRenameCancel}
+                  onOpenContextMenu={handleOpenContextMenu}
                   pendingCreate={pendingCreate}
                   setPendingCreate={setPendingCreate}
                   onCommitCreate={onCommitCreate}
@@ -548,7 +393,7 @@ const CodeStructure: React.FC<CodeStructureProps> = ({
         {/* Footer */}
         <div className="px-3 py-2 border-t border-mod-surface-border shrink-0 flex items-center gap-2">
           <span className="text-[9px] text-mod-surface-text-muted font-mono">
-            {totalFiles} file{totalFiles !== 1 ? 's' : ''} · {totalFolders} folder{totalFolders !== 1 ? 's' : ''}
+            {flatFiles.length} file{flatFiles.length !== 1 ? 's' : ''} · {totalFolders} folder{totalFolders !== 1 ? 's' : ''}
           </span>
         </div>
       </aside>
@@ -556,7 +401,7 @@ const CodeStructure: React.FC<CodeStructureProps> = ({
       {/* ── Editor ── */}
       <div className="flex-1 flex flex-col overflow-hidden" style={{ backgroundColor: '#0f172a' }}>
 
-        {/* Editor header with breadcrumb — dark regardless of theme */}
+        {/* Editor header with breadcrumb */}
         <div className="h-10 border-b px-4 flex items-center justify-between shrink-0"
           style={{ backgroundColor: '#0d1117', borderColor: 'rgba(255,255,255,0.06)' }}
         >
@@ -585,7 +430,7 @@ const CodeStructure: React.FC<CodeStructureProps> = ({
               {langLabel}
             </span>
             <span className="text-[9px] font-mono" style={{ color: '#475569' }}>
-              {currentFileContent.split('\n').length} lines
+              {lineCount} lines
             </span>
           </div>
         </div>
@@ -595,48 +440,13 @@ const CodeStructure: React.FC<CodeStructureProps> = ({
           <Editor
             height="100%"
             language={getMonacoLanguage(activeFile)}
-            value={currentFileContent}
-            onChange={value => handleUpdateFile(value ?? '')}
+            defaultValue={defaultEditorContent}
+            onChange={handleEditorChange}
             theme="vs-dark"
-            onMount={(editor, monaco) => {
-              monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
-                target: monaco.languages.typescript.ScriptTarget.ESNext,
-                allowNonTsExtensions: true,
-                moduleResolution: monaco.languages.typescript.ModuleResolutionKind.NodeJs,
-                module: monaco.languages.typescript.ModuleKind.ESNext,
-                noEmit: true,
-                esModuleInterop: true,
-                jsx: monaco.languages.typescript.JsxEmit.React,
-                reactNamespace: 'React',
-                allowJs: true,
-                typeRoots: ['node_modules/@types']
-              });
-
-              // Suppress "Cannot find module" errors (2792) since we use CDN imports in the sandbox
-              monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
-                diagnosticCodesToIgnore: [2792],
-                noSemanticValidation: false,
-                noSyntaxValidation: false,
-              });
-            }}
-            options={{
-              minimap: { enabled: false },
-              fontSize: 13,
-              fontFamily: "'Fira Code', 'Cascadia Code', Consolas, monospace",
-              fontLigatures: true,
-              lineNumbers: 'on',
-              roundedSelection: true,
-              scrollBeyondLastLine: false,
-              readOnly: false,
-              automaticLayout: true,
-              padding: { top: 16, bottom: 16 },
-              cursorSmoothCaretAnimation: 'on',
-              smoothScrolling: true,
-              contextmenu: true,
-              suggestOnTriggerCharacters: true,
-              acceptSuggestionOnEnter: 'on',
-              tabSize: 2,
-            }}
+            onMount={handleEditorMount}
+            loading={<MonacoLoader />}
+            options={EDITOR_OPTIONS}
+            style={{ opacity: isEditorReady ? 1 : 0, transition: 'opacity 0.2s ease' }}
           />
         </div>
       </div>
