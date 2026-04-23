@@ -31,13 +31,16 @@ const Login: React.FC<LoginProps> = ({ onLogin, onForgotPassword }) => {
     try {
       const data = await makeRequest.post('/secure/login-build', { email, password });
 
-      if (data && data.tenant) {
+      if (data && data.token) {
+        sessionStorage.setItem('access_token', data.token);
+        onLogin();
+      } else if (data && data.tenant) {
         // Formats the tenant object into an array for selection
         const orgsList = Object.entries(data.tenant).map(([id, name]) => ({
           id,
           name: typeof name === 'string' ? name : 'Unknown Organization'
         }));
-        
+
         setOrganizations(orgsList);
         setStep('organization');
       } else {

@@ -239,7 +239,8 @@ const App: React.FC = () => {
       name,
       lastEdited: 'Just now',
       files: generateProjectFiles(name),
-      history: [{ id: 1, type: 'bot', text: `Project "${name}" initialized. Syncing your vision...`, time: "Just now" }]
+      history: [{ id: 1, type: 'bot', text: `Project "${name}" initialized. Syncing your vision...`, time: "Just now" }],
+      versions: [],
     };
     setVibeProjects([newProject, ...vibeProjects]);
     setActiveVibeProjectId(newProject.id);
