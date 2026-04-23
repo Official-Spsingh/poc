@@ -1,8 +1,6 @@
 import { FileCode, FileJson, FileText, Globe, Hash } from 'lucide-react';
 import React from 'react';
 
-export type FileNode = { name: string; path: string; type: 'file' | 'folder'; children?: FileNode[] };
-
 export const getMonacoLanguage = (filename: string) => {
   const ext = filename.split('.').pop() ?? '';
   if (ext === 'tsx' || ext === 'ts') return 'typescript';

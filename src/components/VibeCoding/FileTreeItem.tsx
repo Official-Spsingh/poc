@@ -2,22 +2,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronRight, Folder, FolderOpen, MoreHorizontal } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
 import InlineNewItem from './InlineNewItem';
-import { FileNode, getFileIcon } from './fileTreeUtils';
-
-export interface FileTreeItemProps {
-  node: FileNode;
-  depth?: number;
-  activeFile: string;
-  collapseKey: number;
-  renamingPath: string | null;
-  onSelectFile: (path: string) => void;
-  onRenameItem: (oldPath: string, newPath: string) => void;
-  onRenameCancel: () => void;
-  onOpenContextMenu: (path: string, type: 'file' | 'folder', x: number, y: number) => void;
-  pendingCreate: { parentPath: string; type: 'file' | 'folder' } | null;
-  setPendingCreate: React.Dispatch<React.SetStateAction<{ parentPath: string; type: 'file' | 'folder' } | null>>;
-  onCommitCreate: (parentPath: string, type: 'file' | 'folder', name: string) => void;
-}
+import { getFileIcon } from './fileTreeUtils';
+import { type FileTreeItemProps } from './vibeCoderTypes';
 
 const FileTreeItem = React.memo<FileTreeItemProps>(({
   node, depth = 0, activeFile, collapseKey, renamingPath,

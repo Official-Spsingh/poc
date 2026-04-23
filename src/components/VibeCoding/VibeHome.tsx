@@ -21,17 +21,7 @@ import StudioTable from '../Common/StudioTable';
 import StudioTipsSection from '../Common/StudioTipsSection';
 import StudioToolbar from '../Common/StudioToolbar';
 
-interface Project {
-  id: string;
-  name: string;
-  lastEdited: string;
-}
-
-interface VibeHomeProps {
-  onStartProject: (initialPrompt?: string) => void;
-  onOpenProject: (projectId: string) => void;
-  projects: Project[];
-}
+import { type Project, type VibeHomeProps } from "./vibeCoderTypes";
 
 const VIBE_HERO_TITLES = [
   "What application shall we vibe today?",

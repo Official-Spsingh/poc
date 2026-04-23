@@ -1,13 +1,7 @@
 import { Folder } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
 import { getFileIcon } from './fileTreeUtils';
-
-interface InlineNewItemProps {
-  type: 'file' | 'folder';
-  depth: number;
-  onCommit: (name: string) => void;
-  onCancel: () => void;
-}
+import { type InlineNewItemProps } from './vibeCoderTypes';
 
 const InlineNewItem: React.FC<InlineNewItemProps> = ({ type, depth, onCommit, onCancel }) => {
   const [name, setName] = useState(type === 'file' ? 'NewFile.tsx' : 'NewFolder');

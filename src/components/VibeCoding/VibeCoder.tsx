@@ -20,38 +20,9 @@ import { type Attachment } from '../Common/AIDrawer';
 import AIDrawer from '../Common/AIDrawer';
 import CodePreview from './CodePreview';
 import CodeStructure from './CodeStructure';
-import { FileNode } from './fileTreeUtils';
+import { type FileNode, type Project, type ProjectFile, type ProjectVersion, type VibeCoderProps, type ConsoleLog } from "./vibeCoderTypes";
 import { generateSandboxBaseHTML } from './utils/vibeSandboxUtils';
 
-interface VibeCoderProps {
-  onBack: () => void;
-  initialPrompt?: string;
-  projectId?: string | null;
-  projects: Project[];
-  onUpdateProjects: (projects: Project[]) => void;
-}
-
-export type ProjectFile = {
-  language: string;
-  content: string;
-};
-
-export type ProjectVersion = {
-  id: string;
-  label: string;
-  description: string;
-  timestamp: string;
-  files: { [key: string]: ProjectFile };
-};
-
-export type Project = {
-  id: string;
-  name: string;
-  lastEdited: string;
-  files: { [key: string]: ProjectFile };
-  history: { id: number; type: 'user' | 'bot'; text: string; time: string; attachments?: Attachment[] }[];
-  versions: ProjectVersion[];
-};
 
 export const generateProjectFiles = (name: string): { [key: string]: ProjectFile } => {
   const slug = name.toLowerCase().replace(/\s+/g, '-');
@@ -131,7 +102,7 @@ const VibeCoder: React.FC<VibeCoderProps> = ({ onBack, initialPrompt, projectId,
   const [device, setDevice] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
   const [prompt, setPrompt] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
-  const [consoleLogs, setConsoleLogs] = useState<{ type: 'log' | 'error' | 'warn'; message: string; time: string }[]>([]);
+  const [consoleLogs, setConsoleLogs] = useState<ConsoleLog[]>([]);
   const [showConsole, setShowConsole] = useState(false);
   const [reloadKey, setReloadKey] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);

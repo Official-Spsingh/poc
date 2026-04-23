@@ -2,19 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Minimize2, Terminal as ConsoleIcon, Zap } from 'lucide-react';
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-interface CodePreviewProps {
-  device: 'desktop' | 'tablet' | 'mobile';
-  baseHTML: string | null;
-  vfsPayload: string;
-  reloadKey: number;
-  showConsole: boolean;
-  consoleLogs: { type: 'log' | 'error' | 'warn', message: string, time: string }[];
-  setConsoleLogs: React.Dispatch<React.SetStateAction<any[]>>;
-  isFullscreen: boolean;
-  setIsFullscreen: React.Dispatch<React.SetStateAction<boolean>>;
-  projectId?: string;
-}
+import { type CodePreviewProps, type LoadingOverlayProps } from './vibeCoderTypes';
 
 const DEVICE_PRESETS = {
   desktop: { width: '100%', height: '100%', radius: '0px' },
@@ -22,10 +10,6 @@ const DEVICE_PRESETS = {
   mobile: { width: '375px', height: '812px', radius: '40px' }
 };
 
-interface LoadingOverlayProps {
-  isVisible: boolean;
-  size?: 'normal' | 'large';
-}
 
 const LoadingOverlay: React.FC<LoadingOverlayProps> = ({ isVisible, size = 'normal' }) => {
   const isLarge = size === 'large';

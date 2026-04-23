@@ -16,11 +16,11 @@ import {
 import React, { startTransition, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import Editor from '@monaco-editor/react';
-import { Project } from './VibeCoder';
 import FileTreeItem from './FileTreeItem';
 import InlineNewItem from './InlineNewItem';
 import MonacoLoader from './MonacoLoader';
-import { FileNode, getFileIcon, getLanguageLabel, getMonacoLanguage } from './fileTreeUtils';
+import { getFileIcon, getLanguageLabel, getMonacoLanguage } from './fileTreeUtils';
+import { type CodeStructureProps, type FileNode } from './vibeCoderTypes';
 
 // Static editor options — outside component to avoid recreation on every render
 const EDITOR_OPTIONS = {
@@ -41,18 +41,6 @@ const EDITOR_OPTIONS = {
   acceptSuggestionOnEnter: 'on' as const,
   tabSize: 2,
 } as const;
-
-// ── CodeStructure ──────────────────────────────────────────────────────────────
-interface CodeStructureProps {
-  fileTree: FileNode[];
-  activeFile: string;
-  setActiveFile: (file: string) => void;
-  activeProject: Project;
-  handleUpdateFile: (content: string) => void;
-  handleCreateNewItem: (parentPath: string, type: 'file' | 'folder', name: string) => void;
-  handleDeleteItem: (path: string, type: 'file' | 'folder') => void;
-  handleRenameItem: (oldPath: string, newPath: string) => void;
-}
 
 const CodeStructure: React.FC<CodeStructureProps> = ({
   fileTree,
