@@ -594,12 +594,6 @@ const AIDrawer: React.FC<AIDrawerProps> = ({
               </button>
             </div>
           </div>
-
-          {hasAttachBtn && (
-            <p className="text-[9px] text-mod-surface-text-muted text-center mt-1.5">
-              You can also paste images directly into the input
-            </p>
-          )}
         </div>
       </div>
 
