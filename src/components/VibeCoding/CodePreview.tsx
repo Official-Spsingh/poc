@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Minimize2, Terminal as ConsoleIcon, Zap } from 'lucide-react';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { useModuleTheme } from '../../contexts/ModuleThemeContext';
 import { type CodePreviewProps, type LoadingOverlayProps } from './vibeCoderTypes';
 
 const DEVICE_PRESETS = {
@@ -56,6 +57,9 @@ const CodePreview: React.FC<CodePreviewProps> = ({
   const fsIframeRef = React.useRef<HTMLIFrameElement>(null);
   const preset = DEVICE_PRESETS[device];
 
+  const moduleTheme = useModuleTheme();
+  const resolvedTheme = moduleTheme ?? document.documentElement.getAttribute('data-theme') ?? undefined;
+
   const [loadedKey, setLoadedKey] = React.useState(-1);
   const [loadedHtml, setLoadedHtml] = React.useState<string | null>(null);
   const [fsLoadedKey, setFsLoadedKey] = React.useState(-1);
@@ -84,6 +88,7 @@ const CodePreview: React.FC<CodePreviewProps> = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          data-theme={resolvedTheme}
           className="bg-mod-surface-card"
           style={{ position: 'fixed', inset: 0, zIndex: 9999, display: 'flex', flexDirection: 'column' }}
         >
