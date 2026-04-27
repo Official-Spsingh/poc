@@ -147,7 +147,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate, workflows }) => {
             At ≥1920px padding locks to 200px.  At ~2100px all 5 cards fit
             inside the container and horizontal scroll disappears.
           */}
-          <div className="max-w-[2100px] mx-auto">
+          <div className="max-w-[2000px] mx-auto">
 
             {/* Header */}
             <div className="mb-8 md:mb-12" style={{ paddingLeft: 'clamp(16px, 10.5vw, 200px)', paddingRight: 'clamp(16px, 10.5vw, 200px)' }}>
@@ -168,7 +168,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate, workflows }) => {
                       key={option.id}
                       data-theme={option.moduleTheme}
                       onClick={() => onNavigate(option.id)}
-                      className="group relative bg-dash-card-bg p-8 rounded-3xl border border-dash-card-border dash-card-shadow-hover hover:border-mod-hero-icon-color/50 transition-all text-left overflow-hidden cursor-pointer flex flex-col w-[320px] flex-shrink-0"
+                      className="group relative bg-dash-card-bg p-8 rounded-3xl border border-dash-card-border dash-card-shadow-hover hover:border-mod-hero-icon-color/50 transition-all text-left overflow-hidden cursor-pointer flex flex-col w-[300px] flex-shrink-0"
                     >
                       <div className="absolute top-6 right-6 px-2 py-1 rounded-md text-[9px] font-bold uppercase tracking-wider text-dash-tag-text bg-dash-card-border/50 transition-all">
                         {option.tag}
