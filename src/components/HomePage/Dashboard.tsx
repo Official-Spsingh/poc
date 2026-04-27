@@ -3,6 +3,7 @@ import { ArrowRight, Bot, Clock, Database, ExternalLink, Layout, Plus, Rocket, S
 import React, { useEffect, useState } from 'react';
 import { ViewType, Workflow } from '../../types';
 import AIDrawer from '../Common/AIDrawer';
+import StudioPageWrapper, { StudioMain } from '../Common/StudioPageWrapper';
 
 interface DashboardChatProps {
   onNavigate: (view: ViewType) => void;
@@ -133,34 +134,18 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate, workflows }) => {
 
   return (
     <>
-      <div className="flex-1 dash-page-bg backdrop-blur-3xl overflow-y-auto overflow-x-hidden scrollbar-custom relative">
-        {/* Background Decorations for Glassmorphism */}
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] dash-blur-1 blur-[120px] rounded-full -z-10 animate-pulse" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] dash-blur-2 blur-[120px] rounded-full -z-10 animate-pulse" style={{ animationDelay: '2s' }} />
-        <div className="absolute top-[40%] right-[10%] w-[25%] h-[25%] dash-blur-3 blur-[100px] rounded-full -z-10" />
-
-        <main className="py-6 md:py-12 relative z-10">
-          {/*
-            Single max-width wrapper — everything (header, cards, sections)
-            shares the same 2100px cap and the same clamp side padding so
-            all columns are visually aligned at every viewport width.
-            At ≥1920px padding locks to 200px.  At ~2100px all 5 cards fit
-            inside the container and horizontal scroll disappears.
-          */}
-          <div className="max-w-[2000px] mx-auto">
+      <StudioPageWrapper>
+        <StudioMain pyClassName="py-6 md:py-12">
 
             {/* Header */}
-            <div className="mb-8 md:mb-12" style={{ paddingLeft: 'clamp(16px, 10.5vw, 200px)', paddingRight: 'clamp(16px, 10.5vw, 200px)' }}>
+            <div className="mb-8 md:mb-12">
               <h1 className="text-3xl md:text-4xl font-bold text-dash-title mb-2 md:mb-4 tracking-tight">Welcome back, Shubham</h1>
               <p className="text-dash-subtext text-base md:text-lg">Choose a tool to start building your next big idea.</p>
             </div>
 
             {/* Cards — Desktop (lg+): padding lives on the outer wrapper so both
                 gutters are always visible; only the cards themselves scroll */}
-            <div
-              className="hidden lg:block mb-12 md:mb-20"
-              style={{ paddingLeft: 'clamp(16px, 10.5vw, 200px)', paddingRight: 'clamp(16px, 10.5vw, 200px)' }}
-            >
+            <div className="hidden lg:block mb-12 md:mb-20">
               <div className="overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 <div className="flex gap-6 min-w-max pt-1 pb-8">
                   {options.map((option) => (
@@ -201,10 +186,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate, workflows }) => {
             </div>
 
             {/* Cards — Tablet (2 cols) & Mobile (1 col) */}
-            <div
-              className="lg:hidden grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 mb-12 md:mb-20"
-              style={{ paddingLeft: 'clamp(16px, 10.5vw, 200px)', paddingRight: 'clamp(16px, 10.5vw, 200px)' }}
-            >
+            <div className="lg:hidden grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 mb-12 md:mb-20">
               {options.map((option) => (
                 <div
                   key={option.id}
@@ -240,10 +222,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate, workflows }) => {
               ))}
             </div>
 
-            {/* Recent Activity + Stats — same padding as header/cards */}
-            <div style={{ paddingLeft: 'clamp(16px, 10.5vw, 200px)', paddingRight: 'clamp(16px, 10.5vw, 200px)' }}>
-
-              {/* Recent Activity Section */}
+            {/* Recent Activity Section */}
               <div>
                 <div className="flex items-center justify-between mb-6 md:mb-8">
                   <h2 className="text-lg md:text-xl font-bold text-dash-recent-title flex items-center gap-2">
@@ -318,11 +297,8 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate, workflows }) => {
                   </div>
                 </div>
               </div>
-
-            </div>{/* end padded sections */}
-          </div>{/* end max-w-[2100px] */}
-        </main>
-      </div>
+        </StudioMain>
+      </StudioPageWrapper>
       <DashboardChat onNavigate={onNavigate} />
     </>
   );

@@ -56,7 +56,7 @@ const StudioEmptyState: React.FC<StudioEmptyStateProps> = ({
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="flex flex-col items-center justify-center py-10 md:py-16 px-4 text-center bg-mod-surface-card/40 backdrop-blur-2xl rounded-[48px] border border-mod-surface-border w-full max-w-[1440px] mx-auto my-4 overflow-hidden"
+      className="flex flex-col items-center justify-center py-10 md:py-16 px-4 text-center bg-mod-surface-card/40 backdrop-blur-2xl rounded-[48px] border border-mod-surface-border w-full max-w-[2000px] mx-auto my-4 overflow-hidden"
     >
       <div className="relative mb-6">
         <motion.div 
