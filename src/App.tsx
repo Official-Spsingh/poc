@@ -16,9 +16,11 @@ import Sidebar from './components/Common/Sidebar';
 import DataSection from './components/Data/DataSection';
 import Dashboard from './components/HomePage/Dashboard';
 import Profile from './components/Profile/Profile';
+import AIArchitectModal from './components/Common/AIArchitectModal';
 import VibeCoder, { generateProjectFiles } from './components/VibeCoding/VibeCoder';
 import { type Project } from './components/VibeCoding/vibeCoderTypes';
 import VibeHome from './components/VibeCoding/VibeHome';
+import { makeRequest } from './utils/makeRequest';
 import { COMPONENT_METADATA } from './components/Workflow/WorkflowBuilder/constants';
 import WorkflowBuilder from './components/Workflow/WorkflowBuilder/index';
 import WorkflowHome from './components/Workflow/WorkflowHome';
@@ -194,6 +196,7 @@ const App: React.FC = () => {
   ]);
   const [activeVibeProjectId, setActiveVibeProjectId] = useState<string | null>(null);
   const [vibeInitialPrompt, setVibeInitialPrompt] = useState<string | undefined>(undefined);
+  const [isVibeAiGenerating, setIsVibeAiGenerating] = useState(false);
 
   const executeViewChange = useCallback((newView: ViewType) => {
     setView(newView);
@@ -233,19 +236,34 @@ const App: React.FC = () => {
     }
   }, [lastAppView, lastWorkflowView, lastAgentView, executeViewChange]);
 
-  const handleStartVibeProject = (prompt?: string) => {
+  const handleStartVibeProject = async (prompt?: string) => {
     const name = prompt ? (prompt.length > 20 ? prompt.substring(0, 20) + '...' : prompt) : `New Experiment ${vibeProjects.length + 1}`;
+
+    let files = generateProjectFiles(name);
+
+    if (prompt) {
+      setIsVibeAiGenerating(true);
+      try {
+        const response = await makeRequest.postAuth('/getVibeeCodingApp', { prompt });
+        if (response?.files) files = response.files;
+      } catch {
+        // 404 or any error — use dummy data already set above
+      } finally {
+        setIsVibeAiGenerating(false);
+      }
+    }
+
     const newProject: Project = {
       id: Date.now().toString(),
       name,
       lastEdited: 'Just now',
-      files: generateProjectFiles(name),
+      files,
       history: [{ id: 1, type: 'bot', text: `Project "${name}" initialized. Syncing your vision...`, time: "Just now" }],
       versions: [],
     };
-    setVibeProjects([newProject, ...vibeProjects]);
+    setVibeProjects(prev => [newProject, ...prev]);
     setActiveVibeProjectId(newProject.id);
-    setVibeInitialPrompt(prompt);
+    setVibeInitialPrompt(undefined);
     executeViewChange('vibe-coder');
   };
 
@@ -452,7 +470,15 @@ const App: React.FC = () => {
                 )}
                 
                 {view === 'vibe-home' && (
-                  <VibeHome projects={vibeProjects} onStartProject={handleStartVibeProject} onOpenProject={handleOpenVibeProject} />
+                  <>
+                    <VibeHome projects={vibeProjects} onStartProject={handleStartVibeProject} onOpenProject={handleOpenVibeProject} />
+                    <AIArchitectModal
+                      isOpen={isVibeAiGenerating}
+                      title="Synthesizing"
+                      description="Generating your React application from your prompt. Hang tight..."
+                      statusText="Building Application..."
+                    />
+                  </>
                 )}
                 
                 {view === 'vibe-coder' && (
