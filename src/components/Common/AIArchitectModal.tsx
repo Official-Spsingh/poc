@@ -34,7 +34,7 @@ const AIArchitectModal: React.FC<AIArchitectModalProps> = ({
         initial={{ scale: 0.9, opacity: 0, y: 20 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
         exit={{ scale: 0.9, opacity: 0, y: 20 }}
-        className="relative w-full max-w-2xl bg-mod-surface-card rounded-3xl shadow-mod-modal border border-mod-surface-border overflow-hidden flex flex-col items-center justify-center p-12 lg:p-16"
+        className="relative w-full max-w-2xl bg-mod-surface-card rounded-3xl shadow-lg border border-mod-surface-border overflow-hidden flex flex-col items-center justify-center p-12 lg:p-16"
       >
         <div className="absolute inset-0 opacity-[0.05] pointer-events-none" style={{ backgroundImage: `radial-gradient(var(--mod-hero-icon-color) 1px, transparent 1px)`, backgroundSize: '24px 24px' }} />
 

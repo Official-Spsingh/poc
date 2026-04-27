@@ -34,7 +34,7 @@ import StudioPageWrapper, { StudioMain } from '../Common/StudioPageWrapper';
 import StudioTable from '../Common/StudioTable';
 import StudioTipsSection from '../Common/StudioTipsSection';
 import StudioToolbar from '../Common/StudioToolbar';
-import WorkflowAIArchitectModal from './Modals/WorkflowAIArchitectModal';
+import AIArchitectModal from '../Common/AIArchitectModal';
 import WorkflowCreateWorkspaceModal from './Modals/WorkflowCreateWorkspaceModal';
 import WorkflowInfoModal from './Modals/WorkflowInfoModal';
 import WorkflowLineageModal from './Modals/WorkflowLineageModal';
@@ -639,9 +639,11 @@ const WorkflowHome: React.FC<WorkflowHomeProps> = ({
         workspaces={workspaces}
       />
 
-      <WorkflowAIArchitectModal
-        isAiPromptMode={isAiPromptMode}
-        isGenerating={isGenerating}
+      <AIArchitectModal
+        isOpen={isAiPromptMode && isGenerating}
+        title="Architecting"
+        description="Synthesizing node clusters and logic schemas for your workflow..."
+        statusText="Optimizing Logic Path..."
       />
     </StudioMain>
   </StudioPageWrapper>
