@@ -9,7 +9,7 @@ import {
   Sparkles,
   Trash2
 } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import { useRandomTitle, useTypewriter } from '../../hooks/useTypewriter';
 import StudioCard from '../Common/StudioCard';
@@ -36,31 +36,35 @@ const VIBE_PLACEHOLDERS = [
   "e.g., Design a social media landing page with vibrant gradients..."
 ];
 
+const FILTER_OPTIONS = [
+  { label: 'All Projects', value: 'all' },
+  { label: 'Recent', value: 'recent' },
+] as const;
+
+const VIBE_TIPS = [
+  { icon: Sparkles, title: 'Instant Prototyping', description: 'Describe your vision in natural language and get a production-grade React prototype generated instantly.' },
+  { icon: Rocket, title: 'Live Preview', description: 'See your application come to life in real-time with hot-reloading and interactive previews as you iterate.' },
+  { icon: FileSpreadsheet, title: 'Export & Deploy', description: 'Export your generated code as a standalone project or deploy it directly to your preferred hosting platform.' },
+] as const;
+
 const VibeHome: React.FC<VibeHomeProps> = ({ onStartProject, onOpenProject, projects }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [aiPrompt, setAiPrompt] = useState('');
   const [activeFilter, setActiveFilter] = useState('all');
 
-  const filterOptions = [
-    { label: 'All Projects', value: 'all' },
-    { label: 'Recent', value: 'recent' }
-  ];
-  
-  // Theme is now driven by CSS variables via data-theme on the container div
   const heroTitle = useRandomTitle(VIBE_HERO_TITLES);
   const placeholderText = useTypewriter(VIBE_PLACEHOLDERS);
 
-  const filteredProjects = projects.filter(p => {
+  const filteredProjects = useMemo(() => projects.filter((p: Project) => {
     const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase());
-    
     if (activeFilter === 'all') return matchesSearch;
     if (activeFilter === 'recent') {
       const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
       return matchesSearch && new Date(p.lastEdited) > oneDayAgo;
     }
     return matchesSearch;
-  });
+  }), [projects, searchQuery, activeFilter]);
 
   return (
     <StudioPageWrapper>
@@ -116,7 +120,7 @@ const VibeHome: React.FC<VibeHomeProps> = ({ onStartProject, onOpenProject, proj
           viewMode={viewMode}
           onViewModeChange={setViewMode}
 
-          filterOptions={filterOptions}
+          filterOptions={FILTER_OPTIONS}
           activeFilter={activeFilter}
           onFilterChange={setActiveFilter}
         />
@@ -135,7 +139,7 @@ const VibeHome: React.FC<VibeHomeProps> = ({ onStartProject, onOpenProject, proj
             type={searchQuery && activeFilter !== 'all' ? 'both' : (searchQuery ? 'search' : 'filter')}
 
             searchQuery={searchQuery}
-            activeFilterLabel={filterOptions.find(o => o.value === activeFilter)?.label}
+            activeFilterLabel={FILTER_OPTIONS.find(o => o.value === activeFilter)?.label}
             onClear={() => {
               setSearchQuery('');
               setActiveFilter('all');
@@ -206,14 +210,7 @@ const VibeHome: React.FC<VibeHomeProps> = ({ onStartProject, onOpenProject, proj
             />
           )
         )}
-        <StudioTipsSection
-
-          tips={[
-            { icon: Sparkles, title: 'Instant Prototyping', description: 'Describe your vision in natural language and get a production-grade React prototype generated instantly.' },
-            { icon: Rocket, title: 'Live Preview', description: 'See your application come to life in real-time with hot-reloading and interactive previews as you iterate.' },
-            { icon: FileSpreadsheet, title: 'Export & Deploy', description: 'Export your generated code as a standalone project or deploy it directly to your preferred hosting platform.' }
-          ]}
-        />
+        <StudioTipsSection tips={VIBE_TIPS} />
       </StudioMain>
     </StudioPageWrapper>
   );

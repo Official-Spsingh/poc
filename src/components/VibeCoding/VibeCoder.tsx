@@ -98,6 +98,8 @@ const VibeCoder: React.FC<VibeCoderProps> = ({ onBack, initialPrompt, projectId,
   const [activeFile, setActiveFile] = useState('src/Dashboard.tsx');
   const latestActiveFile = useRef(activeFile);
   useEffect(() => { latestActiveFile.current = activeFile; }, [activeFile]);
+  const latestActiveProjectRef = useRef(activeProject);
+  useEffect(() => { latestActiveProjectRef.current = activeProject; }, [activeProject]);
   const [activeTab, setActiveTab] = useState<'preview' | 'code'>('preview');
   const [device, setDevice] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
   const [prompt, setPrompt] = useState('');
@@ -125,12 +127,15 @@ const VibeCoder: React.FC<VibeCoderProps> = ({ onBack, initialPrompt, projectId,
     }));
   }, [activeProject?.id]);
 
-  // Trigger initial prompt
+  // Trigger initial prompt — deps use projectId not activeProject to avoid
+  // re-registering the effect on every file-content keystroke.
   useEffect(() => {
-    if (initialPrompt && activeProject && activeProject.history.length === 1) {
+    const ap = latestActiveProjectRef.current;
+    if (initialPrompt && ap && ap.history.length === 1) {
       setTimeout(() => { setPrompt(initialPrompt); handleGenerate(initialPrompt); }, 500);
     }
-  }, [initialPrompt, activeProject]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialPrompt, projectId]);
 
   // Console message listener
   useEffect(() => {
@@ -231,20 +236,22 @@ const VibeCoder: React.FC<VibeCoderProps> = ({ onBack, initialPrompt, projectId,
     if (af.startsWith(oldPath)) setActiveFile(af.replace(oldPath, newPath));
   }, [projectId]);
 
+  // Plain function (not useCallback) — defined after the effect that calls it,
+  // so converting to useCallback would cause TS2448. Reads from refs for freshness.
   const handleGenerate = (msg: string, atts?: Attachment[]) => {
-    if ((!msg.trim() && !atts?.length) || !projectId) return;
+    const ap = latestActiveProjectRef.current;
+    if ((!msg.trim() && !atts?.length) || !projectId || !ap) return;
 
-    // Snapshot current files as the next version
-    const currentVersions = activeProject?.versions ?? [];
+    const currentVersions = ap.versions ?? [];
     const newVersion: ProjectVersion = {
       id: crypto.randomUUID(),
       label: `v${currentVersions.length + 1}`,
       description: msg.trim() ? (msg.length > 48 ? msg.substring(0, 48) + '…' : msg) : 'Attachment',
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      files: JSON.parse(JSON.stringify(activeProject?.files ?? {})),
+      files: JSON.parse(JSON.stringify(ap.files)),
     };
 
-    onUpdateProjects(projects.map(proj => proj.id !== projectId ? proj : {
+    onUpdateProjectsRef.current(latestProjects.current.map((proj: Project) => proj.id !== projectId ? proj : {
       ...proj,
       versions: [...currentVersions, newVersion],
       history: [...proj.history, { id: Date.now(), type: 'user', text: msg, time: 'Just now', attachments: atts }],
@@ -253,7 +260,7 @@ const VibeCoder: React.FC<VibeCoderProps> = ({ onBack, initialPrompt, projectId,
 
     setIsGenerating(true);
     setTimeout(() => {
-      onUpdateProjects(latestProjects.current.map(proj => proj.id !== projectId ? proj : {
+      onUpdateProjectsRef.current(latestProjects.current.map((proj: Project) => proj.id !== projectId ? proj : {
         ...proj,
         history: [...proj.history, { id: Date.now() + 1, type: 'bot', text: `Vibe confirmed. Synced adjustments for "${msg.substring(0, 20)}…".`, time: 'Just now' }],
       }));
@@ -261,16 +268,17 @@ const VibeCoder: React.FC<VibeCoderProps> = ({ onBack, initialPrompt, projectId,
     }, 1500);
   };
 
-  const handleRestoreVersion = (ver: ProjectVersion) => {
+  const handleRestoreVersion = useCallback((ver: ProjectVersion) => {
     if (!projectId || !window.confirm(`Restore to ${ver.label}? Current unsaved work will be lost.`)) return;
-    onUpdateProjects(projects.map(p => p.id !== projectId ? p : { ...p, files: JSON.parse(JSON.stringify(ver.files)) }));
+    onUpdateProjectsRef.current(latestProjects.current.map((p: Project) => p.id !== projectId ? p : { ...p, files: JSON.parse(JSON.stringify(ver.files)) }));
     setShowVersionMenu(false);
-  };
+  }, [projectId]);
 
-  const handleDownloadZip = () => {
-    if (!activeProject) return;
+  const handleDownloadZip = useCallback(() => {
+    const ap = latestActiveProjectRef.current;
+    if (!ap) return;
     const files: Record<string, Uint8Array> = {};
-    Object.entries<ProjectFile>(activeProject.files).forEach(([path, file]) => {
+    Object.entries<ProjectFile>(ap.files).forEach(([path, file]) => {
       files[path] = strToU8(file.content);
     });
     zip(files, (err, data) => {
@@ -278,11 +286,11 @@ const VibeCoder: React.FC<VibeCoderProps> = ({ onBack, initialPrompt, projectId,
       const url = URL.createObjectURL(new Blob([data.buffer as ArrayBuffer], { type: 'application/zip' }));
       const a = document.createElement('a');
       a.href = url;
-      a.download = `${activeProject.name.toLowerCase().replace(/\s+/g, '-')}.zip`;
+      a.download = `${ap.name.toLowerCase().replace(/\s+/g, '-')}.zip`;
       a.click();
       URL.revokeObjectURL(url);
     });
-  };
+  }, [projectId]);
 
   const mappedHistory = useMemo(() => {
     if (!activeProject) return [];
